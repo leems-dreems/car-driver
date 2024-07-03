@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://j3p4cvu1qrry"
+path="res://.godot/imported/Car_Door_Close.ogg-87619c6bb06e23b7c65512d928e1b6f0.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Sound effects/Car_Door_Close.ogg"
+dest_files=["res://.godot/imported/Car_Door_Close.ogg-87619c6bb06e23b7c65512d928e1b6f0.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

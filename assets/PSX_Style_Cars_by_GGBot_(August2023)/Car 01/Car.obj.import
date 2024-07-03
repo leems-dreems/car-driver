@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dvxaw08yfxjyw"
+path="res://.godot/imported/Car.obj-3a4c653c56100289c6fc1f6c63ef30aa.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Car.obj-3a4c653c56100289c6fc1f6c63ef30aa.mesh"]
+
+source_file="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Car 01/Car.obj"
+dest_files=["res://.godot/imported/Car.obj-3a4c653c56100289c6fc1f6c63ef30aa.mesh", "res://.godot/imported/Car.obj-3a4c653c56100289c6fc1f6c63ef30aa.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

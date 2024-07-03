@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://duwq7plpdtih5"]
+
+[ext_resource type="PackedScene" uid="uid://c16xg33ou50lh" path="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Car 01/Car.blend" id="1_aa1eu"]
+
+[node name="Car01" type="Node3D"]
+
+[node name="Car2" parent="." instance=ExtResource("1_aa1eu")]

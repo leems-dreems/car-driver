@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b8yi28uufvcv3"
+path="res://.godot/imported/Car_Shadow.obj-b9afc844983fd18998eef44bcd01573e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Car_Shadow.obj-b9afc844983fd18998eef44bcd01573e.mesh"]
+
+source_file="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Shadow (3D)/Car_Shadow.obj"
+dest_files=["res://.godot/imported/Car_Shadow.obj-b9afc844983fd18998eef44bcd01573e.mesh", "res://.godot/imported/Car_Shadow.obj-b9afc844983fd18998eef44bcd01573e.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

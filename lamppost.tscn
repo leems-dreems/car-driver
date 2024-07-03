@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://dkk3u8gftqy7q"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_vne55"]
+radius = 0.05
+height = 0.05
+radial_segments = 12
+rings = 6
+is_hemisphere = true
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ad14y"]
+points = PackedVector3Array(0, 0, -0.0487464, -0.0243732, 0, -0.0422189, 0, 0.0111247, -0.0487464, 0.0243732, 0, -0.0422189, -0.0422189, 0, -0.0243732, -0.0243732, 0.0111247, -0.0422189, 0, 0.0311717, -0.0390983, 0.0243732, 0.0111247, -0.0422189, 0.0422093, 0, -0.0243827, -0.0487464, 0, 0, -0.0422189, 0.0111247, -0.0243732, -0.0195539, 0.0311717, -0.0338591, 0, 0.045047, -0.0217011, 0.0195444, 0.0311717, -0.0338591, 0.0422093, 0.0111247, -0.0243827, 0.0487464, 0, 0, -0.0487464, 0.0111247, 0, -0.0422189, 0, 0.0243637, -0.0390983, 0.0311717, 0, -0.0338591, 0.0311717, -0.0195539, -0.0108506, 0.045047, -0.0187905, 0, 0.05, 0, 0.010841, 0.045047, -0.0187905, 0.0338495, 0.0311717, -0.0195539, 0.0487464, 0.0111247, 0, 0.0422093, 0, 0.0243732, -0.0422189, 0.0111247, 0.0243637, -0.0243732, 0, 0.0422093, -0.0338591, 0.0311717, 0.0195444, -0.0217011, 0.045047, 0, -0.0187905, 0.045047, -0.0108506, -0.0187905, 0.045047, 0.010841, -0.0108506, 0.045047, 0.0187809, 0, 0.045047, 0.0216916, 0.010841, 0.045047, 0.0187809, 0.0187809, 0.045047, 0.010841, 0.0216916, 0.045047, 0, 0.0187809, 0.045047, -0.0108506, 0.0390887, 0.0311717, 0, 0.0338495, 0.0311717, 0.0195444, 0.0422093, 0.0111247, 0.0243732, 0.0243732, 0, 0.0422093, -0.0243732, 0.0111247, 0.0422093, 0, 0, 0.0487464, -0.0195539, 0.0311717, 0.0338495, 0, 0.0311717, 0.0390887, 0.0195444, 0.0311717, 0.0338495, 0.0243732, 0.0111247, 0.0422093, 0, 0.0111247, 0.0487464)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4x80l"]
+top_radius = 0.05
+bottom_radius = 0.05
+height = 4.0
+radial_segments = 12
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ys48g"]
+points = PackedVector3Array(-0.05, -2, 0, -0.0433046, -2, -0.025, -0.0433046, -2, 0.0249902, -0.05, 2, 0, -0.025, -2, -0.0433046, -0.0433046, 2, -0.025, -0.025, -2, 0.0432948, -0.0433046, 2, 0.0249902, 0, -2, -0.05, -0.025, 2, -0.0433046, 0, -2, 0.05, -0.025, 2, 0.0432948, 0.025, -2, -0.0433046, 0, 2, -0.05, 0.025, -2, 0.0432948, 0, 2, 0.05, 0.0432948, -2, -0.0250098, 0.025, 2, -0.0433046, 0.0432948, -2, 0.025, 0.025, 2, 0.0432948, 0.05, -2, 0, 0.0432948, 2, -0.0250098, 0.0432948, 2, 0.025, 0.05, 2, 0)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Base" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Base"]
+mesh = SubResource("SphereMesh_vne55")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Base"]
+shape = SubResource("ConvexPolygonShape3D_ad14y")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, 0)
+mesh = SubResource("CylinderMesh_4x80l")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, 0)
+shape = SubResource("ConvexPolygonShape3D_ys48g")
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
