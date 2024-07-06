@@ -1,7 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://df3ovqaugu3gp"]
+[gd_scene load_steps=13 format=3 uid="uid://df3ovqaugu3gp"]
 
 [ext_resource type="Texture2D" uid="uid://8v4spylpsh8c" path="res://assets/textures/1x1m_grid.png" id="1_s7ctx"]
-[ext_resource type="PackedScene" uid="uid://c0py3jwcv2rge" path="res://car_2.tscn" id="1_u27sv"]
 [ext_resource type="Script" path="res://scripts/city_limits.gd" id="2_q66gr"]
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="4_th2pk"]
 [ext_resource type="Script" path="res://addons/gevp/scripts/camera.gd" id="5_283m0"]
@@ -70,9 +69,6 @@ shape = SubResource("BoxShape3D_8xl5f")
 transform = Transform3D(-0.353554, 0.707107, -0.612372, 0.353553, 0.707107, 0.612373, 0.866025, 2.19381e-07, -0.5, 0, 27, 0)
 shadow_enabled = true
 
-[node name="Car2" parent="." instance=ExtResource("1_u27sv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -13)
-
 [node name="CompactCar" parent="." instance=ExtResource("4_th2pk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -20)
 
@@ -108,5 +104,3 @@ text = "Speed:"
 label_settings = SubResource("LabelSettings_q7nlx")
 
 [connection signal="body_exited" from="BoundingArea3D" to="BoundingArea3D" method="destroyExitingNode"]
-[connection signal="body_entered" from="Car2" to="Car2" method="_on_body_entered"]
-[connection signal="body_exited" from="Car2" to="Car2" method="_on_body_exited"]

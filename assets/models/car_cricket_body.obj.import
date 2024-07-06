@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://2le86icjy0e2"
+path="res://.godot/imported/car_cricket_body.obj-fd4b7b04d88c369d496ee3db31396bab.mesh"
+
+[deps]
+
+files=["res://.godot/imported/car_cricket_body.obj-fd4b7b04d88c369d496ee3db31396bab.mesh"]
+
+source_file="res://assets/models/car_cricket_body.obj"
+dest_files=["res://.godot/imported/car_cricket_body.obj-fd4b7b04d88c369d496ee3db31396bab.mesh", "res://.godot/imported/car_cricket_body.obj-fd4b7b04d88c369d496ee3db31396bab.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
