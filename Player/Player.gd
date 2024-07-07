@@ -190,7 +190,9 @@ func enterVehicle (vehicle: DriveableVehicle) -> void:
 func exitVehicle () -> void:
   current_vehicle.is_being_driven = false
   global_position = current_vehicle.global_position
-  global_position.y += 2
+  global_position.y += 5
   current_vehicle = null
+
+  await get_tree().create_timer(0.1).timeout
   $CharacterCollisionShape.disabled = false
   visible = true
