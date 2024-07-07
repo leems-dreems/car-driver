@@ -4,6 +4,7 @@ extends RigidBody3D
 @export var hingeJoint : HingeJoint3D
 @export var doorOpenSFX : AudioStreamPlayer3D
 @export var doorShutSFX : AudioStreamPlayer3D
+@export var enter_car_collision_shape : CollisionShape3D
 var shutBasis : Basis
 var hinge_limit_upper : float
 var hinge_limit_lower : float
@@ -32,8 +33,9 @@ func open_or_shut () -> void:
     hingeJoint.set_flag(HingeJoint3D.FLAG_ENABLE_MOTOR, true)
     shutDoorMesh.visible = false
     doorOpenSFX.play()
+    enter_car_collision_shape.disabled = false
 
-    use_timer = get_tree().create_timer(0.3)
+    use_timer = get_tree().create_timer(0.5)
     use_timer.timeout.connect(func ():
       hingeJoint.set_flag(HingeJoint3D.FLAG_ENABLE_MOTOR, false)
       use_timer = null
@@ -45,3 +47,11 @@ func open_or_shut () -> void:
     visible = false
     shutDoorMesh.visible = true
     doorShutSFX.play()
+    enter_car_collision_shape.disabled = true
+
+
+func get_use_label () -> String:
+  if is_shut:
+    return 'Open Door'
+  else:
+    return 'Shut Door'

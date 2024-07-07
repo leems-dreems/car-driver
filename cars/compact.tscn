@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=24 format=3 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://scripts/driveable_vehicle.gd" id="1_47vdl"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_2ri1h"]
@@ -11,6 +11,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bhui0qh4i80lg" path="res://assets/models/car_cricket_door_FR.obj" id="5_trfuy"]
 [ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="7_ngr1s"]
 [ext_resource type="AudioStream" uid="uid://d02vhghagqdjw" path="res://assets/sfx/car-door-shut.wav" id="8_n0lig"]
+[ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="10_61kxu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.2
@@ -23,6 +24,11 @@ points = PackedVector3Array(1.03924, 0.297661, -0.705347, 0.708985, 2.03898, -1.
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gm704"]
 points = PackedVector3Array(-1.0687, 0.297661, -0.705347, -1.0687, 0.327818, -0.975636, -1.33902, 1.55859, 0.315243, -0.708382, 2.06896, -1.15564, -1.03864, 0.297661, 0.615627, -1.0687, 1.46848, -1.30593, -0.738444, 2.09929, 0.465341, -1.0987, 1.49846, 0.615627, -0.768445, 2.09929, -1.12573, -1.33902, 1.40834, 0.405339, -1.03864, 0.327818, -0.975636, -0.798508, 2.09929, 0.465341, -1.0687, 0.297661, 0.615627, -0.708382, 2.03898, -0.765349, -1.00876, 1.40834, -1.30593, -0.738444, 2.03898, 0.465341, -1.33902, 1.40834, 0.315243, -1.03864, 0.297661, -0.705347, -1.0687, 1.34838, -1.30593, -1.03864, 1.49846, 0.615627, -0.708382, 2.03898, -1.15564, -0.828508, 1.97884, -1.18574, -1.29872, 1.54575, 0.407587, -1.0987, 0.477895, 0.615627, -0.798508, 2.09929, 0.0750488, -0.708382, 2.06896, -0.495248, -0.708382, 2.09929, -1.12573, -1.0687, 0.778226, -1.12573, -0.888572, 1.64871, -1.24574, -1.30889, 1.37836, 0.435434, -0.828508, 1.85875, -1.21583, -1.03864, 1.34838, -1.30593)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uu7oe"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_100sx"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4010s"]
 resource_name = "carTire"
@@ -115,6 +121,8 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7qo4e")
 
 [node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel")]
+collision_layer = 2
+collision_mask = 19
 mass = 1500.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
 script = ExtResource("1_47vdl")
@@ -169,15 +177,17 @@ motor/target_velocity = -6.28319
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
 mesh = ExtResource("4_d7yiy")
 
-[node name="OpenDoorLeft" type="RigidBody3D" parent="." node_paths=PackedStringArray("shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX") groups=["vehicle_door"]]
+[node name="OpenDoorLeft" type="RigidBody3D" parent="." node_paths=PackedStringArray("shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
 collision_layer = 10
+collision_mask = 19
 mass = 30.0
 script = ExtResource("5_6gdjk")
 shutDoorMesh = NodePath("../ShutDoorLeft")
 hingeJoint = NodePath("../HingeJointLeft")
 doorOpenSFX = NodePath("DoorOpenSFX")
 doorShutSFX = NodePath("DoorShutSFX")
+enter_car_collision_shape = NodePath("../EnterCarCollider/CollisionShape3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="OpenDoorLeft"]
 mesh = ExtResource("4_d7yiy")
@@ -205,15 +215,17 @@ motor/target_velocity = 6.28319
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
 mesh = ExtResource("5_trfuy")
 
-[node name="OpenDoorRight" type="RigidBody3D" parent="." node_paths=PackedStringArray("shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX") groups=["vehicle_door"]]
+[node name="OpenDoorRight" type="RigidBody3D" parent="." node_paths=PackedStringArray("shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
 collision_layer = 10
+collision_mask = 19
 mass = 30.0
 script = ExtResource("5_6gdjk")
 shutDoorMesh = NodePath("../ShutDoorRight")
 hingeJoint = NodePath("../HingeJointRight")
 doorOpenSFX = NodePath("DoorOpenSFX")
 doorShutSFX = NodePath("DoorShutSFX")
+enter_car_collision_shape = NodePath("../EnterCarCollider/CollisionShape3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="OpenDoorRight"]
 mesh = ExtResource("5_trfuy")
@@ -226,6 +238,21 @@ stream = ExtResource("7_ngr1s")
 
 [node name="DoorShutSFX" type="AudioStreamPlayer3D" parent="OpenDoorRight"]
 stream = ExtResource("8_n0lig")
+
+[node name="EnterCarCollider" type="StaticBody3D" parent="."]
+visible = false
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("10_61kxu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnterCarCollider"]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 0.693126, -0.00113106)
+mesh = SubResource("BoxMesh_uu7oe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterCarCollider"]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 0.693126, -0.00113106)
+shape = SubResource("ConcavePolygonShape3D_100sx")
+disabled = true
 
 [node name="WheelFrontLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "screechSFX")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, -1.7702)

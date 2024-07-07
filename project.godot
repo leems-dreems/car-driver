@@ -102,22 +102,22 @@ jump={
 ]
 }
 camera_left={
-"deadzone": 0.5,
+"deadzone": 0.2,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":-1.0,"script":null)
 ]
 }
 camera_right={
-"deadzone": 0.5,
+"deadzone": 0.2,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":1.0,"script":null)
 ]
 }
 camera_up={
-"deadzone": 0.5,
+"deadzone": 0.2,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":3,"axis_value":-1.0,"script":null)
 ]
 }
 camera_down={
-"deadzone": 0.5,
+"deadzone": 0.2,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":3,"axis_value":1.0,"script":null)
 ]
 }
@@ -140,6 +140,7 @@ use={
 3d_physics/layer_2="Car"
 3d_physics/layer_3="Bounds"
 3d_physics/layer_4="Useable"
+3d_physics/layer_5="Player"
 
 [physics]
 

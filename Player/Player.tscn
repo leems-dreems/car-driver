@@ -1,12 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://ciqrpd5675boy"]
+[gd_scene load_steps=16 format=3 uid="uid://ciqrpd5675boy"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_rvo1c"]
-[ext_resource type="PackedScene" uid="uid://b2ew46dlu7u7x" path="res://Player/GrenadeLauncher.tscn" id="3_54qc4"]
 [ext_resource type="Script" path="res://Player/CameraController.gd" id="3_qrkly"]
 [ext_resource type="Script" path="res://Player/MeleeAttackArea.gd" id="3_v1vve"]
 [ext_resource type="PackedScene" uid="uid://c0mo8tek77du4" path="res://Player/CharacterSkin.tscn" id="4_ign62"]
-[ext_resource type="Script" path="res://Player/CoinsContainer.gd" id="7_8eehq"]
-[ext_resource type="PackedScene" uid="uid://cqw64w6kb0fyg" path="res://Player/Coin/CoinVisuals/CoinModel.tscn" id="8_6qxxt"]
 [ext_resource type="AudioStream" uid="uid://bx0t7f2nuk2lr" path="res://Player/Sounds/03_Step_grass_03.wav" id="10_wx4h4"]
 [ext_resource type="AudioStream" uid="uid://cbcb2d63weegs" path="res://Player/Sounds/45_Landing_01.wav" id="11_3s4i7"]
 
@@ -15,7 +12,6 @@
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_gqx4v"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_2ooex"]
-dof_blur_far_enabled = true
 dof_blur_far_distance = 45.0
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_s5n07"]
@@ -105,11 +101,13 @@ radius = 0.721485
 height = 2.65424
 
 [node name="Player" type="CharacterBody3D" groups=["damageables"]]
+collision_layer = 16
+collision_mask = 3
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
+platform_floor_layers = 4294967042
 script = ExtResource("1_rvo1c")
-bullet_speed = 14.0
 acceleration = 6.0
 
 [node name="CharacterCollisionShape" type="CollisionShape3D" parent="."]
@@ -146,8 +144,6 @@ transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 target_position = Vector3(0, 0, -15)
 collision_mask = 8
 
-[node name="GrenadeLauncher" parent="." instance=ExtResource("3_54qc4")]
-
 [node name="GroundShapeCast" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CylinderShape3D_s5n07")
@@ -183,83 +179,6 @@ disabled = true
 
 [node name="CharacterSkin" parent="CharacterRotationRoot" instance=ExtResource("4_ign62")]
 
-[node name="PlayerUI" type="Control" parent="." groups=["camera_mode_toggle"]]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="AimRecticle" type="ColorRect" parent="PlayerUI"]
-unique_name_in_owner = true
-layout_mode = 0
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -3.5
-offset_top = -3.5
-offset_right = 3.5
-offset_bottom = 3.5
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0.290196)
-
-[node name="CoinsContainer" type="HBoxContainer" parent="PlayerUI"]
-unique_name_in_owner = true
-layout_mode = 0
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -336.0
-offset_top = -100.0
-offset_right = -80.0
-offset_bottom = -4.0
-grow_horizontal = 0
-mouse_filter = 2
-theme_override_constants/separation = 30
-alignment = 2
-script = ExtResource("7_8eehq")
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="PlayerUI/CoinsContainer"]
-custom_minimum_size = Vector2(96, 96)
-layout_mode = 2
-size_flags_horizontal = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="PlayerUI/CoinsContainer/SubViewportContainer"]
-own_world_3d = true
-transparent_bg = true
-handle_input_locally = false
-gui_disable_input = true
-size = Vector2i(96, 96)
-render_target_update_mode = 4
-
-[node name="Coin" parent="PlayerUI/CoinsContainer/SubViewportContainer/SubViewport" instance=ExtResource("8_6qxxt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.812403)
-
-[node name="godot_coin" parent="PlayerUI/CoinsContainer/SubViewportContainer/SubViewport/Coin" index="0"]
-transform = Transform3D(0.278847, 0, 0.960336, 0, 1, 0, -0.960336, 0, 0.278847, 0, 0, 0)
-y_amplitude = 0.0
-
-[node name="Camera3D" type="Camera3D" parent="PlayerUI/CoinsContainer/SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.604131)
-current = true
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PlayerUI/CoinsContainer/SubViewportContainer/SubViewport"]
-
-[node name="CoinsLabel" type="Label" parent="PlayerUI/CoinsContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 64
-text = "0"
-
-[node name="Timer" type="Timer" parent="PlayerUI/CoinsContainer"]
-wait_time = 3.0
-one_shot = true
-
 [node name="StepSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("10_wx4h4")
 volume_db = 1.0
@@ -271,5 +190,3 @@ volume_db = 1.0
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [connection signal="foot_step" from="CharacterRotationRoot/CharacterSkin" to="." method="play_foot_step_sound"]
-
-[editable path="PlayerUI/CoinsContainer/SubViewportContainer/SubViewport/Coin"]
