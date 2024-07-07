@@ -83,7 +83,11 @@ func _physics_process(delta: float) -> void:
     current_vehicle.steering_input = Input.get_action_strength("Steer Left") - Input.get_action_strength("Steer Right")
     current_vehicle.throttle_input = pow(Input.get_action_strength("Accelerate"), 2.0)
     current_vehicle.handbrake_input = Input.get_action_strength("Handbrake")
-    current_vehicle.clutch_input = clampf(Input.get_action_strength("Clutch") + Input.get_action_strength("Handbrake"), 0.0, 1.0)
+
+    # Shift to neutral if we are stationary and braking
+    if current_vehicle.current_gear > 0 and current_vehicle.speed < 1:
+      if current_vehicle.handbrake_input >= 1 or current_vehicle.brake_input > 0.5:
+        current_vehicle.shift(-current_vehicle.current_gear)
 
     if current_vehicle.current_gear == -1:
       current_vehicle.brake_input = Input.get_action_strength("Accelerate")
