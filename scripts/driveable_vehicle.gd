@@ -22,7 +22,7 @@ func _integrate_forces (state: PhysicsDirectBodyState3D) -> void:
     state.angular_velocity = Vector3.ZERO
     waiting_to_respawn = false
 
-    await get_tree().create_timer(0.1).timeout
+    await get_tree().create_timer(1.0).timeout
     freeze = false
 
 

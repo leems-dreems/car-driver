@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=34 format=3 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://scripts/driveable_vehicle.gd" id="1_47vdl"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_2ri1h"]
@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="7_ngr1s"]
 [ext_resource type="AudioStream" uid="uid://d02vhghagqdjw" path="res://assets/sfx/car-door-shut.wav" id="8_n0lig"]
 [ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="10_61kxu"]
+[ext_resource type="Texture2D" uid="uid://dan8w045a0t23" path="res://assets/textures/1x1m_grid_black.png" id="15_y6voy"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.6
@@ -131,6 +132,11 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7qo4e")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rn30s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nm370"]
+albedo_texture = ExtResource("15_y6voy")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_a1jbp"]
 points = PackedVector3Array(-0.1, -0.1, -0.1, 0.0999954, 0.1, 0.1, 0.0999954, 0.1, -0.1, 0.0999954, -0.1, 0.1, -0.1, 0.1, 0.1, 0.0999954, -0.1, -0.1, -0.1, 0.1, -0.1, -0.1, -0.1, 0.1)
@@ -412,32 +418,32 @@ doppler_tracking = 2
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
 node_a = NodePath("..")
 node_b = NodePath("../Weight")
-linear_limit_x/upper_distance = 0.1
-linear_limit_x/lower_distance = -0.1
-linear_limit_y/upper_distance = 0.2
-linear_limit_y/lower_distance = -0.2
-linear_limit_z/upper_distance = 0.1
-linear_limit_z/lower_distance = -0.1
+linear_limit_y/upper_distance = 0.1
+linear_limit_y/lower_distance = -0.1
+linear_limit_z/restitution = 1.0
 linear_spring_x/enabled = true
-linear_spring_x/stiffness = 0.1
-linear_spring_x/damping = 0.1
 linear_spring_y/enabled = true
-linear_spring_y/stiffness = 0.1
-linear_spring_y/damping = 0.1
 linear_spring_z/enabled = true
-linear_spring_z/stiffness = 0.1
-linear_spring_z/damping = 0.1
+angular_spring_x/enabled = true
 angular_spring_x/stiffness = 0.05
 angular_spring_x/damping = 0.05
+angular_spring_y/enabled = true
 angular_spring_y/stiffness = 0.05
 angular_spring_y/damping = 0.05
+angular_spring_z/enabled = true
 angular_spring_z/stiffness = 0.05
 angular_spring_z/damping = 0.05
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+mesh = SubResource("PlaneMesh_rn30s")
+surface_material_override/0 = SubResource("StandardMaterial3D_nm370")
 
 [node name="Weight" type="RigidBody3D" parent="."]
 collision_layer = 0
 collision_mask = 0
-mass = 200.0
+mass = 400.0
+center_of_mass_mode = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Weight"]
 shape = SubResource("ConvexPolygonShape3D_a1jbp")
