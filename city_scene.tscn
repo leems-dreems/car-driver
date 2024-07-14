@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://df3ovqaugu3gp"]
+[gd_scene load_steps=15 format=3 uid="uid://df3ovqaugu3gp"]
 
 [ext_resource type="Texture2D" uid="uid://8v4spylpsh8c" path="res://assets/textures/1x1m_grid.png" id="1_s7ctx"]
 [ext_resource type="PackedScene" uid="uid://c0py3jwcv2rge" path="res://car_2.tscn" id="1_u27sv"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/gevp/scripts/camera.gd" id="5_283m0"]
 [ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="6_62x7v"]
 [ext_resource type="Script" path="res://scripts/car_HUD.gd" id="6_eqxcn"]
+[ext_resource type="PackedScene" uid="uid://cmmani56m7eaj" path="res://collidables/trashbin_static.tscn" id="9_ypws5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d01qh"]
 albedo_texture = ExtResource("1_s7ctx")
@@ -106,6 +107,9 @@ size_flags_vertical = 8
 layout_mode = 2
 text = "Speed:"
 label_settings = SubResource("LabelSettings_q7nlx")
+
+[node name="TrashbinStatic" parent="." instance=ExtResource("9_ypws5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.37635, 1.92904, -29.9834)
 
 [connection signal="body_exited" from="BoundingArea3D" to="BoundingArea3D" method="destroyExitingNode"]
 [connection signal="body_entered" from="Car2" to="Car2" method="_on_body_entered"]
