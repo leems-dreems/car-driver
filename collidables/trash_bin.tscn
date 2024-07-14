@@ -7,7 +7,8 @@ bottom_radius = 0.6
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_1pjpg"]
 
 [node name="TrashBin" type="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.21121, 2.94679, -28.4061)
+collision_layer = 64
+collision_mask = 87
 mass = 20.0
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, -0.5, 0)

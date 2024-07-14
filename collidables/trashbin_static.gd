@@ -1,11 +1,11 @@
-extends RigidBody3D
+extends Area3D
 
 @export var resetTime = 15
 @export var physicsBin: PackedScene
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 var readyToHit: bool = true
-var physicsChild
+var physicsChild : RigidBody3D
 
 func _on_body_entered(body: Node3D) -> void:
     if body.is_in_group("CanCollide") && readyToHit:

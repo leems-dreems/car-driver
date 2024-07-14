@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://df3ovqaugu3gp"]
+[gd_scene load_steps=17 format=3 uid="uid://df3ovqaugu3gp"]
 
 [ext_resource type="Texture2D" uid="uid://8v4spylpsh8c" path="res://assets/textures/1x1m_grid.png" id="1_s7ctx"]
 [ext_resource type="Material" uid="uid://ky6syqq4i4ae" path="res://assets/materials/road.tres" id="2_4u2h6"]
@@ -7,8 +7,8 @@
 [ext_resource type="Script" path="res://addons/gevp/scripts/camera.gd" id="5_283m0"]
 [ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="6_62x7v"]
 [ext_resource type="Script" path="res://scripts/car_HUD.gd" id="6_eqxcn"]
-[ext_resource type="PackedScene" uid="uid://cmmani56m7eaj" path="res://collidables/trashbin_static.tscn" id="9_ypws5"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="6_yij02"]
+[ext_resource type="PackedScene" uid="uid://cmmani56m7eaj" path="res://collidables/trashbin_static.tscn" id="9_ypws5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d01qh"]
 albedo_texture = ExtResource("1_s7ctx")
@@ -327,6 +327,7 @@ follow_this = NodePath("../CompactCar")
 vehicle_node = NodePath("../CompactCar")
 
 [node name="Player" parent="." instance=ExtResource("6_yij02")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 0, 7)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "player")]
 script = ExtResource("6_eqxcn")
@@ -350,9 +351,6 @@ size_flags_vertical = 8
 layout_mode = 2
 text = "Speed:"
 label_settings = SubResource("LabelSettings_q7nlx")
-
-[node name="TrashbinStatic" parent="." instance=ExtResource("9_ypws5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.37635, 1.92904, -29.9834)
 
 [node name="UseLabel" type="Label" parent="CanvasLayer"]
 anchors_preset = 7
@@ -383,5 +381,14 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_id77h")
+
+[node name="TrashbinStatic" parent="." instance=ExtResource("9_ypws5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.6236, 1.59004, -39.9834)
+
+[node name="TrashbinStatic2" parent="." instance=ExtResource("9_ypws5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.6236, 1.59004, -33.9834)
+
+[node name="TrashbinStatic3" parent="." instance=ExtResource("9_ypws5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.6236, 1.59004, -27.9834)
 
 [connection signal="body_exited" from="BoundingArea3D" to="BoundingArea3D" method="destroyExitingNode"]

@@ -9,7 +9,9 @@
 top_radius = 0.7
 bottom_radius = 0.6
 
-[node name="TrashbinStatic" type="RigidBody3D"]
+[node name="TrashbinStatic" type="Area3D"]
+collision_layer = 64
+collision_mask = 87
 script = ExtResource("1_wmm8q")
 physicsBin = ExtResource("2_er7xi")
 
