@@ -1,20 +1,46 @@
-[gd_scene load_steps=14 format=3 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=31 format=3 uid="uid://civapmbuqx1uv"]
 
-[ext_resource type="Script" path="res://addons/gevp/scripts/vehicle.gd" id="1_u3dfh"]
+[ext_resource type="Script" path="res://scripts/driveable_vehicle.gd" id="1_47vdl"]
+[ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_2ri1h"]
 [ext_resource type="PackedScene" uid="uid://h6vdpba71kpr" path="res://addons/gevp/scenes/smoke_effect.tscn" id="2_negof"]
 [ext_resource type="Script" path="res://addons/gevp/scripts/wheel.gd" id="2_rwko2"]
-[ext_resource type="ArrayMesh" uid="uid://b2ukdl83jdchx" path="res://assets/models/car_compact.obj" id="3_2fppo"]
+[ext_resource type="ArrayMesh" uid="uid://2le86icjy0e2" path="res://assets/models/car_cricket_body.obj" id="3_6oki7"]
 [ext_resource type="AudioStream" uid="uid://d3nd68khwqhg5" path="res://assets/sfx/spa_tire_skids_and_screeches_tire_emergency_brake_03.wav" id="3_k3j0m"]
+[ext_resource type="ArrayMesh" uid="uid://c2lo5sd57qci7" path="res://assets/models/car_cricket_door_FL.obj" id="4_d7yiy"]
+[ext_resource type="PackedScene" uid="uid://b2hlchrj4h2b7" path="res://addons/gevp/scenes/engine_sound.tscn" id="4_dercd"]
+[ext_resource type="Script" path="res://scripts/car_door.gd" id="5_6gdjk"]
+[ext_resource type="ArrayMesh" uid="uid://bhui0qh4i80lg" path="res://assets/models/car_cricket_door_FR.obj" id="5_trfuy"]
+[ext_resource type="PhysicsMaterial" uid="uid://bgc5lkrsa84nb" path="res://cars/car_door_physics_material.tres" id="7_2j5l5"]
+[ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="7_ngr1s"]
+[ext_resource type="AudioStream" uid="uid://d02vhghagqdjw" path="res://assets/sfx/car-door-shut.wav" id="8_n0lig"]
+[ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="10_61kxu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
-friction = 0.2
+friction = 0.6
+bounce = 0.05
 
-[sub_resource type="Curve" id="Curve_bt7kc"]
-_data = [Vector2(0, 0.494505), 0.0, 2.04495, 0, 0, Vector2(0.617978, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.692308), -1.4839, 0.0, 0, 0]
-point_count = 3
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g05yw"]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+blend_mode = 3
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ymppi"]
-points = PackedVector3Array(-1.02518, 0.525354, 0.360657, 1.0972, 0.138688, 2.9543, 1.08126, -1, 2.91912, 1.13583, -0.246, -2.03968, -1.11068, -1, -1.91922, -1.11068, -1, 2.91912, -1.1258, 0.521507, 2.79884, 1.08126, -1, -1.91922, 0.995758, 0.525354, 0.360657, -1.16526, -0.246, -2.03968, 1.08238, 0.58808, 2.6945, -1.1258, 0.138433, 2.95249, -1.1118, 0.58808, 2.6945, 1.09709, 0.521975, 2.80032, 1.09795, 0.36906, 2.87855, -1.1258, 0.368246, 2.87519)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bgni5"]
+points = PackedVector3Array(0.914147, 0.821743, -2.68575, 1.06954, 0.659279, 2.62043, -1.17623, 0.535279, 2.4314, -0.908973, 2.04927, 0.382443, -1.08715, 0.267965, -2.46668, 0.731244, 1.99439, -1.88854, 1.05049, 0.267965, -2.46668, 1.05049, 1.24751, 2.7874, -0.929471, 1.32733, -2.54067, 0.872319, 2.13843, 0.382443, -1.08715, 1.24751, 2.7874, 0.0663346, 0.397111, 2.5719, -1.17623, 1.51464, 0.560443, -0.670028, 2.05893, -1.52103, 1.13958, 1.60399, 0.560443, -1.08715, 0.357131, 2.34212, 1.0451, 0.344273, 1.17134, 1.13958, 0.535279, -2.3774, 0.912531, 1.33001, -2.59622, -1.17623, 0.80241, -2.11068, 1.05049, 1.69279, -1.30884, -0.879374, 0.557476, -2.72851, -0.966251, 0.643058, 2.7847, -0.763441, 1.90697, -1.96014, 1.13958, 1.33667, 2.34212, -1.02958, 0.318335, 1.20589, 1.00707, 0.647783, 2.76143, 0.974243, 0.41749, 2.42569, -1.00947, 1.32697, -2.20266, 0.961406, 0.267965, -2.55596, 0.0625766, 2.05469, -1.75669, 0.922728, 0.561648, -2.71071)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jv0dm"]
+radius = 0.05
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_g0cid"]
+points = PackedVector3Array(1.03924, 0.297661, -0.705347, 0.708985, 2.03898, -1.15564, 1.33962, 1.55859, 0.315243, 1.03924, 0.297661, 0.615627, 1.0693, 1.46848, -1.30593, 0.739047, 2.09929, 0.465341, 1.0693, 0.327818, -0.975636, 0.769048, 2.09929, -1.12573, 1.0993, 1.49846, 0.615627, 1.33962, 1.40834, 0.405339, 0.799172, 2.09929, 0.465341, 1.0693, 0.297661, 0.615627, 0.708985, 2.06896, -0.465153, 1.00936, 1.40834, -1.30593, 1.03924, 0.327818, -0.975636, 1.33962, 1.40834, 0.315243, 0.739047, 2.03898, 0.465341, 1.0693, 1.34838, -1.30593, 1.0693, 0.297661, -0.705347, 1.03924, 1.49846, 0.615627, 0.829111, 1.97884, -1.18574, 1.29933, 1.54568, 0.407441, 1.0993, 0.507875, 0.615627, 0.799172, 2.09929, 0.105144, 0.708985, 2.09929, -1.12573, 0.708985, 2.03898, -0.735442, 1.0693, 0.778226, -1.12573, 0.889175, 1.64871, -1.24574, 0.829111, 1.85875, -1.21583, 1.30956, 1.37836, 0.435434, 1.03924, 1.34838, -1.30593, 0.708985, 2.09929, -0.465153)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gm704"]
+points = PackedVector3Array(-1.0687, 0.297661, -0.705347, -1.0687, 0.327818, -0.975636, -1.33902, 1.55859, 0.315243, -0.708382, 2.06896, -1.15564, -1.03864, 0.297661, 0.615627, -1.0687, 1.46848, -1.30593, -0.738444, 2.09929, 0.465341, -1.0987, 1.49846, 0.615627, -0.768445, 2.09929, -1.12573, -1.33902, 1.40834, 0.405339, -1.03864, 0.327818, -0.975636, -0.798508, 2.09929, 0.465341, -1.0687, 0.297661, 0.615627, -0.708382, 2.03898, -0.765349, -1.00876, 1.40834, -1.30593, -0.738444, 2.03898, 0.465341, -1.33902, 1.40834, 0.315243, -1.03864, 0.297661, -0.705347, -1.0687, 1.34838, -1.30593, -1.03864, 1.49846, 0.615627, -0.708382, 2.03898, -1.15564, -0.828508, 1.97884, -1.18574, -1.29872, 1.54575, 0.407587, -1.0987, 0.477895, 0.615627, -0.798508, 2.09929, 0.0750488, -0.708382, 2.06896, -0.495248, -0.708382, 2.09929, -1.12573, -1.0687, 0.778226, -1.12573, -0.888572, 1.64871, -1.24574, -1.30889, 1.37836, 0.435434, -0.828508, 1.85875, -1.21583, -1.03864, 1.34838, -1.30593)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uu7oe"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_100sx"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4010s"]
 resource_name = "carTire"
@@ -106,24 +132,40 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7qo4e")
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_a1jbp"]
+points = PackedVector3Array(-0.1, -0.1, -0.1, 0.0999954, 0.1, 0.1, 0.0999954, 0.1, -0.1, 0.0999954, -0.1, 0.1, -0.1, 0.1, 0.1, 0.0999954, -0.1, -0.1, -0.1, 0.1, -0.1, -0.1, -0.1, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_omgop"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlvmx"]
+albedo_color = Color(1, 1, 0, 1)
+
 [node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCollide"]]
-mass = 1500.0
+collision_layer = 2
+collision_mask = 19
+mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
-script = ExtResource("1_u3dfh")
+freeze_mode = 1
+script = ExtResource("1_47vdl")
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
 rear_left_wheel = NodePath("WheelRearLeft")
 rear_right_wheel = NodePath("WheelRearRight")
+steering_slip_assist = 1.0
+countersteer_assist = 0.0
 enable_stability = false
 stability_upright_spring = 0.0
 stability_upright_damping = 0.0
-max_torque = 600.0
-torque_curve = SubResource("Curve_bt7kc")
+max_torque = 900.0
+torque_curve = ExtResource("2_2ri1h")
+shift_time = 0.2
+automatic_time_between_shifts = 500.0
 front_torque_split = 1.0
 variable_torque_split = true
 front_variable_split = 0.5
 front_weight_distribution = 0.6
-center_of_gravity_height_offset = -0.1
+center_of_gravity_height_offset = 0.0
 front_damping_ratio = 0.8
 front_bump_damp_multiplier = 1.5
 front_arb_ratio = 1.0
@@ -132,23 +174,171 @@ rear_damping_ratio = 0.8
 rear_bump_damp_multiplier = 1.5
 rear_arb_ratio = 1.0
 rear_bump_stop_multiplier = 0.8
+coefficient_of_friction = {
+"Dirt": 1.6,
+"Grass": 1.3,
+"Road": 2.0
+}
+lateral_grip_assist = {
+"Dirt": 0.0,
+"Grass": 0.0,
+"Road": 0.0
+}
 front_tire_radius = 0.4
 rear_tire_radius = 0.4
 
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("2_negof")]
 vehicle = NodePath("..")
 
+[node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_dercd")]
+unit_size = 5.0
+vehicle = NodePath("..")
+
 [node name="body" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4545e-14, 0.834898, -0.31264)
-mesh = ExtResource("3_2fppo")
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
+mesh = ExtResource("3_6oki7")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_g05yw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4545e-14, 0.834898, -0.31264)
-shape = SubResource("ConvexPolygonShape3D_ymppi")
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
+shape = SubResource("ConvexPolygonShape3D_bgni5")
+
+[node name="HingeJointLeft" type="HingeJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.11778, 0.835562, -0.593462)
+node_a = NodePath("..")
+node_b = NodePath("../OpenDoorLeft")
+params/bias = 0.99
+angular_limit/enable = true
+angular_limit/upper = 0.0
+angular_limit/lower = -1.0472
+motor/target_velocity = -3.14159
+
+[node name="ShutDoorLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
+mesh = ExtResource("4_d7yiy")
+
+[node name="LeftDoorBodyLatch" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.061, 0.877, 1.304)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftDoorBodyLatch"]
+shape = SubResource("SphereShape3D_jv0dm")
+
+[node name="OpenDoorLeft" type="RigidBody3D" parent="." node_paths=PackedStringArray("shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape", "door_latch", "body_latch") groups=["vehicle_door"]]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
+collision_layer = 10
+collision_mask = 19
+mass = 10.0
+physics_material_override = ExtResource("7_2j5l5")
+script = ExtResource("5_6gdjk")
+shutDoorMesh = NodePath("../ShutDoorLeft")
+hingeJoint = NodePath("../HingeJointLeft")
+doorOpenSFX = NodePath("DoorOpenSFX")
+doorShutSFX = NodePath("DoorShutSFX")
+enter_car_collision_shape = NodePath("../EnterCarCollider/CollisionShape3D")
+door_latch = NodePath("LeftDoorLatch")
+body_latch = NodePath("../LeftDoorBodyLatch")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OpenDoorLeft"]
+mesh = ExtResource("4_d7yiy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OpenDoorLeft"]
+shape = SubResource("ConvexPolygonShape3D_g0cid")
+
+[node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="OpenDoorLeft"]
+stream = ExtResource("7_ngr1s")
+unit_size = 2.0
+
+[node name="DoorShutSFX" type="AudioStreamPlayer3D" parent="OpenDoorLeft"]
+stream = ExtResource("8_n0lig")
+unit_size = 2.0
+
+[node name="LeftDoorLatch" type="Area3D" parent="OpenDoorLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.061, 1.377, -1.304)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OpenDoorLeft/LeftDoorLatch"]
+shape = SubResource("SphereShape3D_jv0dm")
+
+[node name="HingeJointRight" type="HingeJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.118, 0.836, -0.593)
+node_a = NodePath("..")
+node_b = NodePath("../OpenDoorRight")
+params/bias = 0.99
+angular_limit/enable = true
+angular_limit/upper = 1.0472
+angular_limit/lower = 0.0
+motor/target_velocity = 3.14159
+
+[node name="ShutDoorRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
+mesh = ExtResource("5_trfuy")
+
+[node name="RightDoorBodyLatch" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.061, 0.877, 1.304)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightDoorBodyLatch"]
+shape = SubResource("SphereShape3D_jv0dm")
+
+[node name="OpenDoorRight" type="RigidBody3D" parent="." node_paths=PackedStringArray("shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape", "door_latch", "body_latch") groups=["vehicle_door"]]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
+collision_layer = 10
+collision_mask = 19
+mass = 10.0
+physics_material_override = ExtResource("7_2j5l5")
+script = ExtResource("5_6gdjk")
+shutDoorMesh = NodePath("../ShutDoorRight")
+hingeJoint = NodePath("../HingeJointRight")
+doorOpenSFX = NodePath("DoorOpenSFX")
+doorShutSFX = NodePath("DoorShutSFX")
+enter_car_collision_shape = NodePath("../EnterCarCollider/CollisionShape3D")
+door_latch = NodePath("RightDoorLatch")
+body_latch = NodePath("../RightDoorBodyLatch")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OpenDoorRight"]
+mesh = ExtResource("5_trfuy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OpenDoorRight"]
+shape = SubResource("ConvexPolygonShape3D_gm704")
+
+[node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="OpenDoorRight"]
+stream = ExtResource("7_ngr1s")
+unit_size = 2.0
+
+[node name="DoorShutSFX" type="AudioStreamPlayer3D" parent="OpenDoorRight"]
+stream = ExtResource("8_n0lig")
+unit_size = 2.0
+
+[node name="RightDoorLatch" type="Area3D" parent="OpenDoorRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06075, 1.37719, -1.30438)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OpenDoorRight/RightDoorLatch"]
+shape = SubResource("SphereShape3D_jv0dm")
+
+[node name="EnterCarCollider" type="StaticBody3D" parent="."]
+visible = false
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("10_61kxu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnterCarCollider"]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 0.693126, -0.00113106)
+mesh = SubResource("BoxMesh_uu7oe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterCarCollider"]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 0.693126, -0.00113106)
+shape = SubResource("ConcavePolygonShape3D_100sx")
+disabled = true
 
 [node name="WheelFrontLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "screechSFX")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, -1.309)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, -1.7702)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("FrontLeftWheel")
 screechSFX = NodePath("AudioStreamPlayer3D")
@@ -166,7 +356,7 @@ unit_size = 2.0
 doppler_tracking = 2
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "screechSFX")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, -1.309)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, -1.7702)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("FrontRightWheel")
 screechSFX = NodePath("AudioStreamPlayer3D")
@@ -184,7 +374,7 @@ unit_size = 2.0
 doppler_tracking = 2
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "screechSFX")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, 1.69)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, 1.83657)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("RearLeftWheel")
 screechSFX = NodePath("AudioStreamPlayer3D")
@@ -202,7 +392,7 @@ unit_size = 2.0
 doppler_tracking = 2
 
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "screechSFX")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, 1.69)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, 1.83657)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("RearRightWheel")
 screechSFX = NodePath("AudioStreamPlayer3D")
@@ -218,3 +408,40 @@ skeleton = NodePath("")
 stream = ExtResource("3_k3j0m")
 unit_size = 2.0
 doppler_tracking = 2
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
+node_a = NodePath("..")
+node_b = NodePath("../Weight")
+linear_limit_x/upper_distance = 0.1
+linear_limit_x/lower_distance = -0.1
+linear_limit_y/upper_distance = 0.2
+linear_limit_y/lower_distance = -0.2
+linear_limit_z/upper_distance = 0.1
+linear_limit_z/lower_distance = -0.1
+linear_spring_x/enabled = true
+linear_spring_x/stiffness = 0.1
+linear_spring_x/damping = 0.1
+linear_spring_y/enabled = true
+linear_spring_y/stiffness = 0.1
+linear_spring_y/damping = 0.1
+linear_spring_z/enabled = true
+linear_spring_z/stiffness = 0.1
+linear_spring_z/damping = 0.1
+angular_spring_x/stiffness = 0.05
+angular_spring_x/damping = 0.05
+angular_spring_y/stiffness = 0.05
+angular_spring_y/damping = 0.05
+angular_spring_z/stiffness = 0.05
+angular_spring_z/damping = 0.05
+
+[node name="Weight" type="RigidBody3D" parent="."]
+collision_layer = 0
+collision_mask = 0
+mass = 200.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Weight"]
+shape = SubResource("ConvexPolygonShape3D_a1jbp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Weight"]
+mesh = SubResource("BoxMesh_omgop")
+surface_material_override/0 = SubResource("StandardMaterial3D_qlvmx")

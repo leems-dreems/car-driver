@@ -1,13 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://df3ovqaugu3gp"]
+[gd_scene load_steps=16 format=3 uid="uid://df3ovqaugu3gp"]
 
 [ext_resource type="Texture2D" uid="uid://8v4spylpsh8c" path="res://assets/textures/1x1m_grid.png" id="1_s7ctx"]
-[ext_resource type="PackedScene" uid="uid://c0py3jwcv2rge" path="res://car_2.tscn" id="1_u27sv"]
+[ext_resource type="Material" uid="uid://ky6syqq4i4ae" path="res://assets/materials/road.tres" id="2_4u2h6"]
 [ext_resource type="Script" path="res://scripts/city_limits.gd" id="2_q66gr"]
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="4_th2pk"]
 [ext_resource type="Script" path="res://addons/gevp/scripts/camera.gd" id="5_283m0"]
 [ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="6_62x7v"]
 [ext_resource type="Script" path="res://scripts/car_HUD.gd" id="6_eqxcn"]
 [ext_resource type="PackedScene" uid="uid://cmmani56m7eaj" path="res://collidables/trashbin_static.tscn" id="9_ypws5"]
+[ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="6_yij02"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d01qh"]
 albedo_texture = ExtResource("1_s7ctx")
@@ -15,9 +16,6 @@ uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_787ng"]
 size = Vector3(20, 0.1, 500)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3t7jv"]
-albedo_color = Color(0.152941, 0.152941, 0.152941, 1)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_pm7i4"]
 data = PackedVector3Array(-10, 0.05, 250, 10, 0.05, 250, -10, -0.05, 250, 10, 0.05, 250, 10, -0.05, 250, -10, -0.05, 250, 10, 0.05, -250, -10, 0.05, -250, 10, -0.05, -250, -10, 0.05, -250, -10, -0.05, -250, 10, -0.05, -250, 10, 0.05, 250, 10, 0.05, -250, 10, -0.05, 250, 10, 0.05, -250, 10, -0.05, -250, 10, -0.05, 250, -10, 0.05, -250, -10, 0.05, 250, -10, -0.05, -250, -10, 0.05, 250, -10, -0.05, 250, -10, -0.05, -250, 10, 0.05, 250, -10, 0.05, 250, 10, 0.05, -250, -10, 0.05, 250, -10, 0.05, -250, 10, 0.05, -250, -10, -0.05, 250, 10, -0.05, 250, -10, -0.05, -250, 10, -0.05, 250, 10, -0.05, -250, -10, -0.05, -250)
@@ -27,6 +25,11 @@ size = Vector3(500, 500, 500)
 
 [sub_resource type="LabelSettings" id="LabelSettings_q7nlx"]
 font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_juqyv"]
+font_size = 32
+
+[sub_resource type="Theme" id="Theme_id77h"]
 
 [node name="CityScene" type="Node3D"]
 
@@ -38,26 +41,265 @@ size = Vector3(500, 1, 500)
 material = SubResource("StandardMaterial3D_d01qh")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Terrain"]
-transform = Transform3D(0.707107, -0.707107, 0, 0.612372, 0.612372, -0.5, 0.353553, 0.353553, 0.866025, 0, -3.5, -41)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.5, 0.55, -41)
 use_collision = true
-size = Vector3(10, 10, 10)
+size = Vector3(63, 0.1, 100)
+material = ExtResource("2_4u2h6")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -114.05, 3.15, -41)
+use_collision = true
+size = Vector3(63, 0.1, 100)
+material = ExtResource("2_4u2h6")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Terrain"]
+transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, -77.75, 1.85, -41)
+use_collision = true
+size = Vector3(10, 0.1, 100)
+material = ExtResource("2_4u2h6")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Terrain"]
 transform = Transform3D(0.183013, -0.183013, 0.965926, 0.707107, 0.707107, -2.98023e-08, -0.683013, 0.683013, 0.258819, 18, -4.5, -51)
 use_collision = true
 size = Vector3(10, 10, 10)
+material = ExtResource("2_4u2h6")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Terrain" groups=["Road"]]
+collision_mask = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
 mesh = SubResource("BoxMesh_787ng")
 skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_3t7jv")
+surface_material_override/0 = ExtResource("2_4u2h6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
 shape = SubResource("ConcavePolygonShape3D_pm7i4")
+
+[node name="Bollard" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, 0)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard2" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -3)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard3" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -6)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard4" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -9)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard5" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -12)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard6" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -15)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard7" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -18)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard8" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -21)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard9" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -24)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard10" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -27)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard11" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -30)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard12" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -33)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard13" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -36)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard14" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -39)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard15" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -42)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard16" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -45)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard17" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -59)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard18" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -62)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard19" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -65)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard20" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -68)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard21" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -71)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard22" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -74)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard23" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -77)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard24" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -80)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard25" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -83)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard26" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -86)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard27" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -89)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard28" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -92)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard29" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -95)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard30" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -98)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard31" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -101)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
+
+[node name="Bollard32" type="CSGCylinder3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -104)
+use_collision = true
+radius = 0.05
+height = 1.0
+sides = 6
 
 [node name="BoundingArea3D" type="Area3D" parent="."]
 collision_layer = 4
@@ -68,27 +310,28 @@ script = ExtResource("2_q66gr")
 shape = SubResource("BoxShape3D_8xl5f")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.353554, 0.707107, -0.612372, 0.353553, 0.707107, 0.612373, 0.866025, 2.19381e-07, -0.5, 0, 27, 0)
+transform = Transform3D(-0.223415, 0.96539, -0.134568, 0.0777525, 0.155268, 0.984808, 0.971617, 0.209558, -0.109751, 0, 27, 0)
+light_energy = 1.5
+light_angular_distance = 0.5
 shadow_enabled = true
 
-[node name="Car2" parent="." instance=ExtResource("1_u27sv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -13)
-
 [node name="CompactCar" parent="." instance=ExtResource("4_th2pk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 17)
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("follow_this")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 4, 15)
-current = true
 script = ExtResource("5_283m0")
 follow_this = NodePath("../CompactCar")
 
 [node name="VehicleController" parent="." node_paths=PackedStringArray("vehicle_node") instance=ExtResource("6_62x7v")]
 vehicle_node = NodePath("../CompactCar")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle")]
+[node name="Player" parent="." instance=ExtResource("6_yij02")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "player")]
 script = ExtResource("6_eqxcn")
 vehicle = NodePath("../CompactCar")
+player = NodePath("../Player")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 3
@@ -111,6 +354,34 @@ label_settings = SubResource("LabelSettings_q7nlx")
 [node name="TrashbinStatic" parent="." instance=ExtResource("9_ypws5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.37635, 1.92904, -29.9834)
 
+[node name="UseLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -103.0
+offset_right = 160.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_juqyv")
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_id77h")
+
 [connection signal="body_exited" from="BoundingArea3D" to="BoundingArea3D" method="destroyExitingNode"]
-[connection signal="body_entered" from="Car2" to="Car2" method="_on_body_entered"]
-[connection signal="body_exited" from="Car2" to="Car2" method="_on_body_exited"]

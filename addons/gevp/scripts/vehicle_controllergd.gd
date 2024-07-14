@@ -1,8 +1,12 @@
 extends Node3D
 
-@export var vehicle_node : Vehicle
+@export var vehicle_node : DriveableVehicle
 
-func _physics_process(delta):
+func _physics_process (delta) -> void:
+  if not vehicle_node.is_being_driven:
+    vehicle_node.ignition_on = false
+    return
+
   vehicle_node.brake_input = Input.get_action_strength("Brake or Reverse")
   vehicle_node.steering_input = Input.get_action_strength("Steer Left") - Input.get_action_strength("Steer Right")
   vehicle_node.throttle_input = pow(Input.get_action_strength("Accelerate"), 2.0)
@@ -21,3 +25,6 @@ func _physics_process(delta):
   if vehicle_node.current_gear == -1:
     vehicle_node.brake_input = Input.get_action_strength("Accelerate")
     vehicle_node.throttle_input = Input.get_action_strength("Brake or Reverse")
+
+  if vehicle_node.ignition_on == false and vehicle_node.throttle_input > 0.0:
+    vehicle_node.ignition_on = true
