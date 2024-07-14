@@ -1,4 +1,4 @@
-extends Area3D
+extends RigidBody3D
 
 @export var resetTime = 15
 @export var physicsBin: PackedScene

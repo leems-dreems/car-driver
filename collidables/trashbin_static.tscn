@@ -9,7 +9,7 @@
 top_radius = 0.7
 bottom_radius = 0.6
 
-[node name="TrashbinStatic" type="Area3D"]
+[node name="TrashbinStatic" type="RigidBody3D"]
 script = ExtResource("1_wmm8q")
 physicsBin = ExtResource("2_er7xi")
 
