@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=31 format=3 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://scripts/driveable_vehicle.gd" id="1_47vdl"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_2ri1h"]
@@ -16,8 +16,14 @@
 [ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="10_61kxu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
-friction = 0.3
-bounce = 0.2
+friction = 0.6
+bounce = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g05yw"]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+blend_mode = 3
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bgni5"]
 points = PackedVector3Array(0.914147, 0.821743, -2.68575, 1.06954, 0.659279, 2.62043, -1.17623, 0.535279, 2.4314, -0.908973, 2.04927, 0.382443, -1.08715, 0.267965, -2.46668, 0.731244, 1.99439, -1.88854, 1.05049, 0.267965, -2.46668, 1.05049, 1.24751, 2.7874, -0.929471, 1.32733, -2.54067, 0.872319, 2.13843, 0.382443, -1.08715, 1.24751, 2.7874, 0.0663346, 0.397111, 2.5719, -1.17623, 1.51464, 0.560443, -0.670028, 2.05893, -1.52103, 1.13958, 1.60399, 0.560443, -1.08715, 0.357131, 2.34212, 1.0451, 0.344273, 1.17134, 1.13958, 0.535279, -2.3774, 0.912531, 1.33001, -2.59622, -1.17623, 0.80241, -2.11068, 1.05049, 1.69279, -1.30884, -0.879374, 0.557476, -2.72851, -0.966251, 0.643058, 2.7847, -0.763441, 1.90697, -1.96014, 1.13958, 1.33667, 2.34212, -1.02958, 0.318335, 1.20589, 1.00707, 0.647783, 2.76143, 0.974243, 0.41749, 2.42569, -1.00947, 1.32697, -2.20266, 0.961406, 0.267965, -2.55596, 0.0625766, 2.05469, -1.75669, 0.922728, 0.561648, -2.71071)
@@ -126,11 +132,21 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7qo4e")
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_a1jbp"]
+points = PackedVector3Array(-0.1, -0.1, -0.1, 0.0999954, 0.1, 0.1, 0.0999954, 0.1, -0.1, 0.0999954, -0.1, 0.1, -0.1, 0.1, 0.1, 0.0999954, -0.1, -0.1, -0.1, 0.1, -0.1, -0.1, -0.1, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_omgop"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlvmx"]
+albedo_color = Color(1, 1, 0, 1)
+
 [node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel")]
 collision_layer = 2
 collision_mask = 19
-mass = 1500.0
+mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
+freeze_mode = 1
 script = ExtResource("1_47vdl")
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
@@ -149,7 +165,7 @@ front_torque_split = 1.0
 variable_torque_split = true
 front_variable_split = 0.5
 front_weight_distribution = 0.6
-center_of_gravity_height_offset = -0.05
+center_of_gravity_height_offset = 0.0
 front_damping_ratio = 0.8
 front_bump_damp_multiplier = 1.5
 front_arb_ratio = 1.0
@@ -182,6 +198,7 @@ vehicle = NodePath("..")
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
 mesh = ExtResource("3_6oki7")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_g05yw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
@@ -391,3 +408,40 @@ skeleton = NodePath("")
 stream = ExtResource("3_k3j0m")
 unit_size = 2.0
 doppler_tracking = 2
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
+node_a = NodePath("..")
+node_b = NodePath("../Weight")
+linear_limit_x/upper_distance = 0.1
+linear_limit_x/lower_distance = -0.1
+linear_limit_y/upper_distance = 0.2
+linear_limit_y/lower_distance = -0.2
+linear_limit_z/upper_distance = 0.1
+linear_limit_z/lower_distance = -0.1
+linear_spring_x/enabled = true
+linear_spring_x/stiffness = 0.1
+linear_spring_x/damping = 0.1
+linear_spring_y/enabled = true
+linear_spring_y/stiffness = 0.1
+linear_spring_y/damping = 0.1
+linear_spring_z/enabled = true
+linear_spring_z/stiffness = 0.1
+linear_spring_z/damping = 0.1
+angular_spring_x/stiffness = 0.05
+angular_spring_x/damping = 0.05
+angular_spring_y/stiffness = 0.05
+angular_spring_y/damping = 0.05
+angular_spring_z/stiffness = 0.05
+angular_spring_z/damping = 0.05
+
+[node name="Weight" type="RigidBody3D" parent="."]
+collision_layer = 0
+collision_mask = 0
+mass = 200.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Weight"]
+shape = SubResource("ConvexPolygonShape3D_a1jbp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Weight"]
+mesh = SubResource("BoxMesh_omgop")
+surface_material_override/0 = SubResource("StandardMaterial3D_qlvmx")

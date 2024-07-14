@@ -15,11 +15,15 @@ func _ready () -> void:
 ## Used to reset the position of the car without upsetting the physics engine
 func _integrate_forces (state: PhysicsDirectBodyState3D) -> void:
   if waiting_to_respawn:
+    freeze = true
     state.transform.origin = starting_origin
     state.transform.basis = starting_basis
     state.linear_velocity = Vector3.ZERO
     state.angular_velocity = Vector3.ZERO
     waiting_to_respawn = false
+
+    await get_tree().create_timer(0.1).timeout
+    freeze = false
 
 
 func respawn () -> void:

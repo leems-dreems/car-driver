@@ -26,7 +26,7 @@ var _rotation_input: float
 var _tilt_input: float
 var _mouse_input := false
 var _offset: Vector3
-var _anchor: CharacterBody3D
+var _anchor: Player
 var _euler_rotation: Vector3
 
 
@@ -59,10 +59,15 @@ func _physics_process(delta: float) -> void:
   target_position.y = lerp(global_position.y, _anchor._ground_height, 0.1)
   global_position = target_position
 
-  # Rotates camera using euler rotation
-  _euler_rotation.x += _tilt_input * delta
-  _euler_rotation.x = clamp(_euler_rotation.x, tilt_lower_limit, tilt_upper_limit)
-  _euler_rotation.y += _rotation_input * delta
+  if _anchor.current_vehicle != null and _rotation_input == 0 and _tilt_input == 0:
+    # Rotates camera to follow vehicle
+    var vehicle_euler := _anchor.current_vehicle.global_transform.basis.get_euler()
+    _euler_rotation.y = lerp_angle(_euler_rotation.y, vehicle_euler.y + PI, delta)
+  else:
+    # Rotates camera using euler rotation
+    _euler_rotation.x += _tilt_input * delta
+    _euler_rotation.x = clamp(_euler_rotation.x, tilt_lower_limit, tilt_upper_limit)
+    _euler_rotation.y += _rotation_input * delta
 
   transform.basis = Basis.from_euler(_euler_rotation)
 
@@ -73,7 +78,7 @@ func _physics_process(delta: float) -> void:
   _tilt_input = 0.0
 
 
-func setup(anchor: CharacterBody3D) -> void:
+func setup(anchor: Player) -> void:
   _anchor = anchor
   global_transform = _anchor.global_transform
   _offset = global_transform.origin - anchor.global_transform.origin

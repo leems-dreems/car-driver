@@ -308,6 +308,7 @@ var steering_input := 0.0
 var brake_input := 0.0
 var handbrake_input := 0.0
 var clutch_input := 0.0
+var ignition_on := false
 ################################################################
 
 var is_ready := false
@@ -703,6 +704,10 @@ func process_throttle(delta : float):
     clutch_amount = clutch_input
 
 func process_motor(delta : float):
+  if not ignition_on:
+    motor_rpm = lerpf(motor_rpm, 0.0, delta)
+    return
+
   var drag_torque := motor_rpm * motor_drag
   torque_output = get_torque_at_rpm(motor_rpm) * throttle_amount
   ## Adjust torque based on throttle input, clutch input, and motor drag
