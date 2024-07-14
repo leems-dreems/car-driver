@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://21febu6fhlg2"]
+
+[ext_resource type="Script" path="res://collidables/CrashObject.gd" id="1_4djd8"]
+
+[node name="CrashObject" type="Area3D"]
+script = ExtResource("1_4djd8")

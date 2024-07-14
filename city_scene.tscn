@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://df3ovqaugu3gp"]
+[gd_scene load_steps=20 format=3 uid="uid://df3ovqaugu3gp"]
 
 [ext_resource type="Texture2D" uid="uid://8v4spylpsh8c" path="res://assets/textures/1x1m_grid.png" id="1_s7ctx"]
 [ext_resource type="Material" uid="uid://ky6syqq4i4ae" path="res://assets/materials/road.tres" id="2_4u2h6"]
@@ -9,6 +9,9 @@
 [ext_resource type="Script" path="res://scripts/car_HUD.gd" id="6_eqxcn"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="6_yij02"]
 [ext_resource type="PackedScene" uid="uid://cmmani56m7eaj" path="res://collidables/trashbin_static.tscn" id="9_ypws5"]
+[ext_resource type="PackedScene" uid="uid://21febu6fhlg2" path="res://collidables/crash_object.tscn" id="10_aekul"]
+[ext_resource type="PackedScene" uid="uid://3o0ghab2l4ev" path="res://collidables/gas_pump.tscn" id="10_f0gvi"]
+[ext_resource type="PackedScene" uid="uid://co0uu1ghkv7wn" path="res://collidables/trash_bin.tscn" id="12_abnwu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d01qh"]
 albedo_texture = ExtResource("1_s7ctx")
@@ -382,13 +385,30 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_id77h")
 
-[node name="TrashbinStatic" parent="." instance=ExtResource("9_ypws5")]
+[node name="CrashObjects" type="Node" parent="."]
+
+[node name="TrashbinStatic" parent="CrashObjects" instance=ExtResource("9_ypws5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.6236, 1.59004, -39.9834)
 
-[node name="TrashbinStatic2" parent="." instance=ExtResource("9_ypws5")]
+[node name="TrashbinStatic2" parent="CrashObjects" instance=ExtResource("9_ypws5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.6236, 1.59004, -33.9834)
 
-[node name="TrashbinStatic3" parent="." instance=ExtResource("9_ypws5")]
+[node name="TrashbinStatic3" parent="CrashObjects" instance=ExtResource("9_ypws5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.6236, 1.59004, -27.9834)
+
+[node name="CrashObject" parent="CrashObjects" instance=ExtResource("10_aekul")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.562483, -9.56595)
+
+[node name="GasPump" parent="CrashObjects/CrashObject" instance=ExtResource("10_f0gvi")]
+
+[node name="CrashObject2" parent="CrashObjects" instance=ExtResource("10_aekul")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45556, 0.562483, -20.3866)
+
+[node name="GasPump" parent="CrashObjects/CrashObject2" instance=ExtResource("10_f0gvi")]
+
+[node name="CrashObject3" parent="CrashObjects" instance=ExtResource("10_aekul")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.87576, 1.56248, -20.3834)
+
+[node name="TrashBin" parent="CrashObjects/CrashObject3" instance=ExtResource("12_abnwu")]
 
 [connection signal="body_exited" from="BoundingArea3D" to="BoundingArea3D" method="destroyExitingNode"]

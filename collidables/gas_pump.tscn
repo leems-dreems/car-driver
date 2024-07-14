@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://3o0ghab2l4ev"]
+
+[ext_resource type="Script" path="res://collidables/gas_pump.gd" id="1_cqwxs"]
+[ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="1_g40us"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4icfp"]
+size = Vector3(2.45641, 3.51965, 1)
+
+[node name="GasPump" type="RigidBody3D" groups=["CrashScene"]]
+collision_layer = 64
+collision_mask = 87
+script = ExtResource("1_cqwxs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_g40us")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00832367, 1.79281, 0)
+shape = SubResource("BoxShape3D_4icfp")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

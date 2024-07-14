@@ -8,7 +8,7 @@ var readyToHit: bool = true
 var physicsChild : RigidBody3D
 
 func _on_body_entered(body: Node3D) -> void:
-    if body.is_in_group("CanCollide") && readyToHit:
+    if body.is_in_group("CanCrash") && readyToHit:
         gethit()
 
 func gethit():

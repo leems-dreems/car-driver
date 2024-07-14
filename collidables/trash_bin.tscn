@@ -6,7 +6,7 @@ bottom_radius = 0.6
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_1pjpg"]
 
-[node name="TrashBin" type="RigidBody3D"]
+[node name="TrashBin" type="RigidBody3D" groups=["CrashScene"]]
 collision_layer = 64
 collision_mask = 87
 mass = 20.0
