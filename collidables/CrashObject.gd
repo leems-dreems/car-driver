@@ -1,59 +1,42 @@
-extends CollisionObject3D
+class_name DetachableProp extends Node3D
 
-var crashScene: PackedScene
-@export var resetTime = 15
-var collision_shape_3d: CollisionShape3D
-var mesh_instance_3d: MeshInstance3D
-var readyToHit: bool = true
-var physicsChild : RigidBody3D
-var spawnPoint: Vector3
+@export var reset_time := 5.0
+@onready var physics_body : RigidBody3D = $RigidBody3D
+@onready var unfreeze_area : Area3D = $Area3D
+var reset_timer : SceneTreeTimer = null
+var has_been_hit := false
 
 func _ready() -> void:
-    var child = get_child(0)
-    if child.is_in_group("CrashScene"):
-        intializeCrashObject(child)
+  unfreeze_area.connect("body_entered", unfreeze_prop)
+  physics_body.connect("body_entered", func (body: Node3D):
+    if has_been_hit: return
+    has_been_hit = true
+    play_effect(body)
+  )
 
-func intializeCrashObject(child):
-    for grandchild in child.get_children():
-        if grandchild is MeshInstance3D:
-            var mesh = grandchild.duplicate()
-            add_child(mesh)
-            mesh_instance_3d = mesh
-            mesh.global_position = grandchild.global_position
-            spawnPoint = grandchild.global_position
-        elif grandchild is CollisionShape3D:
-            var collision = grandchild.duplicate()
-            add_child(collision)
-            collision.global_position = grandchild.global_position
-            collision_shape_3d = collision
-            self.connect("body_entered", _on_body_entered)
-    
-    for i in range(1,32):
-        set_collision_layer_value(i, child.get_collision_layer_value(i))
-        set_collision_mask_value(i, child.get_collision_mask_value(i))
-        
-    crashScene = PackedScene.new()
-    crashScene.pack(child)
-    child.queue_free()  
+## If a body that can detach this prop enters the [unfreeze_area], unfreeze the prop. This prevents
+## snagging when a fast-moving car hits a detachable prop. TODO: Look into moving this collider
+## onto the car instead, and tying its radius to the car's velocity or something.
+func unfreeze_prop(body: Node3D) -> void:
+  if physics_body.freeze and body.is_in_group("CanCrash"):
+    physics_body.freeze = false
+    if reset_timer == null:
+      reset_timer = get_tree().create_timer(reset_time)
+      await reset_timer.timeout
+      reset()
 
+## Resets [physics_body] to its default position and freezes it
+func reset() -> void:
+  physics_body.freeze = true
+  physics_body.position = Vector3.ZERO
+  physics_body.rotation = Vector3.ZERO
+  has_been_hit = false
+  reset_timer = null
+  stop_effect()
 
+## Can be overridden to play effects etc when something collides with [physics_body]
+func play_effect(body: Node3D) -> void:
+  pass
 
-func _on_body_entered(body: Node3D) -> void:
-    if body.is_in_group("CanCrash") && readyToHit:
-        gethit()
-
-func gethit():
-    readyToHit = false
-    physicsChild = crashScene.instantiate()
-    add_child(physicsChild)
-    physicsChild.global_position = spawnPoint
-    collision_shape_3d.visible = false
-    mesh_instance_3d.visible = false
-    await get_tree().create_timer(resetTime).timeout
-    reset()
-
-func reset():
-    readyToHit = true
-    collision_shape_3d.visible = true
-    mesh_instance_3d.visible = true
-    physicsChild.queue_free()
+func stop_effect() -> void:
+  pass
