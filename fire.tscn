@@ -1,0 +1,62 @@
+[gd_scene load_steps=12 format=3 uid="uid://drtqj75y7cwtf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ltdd8"]
+transparency = 1
+diffuse_mode = 2
+vertex_color_use_as_albedo = true
+billboard_mode = 1
+
+[sub_resource type="Curve" id="Curve_dawdi"]
+_data = [Vector2(0.827451, 0.978723), 0.0, -21.7021, 0, 0, Vector2(1, 0.010989), -27.0981, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_jmfoi"]
+curve = SubResource("Curve_dawdi")
+
+[sub_resource type="Gradient" id="Gradient_fbmcf"]
+offsets = PackedFloat32Array(0, 0.236364, 0.554545, 0.845455)
+colors = PackedColorArray(1, 0.877055, 0.676598, 1, 0.875452, 0.677538, 0, 1, 0.836679, 0.312954, 5.77569e-07, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dogev"]
+gradient = SubResource("Gradient_fbmcf")
+
+[sub_resource type="Curve" id="Curve_iqbu2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lbmno"]
+curve = SubResource("Curve_iqbu2")
+
+[sub_resource type="Curve" id="Curve_01f75"]
+_data = [Vector2(0, 0.472527), 0.0, 0.0, 0, 0, Vector2(0.615942, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -6.8931, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_dliva"]
+curve = SubResource("Curve_01f75")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4bpr3"]
+emission_shape = 1
+emission_sphere_radius = 0.5
+spread = 40.663
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+gravity = Vector3(0, 5, 0)
+scale_curve = SubResource("CurveTexture_dliva")
+color_ramp = SubResource("GradientTexture1D_dogev")
+alpha_curve = SubResource("CurveTexture_jmfoi")
+emission_curve = SubResource("CurveTexture_lbmno")
+
+[sub_resource type="SphereMesh" id="SphereMesh_7adbk"]
+radius = 0.25
+height = 0.5
+radial_segments = 32
+rings = 16
+
+[node name="Fire" type="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.231461, 1.39733, 1.73006)
+material_override = SubResource("StandardMaterial3D_ltdd8")
+lifetime = 0.65
+explosiveness = 0.15
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_4bpr3")
+draw_pass_1 = SubResource("SphereMesh_7adbk")

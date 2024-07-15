@@ -1,0 +1,75 @@
+[gd_scene load_steps=12 format=3 uid="uid://3o0ghab2l4ev"]
+
+[ext_resource type="Script" path="res://collidables/gas_pump.gd" id="1_cqwxs"]
+[ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="1_g40us"]
+[ext_resource type="PackedScene" uid="uid://drtqj75y7cwtf" path="res://fire.tscn" id="3_452q4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4icfp"]
+size = Vector3(2.45641, 3.51965, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1x767"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="Gradient" id="Gradient_6ksbl"]
+offsets = PackedFloat32Array(0, 0.484582, 0.819383, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.932249, 0.891119, 2.31028e-06, 1, 0.920752, 0.355072, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2d36g"]
+gradient = SubResource("Gradient_6ksbl")
+
+[sub_resource type="Curve" id="Curve_vbjrq"]
+_data = [Vector2(0.0392157, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.84081, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_h0mbi"]
+curve = SubResource("Curve_vbjrq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7uuv0"]
+direction = Vector3(0, 1, 0)
+spread = 75.0
+initial_velocity_min = 8.0
+initial_velocity_max = 12.0
+damping_min = 5.0
+damping_max = 10.0
+color_ramp = SubResource("GradientTexture1D_2d36g")
+emission_curve = SubResource("CurveTexture_h0mbi")
+
+[sub_resource type="BoxMesh" id="BoxMesh_l5ueu"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="GasPump" type="RigidBody3D" groups=["CrashScene"]]
+collision_layer = 64
+collision_mask = 87
+script = ExtResource("1_cqwxs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_g40us")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00832367, 1.79281, 0)
+shape = SubResource("BoxShape3D_4icfp")
+
+[node name="Fires" type="Node3D" parent="."]
+
+[node name="Fire" parent="Fires" instance=ExtResource("3_452q4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.90354, 0.648228, -8.17776e-05)
+emitting = false
+
+[node name="Fire2" parent="Fires" instance=ExtResource("3_452q4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.762578, 2.40752, -8.17776e-05)
+emitting = false
+
+[node name="Sparks" type="GPUParticles3D" parent="Fires"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.443619)
+material_override = SubResource("StandardMaterial3D_1x767")
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.78
+randomness = 0.35
+visibility_aabb = AABB(-4.84702, -4, -4, 9.7204, 8, 8)
+process_material = SubResource("ParticleProcessMaterial_7uuv0")
+draw_pass_1 = SubResource("BoxMesh_l5ueu")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
