@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 window/size/mode=2
 
+[dotnet]
+
+project/assembly_name="Fast Traffic"
+
 [input]
 
 "Steer Left"={
@@ -142,6 +146,9 @@ use={
 3d_physics/layer_4="Useable"
 3d_physics/layer_5="Player"
 3d_physics/layer_6="Latch"
+3d_physics/layer_7="PhysicsProp"
+3d_physics/layer_8="StaticScenery"
+3d_physics/layer_9="PropUnfreezeRadius"
 
 [physics]
 

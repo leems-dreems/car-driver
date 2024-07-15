@@ -102,11 +102,11 @@ height = 2.65424
 
 [node name="Player" type="CharacterBody3D" groups=["damageables"]]
 collision_layer = 16
-collision_mask = 3
+collision_mask = 195
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-platform_floor_layers = 4294967042
+platform_floor_layers = 4294967234
 script = ExtResource("1_rvo1c")
 acceleration = 6.0
 

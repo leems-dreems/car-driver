@@ -17,7 +17,6 @@ enum CAMERA_PIVOT { OVER_SHOULDER, THIRD_PERSON }
 @onready var _third_person_pivot: Node3D = $CameraSpringArm/CameraThirdPersonPivot
 @onready var _camera_raycast: RayCast3D = $PlayerCamera/CameraRayCast
 
-
 var _aim_target : Vector3
 var _aim_collider: Node
 var _pivot: Node3D
