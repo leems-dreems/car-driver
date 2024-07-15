@@ -147,6 +147,7 @@ collision_mask = 83
 mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
 freeze_mode = 1
+continuous_cd = true
 script = ExtResource("1_47vdl")
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")

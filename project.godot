@@ -146,7 +146,9 @@ use={
 3d_physics/layer_4="Useable"
 3d_physics/layer_5="Player"
 3d_physics/layer_6="Latch"
-3d_physics/layer_7="CrashableScenery"
+3d_physics/layer_7="PhysicsProp"
+3d_physics/layer_8="StaticScenery"
+3d_physics/layer_9="PropUnfreezeRadius"
 
 [physics]
 
