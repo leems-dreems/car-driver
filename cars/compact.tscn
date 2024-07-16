@@ -18,7 +18,6 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.6
-bounce = 0.05
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g05yw"]
 transparency = 3
@@ -30,7 +29,7 @@ blend_mode = 3
 points = PackedVector3Array(0.914147, 0.821743, -2.68575, 1.06954, 0.659279, 2.62043, -1.17623, 0.535279, 2.4314, -0.908973, 2.04927, 0.382443, -1.08715, 0.267965, -2.46668, 0.731244, 1.99439, -1.88854, 1.05049, 0.267965, -2.46668, 1.05049, 1.24751, 2.7874, -0.929471, 1.32733, -2.54067, 0.872319, 2.13843, 0.382443, -1.08715, 1.24751, 2.7874, 0.0663346, 0.397111, 2.5719, -1.17623, 1.51464, 0.560443, -0.670028, 2.05893, -1.52103, 1.13958, 1.60399, 0.560443, -1.08715, 0.357131, 2.34212, 1.0451, 0.344273, 1.17134, 1.13958, 0.535279, -2.3774, 0.912531, 1.33001, -2.59622, -1.17623, 0.80241, -2.11068, 1.05049, 1.69279, -1.30884, -0.879374, 0.557476, -2.72851, -0.966251, 0.643058, 2.7847, -0.763441, 1.90697, -1.96014, 1.13958, 1.33667, 2.34212, -1.02958, 0.318335, 1.20589, 1.00707, 0.647783, 2.76143, 0.974243, 0.41749, 2.42569, -1.00947, 1.32697, -2.20266, 0.961406, 0.267965, -2.55596, 0.0625766, 2.05469, -1.75669, 0.922728, 0.561648, -2.71071)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_jv0dm"]
-radius = 0.05
+radius = 0.1
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_g0cid"]
 points = PackedVector3Array(1.03924, 0.297661, -0.705347, 0.708985, 2.03898, -1.15564, 1.33962, 1.55859, 0.315243, 1.03924, 0.297661, 0.615627, 1.0693, 1.46848, -1.30593, 0.739047, 2.09929, 0.465341, 1.0693, 0.327818, -0.975636, 0.769048, 2.09929, -1.12573, 1.0993, 1.49846, 0.615627, 1.33962, 1.40834, 0.405339, 0.799172, 2.09929, 0.465341, 1.0693, 0.297661, 0.615627, 0.708985, 2.06896, -0.465153, 1.00936, 1.40834, -1.30593, 1.03924, 0.327818, -0.975636, 1.33962, 1.40834, 0.315243, 0.739047, 2.03898, 0.465341, 1.0693, 1.34838, -1.30593, 1.0693, 0.297661, -0.705347, 1.03924, 1.49846, 0.615627, 0.829111, 1.97884, -1.18574, 1.29933, 1.54568, 0.407441, 1.0993, 0.507875, 0.615627, 0.799172, 2.09929, 0.105144, 0.708985, 2.09929, -1.12573, 0.708985, 2.03898, -0.735442, 1.0693, 0.778226, -1.12573, 0.889175, 1.64871, -1.24574, 0.829111, 1.85875, -1.21583, 1.30956, 1.37836, 0.435434, 1.03924, 1.34838, -1.30593, 0.708985, 2.09929, -0.465153)
@@ -152,6 +151,8 @@ collision_layer = 2
 collision_mask = 83
 mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, 0, -0.5)
 freeze_mode = 1
 continuous_cd = true
 script = ExtResource("1_47vdl")
@@ -166,25 +167,26 @@ stability_upright_spring = 0.0
 stability_upright_damping = 0.0
 max_torque = 900.0
 torque_curve = ExtResource("2_2ri1h")
+final_drive = 4.2
 shift_time = 0.2
 automatic_time_between_shifts = 500.0
 front_torque_split = 1.0
 variable_torque_split = true
 front_variable_split = 0.5
-front_weight_distribution = 0.6
-center_of_gravity_height_offset = 0.0
-front_damping_ratio = 0.8
+front_weight_distribution = 0.55
+center_of_gravity_height_offset = -0.1
+front_damping_ratio = 0.9
 front_bump_damp_multiplier = 1.5
+front_rebound_damp_multiplier = 0.667
 front_arb_ratio = 1.0
-front_bump_stop_multiplier = 0.8
-rear_damping_ratio = 0.8
+rear_damping_ratio = 0.9
 rear_bump_damp_multiplier = 1.5
-rear_arb_ratio = 1.0
-rear_bump_stop_multiplier = 0.8
+rear_rebound_damp_multiplier = 0.667
+rear_arb_ratio = 0.75
 coefficient_of_friction = {
 "Dirt": 1.6,
 "Grass": 1.3,
-"Road": 1.0
+"Road": 2.0
 }
 lateral_grip_assist = {
 "Dirt": 0.0,
@@ -194,7 +196,7 @@ lateral_grip_assist = {
 longitudinal_grip_ratio = {
 "Dirt": 0.5,
 "Grass": 0.5,
-"Road": 1.0
+"Road": 0.9
 }
 front_tire_radius = 0.4
 rear_tire_radius = 0.4
@@ -422,31 +424,28 @@ unit_size = 2.0
 doppler_tracking = 2
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 node_a = NodePath("..")
 node_b = NodePath("../Weight")
 linear_limit_x/softness = 1.0
-linear_limit_y/upper_distance = 0.1
-linear_limit_y/lower_distance = -0.1
-linear_limit_y/softness = 1.0
+linear_limit_y/softness = 0.1
 linear_limit_z/softness = 1.0
 linear_spring_x/enabled = true
 linear_spring_z/enabled = true
-angular_spring_x/enabled = true
 angular_spring_x/stiffness = 0.05
 angular_spring_x/damping = 0.05
-angular_spring_y/enabled = true
 angular_spring_y/stiffness = 0.05
 angular_spring_y/damping = 0.05
-angular_spring_z/enabled = true
 angular_spring_z/stiffness = 0.05
 angular_spring_z/damping = 0.05
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -0.5)
 mesh = SubResource("PlaneMesh_rn30s")
 surface_material_override/0 = SubResource("StandardMaterial3D_nm370")
 
 [node name="Weight" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 collision_layer = 0
 collision_mask = 0
 mass = 400.0
