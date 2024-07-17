@@ -9,7 +9,7 @@ var has_been_hit := false
 func _ready() -> void:
   unfreeze_area.connect("body_entered", unfreeze_prop)
   physics_body.connect("body_entered", func (body: Node3D):
-    if has_been_hit: return
+    if has_been_hit or not body.is_in_group("CanCrash") or body == physics_body: return
     has_been_hit = true
     play_effect(body)
   )
@@ -18,7 +18,7 @@ func _ready() -> void:
 ## snagging when a fast-moving car hits a detachable prop. TODO: Look into moving this collider
 ## onto the car instead, and tying its radius to the car's velocity or something.
 func unfreeze_prop(body: Node3D) -> void:
-  if physics_body.freeze and body.is_in_group("CanCrash"):
+  if physics_body.freeze and body.is_in_group("CanCrash") and not body == physics_body:
     physics_body.freeze = false
     if reset_timer == null:
       reset_timer = get_tree().create_timer(reset_time)

@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://dan8w045a0t23" path="res://assets/textures/1x1m_grid_black.png" id="15_y6voy"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
-friction = 0.6
+friction = 0.2
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bgni5"]
 points = PackedVector3Array(0.914147, 0.821743, -2.68575, 1.06954, 0.659279, 2.62043, -1.17623, 0.535279, 2.4314, -0.908973, 2.04927, 0.382443, -1.08715, 0.267965, -2.46668, 0.731244, 1.99439, -1.88854, 1.05049, 0.267965, -2.46668, 1.05049, 1.24751, 2.7874, -0.929471, 1.32733, -2.54067, 0.872319, 2.13843, 0.382443, -1.08715, 1.24751, 2.7874, 0.0663346, 0.397111, 2.5719, -1.17623, 1.51464, 0.560443, -0.670028, 2.05893, -1.52103, 1.13958, 1.60399, 0.560443, -1.08715, 0.357131, 2.34212, 1.0451, 0.344273, 1.17134, 1.13958, 0.535279, -2.3774, 0.912531, 1.33001, -2.59622, -1.17623, 0.80241, -2.11068, 1.05049, 1.69279, -1.30884, -0.879374, 0.557476, -2.72851, -0.966251, 0.643058, 2.7847, -0.763441, 1.90697, -1.96014, 1.13958, 1.33667, 2.34212, -1.02958, 0.318335, 1.20589, 1.00707, 0.647783, 2.76143, 0.974243, 0.41749, 2.42569, -1.00947, 1.32697, -2.20266, 0.961406, 0.267965, -2.55596, 0.0625766, 2.05469, -1.75669, 0.922728, 0.561648, -2.71071)
@@ -146,7 +146,7 @@ collision_mask = 83
 mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, 0, -0.5)
+center_of_mass = Vector3(0, 0, -0.1)
 freeze_mode = 1
 continuous_cd = true
 script = ExtResource("1_47vdl")
@@ -156,10 +156,13 @@ rear_left_wheel = NodePath("WheelRearLeft")
 rear_right_wheel = NodePath("WheelRearRight")
 steering_slip_assist = 1.0
 countersteer_assist = 0.0
+front_brake_bias = 0.5
+traction_control_max_slip = 4.0
 enable_stability = false
 stability_upright_spring = 0.0
 stability_upright_damping = 0.0
 max_torque = 900.0
+max_rpm = 5000.0
 torque_curve = ExtResource("2_2ri1h")
 final_drive = 4.2
 shift_time = 0.2
@@ -167,20 +170,16 @@ automatic_time_between_shifts = 500.0
 front_torque_split = 1.0
 variable_torque_split = true
 front_variable_split = 0.5
-front_weight_distribution = 0.55
+front_weight_distribution = 0.51
 center_of_gravity_height_offset = -0.1
 front_damping_ratio = 0.9
-front_bump_damp_multiplier = 1.5
-front_rebound_damp_multiplier = 0.667
 front_arb_ratio = 1.0
 rear_damping_ratio = 0.9
-rear_bump_damp_multiplier = 1.5
-rear_rebound_damp_multiplier = 0.667
 rear_arb_ratio = 0.75
 coefficient_of_friction = {
-"Dirt": 1.6,
-"Grass": 1.3,
-"Road": 2.0
+"Dirt": 1.2,
+"Grass": 1.2,
+"Road": 1.5
 }
 lateral_grip_assist = {
 "Dirt": 0.0,
@@ -422,7 +421,7 @@ unit_size = 2.0
 doppler_tracking = 2
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
 node_a = NodePath("..")
 node_b = NodePath("../Weight")
 linear_limit_x/softness = 1.0
@@ -438,12 +437,12 @@ angular_spring_z/stiffness = 0.05
 angular_spring_z/damping = 0.05
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -0.1)
 mesh = SubResource("PlaneMesh_rn30s")
 surface_material_override/0 = SubResource("StandardMaterial3D_nm370")
 
 [node name="Weight" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
 collision_layer = 0
 collision_mask = 0
 mass = 400.0

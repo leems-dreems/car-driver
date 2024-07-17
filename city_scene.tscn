@@ -328,7 +328,7 @@ follow_this = NodePath("../CompactCar")
 vehicle_node = NodePath("../CompactCar")
 
 [node name="Player" parent="." instance=ExtResource("6_yij02")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 0, 7)
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, 7)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "player")]
 script = ExtResource("6_eqxcn")
@@ -389,6 +389,15 @@ theme = SubResource("Theme_id77h")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.1, 2)
 
 [node name="DetachableGasPump" parent="CrashObjects" instance=ExtResource("13_rsd7i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 4)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, 0.5, -11)
+
+[node name="DetachableGasPump2" parent="CrashObjects" instance=ExtResource("13_rsd7i")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, 0.5, -16)
+
+[node name="DetachableGasPump3" parent="CrashObjects" instance=ExtResource("13_rsd7i")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, 0.5, -29)
+
+[node name="DetachableGasPump4" parent="CrashObjects" instance=ExtResource("13_rsd7i")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, 0.5, -34)
 
 [connection signal="body_exited" from="BoundingArea3D" to="BoundingArea3D" method="destroyExitingNode"]
