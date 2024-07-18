@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://78pe57wriy2b"]
+
+[ext_resource type="Script" path="res://collidables/TrashCanSquare.gd" id="1_561to"]
+[ext_resource type="ArrayMesh" uid="uid://cgsmitsotxc04" path="res://assets/models/trashCanSquare.obj" id="2_la16u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5r7l0"]
+size = Vector3(1, 1.67841, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i0t8x"]
+size = Vector3(1.2, 1.678, 1.2)
+
+[node name="TrashCanSquare" type="Node3D"]
+script = ExtResource("1_561to")
+kineticDetachThreshold = 100000.0
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+collision_layer = 64
+collision_mask = 87
+freeze = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = ExtResource("2_la16u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.839203, 0)
+shape = SubResource("BoxShape3D_5r7l0")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 256
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.852012, 0)
+shape = SubResource("BoxShape3D_i0t8x")

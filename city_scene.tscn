@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://df3ovqaugu3gp"]
+[gd_scene load_steps=19 format=3 uid="uid://df3ovqaugu3gp"]
 
 [ext_resource type="Texture2D" uid="uid://8v4spylpsh8c" path="res://assets/textures/1x1m_grid.png" id="1_s7ctx"]
 [ext_resource type="Material" uid="uid://ky6syqq4i4ae" path="res://assets/materials/road.tres" id="2_4u2h6"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/car_HUD.gd" id="6_eqxcn"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="6_yij02"]
 [ext_resource type="PackedScene" uid="uid://21febu6fhlg2" path="res://collidables/crash_object.tscn" id="10_aekul"]
+[ext_resource type="PackedScene" uid="uid://78pe57wriy2b" path="res://collidables/trash_can_square.tscn" id="11_sd78e"]
 [ext_resource type="PackedScene" uid="uid://1doygxshb01r" path="res://collidables/detachable_gas_pump.tscn" id="13_rsd7i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d01qh"]
@@ -390,5 +391,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.1, 2)
 
 [node name="DetachableGasPump" parent="CrashObjects" instance=ExtResource("13_rsd7i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 4)
+
+[node name="TrashCanSquare" parent="CrashObjects" instance=ExtResource("11_sd78e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.6, 4)
+
+[node name="DetachableGasPump2" parent="CrashObjects" instance=ExtResource("13_rsd7i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.722075, 0)
 
 [connection signal="body_exited" from="BoundingArea3D" to="BoundingArea3D" method="destroyExitingNode"]

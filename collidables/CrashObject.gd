@@ -1,6 +1,7 @@
 class_name DetachableProp extends Node3D
 
 @export var reset_time := 5.0
+@export var kineticDetachThreshold := 200000.0
 @onready var physics_body : RigidBody3D = $RigidBody3D
 @onready var unfreeze_area : Area3D = $Area3D
 var reset_timer : SceneTreeTimer = null
@@ -18,7 +19,9 @@ func _ready() -> void:
 ## snagging when a fast-moving car hits a detachable prop. TODO: Look into moving this collider
 ## onto the car instead, and tying its radius to the car's velocity or something.
 func unfreeze_prop(body: Node3D) -> void:
-  if physics_body.freeze and body.is_in_group("CanCrash"):
+  var impactEnergy = pow(body.linear_velocity.length(), 2) * body.mass * 0.5
+  printt("impact energy", impactEnergy)
+  if physics_body.freeze and body.is_in_group("CanCrash") and impactEnergy > kineticDetachThreshold:
     physics_body.freeze = false
     if reset_timer == null:
       reset_timer = get_tree().create_timer(reset_time)
