@@ -9,14 +9,10 @@ class_name SpringyProp extends Node3D
 var springy_props_manager_node : Node3D
 var reset_timer : SceneTreeTimer = null
 var is_detached := false
-var default_position : Vector3
-var default_rotation : Vector3
 
 func _ready() -> void:
   if get_parent_node_3d().has_method("add_base_springy_prop"):
     springy_props_manager_node = get_parent_node_3d()
-  default_position = $RigidBody3D.global_position
-  default_rotation = $RigidBody3D.global_rotation
 
   #physics_body.connect("body_entered", func (body: Node3D):
     #if is_detached or not body.is_in_group("CanCrash"): return
@@ -34,14 +30,17 @@ func _physics_process(_delta: float) -> void:
     print("Exceeded linear breaking point")
     print(str(physics_body.global_position.distance_to(global_position)))
     detach()
-  elif physics_body.global_rotation.angle_to(global_rotation) > angular_breaking_point:
-    print("Exceeded angular breaking point")
-    detach()
+  #elif physics_body.global_rotation.angle_to(global_rotation) > angular_breaking_point:
+    #print("Exceeded angular breaking point")
+    #detach()
 
 ## Detaches this prop from its anchor
 func detach() -> void:
   is_detached = true
   physics_body.gravity_scale = 1
+  physics_body.axis_lock_angular_x = false
+  physics_body.axis_lock_angular_y = false
+  physics_body.axis_lock_angular_z = false
   joint.set_flag_x(Generic6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
   joint.set_flag_y(Generic6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
   joint.set_flag_z(Generic6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)

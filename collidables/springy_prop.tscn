@@ -1,6 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://c4xp8dt0iw21"]
+[gd_scene load_steps=7 format=3 uid="uid://c4xp8dt0iw21"]
 
 [ext_resource type="Script" path="res://collidables/springy_prop.gd" id="1_gk1bk"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j5txw"]
+friction = 0.5
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_ek1mj"]
 radial_segments = 16
@@ -19,21 +22,25 @@ points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.02732
 
 [node name="SpringyProp" type="Node3D"]
 script = ExtResource("1_gk1bk")
+linear_breaking_point = 0.5
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 node_a = NodePath("../StaticBody3D")
 node_b = NodePath("../RigidBody3D")
-linear_limit_x/softness = 1.2
-linear_limit_y/softness = 1.2
-linear_limit_z/softness = 1.2
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 collision_layer = 64
 collision_mask = 83
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 10.0
+physics_material_override = SubResource("PhysicsMaterial_j5txw")
 gravity_scale = 0.0
 max_contacts_reported = 10
 contact_monitor = true
+angular_damp = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
