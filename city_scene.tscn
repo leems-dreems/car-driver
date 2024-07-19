@@ -1,8 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://df3ovqaugu3gp"]
+[gd_scene load_steps=21 format=3 uid="uid://df3ovqaugu3gp"]
 
 [ext_resource type="Texture2D" uid="uid://8v4spylpsh8c" path="res://assets/textures/1x1m_grid.png" id="1_s7ctx"]
 [ext_resource type="Material" uid="uid://ky6syqq4i4ae" path="res://assets/materials/road.tres" id="2_4u2h6"]
 [ext_resource type="Script" path="res://scripts/city_limits.gd" id="2_q66gr"]
+[ext_resource type="PackedScene" uid="uid://c4xp8dt0iw21" path="res://collidables/springy_prop.tscn" id="3_4brc2"]
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="4_th2pk"]
 [ext_resource type="Script" path="res://addons/gevp/scripts/camera.gd" id="5_283m0"]
 [ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="6_62x7v"]
@@ -10,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="6_yij02"]
 [ext_resource type="PackedScene" uid="uid://21febu6fhlg2" path="res://collidables/crash_object.tscn" id="10_aekul"]
 [ext_resource type="PackedScene" uid="uid://78pe57wriy2b" path="res://collidables/trash_can_square.tscn" id="11_sd78e"]
+[ext_resource type="Script" path="res://collidables/springy_props_manager.gd" id="12_2ocea"]
 [ext_resource type="PackedScene" uid="uid://1doygxshb01r" path="res://collidables/detachable_gas_pump.tscn" id="13_rsd7i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d01qh"]
@@ -397,5 +399,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.6, 4)
 
 [node name="DetachableGasPump2" parent="CrashObjects" instance=ExtResource("13_rsd7i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.722075, 0)
+
+[node name="SpringyProps" type="Node3D" parent="."]
+script = ExtResource("12_2ocea")
+
+[node name="SpringyProp" parent="SpringyProps" instance=ExtResource("3_4brc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -14)
 
 [connection signal="body_exited" from="BoundingArea3D" to="BoundingArea3D" method="destroyExitingNode"]
