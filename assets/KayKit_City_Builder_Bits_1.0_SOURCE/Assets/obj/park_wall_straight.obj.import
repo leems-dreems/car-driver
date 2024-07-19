@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bo2x56fst72ca"
+path="res://.godot/imported/park_wall_straight.obj-491edc8045107d882c605687a99a57d2.mesh"
+
+[deps]
+
+files=["res://.godot/imported/park_wall_straight.obj-491edc8045107d882c605687a99a57d2.mesh"]
+
+source_file="res://assets/KayKit_City_Builder_Bits_1.0_SOURCE/Assets/obj/park_wall_straight.obj"
+dest_files=["res://.godot/imported/park_wall_straight.obj-491edc8045107d882c605687a99a57d2.mesh", "res://.godot/imported/park_wall_straight.obj-491edc8045107d882c605687a99a57d2.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

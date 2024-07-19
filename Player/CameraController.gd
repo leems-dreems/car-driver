@@ -12,6 +12,7 @@ enum CAMERA_PIVOT { OVER_SHOULDER, THIRD_PERSON }
 @export var look_speed := 2.0
 @export var player_camera_distance := 10.0
 @export var vehicle_camera_distance := 15.0
+@export var camera_distance_change_speed := 1.5
 
 @onready var camera: Camera3D = $PlayerCamera
 @onready var _over_shoulder_pivot: Node3D = $CameraOverShoulderPivot
@@ -61,14 +62,14 @@ func _physics_process(delta: float) -> void:
   global_position = target_position
 
   if _anchor.current_vehicle != null:
-    _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, vehicle_camera_distance, delta * 3)
+    _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, vehicle_camera_distance, delta * camera_distance_change_speed)
 
     if _rotation_input == 0 and _tilt_input == 0:
       # Rotates camera to follow vehicle
       var vehicle_euler := _anchor.current_vehicle.global_transform.basis.get_euler()
       _euler_rotation.y = lerp_angle(_euler_rotation.y, vehicle_euler.y + PI, delta * 3)
   else:
-    _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, player_camera_distance, delta * 3)
+    _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, player_camera_distance, delta * camera_distance_change_speed)
 
   if _rotation_input != 0.0 or _tilt_input != 0.0:
     _euler_rotation.x += _tilt_input * delta

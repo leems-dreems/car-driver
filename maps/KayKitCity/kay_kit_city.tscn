@@ -1,0 +1,166 @@
+[gd_scene load_steps=18 format=3 uid="uid://defp4i4n5dard"]
+
+[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
+[ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="2_7fuac"]
+[ext_resource type="PackedScene" uid="uid://wrut3fs81xjv" path="res://maps/KayKitCity/terrain_pieces/road_junction.tscn" id="3_6tcif"]
+[ext_resource type="PackedScene" uid="uid://djoco1viojc80" path="res://maps/KayKitCity/terrain_pieces/road_straight.tscn" id="4_1u4ly"]
+[ext_resource type="PackedScene" uid="uid://maofgh0s33e8" path="res://maps/KayKitCity/terrain_pieces/road_corner_curved.tscn" id="5_cfag0"]
+[ext_resource type="PackedScene" uid="uid://ct3mywpm1352t" path="res://maps/KayKitCity/terrain_pieces/base.tscn" id="6_44t2m"]
+[ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="7_1k2ef"]
+[ext_resource type="PackedScene" uid="uid://mq5e2pijfe6b" path="res://maps/KayKitCity/terrain_pieces/road_straight_crossing.tscn" id="7_pihff"]
+[ext_resource type="Script" path="res://scripts/car_HUD.gd" id="8_8euk3"]
+[ext_resource type="PackedScene" uid="uid://ba0xtl41qmm3s" path="res://maps/KayKitCity/props/traffic_light_a.tscn" id="8_pdcgg"]
+[ext_resource type="PackedScene" uid="uid://bw7peryaciady" path="res://maps/KayKitCity/buildings/building_a.tscn" id="9_ov5pk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ly6d5"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_vphii"]
+font_size = 32
+
+[sub_resource type="Theme" id="Theme_8k32a"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tr5dd"]
+
+[sub_resource type="Sky" id="Sky_en3uj"]
+sky_material = SubResource("ProceduralSkyMaterial_tr5dd")
+
+[sub_resource type="Environment" id="Environment_mni1w"]
+background_mode = 2
+sky = SubResource("Sky_en3uj")
+
+[node name="KayKitCity" type="Node3D"]
+
+[node name="CompactCar" parent="." instance=ExtResource("1_djukj")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2, -30)
+
+[node name="VehicleController" parent="." node_paths=PackedStringArray("vehicle_node") instance=ExtResource("2_7fuac")]
+vehicle_node = NodePath("../CompactCar")
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="RoadJunction" parent="Terrain" groups=["Road"] instance=ExtResource("3_6tcif")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="RoadStraight" parent="Terrain" groups=["Road"] instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -14)
+
+[node name="RoadStraight2" parent="Terrain" groups=["Road"] instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -28)
+
+[node name="RoadStraight3" parent="Terrain" groups=["Road"] instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 28)
+
+[node name="RoadStraight4" parent="Terrain" groups=["Road"] instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 14)
+
+[node name="RoadCornerCurved" parent="Terrain" groups=["Road"] instance=ExtResource("5_cfag0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -42)
+
+[node name="Base" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -28)
+
+[node name="Base2" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -14)
+
+[node name="Base3" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -28)
+
+[node name="Base4" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -14)
+
+[node name="Base5" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 14)
+
+[node name="Base6" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 28)
+
+[node name="Base7" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 14)
+
+[node name="Base8" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 28)
+
+[node name="RoadStraightCrossing" parent="Terrain" groups=["Road"] instance=ExtResource("7_pihff")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12, 0, 0)
+
+[node name="RoadStraightCrossing2" parent="Terrain" groups=["Road"] instance=ExtResource("7_pihff")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16, 0, 0)
+
+[node name="TrafficLightA" parent="Terrain" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -9, 0.7, -7)
+
+[node name="TrafficLightA2" parent="Terrain" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(7.54979e-08, 0, 1, 0, 1, 0, -1, 0, 7.54979e-08, 5, 0.7, -7)
+
+[node name="TrafficLightA3" parent="Terrain" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.7, 7)
+
+[node name="TrafficLightA4" parent="Terrain" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0.7, 7)
+
+[node name="BuildingA" parent="Terrain" instance=ExtResource("9_ov5pk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 28)
+
+[node name="Player" parent="." instance=ExtResource("7_1k2ef")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, -37)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "player")]
+script = ExtResource("8_8euk3")
+vehicle = NodePath("../CompactCar")
+player = NodePath("../Player")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -136.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+text = "Speed:"
+label_settings = SubResource("LabelSettings_ly6d5")
+
+[node name="UseLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -103.0
+offset_right = 160.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_vphii")
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_8k32a")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mni1w")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 13, 0)
+light_color = Color(1, 0.952941, 1, 1)
