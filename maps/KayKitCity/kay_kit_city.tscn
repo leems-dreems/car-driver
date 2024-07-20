@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://defp4i4n5dard"]
+[gd_scene load_steps=25 format=3 uid="uid://defp4i4n5dard"]
 
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
 [ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="2_7fuac"]
@@ -8,17 +8,35 @@
 [ext_resource type="PackedScene" uid="uid://ct3mywpm1352t" path="res://maps/KayKitCity/terrain_pieces/base.tscn" id="6_44t2m"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="7_1k2ef"]
 [ext_resource type="PackedScene" uid="uid://mq5e2pijfe6b" path="res://maps/KayKitCity/terrain_pieces/road_straight_crossing.tscn" id="7_pihff"]
-[ext_resource type="Script" path="res://scripts/car_HUD.gd" id="8_8euk3"]
+[ext_resource type="PackedScene" uid="uid://dcpnpdp6bkia0" path="res://maps/KayKitCity/terrain_pieces/road_t_split.tscn" id="8_cexwy"]
 [ext_resource type="PackedScene" uid="uid://ba0xtl41qmm3s" path="res://maps/KayKitCity/props/traffic_light_a.tscn" id="8_pdcgg"]
 [ext_resource type="PackedScene" uid="uid://bw7peryaciady" path="res://maps/KayKitCity/buildings/building_a.tscn" id="9_ov5pk"]
+[ext_resource type="Script" path="res://collidables/springy_props_manager.gd" id="11_b02xr"]
+[ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="11_w4w4x"]
+[ext_resource type="PackedScene" uid="uid://dnhe41455c4fi" path="res://collidables/springy_trash_bin_square.tscn" id="13_gd1lj"]
+[ext_resource type="PackedScene" uid="uid://bol1qtccjchrx" path="res://collidables/springy_gas_pump.tscn" id="14_xgfoh"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_ly6d5"]
-font_size = 32
+[sub_resource type="Gradient" id="Gradient_u6ph6"]
+colors = PackedColorArray(0.746094, 0.746094, 0.746094, 1, 1, 1, 1, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_vphii"]
-font_size = 32
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jwgtv"]
 
-[sub_resource type="Theme" id="Theme_8k32a"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7y14v"]
+seamless = true
+color_ramp = SubResource("Gradient_u6ph6")
+noise = SubResource("FastNoiseLite_jwgtv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pklv7"]
+albedo_color = Color(0, 0.4, 0.00784314, 1)
+albedo_texture = SubResource("NoiseTexture2D_7y14v")
+uv1_scale = Vector3(100, 100, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w5he8"]
+material = SubResource("StandardMaterial3D_pklv7")
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_40nde"]
+size = Vector3(1000, 1, 1000)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tr5dd"]
 
@@ -39,124 +57,171 @@ vehicle_node = NodePath("../CompactCar")
 
 [node name="Terrain" type="Node3D" parent="."]
 
-[node name="RoadJunction" parent="Terrain" groups=["Road"] instance=ExtResource("3_6tcif")]
+[node name="RoadJunction" parent="Terrain" instance=ExtResource("3_6tcif")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 
-[node name="RoadStraight" parent="Terrain" groups=["Road"] instance=ExtResource("4_1u4ly")]
+[node name="RoadStraight" parent="Terrain" instance=ExtResource("4_1u4ly")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -14)
 
-[node name="RoadStraight2" parent="Terrain" groups=["Road"] instance=ExtResource("4_1u4ly")]
+[node name="RoadStraight2" parent="Terrain" instance=ExtResource("4_1u4ly")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -28)
 
-[node name="RoadStraight3" parent="Terrain" groups=["Road"] instance=ExtResource("4_1u4ly")]
+[node name="RoadStraight3" parent="Terrain" instance=ExtResource("4_1u4ly")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 28)
 
-[node name="RoadStraight4" parent="Terrain" groups=["Road"] instance=ExtResource("4_1u4ly")]
+[node name="RoadStraight4" parent="Terrain" instance=ExtResource("4_1u4ly")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 14)
 
-[node name="RoadCornerCurved" parent="Terrain" groups=["Road"] instance=ExtResource("5_cfag0")]
+[node name="RoadCornerCurved" parent="Terrain" instance=ExtResource("5_cfag0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -42)
 
-[node name="Base" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+[node name="RoadCornerCurved5" parent="Terrain" instance=ExtResource("5_cfag0")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 26, 0, -42)
+
+[node name="RoadCornerCurved2" parent="Terrain" instance=ExtResource("5_cfag0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 0)
+
+[node name="RoadCornerCurved3" parent="Terrain" instance=ExtResource("5_cfag0")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -44, 0, 70)
+
+[node name="RoadCornerCurved4" parent="Terrain" instance=ExtResource("5_cfag0")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 26, 0, 70)
+
+[node name="Base" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -28)
 
-[node name="Base2" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+[node name="Base2" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -14)
 
-[node name="Base3" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+[node name="Base3" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -28)
 
-[node name="Base4" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+[node name="Base4" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -14)
 
-[node name="Base5" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+[node name="Base5" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 14)
 
-[node name="Base6" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+[node name="Base6" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 28)
 
-[node name="Base7" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+[node name="Base7" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 14)
 
-[node name="Base8" parent="Terrain" groups=["Road"] instance=ExtResource("6_44t2m")]
+[node name="Base8" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 28)
 
-[node name="RoadStraightCrossing" parent="Terrain" groups=["Road"] instance=ExtResource("7_pihff")]
+[node name="RoadStraight5" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 56)
+
+[node name="RoadStraight6" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 42)
+
+[node name="RoadStraight10" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 28)
+
+[node name="RoadStraight11" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 14)
+
+[node name="RoadStraight12" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 56)
+
+[node name="RoadStraight13" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 42)
+
+[node name="RoadStraight14" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 28)
+
+[node name="RoadStraight15" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 14)
+
+[node name="RoadStraight18" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -14)
+
+[node name="RoadStraight19" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -28)
+
+[node name="RoadStraight16" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 56)
+
+[node name="RoadStraight17" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 42)
+
+[node name="RoadStraight7" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, 70)
+
+[node name="RoadStraight20" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, -42)
+
+[node name="RoadStraight8" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -16, 0, 70)
+
+[node name="RoadStraight9" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, 0, 70)
+
+[node name="RoadStraight21" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, 0, 0)
+
+[node name="Base9" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 42)
+
+[node name="Base10" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 56)
+
+[node name="Base11" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 42)
+
+[node name="Base12" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 56)
+
+[node name="Base13" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 14)
+
+[node name="Base14" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 28)
+
+[node name="Base15" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 42)
+
+[node name="Base16" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 56)
+
+[node name="RoadStraightCrossing" parent="Terrain" instance=ExtResource("7_pihff")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12, 0, 0)
 
-[node name="RoadStraightCrossing2" parent="Terrain" groups=["Road"] instance=ExtResource("7_pihff")]
+[node name="RoadStraightCrossing2" parent="Terrain" instance=ExtResource("7_pihff")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16, 0, 0)
 
-[node name="TrafficLightA" parent="Terrain" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -9, 0.7, -7)
+[node name="RoadTSplit" parent="Terrain" instance=ExtResource("8_cexwy")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 0, 70)
 
-[node name="TrafficLightA2" parent="Terrain" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(7.54979e-08, 0, 1, 0, 1, 0, -1, 0, 7.54979e-08, 5, 0.7, -7)
-
-[node name="TrafficLightA3" parent="Terrain" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.7, 7)
-
-[node name="TrafficLightA4" parent="Terrain" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0.7, 7)
+[node name="RoadTSplit2" parent="Terrain" instance=ExtResource("8_cexwy")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 26, 0, 0)
 
 [node name="BuildingA" parent="Terrain" instance=ExtResource("9_ov5pk")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 28)
 
+[node name="BuildingA2" parent="Terrain" instance=ExtResource("9_ov5pk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 42)
+
+[node name="BuildingA3" parent="Terrain" instance=ExtResource("9_ov5pk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 56)
+
+[node name="Ground" type="StaticBody3D" parent="Terrain" groups=["Grass"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+collision_mask = 18
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_w5he8")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_40nde")
+
 [node name="Player" parent="." instance=ExtResource("7_1k2ef")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, -37)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "player")]
-script = ExtResource("8_8euk3")
-vehicle = NodePath("../CompactCar")
-player = NodePath("../Player")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -320.0
-offset_top = -136.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer"]
-layout_mode = 2
-text = "Speed:"
-label_settings = SubResource("LabelSettings_ly6d5")
-
-[node name="UseLabel" type="Label" parent="CanvasLayer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -103.0
-offset_right = 160.0
-offset_bottom = -80.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 4
-label_settings = SubResource("LabelSettings_vphii")
-horizontal_alignment = 1
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -1.0
-offset_top = -1.0
-offset_right = 1.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = SubResource("Theme_8k32a")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_mni1w")
@@ -164,3 +229,34 @@ environment = SubResource("Environment_mni1w")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 13, 0)
 light_color = Color(1, 0.952941, 1, 1)
+shadow_enabled = true
+
+[node name="PauseAndHUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("11_w4w4x")]
+player = NodePath("../Player")
+
+[node name="SpringyPropsManager" type="Node3D" parent="."]
+script = ExtResource("11_b02xr")
+
+[node name="TrafficLightA" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -9, 0.7, -7)
+
+[node name="TrafficLightA2" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(7.54979e-08, 0, 1, 0, 1, 0, -1, 0, 7.54979e-08, 5, 0.7, -7)
+
+[node name="TrafficLightA3" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.7, 7)
+
+[node name="TrafficLightA4" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0.7, 7)
+
+[node name="SpringyTrashBinSquare" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0.75, 28)
+
+[node name="SpringyTrashBinSquare2" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0.75, -13)
+
+[node name="SpringyGasPump" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0.75, 30)
+
+[node name="SpringyGasPump2" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0.75, 26)

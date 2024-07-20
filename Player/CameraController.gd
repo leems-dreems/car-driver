@@ -12,7 +12,7 @@ enum CAMERA_PIVOT { OVER_SHOULDER, THIRD_PERSON }
 @export var player_camera_distance := 10.0
 @export var vehicle_camera_distance := 15.0
 @export var camera_distance_change_speed := 1.5
-@export var follow_camera_min_velocity := 3.0
+@export var follow_camera_min_velocity := 6.0
 
 @onready var camera: Camera3D = $PlayerCamera
 @onready var _over_shoulder_pivot: Node3D = $CameraOverShoulderPivot

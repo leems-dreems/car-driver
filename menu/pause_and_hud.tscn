@@ -1,0 +1,117 @@
+[gd_scene load_steps=6 format=3 uid="uid://btmduyhkublv7"]
+
+[ext_resource type="Script" path="res://scripts/car_HUD.gd" id="1_t5qel"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_q7nlx"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_juqyv"]
+font_size = 32
+
+[sub_resource type="Theme" id="Theme_id77h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ag0bj"]
+font_size = 64
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+
+[node name="PauseAndHUD" type="CanvasLayer"]
+script = ExtResource("1_t5qel")
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+layout_mode = 2
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 792.0
+offset_top = 472.0
+offset_right = 1112.0
+offset_bottom = 608.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="HUD/MarginContainer"]
+layout_mode = 2
+text = "Speed:"
+label_settings = SubResource("LabelSettings_q7nlx")
+
+[node name="UseLabel" type="Label" parent="HUD"]
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 396.0
+offset_top = 483.0
+offset_right = 716.0
+offset_bottom = 528.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_juqyv")
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="HUD"]
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 555.0
+offset_top = 303.0
+offset_right = 557.0
+offset_bottom = 305.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_id77h")
+
+[node name="PauseMenu" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="PauseMenu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PauseMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Car Driver"
+label_settings = SubResource("LabelSettings_ag0bj")
+horizontal_alignment = 1
+
+[node name="ResumeGameButton" type="Button" parent="PauseMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="StageSelectButton" type="Button" parent="PauseMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Select Stage
+"
+
+[node name="QuitGameButton" type="Button" parent="PauseMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit
+"
+
+[connection signal="pressed" from="PauseMenu/CenterContainer/VBoxContainer/ResumeGameButton" to="." method="handle_resume_button"]
+[connection signal="pressed" from="PauseMenu/CenterContainer/VBoxContainer/QuitGameButton" to="." method="handle_quit_button"]

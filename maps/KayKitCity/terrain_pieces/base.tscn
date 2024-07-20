@@ -5,7 +5,7 @@
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ku3i2"]
 points = PackedVector3Array(-1, 0, -1, -1, 0, 1, -1, 0.0999993, -1, 1, 0, -1, -1, 0.0999993, 1, 1, 0, 1, 1, 0.0999993, -1, 1, 0.0999993, 1)
 
-[node name="Base" type="StaticBody3D"]
+[node name="Base" type="StaticBody3D" groups=["Road"]]
 collision_mask = 82
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

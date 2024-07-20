@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://df3ovqaugu3gp"]
+[gd_scene load_steps=18 format=3 uid="uid://df3ovqaugu3gp"]
 
 [ext_resource type="Texture2D" uid="uid://8v4spylpsh8c" path="res://assets/textures/1x1m_grid.png" id="1_s7ctx"]
 [ext_resource type="Material" uid="uid://ky6syqq4i4ae" path="res://assets/materials/road.tres" id="2_4u2h6"]
@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="4_th2pk"]
 [ext_resource type="Script" path="res://addons/gevp/scripts/camera.gd" id="5_283m0"]
 [ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="6_62x7v"]
-[ext_resource type="Script" path="res://scripts/car_HUD.gd" id="6_eqxcn"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="6_yij02"]
+[ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="8_bcad4"]
 [ext_resource type="PackedScene" uid="uid://21febu6fhlg2" path="res://collidables/crash_object.tscn" id="10_aekul"]
 [ext_resource type="PackedScene" uid="uid://78pe57wriy2b" path="res://collidables/trash_can_square.tscn" id="11_sd78e"]
 [ext_resource type="Script" path="res://collidables/springy_props_manager.gd" id="12_2ocea"]
@@ -26,14 +26,6 @@ data = PackedVector3Array(-10, 0.05, 250, 10, 0.05, 250, -10, -0.05, 250, 10, 0.
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8xl5f"]
 size = Vector3(500, 500, 500)
-
-[sub_resource type="LabelSettings" id="LabelSettings_q7nlx"]
-font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_juqyv"]
-font_size = 32
-
-[sub_resource type="Theme" id="Theme_id77h"]
 
 [node name="CityScene" type="Node3D"]
 
@@ -333,59 +325,8 @@ vehicle_node = NodePath("../CompactCar")
 [node name="Player" parent="." instance=ExtResource("6_yij02")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, 7)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("vehicle", "player")]
-script = ExtResource("6_eqxcn")
-vehicle = NodePath("../CompactCar")
+[node name="CanvasLayer" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_bcad4")]
 player = NodePath("../Player")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -320.0
-offset_top = -136.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer"]
-layout_mode = 2
-text = "Speed:"
-label_settings = SubResource("LabelSettings_q7nlx")
-
-[node name="UseLabel" type="Label" parent="CanvasLayer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -103.0
-offset_right = 160.0
-offset_bottom = -80.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 4
-label_settings = SubResource("LabelSettings_juqyv")
-horizontal_alignment = 1
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -1.0
-offset_top = -1.0
-offset_right = 1.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = SubResource("Theme_id77h")
 
 [node name="CrashObjects" type="Node" parent="."]
 

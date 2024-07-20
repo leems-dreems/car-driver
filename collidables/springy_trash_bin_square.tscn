@@ -1,50 +1,46 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4xp8dt0iw21"]
+[gd_scene load_steps=8 format=3 uid="uid://dnhe41455c4fi"]
 
-[ext_resource type="Script" path="res://collidables/springy_prop.gd" id="1_gk1bk"]
+[ext_resource type="Script" path="res://collidables/springy_trash_bin_square.gd" id="1_qq57t"]
+[ext_resource type="ArrayMesh" uid="uid://cgsmitsotxc04" path="res://assets/models/trashCanSquare.obj" id="2_ynqp0"]
+[ext_resource type="AudioStream" uid="uid://ok43u0a4qgke" path="res://assets/audio/crash_13.wav" id="3_c6ur1"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j5txw"]
-friction = 0.5
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8cs2y"]
+friction = 0.3
+bounce = 0.3
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_ek1mj"]
-radial_segments = 16
+[sub_resource type="BoxShape3D" id="BoxShape3D_kix71"]
+size = Vector3(1, 1.67841, 1)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gd1ja"]
-points = PackedVector3Array(-0.5, -1, 0, -0.46202, -1, -0.191366, -0.46202, -1, 0.191269, -0.5, 1, 0, -0.353563, -1, -0.353563, -0.46202, 1, -0.191366, -0.353563, -1, 0.353465, -0.46202, 1, 0.191269, -0.191366, -1, -0.46202, -0.353563, 1, -0.353563, -0.191366, -1, 0.461922, -0.353563, 1, 0.353465, 0, -1, -0.5, -0.191366, 1, -0.46202, 0, -1, 0.5, -0.191366, 1, 0.461922, 0.191269, -1, -0.46202, 0, 1, -0.5, 0.191269, -1, 0.461922, 0, 1, 0.5, 0.353465, -1, -0.353563, 0.191269, 1, -0.46202, 0.353465, -1, 0.353465, 0.191269, 1, 0.461922, 0.461922, -1, -0.191366, 0.353465, 1, -0.353563, 0.461922, -1, 0.191269, 0.353465, 1, 0.353465, 0.5, -1, 0, 0.461922, 1, -0.191366, 0.461922, 1, 0.191269, 0.5, 1, 0)
-
-[sub_resource type="SphereMesh" id="SphereMesh_hryqd"]
+[sub_resource type="SphereMesh" id="SphereMesh_lm026"]
 radius = 0.1
 height = 0.2
 radial_segments = 12
 rings = 6
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1xuap"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_28qc1"]
 points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.0273234, -0.000674605, -0.091251, -0.033203, -0.00368038, -0.000674605, 0.0273401, -0.094887, -0.0399752, 0.087652, 0.0235076, 0.0236569, -0.0882122, 0.0388687, -0.00672694, 0.027269, 0.0932929, 0.0355924, -0.0634742, -0.0671733, 0.0447611, 0.0878618, 0.00537491, -0.0401042, -0.0636745, -0.0643473, -0.0825919, 0.0242577, -0.0492209, -0.0490121, -0.0271631, 0.0808904, 0.0844492, -0.0243056, 0.0449228, 0.0841661, 0.0242248, -0.0461204, -0.00677629, 0.0886195, -0.0434421, -0.0822497, 0.0271665, 0.0476506, -0.0342178, -0.091493, 0.0115061, 0.0386685, 0.0635835, 0.0659385, 0.0449186, -0.0243224, 0.0844413, 0.0780522, -0.0605514, -0.00368842, 0.0176745, -0.091791, -0.0312626, 0.0414341, 0.0631837, -0.063856, 0.0476588, -0.0271797, -0.0822327, -0.0492209, -0.0242577, -0.0825919, -0.067573, 0.0608245, -0.0401971, -0.0397945, -0.0631744, 0.0655115, -0.0370558, 0.0606348, 0.0690515, 0.0810561, 0.0242025, 0.050793, -0.000674605, -0.02734, -0.0948867, 0.0841654, -0.0242246, -0.04612, -0.0948948, 0.0273233, -0.000674605, -0.000674605, -0.0364572, 0.090488)
 
-[node name="SpringyProp" type="Node3D"]
-script = ExtResource("1_gk1bk")
+[node name="SpringyTrashBinSquare" type="Node3D"]
+script = ExtResource("1_qq57t")
 linear_breaking_point = 0.075
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 collision_layer = 64
-collision_mask = 83
+collision_mask = 87
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 mass = 30.0
-physics_material_override = SubResource("PhysicsMaterial_j5txw")
-gravity_scale = 0.0
+physics_material_override = SubResource("PhysicsMaterial_8cs2y")
 max_contacts_reported = 10
 contact_monitor = true
-angular_damp = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CylinderMesh_ek1mj")
-skeleton = NodePath("../..")
+mesh = ExtResource("2_ynqp0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("ConvexPolygonShape3D_gd1ja")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.839203, 0)
+shape = SubResource("BoxShape3D_kix71")
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -59,7 +55,11 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-mesh = SubResource("SphereMesh_hryqd")
+mesh = SubResource("SphereMesh_lm026")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("ConvexPolygonShape3D_1xuap")
+shape = SubResource("ConvexPolygonShape3D_28qc1")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_c6ur1")
+doppler_tracking = 2

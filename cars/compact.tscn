@@ -196,6 +196,7 @@ rear_tire_radius = 0.4
 
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("2_negof")]
 vehicle = NodePath("..")
+longitudinal_slip_threshold = 1.0
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_dercd")]
 unit_size = 5.0
