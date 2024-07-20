@@ -5,14 +5,14 @@ enum CAMERA_PIVOT { OVER_SHOULDER, THIRD_PERSON }
 
 @export_node_path var player_path : NodePath
 @export var invert_mouse_y := false
-@export_range(0.0, 1.0) var mouse_sensitivity := 0.25
+@export_range(0.0, 1.0) var mouse_sensitivity := 0.1
 @export_range(0.0, 8.0) var joystick_sensitivity := 2.0
 @export var tilt_upper_limit := deg_to_rad(-60.0)
 @export var tilt_lower_limit := deg_to_rad(60.0)
-@export var look_speed := 2.0
 @export var player_camera_distance := 10.0
 @export var vehicle_camera_distance := 15.0
 @export var camera_distance_change_speed := 1.5
+@export var follow_camera_min_velocity := 3.0
 
 @onready var camera: Camera3D = $PlayerCamera
 @onready var _over_shoulder_pivot: Node3D = $CameraOverShoulderPivot
@@ -43,8 +43,8 @@ func _physics_process(delta: float) -> void:
   if not _anchor:
     return
 
-  _rotation_input += Input.get_axis("camera_right", "camera_left") * look_speed
-  _tilt_input += Input.get_axis("camera_down", "camera_up") * look_speed
+  _rotation_input += Input.get_axis("camera_right", "camera_left") * joystick_sensitivity
+  _tilt_input += Input.get_axis("camera_down", "camera_up") * joystick_sensitivity
 
   if invert_mouse_y:
     _tilt_input *= -1
@@ -63,11 +63,11 @@ func _physics_process(delta: float) -> void:
 
   if _anchor.current_vehicle != null:
     _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, vehicle_camera_distance, delta * camera_distance_change_speed)
-
-    if _rotation_input == 0 and _tilt_input == 0:
+    var vehicle_velocity := _anchor.current_vehicle.linear_velocity
+    if vehicle_velocity.length() > follow_camera_min_velocity and _rotation_input == 0 and _tilt_input == 0:
       # Rotates camera to follow vehicle
-      var vehicle_euler := _anchor.current_vehicle.global_transform.basis.get_euler()
-      _euler_rotation.y = lerp_angle(_euler_rotation.y, vehicle_euler.y + PI, delta * 3)
+      var velocity_euler := Basis.looking_at(vehicle_velocity).get_euler()
+      _euler_rotation.y = lerp_angle(_euler_rotation.y, velocity_euler.y + PI, delta * 3)
   else:
     _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, player_camera_distance, delta * camera_distance_change_speed)
 
@@ -76,8 +76,8 @@ func _physics_process(delta: float) -> void:
     _euler_rotation.x = clamp(_euler_rotation.x, tilt_lower_limit, tilt_upper_limit)
     _euler_rotation.y += _rotation_input * delta
 
+  # CameraController and PlayerCamera exist in global space, pivots are local
   transform.basis = Basis.from_euler(_euler_rotation)
-
   camera.global_transform = _pivot.global_transform
   camera.rotation.z = 0
 

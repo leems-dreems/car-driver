@@ -117,6 +117,7 @@ shape = SubResource("CapsuleShape3D_8x2xm")
 [node name="CameraController" type="Node3D" parent="."]
 top_level = true
 script = ExtResource("3_qrkly")
+player_path = NodePath("..")
 invert_mouse_y = true
 tilt_upper_limit = 0.48
 tilt_lower_limit = -0.8
