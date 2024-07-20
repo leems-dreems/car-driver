@@ -22,12 +22,15 @@ points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.02732
 
 [node name="SpringyProp" type="Node3D"]
 script = ExtResource("1_gk1bk")
-linear_breaking_point = 0.5
+linear_breaking_point = 0.2
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 node_a = NodePath("../StaticBody3D")
 node_b = NodePath("../RigidBody3D")
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 collision_layer = 64
@@ -35,7 +38,7 @@ collision_mask = 83
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-mass = 10.0
+mass = 30.0
 physics_material_override = SubResource("PhysicsMaterial_j5txw")
 gravity_scale = 0.0
 max_contacts_reported = 10

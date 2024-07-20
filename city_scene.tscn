@@ -404,6 +404,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.722075, 0)
 script = ExtResource("12_2ocea")
 
 [node name="SpringyProp" parent="SpringyProps" instance=ExtResource("3_4brc2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, -14)
 
 [connection signal="body_exited" from="BoundingArea3D" to="BoundingArea3D" method="destroyExitingNode"]
