@@ -99,6 +99,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -28)
 [node name="Base4" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -14)
 
+[node name="Base33" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -28)
+
+[node name="Base34" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -14)
+
 [node name="Base5" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 14)
 
@@ -186,6 +192,54 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 42)
 [node name="Base16" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 56)
 
+[node name="Base17" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -84)
+
+[node name="Base18" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -70)
+
+[node name="Base19" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -56)
+
+[node name="Base20" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -42)
+
+[node name="Base21" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -84)
+
+[node name="Base22" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -70)
+
+[node name="Base23" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -56)
+
+[node name="Base24" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -42)
+
+[node name="Base25" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -140)
+
+[node name="Base26" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -126)
+
+[node name="Base27" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -112)
+
+[node name="Base28" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -98)
+
+[node name="Base29" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -140)
+
+[node name="Base30" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -126)
+
+[node name="Base31" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -112)
+
+[node name="Base32" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -98)
+
 [node name="RoadStraightCrossing" parent="Terrain" instance=ExtResource("7_pihff")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12, 0, 0)
 
@@ -220,6 +274,24 @@ skeleton = NodePath("../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_40nde")
 
+[node name="Ramp" type="CSGBox3D" parent="Terrain" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -13, 1, -67)
+use_collision = true
+collision_mask = 82
+size = Vector3(5, 1, 9)
+
+[node name="Ramp3" type="CSGBox3D" parent="Terrain" groups=["Road"]]
+transform = Transform3D(-1, -1.49012e-08, -7.45058e-08, 1.94149e-08, 0.866026, -0.5, 8.73587e-08, -0.5, -0.866026, -17, 1, -15)
+use_collision = true
+collision_mask = 82
+size = Vector3(5, 1, 9)
+
+[node name="Ramp2" type="CSGBox3D" parent="Terrain" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, -32, 1, -67)
+use_collision = true
+collision_mask = 82
+size = Vector3(5, 1, 9)
+
 [node name="Player" parent="." instance=ExtResource("7_1k2ef")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, -37)
 
@@ -250,10 +322,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.7, 7)
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0.7, 7)
 
 [node name="SpringyTrashBinSquare" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0.75, 28)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.75, 28)
 
 [node name="SpringyTrashBinSquare2" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0.75, -13)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.75, -13)
+
+[node name="SpringyTrashBinSquare9" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0.75, 24)
+
+[node name="SpringyTrashBinSquare3" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -42)
+
+[node name="SpringyTrashBinSquare6" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -40)
+
+[node name="SpringyTrashBinSquare4" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -46)
+
+[node name="SpringyTrashBinSquare7" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -37)
+
+[node name="SpringyTrashBinSquare8" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -30)
+
+[node name="SpringyTrashBinSquare5" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -35)
 
 [node name="SpringyGasPump" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0.75, 30)

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bvjtmoh4u8ueq"
-path="res://.godot/imported/crash_11.wav-ad465e4e5dd22957b4363ff46d167ddf.sample"
+path="res://.godot/imported/crash_11.wav-647b1b4a8c6fa42cd5c6d983e1583cb8.sample"
 
 [deps]
 
-source_file="res://assets/audio/crash_11.wav"
-dest_files=["res://.godot/imported/crash_11.wav-ad465e4e5dd22957b4363ff46d167ddf.sample"]
+source_file="res://assets/audio/Hanna-Barbera SFX/crash_11.wav"
+dest_files=["res://.godot/imported/crash_11.wav-647b1b4a8c6fa42cd5c6d983e1583cb8.sample"]
 
 [params]
 

@@ -1,8 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://dnhe41455c4fi"]
+[gd_scene load_steps=17 format=3 uid="uid://dnhe41455c4fi"]
 
 [ext_resource type="Script" path="res://collidables/springy_trash_bin_square.gd" id="1_qq57t"]
 [ext_resource type="ArrayMesh" uid="uid://cgsmitsotxc04" path="res://assets/models/trashCanSquare.obj" id="2_ynqp0"]
-[ext_resource type="AudioStream" uid="uid://ok43u0a4qgke" path="res://assets/audio/crash_13.wav" id="3_c6ur1"]
+[ext_resource type="AudioStream" uid="uid://clui70lbe0333" path="res://assets/audio/Hanna-Barbera SFX/hit_1.wav" id="3_hicbd"]
+[ext_resource type="AudioStream" uid="uid://mqbnccxbgjdr" path="res://assets/audio/Hanna-Barbera SFX/hit_2.wav" id="4_qycs8"]
+[ext_resource type="AudioStream" uid="uid://cs0smpmvmbrm2" path="res://assets/audio/Hanna-Barbera SFX/hit_3.wav" id="5_v1xoi"]
+[ext_resource type="AudioStream" uid="uid://bwn5sr0828syv" path="res://assets/audio/Hanna-Barbera SFX/hit_4.wav" id="6_gjv7k"]
+[ext_resource type="AudioStream" uid="uid://bdkk3mqeoa16u" path="res://assets/audio/Hanna-Barbera SFX/hit_5.wav" id="7_tfwh5"]
+[ext_resource type="AudioStream" uid="uid://bd0nkixrwchtj" path="res://assets/audio/Hanna-Barbera SFX/hit_6.wav" id="8_wfcqn"]
+[ext_resource type="AudioStream" uid="uid://b45dgh56n56fo" path="res://assets/audio/Hanna-Barbera SFX/hit_7.wav" id="9_7wixv"]
+[ext_resource type="AudioStream" uid="uid://ct1pgm7jhp1ts" path="res://assets/audio/Hanna-Barbera SFX/hit_8.wav" id="10_x7tns"]
+[ext_resource type="AudioStream" uid="uid://csyfjrbnl7xu5" path="res://assets/audio/Hanna-Barbera SFX/hit_9.wav" id="11_ghpkv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8cs2y"]
 friction = 0.3
@@ -19,6 +27,27 @@ rings = 6
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_28qc1"]
 points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.0273234, -0.000674605, -0.091251, -0.033203, -0.00368038, -0.000674605, 0.0273401, -0.094887, -0.0399752, 0.087652, 0.0235076, 0.0236569, -0.0882122, 0.0388687, -0.00672694, 0.027269, 0.0932929, 0.0355924, -0.0634742, -0.0671733, 0.0447611, 0.0878618, 0.00537491, -0.0401042, -0.0636745, -0.0643473, -0.0825919, 0.0242577, -0.0492209, -0.0490121, -0.0271631, 0.0808904, 0.0844492, -0.0243056, 0.0449228, 0.0841661, 0.0242248, -0.0461204, -0.00677629, 0.0886195, -0.0434421, -0.0822497, 0.0271665, 0.0476506, -0.0342178, -0.091493, 0.0115061, 0.0386685, 0.0635835, 0.0659385, 0.0449186, -0.0243224, 0.0844413, 0.0780522, -0.0605514, -0.00368842, 0.0176745, -0.091791, -0.0312626, 0.0414341, 0.0631837, -0.063856, 0.0476588, -0.0271797, -0.0822327, -0.0492209, -0.0242577, -0.0825919, -0.067573, 0.0608245, -0.0401971, -0.0397945, -0.0631744, 0.0655115, -0.0370558, 0.0606348, 0.0690515, 0.0810561, 0.0242025, 0.050793, -0.000674605, -0.02734, -0.0948867, 0.0841654, -0.0242246, -0.04612, -0.0948948, 0.0273233, -0.000674605, -0.000674605, -0.0364572, 0.090488)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3uuiw"]
+streams_count = 9
+stream_0/stream = ExtResource("3_hicbd")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("4_qycs8")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("5_v1xoi")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("6_gjv7k")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("7_tfwh5")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("8_wfcqn")
+stream_5/weight = 1.0
+stream_6/stream = ExtResource("9_7wixv")
+stream_6/weight = 1.0
+stream_7/stream = ExtResource("10_x7tns")
+stream_7/weight = 1.0
+stream_8/stream = ExtResource("11_ghpkv")
+stream_8/weight = 1.0
 
 [node name="SpringyTrashBinSquare" type="Node3D"]
 script = ExtResource("1_qq57t")
@@ -61,5 +90,5 @@ mesh = SubResource("SphereMesh_lm026")
 shape = SubResource("ConvexPolygonShape3D_28qc1")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("3_c6ur1")
+stream = SubResource("AudioStreamRandomizer_3uuiw")
 doppler_tracking = 2

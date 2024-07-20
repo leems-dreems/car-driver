@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bw7d3mhbykib"
-path="res://.godot/imported/clash.wav-b32e4732d5f3e93f03b634fdf392240e.sample"
+path="res://.godot/imported/clash.wav-54180ce3b08602ccb3edf1c4530c3c8e.sample"
 
 [deps]
 
-source_file="res://assets/audio/clash.wav"
-dest_files=["res://.godot/imported/clash.wav-b32e4732d5f3e93f03b634fdf392240e.sample"]
+source_file="res://assets/audio/Hanna-Barbera SFX/clash.wav"
+dest_files=["res://.godot/imported/clash.wav-54180ce3b08602ccb3edf1c4530c3c8e.sample"]
 
 [params]
 

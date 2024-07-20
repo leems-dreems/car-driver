@@ -13,7 +13,7 @@ func respawn() -> void:
 
 func play_effect() -> void:
   $AudioStreamPlayer3D.play()
-  physics_body.apply_central_impulse(Vector3.UP * physics_body.mass * 10)
+  physics_body.apply_central_impulse(Vector3.UP * physics_body.mass * 5)
   for emitter: Node in $RigidBody3D/Emitters.get_children():
     if emitter is GPUParticles3D:
       emitter.emitting = true

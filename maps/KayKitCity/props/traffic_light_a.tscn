@@ -1,8 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://ba0xtl41qmm3s"]
+[gd_scene load_steps=21 format=3 uid="uid://ba0xtl41qmm3s"]
 
 [ext_resource type="Script" path="res://maps/KayKitCity/props/traffic_light_a.gd" id="1_seoio"]
 [ext_resource type="ArrayMesh" uid="uid://b4uey6sj07txa" path="res://assets/KayKit_City_Builder_Bits_1.0_SOURCE/Assets/obj/trafficlight_A.obj" id="2_ciu47"]
-[ext_resource type="AudioStream" uid="uid://comchkrj2ba8b" path="res://assets/audio/crash_4.wav" id="3_xn13i"]
+[ext_resource type="AudioStream" uid="uid://du4mx5rpm2p0x" path="res://assets/audio/Hanna-Barbera SFX/metal_clunck_1.wav" id="3_nbwdu"]
+[ext_resource type="AudioStream" uid="uid://c2clh54bmqdfi" path="res://assets/audio/Hanna-Barbera SFX/metal_clunk_2.wav" id="4_wut4u"]
+[ext_resource type="AudioStream" uid="uid://pu2fa2oe7j8k" path="res://assets/audio/Hanna-Barbera SFX/metal_clunk_3.wav" id="5_wum4e"]
+[ext_resource type="AudioStream" uid="uid://cqxalaanyiqkc" path="res://assets/audio/Hanna-Barbera SFX/metal_clunk_4.wav" id="6_kbk60"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jcshc"]
 friction = 0.2
@@ -55,6 +58,17 @@ emission_curve = SubResource("CurveTexture_h0mbi")
 
 [sub_resource type="BoxMesh" id="BoxMesh_ajrsc"]
 size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2mhpn"]
+streams_count = 4
+stream_0/stream = ExtResource("3_nbwdu")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("4_wut4u")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("5_wum4e")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("6_kbk60")
+stream_3/weight = 1.0
 
 [node name="TrafficLightA" type="Node3D"]
 script = ExtResource("1_seoio")
@@ -121,5 +135,5 @@ process_material = SubResource("ParticleProcessMaterial_mx8ur")
 draw_pass_1 = SubResource("BoxMesh_ajrsc")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("3_xn13i")
+stream = SubResource("AudioStreamRandomizer_2mhpn")
 doppler_tracking = 2

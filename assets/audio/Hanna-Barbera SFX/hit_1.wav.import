@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://clui70lbe0333"
+path="res://.godot/imported/hit_1.wav-057c20884896fefa3e3cec622f25fd93.sample"
+
+[deps]
+
+source_file="res://assets/audio/Hanna-Barbera SFX/hit_1.wav"
+dest_files=["res://.godot/imported/hit_1.wav-057c20884896fefa3e3cec622f25fd93.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dl3yfmadp55qm"
+path="res://.godot/imported/noise_8.wav-8c277c4f4d85679f2fee31fbb670f5e0.sample"
+
+[deps]
+
+source_file="res://assets/audio/Hanna-Barbera SFX/noise_8.wav"
+dest_files=["res://.godot/imported/noise_8.wav-8c277c4f4d85679f2fee31fbb670f5e0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
