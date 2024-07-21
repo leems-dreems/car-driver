@@ -2,6 +2,9 @@ extends CanvasLayer
 
 @export var vehicle : Vehicle
 @export var player : Player
+@onready var vehicle_hud_label := $HUD/VehicleHUD/Label
+@onready var use_label := $HUD/CenterContainer/VBoxContainer/UseLabel
+@onready var mission_label := $HUD/CenterContainer/VBoxContainer/MissionLabel
 
 
 func _process(_delta: float) -> void:
@@ -19,29 +22,31 @@ func _process(_delta: float) -> void:
 
 
 func _update_hud() -> void:
-  if player.current_vehicle != null:
-    $HUD/MarginContainer/Label.text = 'Throttle: ' + '%.2f' % player.current_vehicle.throttle_input
-    $HUD/MarginContainer/Label.text += '\nBrake: ' + '%.2f' % player.current_vehicle.brake_input
-    $HUD/MarginContainer/Label.text += '\nHandbrake: ' + str(player.current_vehicle.handbrake_input)
-    $HUD/MarginContainer/Label.text += '\nSteer: ' + '%.2f' % player.current_vehicle.steering_input
-    $HUD/MarginContainer/Label.text += '\nGear: ' + str(player.current_vehicle.current_gear)
-  else:
-    var current_mission := player.mission_manager.get_current_mission()
-    if current_mission == null:
-      $HUD/MarginContainer/Label.text = "No current mission"
+  if player.current_mission != null:
+    var current_objective := player.current_mission.get_current_objective()
+    if current_objective == null:
+      mission_label.text = "Mission complete"
     else:
-      var current_objective := current_mission.get_current_objective()
-      $HUD/MarginContainer/Label.text = current_objective.objective_text
+      mission_label.text = current_objective.objective_text
+  
+  if player.current_vehicle != null:
+    vehicle_hud_label.text = "Throttle: " + "%.2f" % player.current_vehicle.throttle_input
+    vehicle_hud_label.text += "\nBrake: " + "%.2f" % player.current_vehicle.brake_input
+    vehicle_hud_label.text += "\nHandbrake: " + str(player.current_vehicle.handbrake_input)
+    vehicle_hud_label.text += "\nSteer: " + "%.2f" % player.current_vehicle.steering_input
+    vehicle_hud_label.text += "\nGear: " + str(player.current_vehicle.current_gear)
+  else:
+    vehicle_hud_label.text = ""
 
   if player.useable_target != null:
-    if player.useable_target.has_method('get_use_label'):
-      $HUD/UseLabel.text = player.useable_target.get_use_label()
+    if player.useable_target.has_method("get_use_label"):
+      use_label.text = player.useable_target.get_use_label()
     elif player.useable_target is ObjectiveArea:
-      $HUD/UseLabel.text = 'Use Objective Marker'
+      use_label.text = player.useable_target.objective_text
     else:
-      $HUD/UseLabel.text = 'Use'
+      use_label.text = "Use"
   else:
-    $HUD/UseLabel.text = ''
+    use_label.text = ""
 
 
 func handle_resume_button() -> void:

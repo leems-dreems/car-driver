@@ -5,10 +5,10 @@
 [sub_resource type="LabelSettings" id="LabelSettings_q7nlx"]
 font_size = 32
 
+[sub_resource type="Theme" id="Theme_id77h"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_juqyv"]
 font_size = 32
-
-[sub_resource type="Theme" id="Theme_id77h"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ag0bj"]
 font_size = 64
@@ -18,66 +18,53 @@ outline_color = Color(0, 0, 0, 1)
 [node name="PauseAndHUD" type="CanvasLayer"]
 script = ExtResource("1_jvxva")
 
-[node name="HUD" type="Control" parent="."]
-layout_mode = 3
+[node name="HUD" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1152.0
-offset_bottom = -648.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+[node name="VehicleHUD" type="MarginContainer" parent="HUD"]
 layout_mode = 2
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 792.0
-offset_top = 472.0
-offset_right = 1112.0
-offset_bottom = 608.0
-grow_horizontal = 0
-grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="Label" type="Label" parent="HUD/MarginContainer"]
+[node name="Label" type="Label" parent="HUD/VehicleHUD"]
 layout_mode = 2
 text = "Speed:"
 label_settings = SubResource("LabelSettings_q7nlx")
 
-[node name="UseLabel" type="Label" parent="HUD"]
+[node name="CenterContainer2" type="CenterContainer" parent="HUD"]
 layout_mode = 2
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 396.0
-offset_top = 483.0
-offset_right = 716.0
-offset_bottom = 528.0
-grow_horizontal = 2
-grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="HUD/CenterContainer2"]
+custom_minimum_size = Vector2(2, 2)
+layout_mode = 2
+mouse_filter = 2
+theme = SubResource("Theme_id77h")
+
+[node name="CenterContainer" type="CenterContainer" parent="HUD"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/CenterContainer"]
+layout_mode = 2
+
+[node name="MissionLabel" type="Label" parent="HUD/CenterContainer/VBoxContainer"]
+layout_mode = 2
 size_flags_horizontal = 4
 label_settings = SubResource("LabelSettings_juqyv")
 horizontal_alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="HUD"]
+[node name="MarginContainer" type="MarginContainer" parent="HUD/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 800)
 layout_mode = 2
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 555.0
-offset_top = 303.0
-offset_right = 557.0
-offset_bottom = 305.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = SubResource("Theme_id77h")
+
+[node name="UseLabel" type="Label" parent="HUD/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_juqyv")
+horizontal_alignment = 1
 
 [node name="PauseMenu" type="MarginContainer" parent="."]
 anchors_preset = 15

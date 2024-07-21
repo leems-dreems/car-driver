@@ -24,7 +24,7 @@ enum WEAPON_TYPE { DEFAULT, GRENADE }
 
 ## Vehicle the player is currently in
 @export var current_vehicle : DriveableVehicle = null
-@export var mission_manager : MissionsManager = null
+@export var current_mission : Mission = null
 ## The useable target the player is looking at
 var useable_target : Node3D = null
 
@@ -124,6 +124,8 @@ func _physics_process(delta: float) -> void:
       elif useable_target is EnterVehicleCollider:
         enterVehicle(useable_target.vehicle)
       elif useable_target is ObjectiveArea:
+        if useable_target.start_mission:
+          current_mission = useable_target.get_parent()
         useable_target.trigger(null)
 
     velocity.y += _gravity * delta

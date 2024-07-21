@@ -6,6 +6,7 @@ enum Trigger_methods {
   ON_USE
 }
 @export var objective_text := ''
+@export var start_mission := false
 @export var trigger_in_vehicle := false
 @export var trigger_on_foot := false
 @export var trigger_method := Trigger_methods.ON_ENTER
@@ -27,17 +28,17 @@ func trigger(_body: Node3D) -> void:
 ## Activate an objective when the previous objective has been completed
 func activate() -> void:
   visible = true
-  monitoring = true
-  monitorable = true
+  set_deferred("monitoring", true)
+  set_deferred("monitorable", true)
   for child: Node in get_children():
     if child is CollisionShape3D:
-      child.disabled = false
+      child.set_deferred("disabled", false)
 
 
 func deactivate() -> void:
   visible = false
-  monitoring = false
-  monitorable = false
+  set_deferred("monitoring", false)
+  set_deferred("monitorable", false)
   for child: Node in get_children():
     if child is CollisionShape3D:
-      child.disabled = true
+      child.set_deferred("disabled", true)

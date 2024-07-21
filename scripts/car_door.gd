@@ -27,7 +27,7 @@ func _ready ():
   shutDoorMesh.visible = true
 
 
-func _physics_process (delta: float) -> void:
+func _physics_process (_delta: float) -> void:
   if is_shut or open_timer != null: return
   if door_latch.overlaps_area(body_latch): shut()
   
