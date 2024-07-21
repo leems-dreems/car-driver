@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://btmduyhkublv7"]
 
-[ext_resource type="Script" path="res://scripts/car_HUD.gd" id="1_t5qel"]
+[ext_resource type="Script" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_q7nlx"]
 font_size = 32
@@ -16,7 +16,7 @@ outline_size = 12
 outline_color = Color(0, 0, 0, 1)
 
 [node name="PauseAndHUD" type="CanvasLayer"]
-script = ExtResource("1_t5qel")
+script = ExtResource("1_jvxva")
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3

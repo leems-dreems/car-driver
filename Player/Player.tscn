@@ -108,7 +108,6 @@ axis_lock_angular_y = true
 axis_lock_angular_z = true
 platform_floor_layers = 4294967234
 script = ExtResource("1_rvo1c")
-acceleration = 6.0
 
 [node name="CharacterCollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

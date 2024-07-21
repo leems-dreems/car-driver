@@ -26,11 +26,18 @@ func _update_hud() -> void:
     $HUD/MarginContainer/Label.text += '\nSteer: ' + '%.2f' % player.current_vehicle.steering_input
     $HUD/MarginContainer/Label.text += '\nGear: ' + str(player.current_vehicle.current_gear)
   else:
-    $HUD/MarginContainer/Label.text = ''
+    var current_mission := player.mission_manager.get_current_mission()
+    if current_mission == null:
+      $HUD/MarginContainer/Label.text = "No current mission"
+    else:
+      var current_objective := current_mission.get_current_objective()
+      $HUD/MarginContainer/Label.text = current_objective.objective_text
 
   if player.useable_target != null:
     if player.useable_target.has_method('get_use_label'):
       $HUD/UseLabel.text = player.useable_target.get_use_label()
+    elif player.useable_target is ObjectiveArea:
+      $HUD/UseLabel.text = 'Use Objective Marker'
     else:
       $HUD/UseLabel.text = 'Use'
   else:

@@ -5,6 +5,7 @@ enum Trigger_methods {
   ON_ENTER,
   ON_USE
 }
+@export var objective_text := ''
 @export var trigger_in_vehicle := false
 @export var trigger_on_foot := false
 @export var trigger_method := Trigger_methods.ON_ENTER
