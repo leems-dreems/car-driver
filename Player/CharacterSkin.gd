@@ -19,31 +19,31 @@ var moving_blend_path := "parameters/StateMachine/move/blend_position"
 
 
 func _ready():
-	animation_tree.active = true
-	main_animation_player["playback_default_blend_time"] = 0.1
+  animation_tree.active = true
+  main_animation_player["playback_default_blend_time"] = 0.1
 
 
 func set_moving(value : bool):
-	moving = value
-	if moving:
-		state_machine.travel("move")
-	else:
-		state_machine.travel("idle")
+  moving = value
+  if moving:
+    state_machine.travel("move")
+  else:
+    state_machine.travel("idle")
 
 
 func set_moving_speed(value : float):
-	move_speed = clamp(value, 0.0, 1.0)
-	animation_tree.set(moving_blend_path, move_speed)
+  move_speed = clamp(value, 0.0, 1.0)
+  animation_tree.set(moving_blend_path, move_speed)
 
 
 func jump():
-	state_machine.travel("jump")
+  state_machine.travel("jump")
 
 
 func fall():
-	state_machine.travel("fall")
+  state_machine.travel("fall")
 
 
 func punch():
-	animation_tree["parameters/PunchOneShot/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
+  animation_tree["parameters/PunchOneShot/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
 

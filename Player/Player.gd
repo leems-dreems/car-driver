@@ -118,10 +118,12 @@ func _physics_process(delta: float) -> void:
 
     # Try to use whatever we're aiming at
     if is_using and useable_target != null:
-      if useable_target.has_method('open_or_shut'):
+      if useable_target.has_method("open_or_shut"):
         useable_target.open_or_shut()
       elif useable_target is EnterVehicleCollider:
         enterVehicle(useable_target.vehicle)
+      elif useable_target is ObjectiveArea:
+        useable_target.trigger(null)
 
     velocity.y += _gravity * delta
 
