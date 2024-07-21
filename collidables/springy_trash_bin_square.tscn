@@ -13,7 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://csyfjrbnl7xu5" path="res://assets/audio/Hanna-Barbera SFX/hit_9.wav" id="11_ghpkv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8cs2y"]
-friction = 0.3
+friction = 0.5
 bounce = 0.3
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kix71"]

@@ -9,7 +9,7 @@ func _ready () -> void:
   super()
   starting_origin = global_position
   starting_basis = Basis(transform.basis)
-  $EnterCarCollider.vehicle = self
+  $ColliderBits/EnterCarCollider.vehicle = self
   return
 
 ## Used to reset the position of the car without upsetting the physics engine
