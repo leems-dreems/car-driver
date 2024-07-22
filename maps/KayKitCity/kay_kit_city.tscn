@@ -649,9 +649,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 3, 19)
 collision_layer = 512
 collision_mask = 18
 script = ExtResource("18_y7o6o")
-objective_text = "Go to the gas station"
+objective_text = "Drive to the gas station"
 trigger_in_vehicle = true
-trigger_on_foot = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MissionsManager/Mission_1/End"]
 mesh = SubResource("BoxMesh_xiwhd")

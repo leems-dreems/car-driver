@@ -19,11 +19,34 @@ func _ready() -> void:
       connect("body_entered", trigger)
     Trigger_methods.ON_USE:
       set_collision_layer_value(4, true)
+  Game.player_changed_vehicle.connect(func ():
+    check_colliding_bodies()
+  )
+  return
 
-## Call to complete this objective
+## Check to see if [_body] meets the requirements to complete this objective
 func trigger(_body: Node3D) -> void:
+  if not (_body is Player or _body is DriveableVehicle):
+    return
+  if trigger_in_vehicle and _body is DriveableVehicle and _body.is_being_driven:
+    complete_objective()
+  elif trigger_on_foot and _body is Player:
+    complete_objective()
+  return
+
+## See if any colliding bodies can complete this objective. This is a manual check for e.g. when
+## the player gets in/out of a vehicle that is in this ObjectiveArea
+func check_colliding_bodies() -> void:
+  for _body: Node3D in get_overlapping_bodies():
+    trigger(_body)
+    if is_completed: break
+  return
+
+## Mark this objective as complete, make it invisible and turn off collision
+func complete_objective() -> void:
   is_completed = true
   deactivate()
+  return
 
 ## Activate an objective when the previous objective has been completed
 func activate() -> void:
@@ -33,6 +56,7 @@ func activate() -> void:
   for child: Node in get_children():
     if child is CollisionShape3D:
       child.set_deferred("disabled", false)
+  return
 
 
 func deactivate() -> void:
@@ -42,3 +66,4 @@ func deactivate() -> void:
   for child: Node in get_children():
     if child is CollisionShape3D:
       child.set_deferred("disabled", true)
+  return

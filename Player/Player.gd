@@ -126,7 +126,7 @@ func _physics_process(delta: float) -> void:
       elif useable_target is ObjectiveArea:
         if useable_target.start_mission:
           current_mission = useable_target.get_parent()
-        useable_target.trigger(null)
+        useable_target.trigger(self)
 
     velocity.y += _gravity * delta
 
@@ -202,6 +202,7 @@ func enterVehicle (vehicle: DriveableVehicle) -> void:
   vehicle.is_being_driven = true
   $CharacterCollisionShape.disabled = true
   visible = false
+  Game.player_changed_vehicle.emit()
 
 
 func exitVehicle () -> void:
@@ -209,6 +210,7 @@ func exitVehicle () -> void:
   global_position = current_vehicle.global_position
   global_position.y += 5
   current_vehicle = null
+  Game.player_changed_vehicle.emit()
 
   await get_tree().create_timer(0.1).timeout
   $CharacterCollisionShape.disabled = false
