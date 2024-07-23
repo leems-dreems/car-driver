@@ -22,15 +22,7 @@ points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.02732
 
 [node name="SpringyProp" type="Node3D"]
 script = ExtResource("1_gk1bk")
-linear_breaking_point = 0.2
-
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-node_a = NodePath("../StaticBody3D")
-node_b = NodePath("../RigidBody3D")
-angular_limit_x/enabled = false
-angular_limit_y/enabled = false
-angular_limit_z/enabled = false
+linear_breaking_point = 0.075
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 collision_layer = 64
@@ -53,6 +45,14 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("ConvexPolygonShape3D_gd1ja")
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+node_a = NodePath("../StaticBody3D")
+node_b = NodePath("../RigidBody3D")
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 0

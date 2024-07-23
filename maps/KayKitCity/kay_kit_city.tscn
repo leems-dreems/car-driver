@@ -1,0 +1,607 @@
+[gd_scene load_steps=25 format=3 uid="uid://defp4i4n5dard"]
+
+[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
+[ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="2_7fuac"]
+[ext_resource type="PackedScene" uid="uid://wrut3fs81xjv" path="res://maps/KayKitCity/terrain_pieces/road_junction.tscn" id="3_6tcif"]
+[ext_resource type="PackedScene" uid="uid://djoco1viojc80" path="res://maps/KayKitCity/terrain_pieces/road_straight.tscn" id="4_1u4ly"]
+[ext_resource type="PackedScene" uid="uid://maofgh0s33e8" path="res://maps/KayKitCity/terrain_pieces/road_corner_curved.tscn" id="5_cfag0"]
+[ext_resource type="PackedScene" uid="uid://ct3mywpm1352t" path="res://maps/KayKitCity/terrain_pieces/base.tscn" id="6_44t2m"]
+[ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="7_1k2ef"]
+[ext_resource type="PackedScene" uid="uid://mq5e2pijfe6b" path="res://maps/KayKitCity/terrain_pieces/road_straight_crossing.tscn" id="7_pihff"]
+[ext_resource type="PackedScene" uid="uid://dcpnpdp6bkia0" path="res://maps/KayKitCity/terrain_pieces/road_t_split.tscn" id="8_cexwy"]
+[ext_resource type="PackedScene" uid="uid://ba0xtl41qmm3s" path="res://maps/KayKitCity/props/traffic_light_a.tscn" id="8_pdcgg"]
+[ext_resource type="PackedScene" uid="uid://bw7peryaciady" path="res://maps/KayKitCity/buildings/building_a.tscn" id="9_ov5pk"]
+[ext_resource type="Script" path="res://collidables/springy_props_manager.gd" id="11_b02xr"]
+[ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="11_w4w4x"]
+[ext_resource type="PackedScene" uid="uid://dnhe41455c4fi" path="res://collidables/springy_trash_bin_square.tscn" id="13_gd1lj"]
+[ext_resource type="PackedScene" uid="uid://bol1qtccjchrx" path="res://collidables/springy_gas_pump.tscn" id="14_xgfoh"]
+
+[sub_resource type="Gradient" id="Gradient_u6ph6"]
+colors = PackedColorArray(0.746094, 0.746094, 0.746094, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jwgtv"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7y14v"]
+seamless = true
+color_ramp = SubResource("Gradient_u6ph6")
+noise = SubResource("FastNoiseLite_jwgtv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pklv7"]
+albedo_color = Color(0, 0.4, 0.00784314, 1)
+albedo_texture = SubResource("NoiseTexture2D_7y14v")
+uv1_scale = Vector3(100, 100, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w5he8"]
+material = SubResource("StandardMaterial3D_pklv7")
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_40nde"]
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tr5dd"]
+
+[sub_resource type="Sky" id="Sky_en3uj"]
+sky_material = SubResource("ProceduralSkyMaterial_tr5dd")
+
+[sub_resource type="Environment" id="Environment_mni1w"]
+background_mode = 2
+sky = SubResource("Sky_en3uj")
+
+[node name="KayKitCity" type="Node3D"]
+
+[node name="CompactCar" parent="." instance=ExtResource("1_djukj")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2, -30)
+
+[node name="VehicleController" parent="." node_paths=PackedStringArray("vehicle_node") instance=ExtResource("2_7fuac")]
+vehicle_node = NodePath("../CompactCar")
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="RoadJunction" parent="Terrain" instance=ExtResource("3_6tcif")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="RoadStraight" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -14)
+
+[node name="RoadStraight2" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -28)
+
+[node name="RoadStraight3" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 28)
+
+[node name="RoadStraight4" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 14)
+
+[node name="RoadCornerCurved" parent="Terrain" instance=ExtResource("5_cfag0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -42)
+
+[node name="RoadCornerCurved5" parent="Terrain" instance=ExtResource("5_cfag0")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 26, 0, -42)
+
+[node name="RoadCornerCurved2" parent="Terrain" instance=ExtResource("5_cfag0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 0)
+
+[node name="RoadCornerCurved3" parent="Terrain" instance=ExtResource("5_cfag0")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -44, 0, 70)
+
+[node name="RoadCornerCurved4" parent="Terrain" instance=ExtResource("5_cfag0")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 26, 0, 70)
+
+[node name="Base" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -28)
+
+[node name="Base2" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -14)
+
+[node name="Base3" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -28)
+
+[node name="Base4" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -14)
+
+[node name="Base33" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -28)
+
+[node name="Base34" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -14)
+
+[node name="Base5" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 14)
+
+[node name="Base6" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 28)
+
+[node name="Base7" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 14)
+
+[node name="Base8" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 28)
+
+[node name="RoadStraight5" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 56)
+
+[node name="RoadStraight6" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 42)
+
+[node name="RoadStraight10" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 28)
+
+[node name="RoadStraight11" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 14)
+
+[node name="RoadStraight12" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 56)
+
+[node name="RoadStraight13" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 42)
+
+[node name="RoadStraight14" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 28)
+
+[node name="RoadStraight15" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 14)
+
+[node name="RoadStraight18" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -14)
+
+[node name="RoadStraight19" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -28)
+
+[node name="RoadStraight16" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 56)
+
+[node name="RoadStraight17" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 42)
+
+[node name="RoadStraight7" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, 70)
+
+[node name="RoadStraight20" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12, 0, -42)
+
+[node name="RoadStraight8" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -16, 0, 70)
+
+[node name="RoadStraight9" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, 0, 70)
+
+[node name="RoadStraight21" parent="Terrain" instance=ExtResource("4_1u4ly")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, 0, 0)
+
+[node name="Base9" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 42)
+
+[node name="Base10" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 56)
+
+[node name="Base11" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 42)
+
+[node name="Base12" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 56)
+
+[node name="Base13" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 14)
+
+[node name="Base14" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 28)
+
+[node name="Base15" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 42)
+
+[node name="Base16" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 56)
+
+[node name="Base17" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -84)
+
+[node name="Base18" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -70)
+
+[node name="Base19" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -56)
+
+[node name="Base20" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -42)
+
+[node name="Base21" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -84)
+
+[node name="Base22" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -70)
+
+[node name="Base23" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -56)
+
+[node name="Base24" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -42)
+
+[node name="Base25" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -140)
+
+[node name="Base26" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -126)
+
+[node name="Base27" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -112)
+
+[node name="Base28" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -98)
+
+[node name="Base29" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -140)
+
+[node name="Base30" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -126)
+
+[node name="Base31" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -112)
+
+[node name="Base32" parent="Terrain" instance=ExtResource("6_44t2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -98)
+
+[node name="RoadStraightCrossing" parent="Terrain" instance=ExtResource("7_pihff")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12, 0, 0)
+
+[node name="RoadStraightCrossing2" parent="Terrain" instance=ExtResource("7_pihff")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16, 0, 0)
+
+[node name="RoadTSplit" parent="Terrain" instance=ExtResource("8_cexwy")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 0, 70)
+
+[node name="RoadTSplit2" parent="Terrain" instance=ExtResource("8_cexwy")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 26, 0, 0)
+
+[node name="BuildingA" parent="Terrain" instance=ExtResource("9_ov5pk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 28)
+
+[node name="BuildingA2" parent="Terrain" instance=ExtResource("9_ov5pk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 42)
+
+[node name="BuildingA3" parent="Terrain" instance=ExtResource("9_ov5pk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 56)
+
+[node name="Ground" type="StaticBody3D" parent="Terrain" groups=["Grass"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+collision_mask = 18
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_w5he8")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_40nde")
+
+[node name="Ramp" type="CSGBox3D" parent="Terrain" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -13, 1, -53)
+use_collision = true
+collision_mask = 82
+size = Vector3(5, 1, 9)
+
+[node name="Ramp3" type="CSGBox3D" parent="Terrain" groups=["Road"]]
+transform = Transform3D(-1, -1.49012e-08, -7.45058e-08, 1.94149e-08, 0.866026, -0.5, 8.73587e-08, -0.5, -0.866026, -17, 1, -15)
+use_collision = true
+collision_mask = 82
+size = Vector3(5, 1, 9)
+
+[node name="Ramp2" type="CSGBox3D" parent="Terrain" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, -32, 1, -17)
+use_collision = true
+collision_mask = 82
+size = Vector3(5, 1, 9)
+
+[node name="Player" parent="." instance=ExtResource("7_1k2ef")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, -37)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mni1w")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 13, 0)
+light_color = Color(1, 0.952941, 1, 1)
+shadow_enabled = true
+
+[node name="PauseAndHUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("11_w4w4x")]
+player = NodePath("../Player")
+
+[node name="SpringyPropsManager" type="Node3D" parent="."]
+script = ExtResource("11_b02xr")
+
+[node name="TrafficLightA" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -9, 0.7, -7)
+
+[node name="TrafficLightA2" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(7.54979e-08, 0, 1, 0, 1, 0, -1, 0, 7.54979e-08, 5, 0.7, -7)
+
+[node name="TrafficLightA3" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.7, 7)
+
+[node name="TrafficLightA4" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0.7, 7)
+
+[node name="SpringyTrashBinSquare" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.75, 28)
+
+[node name="SpringyTrashBinSquare2" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.75, -13)
+
+[node name="SpringyTrashBinSquare9" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0.75, 24)
+
+[node name="SpringyTrashBinSquare3" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -62)
+
+[node name="SpringyTrashBinSquare6" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -59)
+
+[node name="SpringyTrashBinSquare4" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -65)
+
+[node name="SpringyTrashBinSquare7" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -56)
+
+[node name="SpringyTrashBinSquare8" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -50)
+
+[node name="SpringyTrashBinSquare5" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -53)
+
+[node name="SpringyTrashBinSquare10" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -80)
+
+[node name="SpringyTrashBinSquare11" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -77)
+
+[node name="SpringyTrashBinSquare12" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -83)
+
+[node name="SpringyTrashBinSquare13" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -74)
+
+[node name="SpringyTrashBinSquare14" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -68)
+
+[node name="SpringyTrashBinSquare15" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -71)
+
+[node name="SpringyTrashBinSquare16" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -98)
+
+[node name="SpringyTrashBinSquare17" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -95)
+
+[node name="SpringyTrashBinSquare18" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -101)
+
+[node name="SpringyTrashBinSquare19" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -92)
+
+[node name="SpringyTrashBinSquare20" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -86)
+
+[node name="SpringyTrashBinSquare21" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.75, -89)
+
+[node name="SpringyTrashBinSquare22" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -62)
+
+[node name="SpringyTrashBinSquare23" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -59)
+
+[node name="SpringyTrashBinSquare24" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -65)
+
+[node name="SpringyTrashBinSquare25" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -56)
+
+[node name="SpringyTrashBinSquare26" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -50)
+
+[node name="SpringyTrashBinSquare27" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -53)
+
+[node name="SpringyTrashBinSquare28" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -80)
+
+[node name="SpringyTrashBinSquare29" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -77)
+
+[node name="SpringyTrashBinSquare30" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -83)
+
+[node name="SpringyTrashBinSquare31" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -74)
+
+[node name="SpringyTrashBinSquare32" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -68)
+
+[node name="SpringyTrashBinSquare33" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -71)
+
+[node name="SpringyTrashBinSquare34" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -98)
+
+[node name="SpringyTrashBinSquare35" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -95)
+
+[node name="SpringyTrashBinSquare36" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -101)
+
+[node name="SpringyTrashBinSquare37" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -92)
+
+[node name="SpringyTrashBinSquare38" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -86)
+
+[node name="SpringyTrashBinSquare39" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0.75, -89)
+
+[node name="SpringyTrashBinSquare40" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -62)
+
+[node name="SpringyTrashBinSquare41" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -59)
+
+[node name="SpringyTrashBinSquare42" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -65)
+
+[node name="SpringyTrashBinSquare43" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -56)
+
+[node name="SpringyTrashBinSquare44" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -50)
+
+[node name="SpringyTrashBinSquare45" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -53)
+
+[node name="SpringyTrashBinSquare46" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -80)
+
+[node name="SpringyTrashBinSquare47" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -77)
+
+[node name="SpringyTrashBinSquare48" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -83)
+
+[node name="SpringyTrashBinSquare49" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -74)
+
+[node name="SpringyTrashBinSquare50" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -68)
+
+[node name="SpringyTrashBinSquare51" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -71)
+
+[node name="SpringyTrashBinSquare52" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -98)
+
+[node name="SpringyTrashBinSquare53" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -95)
+
+[node name="SpringyTrashBinSquare54" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -101)
+
+[node name="SpringyTrashBinSquare55" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -92)
+
+[node name="SpringyTrashBinSquare56" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -86)
+
+[node name="SpringyTrashBinSquare57" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0.75, -89)
+
+[node name="SpringyTrashBinSquare58" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -62)
+
+[node name="SpringyTrashBinSquare59" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -59)
+
+[node name="SpringyTrashBinSquare60" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -65)
+
+[node name="SpringyTrashBinSquare61" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -56)
+
+[node name="SpringyTrashBinSquare62" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -50)
+
+[node name="SpringyTrashBinSquare63" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -53)
+
+[node name="SpringyTrashBinSquare64" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -80)
+
+[node name="SpringyTrashBinSquare65" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -77)
+
+[node name="SpringyTrashBinSquare66" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -83)
+
+[node name="SpringyTrashBinSquare67" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -74)
+
+[node name="SpringyTrashBinSquare68" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -68)
+
+[node name="SpringyTrashBinSquare69" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -71)
+
+[node name="SpringyTrashBinSquare70" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -98)
+
+[node name="SpringyTrashBinSquare71" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -95)
+
+[node name="SpringyTrashBinSquare72" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -101)
+
+[node name="SpringyTrashBinSquare73" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -92)
+
+[node name="SpringyTrashBinSquare74" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -86)
+
+[node name="SpringyTrashBinSquare75" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, -89)
+
+[node name="SpringyTrashBinSquare76" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -62)
+
+[node name="SpringyTrashBinSquare77" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -59)
+
+[node name="SpringyTrashBinSquare78" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -65)
+
+[node name="SpringyTrashBinSquare79" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -56)
+
+[node name="SpringyTrashBinSquare80" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -50)
+
+[node name="SpringyTrashBinSquare81" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -53)
+
+[node name="SpringyTrashBinSquare82" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -80)
+
+[node name="SpringyTrashBinSquare83" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -77)
+
+[node name="SpringyTrashBinSquare84" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -83)
+
+[node name="SpringyTrashBinSquare85" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -74)
+
+[node name="SpringyTrashBinSquare86" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -68)
+
+[node name="SpringyTrashBinSquare87" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -71)
+
+[node name="SpringyTrashBinSquare88" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -98)
+
+[node name="SpringyTrashBinSquare89" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -95)
+
+[node name="SpringyTrashBinSquare90" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -101)
+
+[node name="SpringyTrashBinSquare91" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -92)
+
+[node name="SpringyTrashBinSquare92" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -86)
+
+[node name="SpringyTrashBinSquare93" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -89)
+
+[node name="SpringyGasPump" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0.75, 30)
+
+[node name="SpringyGasPump2" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0.75, 26)

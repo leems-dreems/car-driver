@@ -14,14 +14,14 @@ vertex_color_use_as_albedo = true
 offsets = PackedFloat32Array(0, 0.484582, 0.819383, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0.932249, 0.891119, 2.31028e-06, 1, 0.920752, 0.355072, 0, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_2d36g"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t5ley"]
 gradient = SubResource("Gradient_6ksbl")
 
 [sub_resource type="Curve" id="Curve_vbjrq"]
 _data = [Vector2(0.0392157, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.84081, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_h0mbi"]
+[sub_resource type="CurveTexture" id="CurveTexture_usnhc"]
 curve = SubResource("Curve_vbjrq")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7uuv0"]
@@ -31,8 +31,8 @@ initial_velocity_min = 8.0
 initial_velocity_max = 12.0
 damping_min = 5.0
 damping_max = 10.0
-color_ramp = SubResource("GradientTexture1D_2d36g")
-emission_curve = SubResource("CurveTexture_h0mbi")
+color_ramp = SubResource("GradientTexture1D_t5ley")
+emission_curve = SubResource("CurveTexture_usnhc")
 
 [sub_resource type="BoxMesh" id="BoxMesh_l5ueu"]
 size = Vector3(0.1, 0.1, 0.1)
@@ -43,10 +43,10 @@ size = Vector3(2.45641, 3.51965, 1)
 [node name="DetachableGasPump" type="Node3D"]
 script = ExtResource("1_cx65w")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="." groups=["CrashScene"]]
+[node name="RigidBody3D" type="RigidBody3D" parent="." groups=["CanCrash", "CrashScene"]]
 collision_layer = 64
 collision_mask = 87
-mass = 30.0
+mass = 500.0
 freeze = true
 freeze_mode = 1
 max_contacts_reported = 10
@@ -84,7 +84,7 @@ draw_pass_1 = SubResource("BoxMesh_l5ueu")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 256
-collision_mask = 2
+collision_mask = 66
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.00832367, 1.79281, 0)
