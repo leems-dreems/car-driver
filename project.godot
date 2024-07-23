@@ -155,6 +155,8 @@ Pause={
 3d_physics/layer_7="PhysicsProp"
 3d_physics/layer_8="StaticScenery"
 3d_physics/layer_9="PropUnfreezeRadius"
+3d_physics/layer_18="CarBumper"
+3d_physics/layer_19="CarDoor"
 
 [physics]
 
