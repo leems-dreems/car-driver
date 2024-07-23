@@ -401,6 +401,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.722075, 0)
 
 [node name="TrashCanCity" parent="CrashObjects" instance=ExtResource("12_mfpmr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 0)
+reset_time = 10.0
 kineticDetachThreshold = 50000.0
 
 [connection signal="body_exited" from="BoundingArea3D" to="BoundingArea3D" method="destroyExitingNode"]
