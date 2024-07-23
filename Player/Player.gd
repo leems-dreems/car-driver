@@ -141,13 +141,10 @@ func _physics_process(delta: float) -> void:
     elif is_on_floor():
       var xz_velocity := Vector3(velocity.x, 0, velocity.z)
       if xz_velocity.length() > stopping_speed:
-        if xz_velocity.length() > running_speed:
-          _dummy_skin.run()
-        else:
-          _dummy_skin.walk()
-        # _dummy_skin.set_moving_speed(inverse_lerp(0.0, move_speed, xz_velocity.length()))
+        _dummy_skin.set_moving(true)
+        _dummy_skin.set_moving_speed(inverse_lerp(0.0, move_speed, xz_velocity.length()))
       else:
-        _dummy_skin.idle()
+        _dummy_skin.set_moving(false)
 
     if is_just_on_floor:
       _landing_sound.play()
