@@ -19349,7 +19349,6 @@ tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-
 [sub_resource type="Animation" id="Animation_ohruv"]
 resource_name = "Running_A"
 length = 0.8
-loop_mode = 1
 tracks/0/type = "position_3d"
 tracks/0/imported = true
 tracks/0/enabled = true
@@ -29021,7 +29020,6 @@ tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-
 [sub_resource type="Animation" id="Animation_7ncmk"]
 resource_name = "Walking_A"
 length = 1.06667
-loop_mode = 1
 tracks/0/type = "position_3d"
 tracks/0/imported = true
 tracks/0/enabled = true

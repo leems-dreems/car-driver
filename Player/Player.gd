@@ -1,13 +1,6 @@
 class_name Player
 extends CharacterBody3D
 
-signal weapon_switched(weapon_name: String)
-
-const BULLET_SCENE := preload("Bullet.tscn")
-const COIN_SCENE := preload("Coin/Coin.tscn")
-
-enum WEAPON_TYPE { DEFAULT, GRENADE }
-
 ## Character maximum run speed on the ground.
 @export var move_speed := 8.0
 ## Movement acceleration (how fast character achieve maximum speed)
@@ -31,10 +24,8 @@ var useable_target : Node3D = null
 
 @onready var _rotation_root: Node3D = $CharacterRotationRoot
 @onready var _camera_controller: CameraController = $CameraController
-@onready var _attack_animation_player: AnimationPlayer = $CharacterRotationRoot/MeleeAnchor/AnimationPlayer
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
 @onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummySkin
-@onready var _character_skin: CharacterSkin = $CharacterRotationRoot/CharacterSkin
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 
@@ -166,9 +157,6 @@ func reset_position() -> void:
 
 
 func _get_camera_oriented_input() -> Vector3:
-  if _attack_animation_player.is_playing():
-    return Vector3.ZERO
-
   var raw_input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
   var input := Vector3.ZERO
