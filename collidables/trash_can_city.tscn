@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://dkfrqbc052o1n"]
+
+[ext_resource type="Script" path="res://collidables/TrashCanCity.gd" id="1_1j0fi"]
+[ext_resource type="ArrayMesh" uid="uid://duqmuekq6ubb5" path="res://assets/models/cityTrashCan.obj" id="2_67tko"]
+[ext_resource type="Texture2D" uid="uid://dtbtgruxlo6j5" path="res://assets/textures/cityTrashCan2.png" id="3_enk53"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jcnlw"]
+height = 0.25
+radius = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_03i2n"]
+height = 2.26332
+radius = 0.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rutik"]
+transparency = 4
+cull_mode = 2
+albedo_texture = ExtResource("3_enk53")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rrnj2"]
+height = 2.28829
+radius = 1.275
+
+[node name="TrashCanCity" type="Node3D"]
+script = ExtResource("1_1j0fi")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+collision_layer = 64
+collision_mask = 87
+freeze = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84827, 0)
+shape = SubResource("CylinderShape3D_jcnlw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14029, 0)
+shape = SubResource("CylinderShape3D_03i2n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = ExtResource("2_67tko")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_rutik")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 256
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.22064, 0)
+shape = SubResource("CylinderShape3D_rrnj2")
