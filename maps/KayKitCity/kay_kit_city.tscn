@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://defp4i4n5dard"]
+[gd_scene load_steps=26 format=3 uid="uid://defp4i4n5dard"]
 
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
 [ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="2_7fuac"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="11_w4w4x"]
 [ext_resource type="PackedScene" uid="uid://dnhe41455c4fi" path="res://collidables/springy_trash_bin_square.tscn" id="13_gd1lj"]
 [ext_resource type="PackedScene" uid="uid://bol1qtccjchrx" path="res://collidables/springy_gas_pump.tscn" id="14_xgfoh"]
+[ext_resource type="PackedScene" uid="uid://ds0e0h6kkjqxj" path="res://collidables/springy_trash_can_round.tscn" id="16_sloab"]
 
 [sub_resource type="Gradient" id="Gradient_u6ph6"]
 colors = PackedColorArray(0.746094, 0.746094, 0.746094, 1, 1, 1, 1, 1)
@@ -605,3 +606,33 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0
 
 [node name="SpringyGasPump2" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0.75, 26)
+
+[node name="SpringyTrashBinRound" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.75, 42)
+
+[node name="SpringyTrashBinRound2" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.75, 48)
+
+[node name="SpringyTrashBinRound5" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, 48)
+
+[node name="SpringyTrashBinRound6" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0.75, 48)
+
+[node name="SpringyTrashBinRound7" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.75, 51)
+
+[node name="SpringyTrashBinRound8" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, 51)
+
+[node name="SpringyTrashBinRound9" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0.75, 51)
+
+[node name="SpringyTrashBinRound10" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0.75, 51)
+
+[node name="SpringyTrashBinRound3" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.75, 45)
+
+[node name="SpringyTrashBinRound4" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0.75, 45)
