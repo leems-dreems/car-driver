@@ -1,13 +1,6 @@
 class_name Player
 extends CharacterBody3D
 
-signal weapon_switched(weapon_name: String)
-
-const BULLET_SCENE := preload("Bullet.tscn")
-const COIN_SCENE := preload("Coin/Coin.tscn")
-
-enum WEAPON_TYPE { DEFAULT, GRENADE }
-
 ## Character maximum run speed on the ground.
 @export var move_speed := 8.0
 ## Movement acceleration (how fast character achieve maximum speed)
@@ -21,6 +14,8 @@ enum WEAPON_TYPE { DEFAULT, GRENADE }
 ## Minimum horizontal speed on the ground. This controls when the character's animation tree changes
 ## between the idle and running states.
 @export var stopping_speed := 1.0
+## Speed to switch from walking to running
+@export var running_speed := 4.0
 
 ## Vehicle the player is currently in
 @export var current_vehicle : DriveableVehicle = null
@@ -29,9 +24,8 @@ var useable_target : Node3D = null
 
 @onready var _rotation_root: Node3D = $CharacterRotationRoot
 @onready var _camera_controller: CameraController = $CameraController
-@onready var _attack_animation_player: AnimationPlayer = $CharacterRotationRoot/MeleeAnchor/AnimationPlayer
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
-@onready var _character_skin: CharacterSkin = $CharacterRotationRoot/CharacterSkin
+@onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummySkin
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 
@@ -132,16 +126,16 @@ func _physics_process(delta: float) -> void:
 
     # Set character animation
     if is_just_jumping:
-      _character_skin.jump()
+      _dummy_skin.jump()
     elif not is_on_floor() and velocity.y < 0:
-      _character_skin.fall()
+      _dummy_skin.fall()
     elif is_on_floor():
       var xz_velocity := Vector3(velocity.x, 0, velocity.z)
       if xz_velocity.length() > stopping_speed:
-        _character_skin.set_moving(true)
-        _character_skin.set_moving_speed(inverse_lerp(0.0, move_speed, xz_velocity.length()))
+        _dummy_skin.set_moving(true)
+        _dummy_skin.set_moving_speed(inverse_lerp(0.0, move_speed, xz_velocity.length()))
       else:
-        _character_skin.set_moving(false)
+        _dummy_skin.set_moving(false)
 
     if is_just_on_floor:
       _landing_sound.play()
@@ -163,9 +157,6 @@ func reset_position() -> void:
 
 
 func _get_camera_oriented_input() -> Vector3:
-  if _attack_animation_player.is_playing():
-    return Vector3.ZERO
-
   var raw_input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
   var input := Vector3.ZERO
