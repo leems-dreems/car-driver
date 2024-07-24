@@ -25,6 +25,7 @@ func _ready ():
   is_shut = true
   visible = false
   shutDoorMesh.visible = true
+  set_collision_layer_value(19, false)
 
 
 func _physics_process (delta: float) -> void:
@@ -42,6 +43,7 @@ func open () -> void:
   shutDoorMesh.visible = false
   doorOpenSFX.play()
   enter_car_collision_shape.disabled = false
+  set_collision_layer_value(19, true)
 
   open_timer = get_tree().create_timer(0.5)
   open_timer.timeout.connect(func ():
@@ -59,6 +61,7 @@ func shut () -> void:
   shutDoorMesh.visible = true
   doorShutSFX.play()
   enter_car_collision_shape.disabled = true
+  set_collision_layer_value(19, false)
 
 
 func open_or_shut () -> void:
