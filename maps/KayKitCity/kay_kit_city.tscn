@@ -614,31 +614,31 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0.75, 26)
 
 [node name="SpringyTrashBinRound" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.75, 42)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0.75, 34)
 
 [node name="SpringyTrashBinRound2" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.75, 48)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0.75, 40)
 
 [node name="SpringyTrashBinRound5" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, 48)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0.75, 40)
 
 [node name="SpringyTrashBinRound6" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0.75, 48)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.75, 40)
 
 [node name="SpringyTrashBinRound7" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.75, 51)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0.75, 43)
 
 [node name="SpringyTrashBinRound8" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.75, 51)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.75, 43)
 
 [node name="SpringyTrashBinRound9" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0.75, 51)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.75, 43)
 
 [node name="SpringyTrashBinRound10" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0.75, 51)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0.75, 43)
 
 [node name="SpringyTrashBinRound3" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.75, 45)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0.75, 37)
 
 [node name="SpringyTrashBinRound4" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0.75, 45)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.75, 37)
