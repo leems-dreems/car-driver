@@ -1,0 +1,111 @@
+[gd_scene load_steps=20 format=3 uid="uid://ds0e0h6kkjqxj"]
+
+[ext_resource type="Script" path="res://collidables/springy_trash_can_round.gd" id="1_chnk8"]
+[ext_resource type="ArrayMesh" uid="uid://duqmuekq6ubb5" path="res://assets/models/cityTrashCan.obj" id="2_arfsr"]
+[ext_resource type="AudioStream" uid="uid://clui70lbe0333" path="res://assets/audio/Hanna-Barbera SFX/hit_1.wav" id="3_g156r"]
+[ext_resource type="Texture2D" uid="uid://dtbtgruxlo6j5" path="res://assets/textures/cityTrashCan2.png" id="3_h3p1l"]
+[ext_resource type="AudioStream" uid="uid://mqbnccxbgjdr" path="res://assets/audio/Hanna-Barbera SFX/hit_2.wav" id="4_ubaik"]
+[ext_resource type="AudioStream" uid="uid://cs0smpmvmbrm2" path="res://assets/audio/Hanna-Barbera SFX/hit_3.wav" id="5_oy64b"]
+[ext_resource type="AudioStream" uid="uid://bwn5sr0828syv" path="res://assets/audio/Hanna-Barbera SFX/hit_4.wav" id="6_584nw"]
+[ext_resource type="AudioStream" uid="uid://bdkk3mqeoa16u" path="res://assets/audio/Hanna-Barbera SFX/hit_5.wav" id="7_8wgmo"]
+[ext_resource type="AudioStream" uid="uid://bd0nkixrwchtj" path="res://assets/audio/Hanna-Barbera SFX/hit_6.wav" id="8_83oow"]
+[ext_resource type="AudioStream" uid="uid://b45dgh56n56fo" path="res://assets/audio/Hanna-Barbera SFX/hit_7.wav" id="9_upqea"]
+[ext_resource type="AudioStream" uid="uid://ct1pgm7jhp1ts" path="res://assets/audio/Hanna-Barbera SFX/hit_8.wav" id="10_1b68x"]
+[ext_resource type="AudioStream" uid="uid://csyfjrbnl7xu5" path="res://assets/audio/Hanna-Barbera SFX/hit_9.wav" id="11_njm3p"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43kg8"]
+friction = 0.5
+bounce = 0.3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fq2rn"]
+height = 0.25
+radius = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fkdsi"]
+height = 2.26332
+radius = 0.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2vps4"]
+transparency = 4
+cull_mode = 2
+albedo_texture = ExtResource("3_h3p1l")
+
+[sub_resource type="SphereMesh" id="SphereMesh_fk7ck"]
+radius = 0.1
+height = 0.2
+radial_segments = 12
+rings = 6
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_xi5cl"]
+points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.0273234, -0.000674605, -0.091251, -0.033203, -0.00368038, -0.000674605, 0.0273401, -0.094887, -0.0399752, 0.087652, 0.0235076, 0.0236569, -0.0882122, 0.0388687, -0.00672694, 0.027269, 0.0932929, 0.0355924, -0.0634742, -0.0671733, 0.0447611, 0.0878618, 0.00537491, -0.0401042, -0.0636745, -0.0643473, -0.0825919, 0.0242577, -0.0492209, -0.0490121, -0.0271631, 0.0808904, 0.0844492, -0.0243056, 0.0449228, 0.0841661, 0.0242248, -0.0461204, -0.00677629, 0.0886195, -0.0434421, -0.0822497, 0.0271665, 0.0476506, -0.0342178, -0.091493, 0.0115061, 0.0386685, 0.0635835, 0.0659385, 0.0449186, -0.0243224, 0.0844413, 0.0780522, -0.0605514, -0.00368842, 0.0176745, -0.091791, -0.0312626, 0.0414341, 0.0631837, -0.063856, 0.0476588, -0.0271797, -0.0822327, -0.0492209, -0.0242577, -0.0825919, -0.067573, 0.0608245, -0.0401971, -0.0397945, -0.0631744, 0.0655115, -0.0370558, 0.0606348, 0.0690515, 0.0810561, 0.0242025, 0.050793, -0.000674605, -0.02734, -0.0948867, 0.0841654, -0.0242246, -0.04612, -0.0948948, 0.0273233, -0.000674605, -0.000674605, -0.0364572, 0.090488)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o1yf6"]
+streams_count = 9
+stream_0/stream = ExtResource("3_g156r")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("4_ubaik")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("5_oy64b")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("6_584nw")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("7_8wgmo")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("8_83oow")
+stream_5/weight = 1.0
+stream_6/stream = ExtResource("9_upqea")
+stream_6/weight = 1.0
+stream_7/stream = ExtResource("10_1b68x")
+stream_7/weight = 1.0
+stream_8/stream = ExtResource("11_njm3p")
+stream_8/weight = 1.0
+
+[node name="SpringyTrashBinRound" type="Node3D"]
+script = ExtResource("1_chnk8")
+linear_breaking_point = 0.075
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+collision_layer = 64
+collision_mask = 87
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 30.0
+physics_material_override = SubResource("PhysicsMaterial_43kg8")
+max_contacts_reported = 10
+contact_monitor = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84827, 0)
+shape = SubResource("CylinderShape3D_fq2rn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14029, 0)
+shape = SubResource("CylinderShape3D_fkdsi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = ExtResource("2_arfsr")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_2vps4")
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+node_a = NodePath("../StaticBody3D")
+node_b = NodePath("../RigidBody3D")
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("SphereMesh_fk7ck")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_xi5cl")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_o1yf6")
+doppler_tracking = 2
