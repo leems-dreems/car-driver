@@ -15,6 +15,10 @@ run/main_scene="res://maps/KayKitCity/kay_kit_city.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Game="*res://scripts/Game.gd"
+
 [display]
 
 window/size/mode=2
@@ -155,6 +159,7 @@ Pause={
 3d_physics/layer_7="PhysicsProp"
 3d_physics/layer_8="StaticScenery"
 3d_physics/layer_9="PropUnfreezeRadius"
+3d_physics/layer_10="ObjectiveArea"
 3d_physics/layer_18="CarBumper"
 3d_physics/layer_19="CarDoor"
 3d_physics/layer_21="Explosion"

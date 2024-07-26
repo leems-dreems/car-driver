@@ -19,6 +19,7 @@ extends CharacterBody3D
 
 ## Vehicle the player is currently in
 @export var current_vehicle : DriveableVehicle = null
+@export var current_mission : Mission = null
 ## The useable target the player is looking at
 var useable_target : Node3D = null
 
@@ -112,10 +113,14 @@ func _physics_process(delta: float) -> void:
 
     # Try to use whatever we're aiming at
     if is_using and useable_target != null:
-      if useable_target.has_method('open_or_shut'):
+      if useable_target.has_method("open_or_shut"):
         useable_target.open_or_shut()
       elif useable_target is EnterVehicleCollider:
         enterVehicle(useable_target.vehicle)
+      elif useable_target is ObjectiveArea:
+        if useable_target.start_mission:
+          current_mission = useable_target.get_parent()
+        useable_target.trigger(self)
 
     velocity.y += _gravity * delta
 
@@ -188,6 +193,7 @@ func enterVehicle (vehicle: DriveableVehicle) -> void:
   vehicle.is_being_driven = true
   $CharacterCollisionShape.disabled = true
   visible = false
+  Game.player_changed_vehicle.emit()
 
 
 func exitVehicle () -> void:
@@ -195,6 +201,7 @@ func exitVehicle () -> void:
   global_position = current_vehicle.global_position
   global_position.y += 5
   current_vehicle = null
+  Game.player_changed_vehicle.emit()
 
   await get_tree().create_timer(0.1).timeout
   $CharacterCollisionShape.disabled = false

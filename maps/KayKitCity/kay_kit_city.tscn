@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://defp4i4n5dard"]
+[gd_scene load_steps=32 format=3 uid="uid://defp4i4n5dard"]
 
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
 [ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="2_7fuac"]
@@ -16,6 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://dnhe41455c4fi" path="res://collidables/springy_trash_bin_square.tscn" id="13_gd1lj"]
 [ext_resource type="PackedScene" uid="uid://bol1qtccjchrx" path="res://collidables/springy_gas_pump.tscn" id="14_xgfoh"]
 [ext_resource type="PackedScene" uid="uid://ds0e0h6kkjqxj" path="res://collidables/springy_trash_can_round.tscn" id="16_sloab"]
+[ext_resource type="Script" path="res://missions/missions_manager.gd" id="16_xckov"]
+[ext_resource type="Script" path="res://missions/mission.gd" id="17_a4v38"]
+[ext_resource type="Script" path="res://missions/objective_area.gd" id="18_y7o6o"]
 
 [sub_resource type="Gradient" id="Gradient_u6ph6"]
 colors = PackedColorArray(0.746094, 0.746094, 0.746094, 1, 1, 1, 1, 1)
@@ -47,6 +50,16 @@ sky_material = SubResource("ProceduralSkyMaterial_tr5dd")
 [sub_resource type="Environment" id="Environment_mni1w"]
 background_mode = 2
 sky = SubResource("Sky_en3uj")
+
+[sub_resource type="BoxMesh" id="BoxMesh_xiwhd"]
+size = Vector3(6, 4, 6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oncjh"]
+transparency = 1
+albedo_color = Color(0, 1, 0, 0.439216)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_sc38f"]
+points = PackedVector3Array(-3, -2, -3, -3, 2, -3, 3, -2, -3, -3, -2, 3, -3, 2, 3, 3, 2, -3, 3, -2, 3, 3, 2, 3)
 
 [node name="KayKitCity" type="Node3D"]
 
@@ -851,3 +864,43 @@ reset_time = 10.0
 [node name="SpringyTrashBinRound4" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.75, 37)
 reset_time = 10.0
+
+[node name="MissionsManager" type="Node" parent="."]
+script = ExtResource("16_xckov")
+
+[node name="Mission_1" type="Node3D" parent="MissionsManager" node_paths=PackedStringArray("objectives")]
+script = ExtResource("17_a4v38")
+mission_name = "The Gas Station Mission"
+objectives = [NodePath("Start"), NodePath("End")]
+
+[node name="Start" type="Area3D" parent="MissionsManager/Mission_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3, -29)
+collision_layer = 512
+collision_mask = 18
+script = ExtResource("18_y7o6o")
+objective_text = "Start Mission"
+start_mission = true
+trigger_on_foot = true
+trigger_method = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MissionsManager/Mission_1/Start"]
+mesh = SubResource("BoxMesh_xiwhd")
+surface_material_override/0 = SubResource("StandardMaterial3D_oncjh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MissionsManager/Mission_1/Start"]
+shape = SubResource("ConvexPolygonShape3D_sc38f")
+
+[node name="End" type="Area3D" parent="MissionsManager/Mission_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 3, 19)
+collision_layer = 512
+collision_mask = 18
+script = ExtResource("18_y7o6o")
+objective_text = "Drive to the gas station"
+trigger_in_vehicle = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MissionsManager/Mission_1/End"]
+mesh = SubResource("BoxMesh_xiwhd")
+surface_material_override/0 = SubResource("StandardMaterial3D_oncjh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MissionsManager/Mission_1/End"]
+shape = SubResource("ConvexPolygonShape3D_sc38f")
