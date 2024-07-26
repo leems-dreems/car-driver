@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://lfmcun5yh37r"]
+
+[ext_resource type="Script" path="res://traffic/traffic_path_follower.gd" id="1_ub7a2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1d423"]
+size = Vector3(3, 3, 6)
+
+[node name="TrafficPathFollower" type="PathFollow3D"]
+script = ExtResource("1_ub7a2")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 986
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_1d423")
