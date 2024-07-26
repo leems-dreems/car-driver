@@ -56,7 +56,7 @@ func respawn() -> void:
 ## Applies an explosion force to a body. If [local_offset] is unspecified, the force will be offset
 ## to slightly above the body's center of mass, to impart a bit of top-spin.
 func apply_explosion_force(_body: RigidBody3D, delta: float, local_offset: Vector3 = Vector3.INF, multiplier: float = 1.0) -> void:
-  var direction_vector: Vector3 = (_body.global_position + _body.center_of_mass) - global_position
+  var direction_vector: Vector3 = (_body.global_position + _body.center_of_mass) - explosion_area.global_position
   # Compare the explosion's current scale to its max scale to get a strength multiplier
   var fade_multiplier: float = explosion_scale / explosion_area.scale.x
   var force_vector := direction_vector.normalized() * fade_multiplier * explosion_force_multiplier * multiplier
