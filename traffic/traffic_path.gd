@@ -2,7 +2,7 @@ class_name TrafficPath extends Path3D
 ## A path that spawns traffic driving along it
 
 @export var number_of_vehicles := 5
-@export var target_speed := 20.0
+@export var road_speed := 20.0
 var compact_car_scene:= preload("res://cars/compact.tscn")
 var traffic_follower_scene:= preload("res://traffic/traffic_path_follower.tscn")
 var followers: Array[TrafficPathFollower] = []
@@ -25,13 +25,33 @@ func _physics_process(_delta: float) -> void:
   for follower in followers:
     if follower.vehicle != null and not follower.vehicle.is_being_driven:
       if follower.vehicle.get_wheel_contact_count() >= 3:
-        follower.vehicle.ignition_on = true
+        var closest_offset := curve.get_closest_offset(follower.vehicle.position)
+        # Get the Y axis rotation of the nearest position on the path
+        follower.progress = closest_offset + 5.0
+        var closest_path_rotation_y: float = follower.rotation.y
+        # Get the Y axis rotation of a position some distance along the path
+        follower.progress += 10.0
+        var future_path_rotation_y: float = follower.rotation.y
+        # Compare the rotations and calculate vehicle inputs
+        var path_angle_difference := angle_difference(closest_path_rotation_y, future_path_rotation_y)
         var speed := follower.vehicle.linear_velocity.length()
+        var target_speed: float
+        if path_angle_difference > PI / 4:
+          target_speed = 3.0
+        else:
+          target_speed = road_speed
+        follower.vehicle.ignition_on = true
         if speed < target_speed:
           if speed < target_speed / 2:
             follower.vehicle.throttle_input = 0.5
           else:
             follower.vehicle.throttle_input = clampf(1 - (target_speed / speed), 0.0, 0.5)
+        elif speed > target_speed * 2.0:
+          follower.vehicle.throttle_input = 0.0
+          follower.vehicle.brake_input = 0.5
+        # Steer to match the rotation of the nearest path position
+        var steering_angle_difference := angle_difference(follower.vehicle.rotation.y, closest_path_rotation_y)
+        follower.vehicle.steering_input = clampf(steering_angle_difference, 0.0, 1.0)
       else:
         follower.vehicle.throttle_input = 0.0
     else:
@@ -44,7 +64,7 @@ func _physics_process(_delta: float) -> void:
         new_vehicle.position = follower.position
         new_vehicle.rotation = follower.rotation
         add_child(new_vehicle)
-        # Break so as to avoid adding 2 vehicles in the same frame
+        # Break so as to avoid adding 2 vehicles in the same physics step
         break
       else:
         follower.just_moved = false
