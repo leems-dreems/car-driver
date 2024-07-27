@@ -1,8 +1,9 @@
-extends Node3D
+class_name VehicleController extends Node3D
 
 @export var vehicle_node : DriveableVehicle
 
 func _physics_process (delta) -> void:
+  if not vehicle_node: return
   if not vehicle_node.is_being_driven:
     vehicle_node.ignition_on = false
     return

@@ -233,7 +233,6 @@ shape = SubResource("SphereShape3D_jv0dm")
 
 [node name="OpenDoorLeft" type="RigidBody3D" parent="ColliderBits" node_paths=PackedStringArray("shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape", "door_latch", "body_latch") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
-top_level = true
 visible = false
 collision_layer = 262152
 collision_mask = 83
@@ -298,7 +297,6 @@ shape = SubResource("SphereShape3D_jv0dm")
 
 [node name="OpenDoorRight" type="RigidBody3D" parent="ColliderBits" node_paths=PackedStringArray("shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape", "door_latch", "body_latch") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
-top_level = true
 visible = false
 collision_layer = 262152
 collision_mask = 83

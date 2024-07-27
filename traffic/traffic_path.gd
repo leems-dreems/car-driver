@@ -26,7 +26,7 @@ func _physics_process(_delta: float) -> void:
     follower.progress = randf_range(0, path_length)
     var new_vehicle: Vehicle = compact_car_scene.instantiate()
     follower.vehicle = new_vehicle
+    new_vehicle.position = follower.position
+    new_vehicle.rotation = follower.rotation
     add_child(new_vehicle)
-    new_vehicle.global_position = follower.global_position
-    new_vehicle.global_rotation = follower.global_rotation
   return

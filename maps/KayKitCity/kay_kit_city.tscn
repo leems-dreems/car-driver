@@ -1,7 +1,6 @@
-[gd_scene load_steps=35 format=3 uid="uid://defp4i4n5dard"]
+[gd_scene load_steps=34 format=3 uid="uid://defp4i4n5dard"]
 
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
-[ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="2_7fuac"]
 [ext_resource type="PackedScene" uid="uid://wrut3fs81xjv" path="res://maps/KayKitCity/terrain_pieces/road_junction.tscn" id="3_6tcif"]
 [ext_resource type="PackedScene" uid="uid://djoco1viojc80" path="res://maps/KayKitCity/terrain_pieces/road_straight.tscn" id="4_1u4ly"]
 [ext_resource type="PackedScene" uid="uid://maofgh0s33e8" path="res://maps/KayKitCity/terrain_pieces/road_corner_curved.tscn" id="5_cfag0"]
@@ -74,9 +73,6 @@ point_count = 10
 
 [node name="CompactCar" parent="." instance=ExtResource("1_djukj")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -17, 2, -30)
-
-[node name="VehicleController" parent="." node_paths=PackedStringArray("vehicle_node") instance=ExtResource("2_7fuac")]
-vehicle_node = NodePath("../CompactCar")
 
 [node name="Terrain" type="Node3D" parent="."]
 

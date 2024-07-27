@@ -1,8 +1,8 @@
 class_name DriveableVehicle extends Vehicle
 
 var is_being_driven := false
-var starting_origin : Vector3
-var starting_basis : Basis
+var starting_origin: Vector3
+var starting_basis: Basis
 var waiting_to_respawn := false
 @onready var door_left: RigidBody3D = $ColliderBits/OpenDoorLeft
 @onready var door_right: RigidBody3D = $ColliderBits/OpenDoorRight
@@ -13,7 +13,7 @@ func _ready () -> void:
   starting_origin = global_position
   starting_basis = Basis(transform.basis)
   $ColliderBits/EnterCarCollider.vehicle = self
-  await get_tree().create_timer(0.5).timeout
+  await get_tree().create_timer(0.2).timeout
   unfreeze_bodies()
   return
 
@@ -37,11 +37,15 @@ func respawn () -> void:
 
 func freeze_bodies() -> void:
   freeze = true
+  door_left.top_level = false
   door_left.freeze = true
+  door_right.top_level = false
   door_right.freeze = true
 
 
 func unfreeze_bodies() -> void:
   freeze = false
+  door_left.top_level = true
   door_left.freeze = false
+  door_right.top_level = true
   door_right.freeze = false
