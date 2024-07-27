@@ -72,7 +72,10 @@ stream_3/weight = 1.0
 
 [node name="TrafficLightA" type="Node3D"]
 script = ExtResource("1_seoio")
-linear_breaking_point = 0.075
+linear_breaking_point = 0.05
+
+[node name="CenterOfMassMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 2.5, 0.3)
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." groups=["CanCrash"]]
 collision_layer = 64
