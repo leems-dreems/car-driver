@@ -248,26 +248,26 @@ extends RigidBody3D
 ## the responsivness of the tire.
 ## Surface detection uses node groups to identify the surface, so make sure
 ## your staticbodies and rigidbodies belong to one of these groups.
-@export var tire_stiffnesses := { "Road" : 10.0, "Dirt" : 0.5, "Grass" : 0.5 }
+@export var tire_stiffnesses := {"Road" : 10.0, "Dirt" : 0.5, "Grass" : 0.5}
 ## A multiplier for the amount of force a tire can apply based on the surface.
 ## Surface detection uses node groups to identify the surface, so make sure
 ## your staticbodies and rigidbodies belong to one of these groups.
-@export var coefficient_of_friction := { "Road" : 3.0, "Dirt" : 2.4, "Grass" : 2.0 }
+@export var coefficient_of_friction := {"Road" : 3.0, "Dirt" : 2.4, "Grass" : 2.0}
 ## A multiplier for the amount of rolling resistance force based on the surface.
 ## Surface detection uses node groups to identify the surface, so make sure
 ## your staticbodies and rigidbodies belong to one of these groups.
-@export var rolling_resistance := { "Road" : 1.0, "Dirt" : 2.0, "Grass" : 4.0 }
+@export var rolling_resistance := {"Road" : 1.0, "Dirt" : 2.0, "Grass" : 4.0}
 ## A multiplier to provide more grip based on the amount of lateral wheel slip.
 ## This can be used to keep vehicles from sliding a long distance, but may provide
 ## unrealistically high amounts of grip.
 ## Surface detection uses node groups to identify the surface, so make sure
 ## your staticbodies and rigidbodies belong to one of these groups.
-@export var lateral_grip_assist := { "Road" : 0.05, "Dirt" : 0.0, "Grass" : 0.0}
+@export var lateral_grip_assist := {"Road" : 0.05, "Dirt" : 0.0, "Grass" : 0.0}
 ## A multiplier to adjust longitudinal grip to differ from lateral grip.
 ## Useful for allowing vehicles to have wheel spin and maintain high lateral grip.
 ## Surface detection uses node groups to identify the surface, so make sure
 ## your staticbodies and rigidbodies belong to one of these groups.
-@export var longitudinal_grip_ratio := { "Road" : 0.5, "Dirt": 0.5, "Grass" : 0.5}
+@export var longitudinal_grip_ratio := {"Road" : 0.5, "Dirt": 0.5, "Grass" : 0.5}
 @export_subgroup("Front Axle", "front_")
 ## Tire radius in meters
 @export var front_tire_radius := 0.3
