@@ -22,6 +22,7 @@ collision_mask = 195
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
+floor_max_angle = 1.0472
 platform_floor_layers = 4294967234
 script = ExtResource("1_rvo1c")
 acceleration = 6.0

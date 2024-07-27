@@ -919,3 +919,5 @@ script = ExtResource("20_jlqe1")
 
 [node name="TrafficPathFollower" parent="TrafficManager/TrafficPath" instance=ExtResource("21_u0y4w")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Testing Stuff" type="Node3D" parent="."]

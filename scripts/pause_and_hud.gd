@@ -30,10 +30,7 @@ func _update_hud() -> void:
       mission_label.text = current_objective.objective_text
   
   if player.current_vehicle != null:
-    vehicle_hud_label.text = "Throttle: " + "%.2f" % player.current_vehicle.throttle_input
-    vehicle_hud_label.text += "\nBrake: " + "%.2f" % player.current_vehicle.brake_input
-    vehicle_hud_label.text += "\nHandbrake: " + str(player.current_vehicle.handbrake_input)
-    vehicle_hud_label.text += "\nSteer: " + "%.2f" % player.current_vehicle.steering_input
+    vehicle_hud_label.text = "Speed: " + str(int(player.current_vehicle.linear_velocity.length()))
     vehicle_hud_label.text += "\nGear: " + str(player.current_vehicle.current_gear)
   else:
     vehicle_hud_label.text = ""
