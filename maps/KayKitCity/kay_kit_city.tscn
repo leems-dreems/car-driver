@@ -299,23 +299,11 @@ use_collision = true
 collision_mask = 82
 size = Vector3(5, 1, 9)
 
-[node name="Ramp3" type="CSGBox3D" parent="Terrain" groups=["Road"]]
-transform = Transform3D(-1, -1.49012e-08, -7.45058e-08, 1.94149e-08, 0.866026, -0.5, 8.73587e-08, -0.5, -0.866026, 13, 1, -15)
-use_collision = true
-collision_mask = 82
-size = Vector3(5, 1, 9)
-
 [node name="Ramp4" type="CSGBox3D" parent="Terrain" groups=["Road"]]
 transform = Transform3D(-1, -1.49012e-08, -7.45058e-08, 4.13634e-08, 0.707107, -0.707107, 7.93571e-08, -0.707107, -0.707107, -20, 0.189339, -67.9455)
 use_collision = true
 collision_mask = 82
 size = Vector3(5, 3, 3)
-
-[node name="Ramp2" type="CSGBox3D" parent="Terrain" groups=["Road"]]
-transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, -32, 1, -17)
-use_collision = true
-collision_mask = 82
-size = Vector3(5, 1, 9)
 
 [node name="Player" parent="." instance=ExtResource("7_1k2ef")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, -37)
