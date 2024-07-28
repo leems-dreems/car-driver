@@ -1,7 +1,7 @@
 class_name TrafficPath extends Path3D
 ## A path that spawns traffic driving along it
 
-@export var number_of_vehicles := 5
+@export var number_of_vehicles := 10
 @export var road_speed := 20.0
 var compact_car_scene:= preload("res://cars/compact.tscn")
 var traffic_follower_scene:= preload("res://traffic/traffic_path_follower.tscn")
@@ -28,16 +28,17 @@ func _physics_process(_delta: float) -> void:
         var closest_offset := curve.get_closest_offset(follower.vehicle.position)
         # Get the Y axis rotation of the nearest position on the path
         follower.progress = closest_offset + 5.0
+        var closest_path_transform := Transform3D(follower.transform)
         var closest_path_rotation_y: float = follower.rotation.y
         # Get the Y axis rotation of a position some distance along the path
         follower.progress += 10.0
         var future_path_rotation_y: float = follower.rotation.y
         # Compare the rotations and calculate vehicle inputs
-        var path_angle_difference := angle_difference(closest_path_rotation_y, future_path_rotation_y)
+        var path_angle_difference := angle_difference(follower.vehicle.rotation.y, future_path_rotation_y)
         var speed := follower.vehicle.linear_velocity.length()
         var target_speed: float
         if path_angle_difference > PI / 4:
-          target_speed = 3.0
+          target_speed = 5.0
         else:
           target_speed = road_speed
         follower.vehicle.ignition_on = true
@@ -48,10 +49,23 @@ func _physics_process(_delta: float) -> void:
             follower.vehicle.throttle_input = clampf(1 - (target_speed / speed), 0.0, 0.5)
         elif speed > target_speed * 2.0:
           follower.vehicle.throttle_input = 0.0
-          follower.vehicle.brake_input = 0.5
+          follower.vehicle.brake_input = 0.2
+
         # Steer to match the rotation of the nearest path position
-        var steering_angle_difference := angle_difference(follower.vehicle.rotation.y, closest_path_rotation_y)
-        follower.vehicle.steering_input = clampf(steering_angle_difference, 0.0, 1.0)
+        var turning_angle := angle_difference(follower.vehicle.rotation.y, closest_path_rotation_y)
+        var looking_at_path_transform := follower.vehicle.transform.looking_at(closest_path_transform.origin)
+        var lanekeeping_angle := angle_difference(follower.vehicle.rotation.y, looking_at_path_transform.basis.get_euler().y)
+        if turning_angle > PI / 64:
+          follower.vehicle.steering_input = clampf(turning_angle, 0.1, 1.0)
+        elif turning_angle < -PI / 64:
+          follower.vehicle.steering_input = clampf(turning_angle, -0.1, -1.0)
+        else:
+          if lanekeeping_angle > PI / 64:
+            follower.vehicle.steering_input = clampf(lanekeeping_angle, 0.0, 1.0)
+          elif lanekeeping_angle < -PI / 64:
+            follower.vehicle.steering_input = clampf(lanekeeping_angle, 0.0, -1.0)
+          else:
+            follower.vehicle.steering_input = 0.0
       else:
         follower.vehicle.throttle_input = 0.0
     else:
