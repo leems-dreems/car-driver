@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://1doygxshb01r"]
+[gd_scene load_steps=14 format=3 uid="uid://1doygxshb01r"]
 
 [ext_resource type="Script" path="res://collidables/detachable_gas_pump.gd" id="1_cx65w"]
 [ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="3_o54nt"]
 [ext_resource type="PackedScene" uid="uid://drtqj75y7cwtf" path="res://fire.tscn" id="4_0gsha"]
+[ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="4_7x2di"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4icfp"]
 size = Vector3(2.45641, 3.51965, 1)
@@ -63,10 +64,12 @@ shape = SubResource("BoxShape3D_4icfp")
 
 [node name="Fire" parent="RigidBody3D/Fires" instance=ExtResource("4_0gsha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.90354, 0.648228, -8.17776e-05)
+visible = false
 emitting = false
 
 [node name="Fire2" parent="RigidBody3D/Fires" instance=ExtResource("4_0gsha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.762578, 2.40752, -8.17776e-05)
+visible = false
 emitting = false
 
 [node name="Sparks" type="GPUParticles3D" parent="RigidBody3D/Fires"]
@@ -81,6 +84,14 @@ randomness = 0.35
 visibility_aabb = AABB(-4.84702, -4, -4, 9.7204, 8, 8)
 process_material = SubResource("ParticleProcessMaterial_7uuv0")
 draw_pass_1 = SubResource("BoxMesh_l5ueu")
+
+[node name="Fire3" parent="RigidBody3D/Fires" instance=ExtResource("4_7x2di")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.336078, 0.642035, -0.54597)
+emitting = false
+
+[node name="Fire4" parent="RigidBody3D/Fires" instance=ExtResource("4_7x2di")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493172, 2.05698, 0.0750976)
+emitting = false
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 256
