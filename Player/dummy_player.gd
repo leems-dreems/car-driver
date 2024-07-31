@@ -16,6 +16,8 @@ func _ready() -> void:
   animation_tree.active = true
   animation_player.get_animation("Walking_A").loop_mode = Animation.LOOP_LINEAR
   animation_player.get_animation("Running_A").loop_mode = Animation.LOOP_LINEAR
+  animation_player.get_animation("Idle").loop_mode = Animation.LOOP_LINEAR
+  animation_player.get_animation("Jump_Idle").loop_mode = Animation.LOOP_LINEAR
 
 
 func set_moving(value : bool):

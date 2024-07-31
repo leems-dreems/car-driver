@@ -160,6 +160,10 @@ Pause={
 3d_physics/layer_8="StaticScenery"
 3d_physics/layer_9="PropUnfreezeRadius"
 3d_physics/layer_10="ObjectiveArea"
+3d_physics/layer_18="CarBumper"
+3d_physics/layer_19="CarDoor"
+3d_physics/layer_21="Explosion"
+3d_physics/layer_22="ExplosionCatcher"
 
 [physics]
 

@@ -1,7 +1,7 @@
 class_name SpringyProp extends Node3D
 
 @export var reset_time := 5.0
-@export var linear_breaking_point := 0.2
+@export var linear_breaking_point := 0.1
 @onready var physics_body : RigidBody3D = $RigidBody3D
 @onready var joint : Generic6DOFJoint3D = $Generic6DOFJoint3D
 var springy_props_manager_node : Node3D = null
@@ -9,6 +9,10 @@ var reset_timer : SceneTreeTimer = null
 var is_detached := false
 
 func _ready() -> void:
+  var com_marker: Marker3D = get_node("CenterOfMassMarker")
+  if com_marker:
+    physics_body.center_of_mass_mode = RigidBody3D.CENTER_OF_MASS_MODE_CUSTOM
+    physics_body.center_of_mass = com_marker.position
   physics_body.gravity_scale = 0
   register_scene_with_manager()
   return

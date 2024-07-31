@@ -37,6 +37,8 @@ func trigger(_body: Node3D) -> void:
 ## See if any colliding bodies can complete this objective. This is a manual check for e.g. when
 ## the player gets in/out of a vehicle that is in this ObjectiveArea
 func check_colliding_bodies() -> void:
+  if not monitoring:
+    return
   for _body: Node3D in get_overlapping_bodies():
     trigger(_body)
     if is_completed: break

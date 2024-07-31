@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://bol1qtccjchrx"]
+[gd_scene load_steps=22 format=3 uid="uid://bol1qtccjchrx"]
 
 [ext_resource type="Script" path="res://collidables/springy_gas_pump.gd" id="1_vl6gh"]
 [ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="2_5obv0"]
 [ext_resource type="PackedScene" uid="uid://drtqj75y7cwtf" path="res://fire.tscn" id="3_nyhtx"]
 [ext_resource type="AudioStream" uid="uid://bvjtmoh4u8ueq" path="res://assets/audio/Hanna-Barbera SFX/crash_11.wav" id="4_h23ki"]
 [ext_resource type="AudioStream" uid="uid://ok43u0a4qgke" path="res://assets/audio/Hanna-Barbera SFX/crash_13.wav" id="5_kxdrc"]
+[ext_resource type="AudioStream" uid="uid://4icv5wfjnole" path="res://assets/audio/Hanna-Barbera SFX/bomb_1.wav" id="6_yxx17"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3og3g"]
 friction = 0.4
@@ -59,9 +60,25 @@ stream_0/weight = 1.0
 stream_1/stream = ExtResource("5_kxdrc")
 stream_1/weight = 1.0
 
+[sub_resource type="SphereMesh" id="SphereMesh_83axv"]
+radius = 1.0
+height = 2.0
+radial_segments = 16
+rings = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_280ep"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.164706)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_q5njm"]
+radius = 1.0
+
 [node name="SpringyGasPump" type="Node3D"]
 script = ExtResource("1_vl6gh")
-linear_breaking_point = 0.075
+linear_breaking_point = 0.02
+
+[node name="CenterOfMassMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." groups=["CanCrash", "CrashScene"]]
 collision_layer = 64
@@ -69,7 +86,7 @@ collision_mask = 87
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-mass = 100.0
+mass = 400.0
 physics_material_override = SubResource("PhysicsMaterial_3og3g")
 max_contacts_reported = 10
 contact_monitor = true
@@ -125,3 +142,19 @@ shape = SubResource("ConvexPolygonShape3D_2a3j4")
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_efm52")
 doppler_tracking = 2
+
+[node name="ExplosionArea" type="Area3D" parent="."]
+collision_layer = 1048576
+collision_mask = 2490450
+monitoring = false
+monitorable = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ExplosionArea"]
+mesh = SubResource("SphereMesh_83axv")
+surface_material_override/0 = SubResource("StandardMaterial3D_280ep")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExplosionArea"]
+shape = SubResource("SphereShape3D_q5njm")
+
+[node name="ExplosionAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_yxx17")

@@ -22,7 +22,6 @@ points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.02732
 
 [node name="SpringyProp" type="Node3D"]
 script = ExtResource("1_gk1bk")
-linear_breaking_point = 0.075
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 collision_layer = 64
@@ -63,3 +62,5 @@ mesh = SubResource("SphereMesh_hryqd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_1xuap")
+
+[node name="CenterOfMassMarker" type="Marker3D" parent="."]
