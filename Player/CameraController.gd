@@ -12,7 +12,8 @@ enum CAMERA_PIVOT { OVER_SHOULDER, THIRD_PERSON }
 @export var player_camera_distance := 10.0
 @export var vehicle_camera_distance := 15.0
 @export var camera_distance_change_speed := 1.5
-@export var follow_camera_min_velocity := 6.0
+@export var follow_cam_min_velocity := 1.0
+@export var follow_cam_stiffness := 0.25
 
 @onready var camera: Camera3D = $PlayerCamera
 @onready var _over_shoulder_pivot: Node3D = $CameraOverShoulderPivot
@@ -65,14 +66,14 @@ func _physics_process(delta: float) -> void:
     _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, vehicle_camera_distance, delta * camera_distance_change_speed)
     if _rotation_input == 0 and _tilt_input == 0:
       var vehicle_velocity := _anchor.current_vehicle.linear_velocity
-      if vehicle_velocity.length() > 1:
+      if vehicle_velocity.length() > follow_cam_min_velocity:
         var camera_euler: Vector3
         if _anchor.current_vehicle.throttle_input > 0.0 or _anchor.current_vehicle.steering_input != 0.0:
           # Look at the midpoint of where the car is pointing and its direction of travel
           if _anchor.current_vehicle.current_gear == -1:
-            camera_euler = lerp(Basis.looking_at(vehicle_velocity), _anchor.current_vehicle.transform.basis.rotated(_anchor.current_vehicle.transform.basis.y, PI), 0.5).get_euler()
+            camera_euler = lerp(Basis.looking_at(vehicle_velocity), _anchor.current_vehicle.transform.basis.rotated(_anchor.current_vehicle.transform.basis.y, PI), follow_cam_stiffness).get_euler()
           else:
-            camera_euler = lerp(Basis.looking_at(vehicle_velocity), _anchor.current_vehicle.transform.basis, 0.75).get_euler()
+            camera_euler = lerp(Basis.looking_at(vehicle_velocity), _anchor.current_vehicle.transform.basis, follow_cam_stiffness).get_euler()
           _euler_rotation.y = lerp_angle(_euler_rotation.y, camera_euler.y + PI, delta * 3)
         else:
           # Look at direction car is heading in
