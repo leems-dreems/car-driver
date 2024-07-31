@@ -14,6 +14,7 @@ enum CAMERA_PIVOT { OVER_SHOULDER, THIRD_PERSON }
 @export var camera_distance_change_speed := 1.5
 @export var follow_cam_min_velocity := 1.0
 @export var follow_cam_stiffness := 0.25
+@export var follow_cam_delay := 0.75
 
 @onready var camera: Camera3D = $PlayerCamera
 @onready var _over_shoulder_pivot: Node3D = $CameraOverShoulderPivot
@@ -30,7 +31,8 @@ var _tilt_input: float
 var _mouse_input := false
 var _offset: Vector3
 var _anchor: Player
-var _euler_rotation: Vector3
+var _euler_rotation : Vector3
+var input_timer : SceneTreeTimer = null
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -64,7 +66,16 @@ func _physics_process(delta: float) -> void:
 
   if _anchor.current_vehicle != null:
     _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, vehicle_camera_distance, delta * camera_distance_change_speed)
-    if _rotation_input == 0 and _tilt_input == 0:
+    if _rotation_input != 0 or _tilt_input != 0:
+      if input_timer == null:
+        input_timer = get_tree().create_timer(follow_cam_delay)
+        input_timer.timeout.connect(func ():
+          input_timer = null
+        )
+      else:
+        input_timer.time_left = follow_cam_delay
+
+    if input_timer == null:
       var vehicle_velocity := _anchor.current_vehicle.linear_velocity
       if vehicle_velocity.length() > follow_cam_min_velocity:
         var camera_euler: Vector3
@@ -75,10 +86,10 @@ func _physics_process(delta: float) -> void:
           else:
             camera_euler = lerp(Basis.looking_at(vehicle_velocity), _anchor.current_vehicle.transform.basis, follow_cam_stiffness).get_euler()
           _euler_rotation.y = lerp_angle(_euler_rotation.y, camera_euler.y + PI, delta * 3)
-        else:
+        elif input_timer == null:
           # Look at direction car is heading in
           camera_euler = Basis.looking_at(vehicle_velocity).get_euler()
-          _euler_rotation.y = lerp_angle(_euler_rotation.y, camera_euler.y + PI, delta)
+          _euler_rotation.y = lerp_angle(_euler_rotation.y, camera_euler.y + PI, delta / 2)
   else:
     _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, player_camera_distance, delta * camera_distance_change_speed)
 
