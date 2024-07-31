@@ -63,11 +63,13 @@ func _physics_process(delta: float) -> void:
 
   if _anchor.current_vehicle != null:
     _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, vehicle_camera_distance, delta * camera_distance_change_speed)
-    var vehicle_velocity := _anchor.current_vehicle.linear_velocity
-    if vehicle_velocity.length() > follow_camera_min_velocity and _rotation_input == 0 and _tilt_input == 0:
-      # Rotates camera to follow vehicle
-      var velocity_euler := Basis.looking_at(vehicle_velocity).get_euler()
-      _euler_rotation.y = lerp_angle(_euler_rotation.y, velocity_euler.y + PI, delta * 3)
+    if _rotation_input == 0 and _tilt_input == 0:
+      var vehicle_velocity := _anchor.current_vehicle.linear_velocity
+      if vehicle_velocity.length() > 1:
+        if _anchor.current_vehicle.throttle_input > 0.0 or _anchor.current_vehicle.steering_input != 0.0:
+          # Rotates camera to follow vehicle
+          var velocity_euler := Basis.looking_at(vehicle_velocity).get_euler()
+          _euler_rotation.y = lerp_angle(_euler_rotation.y, velocity_euler.y + PI, delta * 3)
   else:
     _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, player_camera_distance, delta * camera_distance_change_speed)
 
