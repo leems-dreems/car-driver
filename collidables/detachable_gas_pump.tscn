@@ -87,11 +87,9 @@ draw_pass_1 = SubResource("BoxMesh_l5ueu")
 
 [node name="Fire3" parent="RigidBody3D/Fires" instance=ExtResource("4_7x2di")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.336078, 0.642035, -0.54597)
-emitting = false
 
 [node name="Fire4" parent="RigidBody3D/Fires" instance=ExtResource("4_7x2di")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493172, 2.05698, 0.0750976)
-emitting = false
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 256
