@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://c43mf70gsgib2"]
+
+[ext_resource type="Script" path="res://menu/StageSelect.gd" id="1_4b8v3"]
+
+[node name="StageSelect" type="Node2D"]
+script = ExtResource("1_4b8v3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="PauseMenu" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/PauseMenu"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+color = Color(0.233925, 0.233925, 0.233925, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/PauseMenu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenu/CenterContainer"]
+layout_mode = 2
+
+[node name="CancelButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back
+"
+
+[node name="StageList" type="ItemList" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+
+[node name="LoadButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Load Stage"
+
+[connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
