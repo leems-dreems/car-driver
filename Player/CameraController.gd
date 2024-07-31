@@ -66,10 +66,18 @@ func _physics_process(delta: float) -> void:
     if _rotation_input == 0 and _tilt_input == 0:
       var vehicle_velocity := _anchor.current_vehicle.linear_velocity
       if vehicle_velocity.length() > 1:
+        var camera_euler: Vector3
         if _anchor.current_vehicle.throttle_input > 0.0 or _anchor.current_vehicle.steering_input != 0.0:
-          # Rotates camera to follow vehicle
-          var velocity_euler := Basis.looking_at(vehicle_velocity).get_euler()
-          _euler_rotation.y = lerp_angle(_euler_rotation.y, velocity_euler.y + PI, delta * 3)
+          # Look at the midpoint of where the car is pointing and its direction of travel
+          if _anchor.current_vehicle.current_gear == -1:
+            camera_euler = lerp(Basis.looking_at(vehicle_velocity), _anchor.current_vehicle.transform.basis.rotated(_anchor.current_vehicle.transform.basis.y, PI), 0.5).get_euler()
+          else:
+            camera_euler = lerp(Basis.looking_at(vehicle_velocity), _anchor.current_vehicle.transform.basis, 0.75).get_euler()
+          _euler_rotation.y = lerp_angle(_euler_rotation.y, camera_euler.y + PI, delta * 3)
+        else:
+          # Look at direction car is heading in
+          camera_euler = Basis.looking_at(vehicle_velocity).get_euler()
+          _euler_rotation.y = lerp_angle(_euler_rotation.y, camera_euler.y + PI, delta)
   else:
     _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, player_camera_distance, delta * camera_distance_change_speed)
 
