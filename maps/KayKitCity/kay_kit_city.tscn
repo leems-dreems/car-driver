@@ -272,13 +272,16 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 0,
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 26, 0, 0)
 
 [node name="BuildingA" parent="Terrain" instance=ExtResource("9_ov5pk")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 28)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 38)
 
 [node name="BuildingA2" parent="Terrain" instance=ExtResource("9_ov5pk")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 42)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 47)
 
 [node name="BuildingA3" parent="Terrain" instance=ExtResource("9_ov5pk")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 56)
+
+[node name="BuildingA4" parent="Terrain" instance=ExtResource("9_ov5pk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 29)
 
 [node name="Ground" type="StaticBody3D" parent="Terrain" groups=["Grass"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
@@ -316,7 +319,8 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 light_color = Color(1, 0.952941, 1, 1)
 shadow_enabled = true
 
-[node name="PauseAndHUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("11_w4w4x")]
+[node name="PauseAndHUD" parent="." node_paths=PackedStringArray("vehicle", "player") instance=ExtResource("11_w4w4x")]
+vehicle = NodePath("../CompactCar")
 player = NodePath("../Player")
 
 [node name="SpringyPropsManager" type="Node3D" parent="."]
@@ -831,7 +835,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0.75, 40)
 reset_time = 10.0
 
 [node name="SpringyTrashBinRound6" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.75, 40)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.75, 40)
 reset_time = 10.0
 
 [node name="SpringyTrashBinRound7" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]

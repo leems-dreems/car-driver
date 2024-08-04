@@ -231,7 +231,7 @@ collision_mask = 32
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/LeftDoorBodyLatch"]
 shape = SubResource("SphereShape3D_jv0dm")
 
-[node name="OpenDoorLeft" type="RigidBody3D" parent="ColliderBits" node_paths=PackedStringArray("shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape", "door_latch", "body_latch") groups=["vehicle_door"]]
+[node name="OpenDoorLeft" type="RigidBody3D" parent="ColliderBits" node_paths=PackedStringArray("parent_car", "shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape", "door_latch", "body_latch") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
 visible = false
 collision_layer = 262152
@@ -241,6 +241,7 @@ physics_material_override = ExtResource("7_2j5l5")
 freeze = true
 freeze_mode = 1
 script = ExtResource("5_6gdjk")
+parent_car = NodePath("../..")
 shutDoorMesh = NodePath("../ShutDoorLeft")
 hingeJoint = NodePath("../HingeJointLeft")
 doorOpenSFX = NodePath("DoorOpenSFX")
@@ -295,7 +296,7 @@ collision_mask = 32
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/RightDoorBodyLatch"]
 shape = SubResource("SphereShape3D_jv0dm")
 
-[node name="OpenDoorRight" type="RigidBody3D" parent="ColliderBits" node_paths=PackedStringArray("shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape", "door_latch", "body_latch") groups=["vehicle_door"]]
+[node name="OpenDoorRight" type="RigidBody3D" parent="ColliderBits" node_paths=PackedStringArray("parent_car", "shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape", "door_latch", "body_latch") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
 visible = false
 collision_layer = 262152
@@ -305,6 +306,7 @@ physics_material_override = ExtResource("7_2j5l5")
 freeze = true
 freeze_mode = 1
 script = ExtResource("5_6gdjk")
+parent_car = NodePath("../..")
 shutDoorMesh = NodePath("../ShutDoorRight")
 hingeJoint = NodePath("../HingeJointRight")
 doorOpenSFX = NodePath("DoorOpenSFX")
