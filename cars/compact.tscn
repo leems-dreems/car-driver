@@ -197,15 +197,16 @@ unit_size = 5.0
 vehicle = NodePath("..")
 
 [node name="body" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4.12071e-10, -0.5, -1.79373e-06)
 mesh = ExtResource("3_6oki7")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4.12071e-10, -0.5, -1.79373e-06)
 shape = SubResource("ConvexPolygonShape3D_4w5uj")
 
 [node name="ColliderBits" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, 4.12071e-10, 0, -1.79373e-06)
 
 [node name="HingeJointLeft" type="HingeJoint3D" parent="ColliderBits"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.11778, 0.835562, -0.593462)
@@ -354,7 +355,7 @@ shape = SubResource("ConcavePolygonShape3D_100sx")
 disabled = true
 
 [node name="WheelFrontLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "screechSFX")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, -1.7702)
+transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, -0.7, -0.1, -1.7702)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("FrontLeftWheel")
 screechSFX = NodePath("AudioStreamPlayer3D")
@@ -372,7 +373,7 @@ unit_size = 2.0
 doppler_tracking = 2
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "screechSFX")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, -1.7702)
+transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 0.7, -0.1, -1.7702)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("FrontRightWheel")
 screechSFX = NodePath("AudioStreamPlayer3D")
@@ -390,7 +391,7 @@ unit_size = 2.0
 doppler_tracking = 2
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "screechSFX")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, 1.83657)
+transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, -0.7, -0.1, 1.83657)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("RearLeftWheel")
 screechSFX = NodePath("AudioStreamPlayer3D")
@@ -408,7 +409,7 @@ unit_size = 2.0
 doppler_tracking = 2
 
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "screechSFX")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, 1.83657)
+transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 0.7, -0.1, 1.83657)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("RearRightWheel")
 screechSFX = NodePath("AudioStreamPlayer3D")
@@ -426,7 +427,7 @@ unit_size = 2.0
 doppler_tracking = 2
 
 [node name="ExplosionCatcher" type="StaticBody3D" parent="." groups=["ExplosionCatcher"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.3, -2.5)
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, 0.8, 0.3, -2.5)
 collision_layer = 2097152
 collision_mask = 0
 
@@ -434,7 +435,7 @@ collision_mask = 0
 shape = SubResource("SphereShape3D_sp4ri")
 
 [node name="ExplosionCatcher2" type="StaticBody3D" parent="." groups=["ExplosionCatcher"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0.3, -2.5)
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -0.8, 0.3, -2.5)
 collision_layer = 2097152
 collision_mask = 0
 
@@ -442,7 +443,7 @@ collision_mask = 0
 shape = SubResource("SphereShape3D_sp4ri")
 
 [node name="ExplosionCatcher3" type="StaticBody3D" parent="." groups=["ExplosionCatcher"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.3, 0)
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, 0.8, 0.3, -1.82446e-06)
 collision_layer = 2097152
 collision_mask = 0
 
@@ -450,7 +451,7 @@ collision_mask = 0
 shape = SubResource("SphereShape3D_sp4ri")
 
 [node name="ExplosionCatcher4" type="StaticBody3D" parent="." groups=["ExplosionCatcher"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0.3, 0)
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -0.8, 0.3, -1.86358e-06)
 collision_layer = 2097152
 collision_mask = 0
 
@@ -458,7 +459,7 @@ collision_mask = 0
 shape = SubResource("SphereShape3D_sp4ri")
 
 [node name="ExplosionCatcher5" type="StaticBody3D" parent="." groups=["ExplosionCatcher"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.3, 2.5)
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, 0.8, 0.3, 2.5)
 collision_layer = 2097152
 collision_mask = 0
 
@@ -466,7 +467,7 @@ collision_mask = 0
 shape = SubResource("SphereShape3D_sp4ri")
 
 [node name="ExplosionCatcher6" type="StaticBody3D" parent="." groups=["ExplosionCatcher"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0.3, 2.5)
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -0.8, 0.3, 2.5)
 collision_layer = 2097152
 collision_mask = 0
 

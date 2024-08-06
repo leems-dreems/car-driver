@@ -24,49 +24,62 @@ func _physics_process(_delta: float) -> void:
     followers.push_back(new_follower)
     add_child(new_follower)
   for follower in followers:
-    if follower.vehicle != null and not follower.vehicle.is_being_driven:
-      if follower.vehicle.get_wheel_contact_count() >= 3:
-        var closest_offset := curve.get_closest_offset(follower.vehicle.position)
-        var speed := follower.vehicle.linear_velocity.length()
+    var _vehicle := follower.vehicle
+    if _vehicle != null and not _vehicle.is_being_driven:
+      if _vehicle.get_wheel_contact_count() >= 3:
+        var closest_offset := curve.get_closest_offset(_vehicle.position)
+        var speed := _vehicle.linear_velocity.length()
         # Get the Y axis rotation of the nearest position on the path
         follower.progress = closest_offset + (speed * 1.0)
         var closest_path_transform := Transform3D(follower.transform)
-        var closest_path_rotation_y: float = follower.rotation.y
         var target_speed := road_speed
         # If we are far from the path, aim towards nearby path point
-        var _closest_position := curve.get_closest_point(follower.vehicle.position)
-        if _closest_position.distance_to(follower.vehicle.position) > path_distance_limit:
-          follower.vehicle.set_interest_vectors(follower.vehicle.transform.looking_at(closest_path_transform.origin).basis.z)
+        var _closest_position := curve.get_closest_point(_vehicle.position)
+        if _closest_position.distance_to(_vehicle.position) > path_distance_limit:
+          _vehicle.set_interest_vectors(_vehicle.transform.looking_at(closest_path_transform.origin).basis.z)
         else:
           # Get interest vector using position of path follower
-          follower.vehicle.set_interest_vectors(closest_path_transform.basis.z)
-        follower.vehicle.set_summed_interest_vector()
-        var _interest_vector := follower.vehicle.summed_interest_vector
-        var _interest_strength := clampf(_interest_vector.length() / follower.vehicle.steering_ray_distance, 0.0, 1.0)
-        if _interest_strength < 0.75:
-          target_speed *= 0.5
-        elif _interest_strength < 0.5:
+          _vehicle.set_interest_vectors(closest_path_transform.basis.z)
+        _vehicle.set_summed_interest_vector()
+        var _interest_vector := _vehicle.summed_interest_vector.rotated(Vector3.UP, _vehicle.rotation.y)
+        var _interest_strength := clampf(_interest_vector.length() / _vehicle.steering_ray_length, 0.0, 1.0)
+        if _interest_vector.z < _vehicle.steering_ray_length * -0.5:
+          target_speed = 0.0
+        elif _interest_vector.z < _vehicle.steering_ray_length * 0.25:
           target_speed *= 0.25
-        follower.vehicle.ignition_on = true
-        if speed < target_speed:
-          if speed < target_speed / 2:
-            follower.vehicle.throttle_input = 0.5
-          else:
-            follower.vehicle.throttle_input = clampf(1 - (target_speed / speed), 0.0, 0.5)
-        elif speed > target_speed * 1.2:
-          follower.vehicle.throttle_input = 0.0
-          follower.vehicle.brake_input = 0.2
+        elif _interest_vector.z < _vehicle.steering_ray_length * 0.75:
+          target_speed *= 0.5
 
-        # Steer to match the rotation of the nearest path position
-        var turning_angle := follower.vehicle.get_interest_vector_y_difference()
-        if turning_angle > PI / 128:
-          follower.vehicle.steering_input = clampf(-turning_angle, -1.0, -0.1)
-        elif turning_angle < -PI / 128:
-          follower.vehicle.steering_input = clampf(-turning_angle, 0.1, 1.0)
+        _vehicle.ignition_on = true
+        if target_speed <= 0.0:
+          _vehicle.throttle_input = 0.0
+          _vehicle.brake_input = 1.0
+        elif speed < target_speed:
+          if speed < target_speed / 2:
+            _vehicle.throttle_input = 0.5
+            _vehicle.brake_input = 0.0
+          else:
+            _vehicle.throttle_input = clampf(1 - (target_speed / speed), 0.0, 0.5)
+            _vehicle.brake_input = 0.0
+        elif speed > target_speed * 1.2:
+          _vehicle.throttle_input = 0.0
+          _vehicle.brake_input = 0.2
         else:
-          follower.vehicle.steering_input = 0.0
+          _vehicle.throttle_input = 0.0
+          _vehicle.brake_input = 0.0
+        print(_interest_vector)
+        print("Speed: " + str(target_speed) + " Throttle: " + str(_vehicle.throttle_input) + " Brake: " + str(_vehicle.brake_input))
+        # Steer to match the rotation of the nearest path position
+        var turning_angle := _vehicle.get_interest_vector_y_difference()
+        if turning_angle > PI / 128:
+          _vehicle.steering_input = clampf(-turning_angle, -1.0, -0.1)
+        elif turning_angle < -PI / 128:
+          _vehicle.steering_input = clampf(-turning_angle, 0.1, 1.0)
+        else:
+          _vehicle.steering_input = 0.0
       else:
-        follower.vehicle.throttle_input = 0.0
+        _vehicle.steering_input = 0.0
+        _vehicle.throttle_input = 0.0
     else:
       if follower.just_moved == false:
         follower.progress = randf_range(0, path_length)
