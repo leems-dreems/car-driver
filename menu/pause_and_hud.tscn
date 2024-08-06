@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://btmduyhkublv7"]
+[gd_scene load_steps=7 format=3 uid="uid://btmduyhkublv7"]
 
 [ext_resource type="Script" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
+[ext_resource type="PackedScene" uid="uid://c43mf70gsgib2" path="res://menu/stage_select.tscn" id="2_ymesr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_q7nlx"]
 font_size = 32
@@ -17,6 +18,7 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="PauseAndHUD" type="CanvasLayer"]
 script = ExtResource("1_jvxva")
+stageMenu = ExtResource("2_ymesr")
 
 [node name="HUD" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -91,7 +93,6 @@ text = "Resume"
 
 [node name="StageSelectButton" type="Button" parent="PauseMenu/CenterContainer/VBoxContainer"]
 layout_mode = 2
-disabled = true
 text = "Select Stage
 "
 
@@ -101,4 +102,5 @@ text = "Quit
 "
 
 [connection signal="pressed" from="PauseMenu/CenterContainer/VBoxContainer/ResumeGameButton" to="." method="handle_resume_button"]
+[connection signal="pressed" from="PauseMenu/CenterContainer/VBoxContainer/StageSelectButton" to="." method="_on_stage_select_button_pressed"]
 [connection signal="pressed" from="PauseMenu/CenterContainer/VBoxContainer/QuitGameButton" to="." method="handle_quit_button"]

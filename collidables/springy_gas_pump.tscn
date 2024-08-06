@@ -1,9 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://bol1qtccjchrx"]
+[gd_scene load_steps=23 format=3 uid="uid://bol1qtccjchrx"]
 
 [ext_resource type="Script" path="res://collidables/springy_gas_pump.gd" id="1_vl6gh"]
 [ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="2_5obv0"]
 [ext_resource type="PackedScene" uid="uid://drtqj75y7cwtf" path="res://fire.tscn" id="3_nyhtx"]
 [ext_resource type="AudioStream" uid="uid://bvjtmoh4u8ueq" path="res://assets/audio/Hanna-Barbera SFX/crash_11.wav" id="4_h23ki"]
+[ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="4_mb611"]
 [ext_resource type="AudioStream" uid="uid://ok43u0a4qgke" path="res://assets/audio/Hanna-Barbera SFX/crash_13.wav" id="5_kxdrc"]
 [ext_resource type="AudioStream" uid="uid://4icv5wfjnole" path="res://assets/audio/Hanna-Barbera SFX/bomb_1.wav" id="6_yxx17"]
 
@@ -102,10 +103,12 @@ shape = SubResource("BoxShape3D_e7532")
 
 [node name="Fire" parent="RigidBody3D/Emitters" instance=ExtResource("3_nyhtx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.90354, 0.648228, -8.17776e-05)
+visible = false
 emitting = false
 
 [node name="Fire2" parent="RigidBody3D/Emitters" instance=ExtResource("3_nyhtx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.762578, 2.40752, -8.17776e-05)
+visible = false
 emitting = false
 
 [node name="Sparks" type="GPUParticles3D" parent="RigidBody3D/Emitters"]
@@ -120,6 +123,14 @@ randomness = 0.35
 visibility_aabb = AABB(-4.84702, -4, -4, 9.7204, 8, 8)
 process_material = SubResource("ParticleProcessMaterial_aomou")
 draw_pass_1 = SubResource("BoxMesh_uk76s")
+
+[node name="Fire3" parent="RigidBody3D/Emitters" instance=ExtResource("4_mb611")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65663, 1.92129, -0.00401568)
+emitting = false
+
+[node name="Fire4" parent="RigidBody3D/Emitters" instance=ExtResource("4_mb611")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.833531, 0.843393, -0.06897)
+emitting = false
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
