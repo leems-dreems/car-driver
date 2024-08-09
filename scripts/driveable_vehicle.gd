@@ -12,6 +12,7 @@ var interest_vectors: Array[Vector3] = []
 var summed_interest_vector := Vector3.ZERO
 var steering_ray_group := "SteeringRayCast"
 var steering_ray_collision_masks: Array[int] = [1, 2, 5, 7, 8]
+var interest_direction_mesh: MeshInstance3D
 @onready var door_left: RigidBody3D = $ColliderBits/OpenDoorLeft
 @onready var door_right: RigidBody3D = $ColliderBits/OpenDoorRight
 
@@ -69,6 +70,17 @@ func start_ai() -> void:
       steering_raycasts.push_back(_new_raycast)
   for _raycast in steering_raycasts:
     _raycast.enabled = true
+
+  # Add interest direction pointer mesh
+  interest_direction_mesh = MeshInstance3D.new()
+  var _cylinder_mesh := CylinderMesh.new()
+  _cylinder_mesh.height = 0.01
+  _cylinder_mesh.top_radius = 0.05
+  _cylinder_mesh.bottom_radius = 0.05
+  interest_direction_mesh.mesh = _cylinder_mesh
+  interest_direction_mesh.rotate_x(PI / 2)
+  add_child(interest_direction_mesh)
+
   return
 
 ## Disables AI for this vehicle
@@ -100,6 +112,12 @@ func set_summed_interest_vector() -> void:
   for _interest_vector in interest_vectors:
     _summed_interest_vector += _interest_vector
   summed_interest_vector = _summed_interest_vector.reflect(Vector3.FORWARD)
+
+  interest_direction_mesh.position = (_summed_interest_vector / 2)
+  print(_summed_interest_vector)
+  interest_direction_mesh.rotation.y = Vector3.FORWARD.signed_angle_to(_summed_interest_vector, Vector3.UP)
+  interest_direction_mesh.mesh.height = _summed_interest_vector.length()
+
   return
 
 ## Get the angle difference on the Y axis between the car's rotation and the interest vector

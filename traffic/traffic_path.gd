@@ -1,7 +1,7 @@
 class_name TrafficPath extends Path3D
 ## A path that spawns traffic driving along it
 
-@export var number_of_vehicles := 10
+@export var number_of_vehicles := 1
 @export var road_speed := 20.0
 var compact_car_scene:= preload("res://cars/compact.tscn")
 var traffic_follower_scene:= preload("res://traffic/traffic_path_follower.tscn")
