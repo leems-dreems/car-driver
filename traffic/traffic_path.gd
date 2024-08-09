@@ -29,17 +29,15 @@ func _physics_process(_delta: float) -> void:
         var closest_offset := curve.get_closest_offset(follower.vehicle.position)
         var speed := follower.vehicle.linear_velocity.length()
         # Get the Y axis rotation of the nearest position on the path
-        follower.progress = closest_offset + (speed * 1.0)
-        var closest_path_transform := Transform3D(follower.transform)
+        follower.progress = closest_offset + speed
         var closest_path_rotation_y: float = follower.rotation.y
         var target_speed := road_speed
         # If we are far from the path, aim towards nearby path point
         var _closest_position := curve.get_closest_point(follower.vehicle.position)
-        if _closest_position.distance_to(follower.vehicle.position) > path_distance_limit:
-          follower.vehicle.set_interest_vectors(follower.vehicle.transform.looking_at(closest_path_transform.origin).basis.z)
-        else:
-          # Get interest vector using position of path follower
-          follower.vehicle.set_interest_vectors(closest_path_transform.basis.z)
+        if _closest_position.distance_to(follower.vehicle.position) < path_distance_limit:
+          # Move TrafficPathFollower forward a bit, then aim for it
+          follower.progress += follower.progress + speed
+        follower.vehicle.set_interest_vectors(follower.global_transform.origin)
         follower.vehicle.set_summed_interest_vector()
         var _interest_vector := follower.vehicle.summed_interest_vector
         var _interest_strength := clampf(_interest_vector.length() / follower.vehicle.steering_ray_distance, 0.0, 1.0)
@@ -60,9 +58,9 @@ func _physics_process(_delta: float) -> void:
         # Steer to match the rotation of the nearest path position
         var turning_angle := follower.vehicle.get_interest_vector_y_difference()
         if turning_angle > PI / 128:
-          follower.vehicle.steering_input = clampf(-turning_angle, -1.0, -0.1)
+          follower.vehicle.steering_input = clampf(turning_angle, 0.1, 1.0)
         elif turning_angle < -PI / 128:
-          follower.vehicle.steering_input = clampf(-turning_angle, 0.1, 1.0)
+          follower.vehicle.steering_input = clampf(turning_angle, -1.0, -0.1)
         else:
           follower.vehicle.steering_input = 0.0
       else:

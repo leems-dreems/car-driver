@@ -61,7 +61,7 @@ func start_ai() -> void:
     for i: int in steering_ray_count:
       var _new_raycast := RayCast3D.new()
       _new_raycast.add_to_group(steering_ray_group)
-      _new_raycast.position = Vector3(0, 2, 0)
+      _new_raycast.position = Vector3(0, 0, 0)
       for _mask_value in steering_ray_collision_masks:
         _new_raycast.set_collision_mask_value(_mask_value, true)
       var _angle := (i * (2 * PI)) / steering_ray_count
@@ -92,12 +92,14 @@ func stop_ai() -> void:
   return
 
 ## Calculate the amount of interest in each direction
-func set_interest_vectors(_path_vector: Vector3) -> void:
-  _path_vector = _path_vector.normalized()
+func set_interest_vectors(_target_global_position: Vector3) -> void:
+  var _target_position := to_local(_target_global_position)
+  _target_position.y = 0
+  _target_position = _target_position.normalized()
   interest_vectors = []
   for _raycast in steering_raycasts:
     # The dot product of two aligned vectors is 1, and for two perpendicular vectors it’s 0
-    var _interest_amount := _raycast.target_position.normalized().dot(_path_vector)
+    var _interest_amount := _raycast.target_position.normalized().dot(_target_position)
     _interest_amount = maxf(0, _interest_amount)
     var _danger_amount := 0.0
     if _raycast.is_colliding():
@@ -111,15 +113,15 @@ func set_summed_interest_vector() -> void:
   var _summed_interest_vector := Vector3.ZERO
   for _interest_vector in interest_vectors:
     _summed_interest_vector += _interest_vector
-  summed_interest_vector = _summed_interest_vector.reflect(Vector3.FORWARD)
+  summed_interest_vector = _summed_interest_vector
 
-  interest_direction_mesh.position = (_summed_interest_vector / 2)
-  print(_summed_interest_vector)
-  interest_direction_mesh.rotation.y = Vector3.FORWARD.signed_angle_to(_summed_interest_vector, Vector3.UP)
-  interest_direction_mesh.mesh.height = _summed_interest_vector.length()
+  interest_direction_mesh.position = (summed_interest_vector / 2)
+#  print(summed_interest_vector)
+  interest_direction_mesh.rotation.y = get_interest_vector_y_difference()
+  interest_direction_mesh.mesh.height = summed_interest_vector.length()
 
   return
 
 ## Get the angle difference on the Y axis between the car's rotation and the interest vector
 func get_interest_vector_y_difference() -> float:
-  return transform.looking_at(to_global(summed_interest_vector)).basis.rotated(Vector3.UP, PI).get_euler().y
+  return Vector3.FORWARD.signed_angle_to(summed_interest_vector, Vector3.UP)
