@@ -3,6 +3,7 @@ class_name TrafficPath extends Path3D
 
 @export var number_of_vehicles := 1
 @export var road_speed := 20.0
+@export var road_reversing_speed := 5.0
 var compact_car_scene:= preload("res://cars/compact.tscn")
 var traffic_follower_scene:= preload("res://traffic/traffic_path_follower.tscn")
 var followers: Array[TrafficPathFollower] = []
@@ -40,23 +41,48 @@ func _physics_process(_delta: float) -> void:
         follower.vehicle.set_interest_vectors(follower.global_transform.origin)
         follower.vehicle.set_summed_interest_vector()
         var _interest_vector := follower.vehicle.summed_interest_vector
-        var _interest_strength := clampf(_interest_vector.length() / follower.vehicle.steering_ray_distance, 0.0, 1.0)
-        if _interest_strength < 0.75:
-          target_speed *= 0.5
-        elif _interest_strength < 0.5:
+        var _interest_strength := clampf(_interest_vector.length() / follower.vehicle.steering_ray_length, 0.0, 1.0)
+        if _interest_vector.z > follower.vehicle.steering_ray_length * 1.0:
+          if follower.vehicle.linear_velocity.z > 0.1:
+            target_speed = -road_reversing_speed
+          else:
+            target_speed = 0.0
+        elif _interest_vector.z > follower.vehicle.steering_ray_length * 0.25:
           target_speed *= 0.25
+        elif _interest_vector.z > follower.vehicle.steering_ray_length * 0.75:
+          target_speed *= 0.5
+
         follower.vehicle.ignition_on = true
-        if speed < target_speed:
+        if target_speed == road_reversing_speed:
+          if not follower.vehicle.is_shifting and not follower.vehicle.current_gear == -1:
+            follower.vehicle.shift(-1)
+          else:
+            follower.vehicle.throttle_input = 0.5
+            follower.vehicle.brake_input = 0.0
+            follower.vehicle.handbrake_input = 0.0
+        elif target_speed == 0.0:
+          follower.vehicle.throttle_input = 0.0
+          follower.vehicle.brake_input = 0.0
+          follower.vehicle.handbrake_input = 1.0
+        elif speed < target_speed:
           if speed < target_speed / 2:
             follower.vehicle.throttle_input = 0.5
+            follower.vehicle.brake_input = 0.0
+            follower.vehicle.handbrake_input = 0.0
           else:
             follower.vehicle.throttle_input = clampf(1 - (target_speed / speed), 0.0, 0.5)
+            follower.vehicle.brake_input = 0.0
+            follower.vehicle.handbrake_input = 0.0
         elif speed > target_speed * 1.2:
           follower.vehicle.throttle_input = 0.0
           follower.vehicle.brake_input = 0.2
-
+          follower.vehicle.handbrake_input = 0.0
+        else:
+          follower.vehicle.throttle_input = 0.0
+          follower.vehicle.brake_input = 0.0
+          follower.vehicle.handbrake_input = 0.0
         # Steer to match the rotation of the nearest path position
-        var turning_angle := follower.vehicle.get_interest_vector_y_difference()
+        var turning_angle := follower.vehicle.get_interest_angle()
         if turning_angle > PI / 128:
           follower.vehicle.steering_input = clampf(turning_angle, 0.1, 1.0)
         elif turning_angle < -PI / 128:
@@ -64,6 +90,7 @@ func _physics_process(_delta: float) -> void:
         else:
           follower.vehicle.steering_input = 0.0
       else:
+        follower.vehicle.steering_input = 0.0
         follower.vehicle.throttle_input = 0.0
     else:
       if follower.just_moved == false:
