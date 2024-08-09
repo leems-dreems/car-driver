@@ -1,0 +1,68 @@
+[gd_scene load_steps=14 format=3 uid="uid://c0sm3m6mudm7u"]
+
+[ext_resource type="Texture2D" uid="uid://bcctf2eb0h5f2" path="res://assets/textures/stillFlame.png" id="1_qghlc"]
+[ext_resource type="Texture2D" uid="uid://d1jy3bqnsbkwu" path="res://assets/textures/FlameSheet.png" id="2_qg21p"]
+
+[sub_resource type="Curve" id="Curve_dawdi"]
+_data = [Vector2(0.827451, 0.978723), 0.0, -21.7021, 0, 0, Vector2(1, 0.010989), -27.0981, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_jmfoi"]
+curve = SubResource("Curve_dawdi")
+
+[sub_resource type="Gradient" id="Gradient_fbmcf"]
+offsets = PackedFloat32Array(0, 0.251101, 0.515419, 0.801762)
+colors = PackedColorArray(1, 1, 1, 1, 0.875452, 0.677538, 0, 1, 0.836679, 0.312954, 5.77569e-07, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dogev"]
+gradient = SubResource("Gradient_fbmcf")
+
+[sub_resource type="Curve" id="Curve_iqbu2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lbmno"]
+curve = SubResource("Curve_iqbu2")
+
+[sub_resource type="Curve" id="Curve_01f75"]
+_data = [Vector2(0, 0.472527), 0.0, 0.0, 0, 0, Vector2(0.615942, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -6.8931, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_dliva"]
+curve = SubResource("Curve_01f75")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4bpr3"]
+emission_shape = 1
+emission_sphere_radius = 0.5
+angle_max = 360.0
+spread = 40.663
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+gravity = Vector3(0, 5, 0)
+scale_curve = SubResource("CurveTexture_dliva")
+color_ramp = SubResource("GradientTexture1D_dogev")
+alpha_curve = SubResource("CurveTexture_jmfoi")
+emission_curve = SubResource("CurveTexture_lbmno")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ohj5"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_qghlc")
+detail_mask = ExtResource("2_qg21p")
+disable_receive_shadows = true
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_nndmt"]
+material = SubResource("StandardMaterial3D_8ohj5")
+
+[node name="Fire" type="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.231461, 1.39733, 1.73006)
+lifetime = 0.65
+explosiveness = 0.15
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_4bpr3")
+draw_pass_1 = SubResource("QuadMesh_nndmt")

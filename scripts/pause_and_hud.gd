@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @export var vehicle : Vehicle
 @export var player : Player
+@export var stageMenu : PackedScene
 @onready var vehicle_hud_label := $HUD/VehicleHUD/Label
 @onready var use_label := $HUD/CenterContainer/VBoxContainer/UseLabel
 @onready var mission_label := $HUD/CenterContainer/VBoxContainer/MissionLabel
@@ -52,3 +53,7 @@ func handle_resume_button() -> void:
 
 func handle_quit_button() -> void:
   get_tree().quit()
+
+func _on_stage_select_button_pressed() -> void:
+    var menu = stageMenu.instantiate()
+    add_child(menu)
