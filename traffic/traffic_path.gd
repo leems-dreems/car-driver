@@ -53,22 +53,25 @@ func _physics_process(_delta: float) -> void:
         _vehicle.ignition_on = true
         if target_speed <= 0.0:
           _vehicle.throttle_input = 0.0
-          _vehicle.brake_input = 1.0
+          _vehicle.brake_input = 0.0
+          _vehicle.handbrake_input = 1.0
         elif speed < target_speed:
           if speed < target_speed / 2:
             _vehicle.throttle_input = 0.5
             _vehicle.brake_input = 0.0
+            _vehicle.handbrake_input = 0.0
           else:
             _vehicle.throttle_input = clampf(1 - (target_speed / speed), 0.0, 0.5)
             _vehicle.brake_input = 0.0
+            _vehicle.handbrake_input = 0.0
         elif speed > target_speed * 1.2:
           _vehicle.throttle_input = 0.0
           _vehicle.brake_input = 0.2
+          _vehicle.handbrake_input = 0.0
         else:
           _vehicle.throttle_input = 0.0
           _vehicle.brake_input = 0.0
-        print(_interest_vector)
-        print("Speed: " + str(target_speed) + " Throttle: " + str(_vehicle.throttle_input) + " Brake: " + str(_vehicle.brake_input))
+          _vehicle.handbrake_input = 0.0
         # Steer to match the rotation of the nearest path position
         var turning_angle := _vehicle.get_interest_vector_y_difference()
         if turning_angle > PI / 128:

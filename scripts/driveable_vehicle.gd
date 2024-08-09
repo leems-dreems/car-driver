@@ -10,7 +10,7 @@ var steering_ray_length := 8
 var antenna_length := 16
 var antenna_angle := PI / 32
 var avoidance_multiplier := 2
-var antenna_multiplier := 16
+var antenna_multiplier := 32
 var left_antenna_mesh: MeshInstance3D
 var right_antenna_mesh: MeshInstance3D
 var interest_direction_mesh: MeshInstance3D
@@ -149,26 +149,26 @@ func set_interest_vectors(_path_vector: Vector3) -> void:
         interest_vectors[i - 16] /= _danger_amount * avoidance_multiplier
     i += 1
 
-  # Check "antenna" raycasts
-  var _danger_amount_left := 0.0
-  var _danger_amount_right := 0.0
-  for _raycast in antenna_raycasts:
-    if _raycast.is_colliding():
-      var _danger_distance: float = _raycast.get_collision_point().distance_to(_raycast.global_position)
-      if _raycast.target_position.x < 0:
-        _danger_amount_left = 1 - clampf(_danger_distance / antenna_length, 0.0, 1.0)
-      else:
-        _danger_amount_right = 1 - clampf(_danger_distance / antenna_length, 0.0, 1.0)
-  left_antenna_mesh.transparency = 1 - clampf(_danger_amount_left, 0.1, 1.0)
-  right_antenna_mesh.transparency = 1 - clampf(_danger_amount_right, 0.1, 1.0)
-  if _danger_amount_left > 0.0:
-    interest_vectors[steering_ray_count / 4] *= _danger_amount_left * antenna_multiplier
-    interest_vectors[0].z = minf(-1.0, interest_vectors[0].z)
-    interest_vectors[0] *= _danger_amount_left * antenna_multiplier
-  if _danger_amount_right > 0.0:
-    interest_vectors[(steering_ray_count / 4) * 3] *= _danger_amount_right * antenna_multiplier
-    interest_vectors[0].z = minf(-1.0, interest_vectors[0].z)
-    interest_vectors[0] *= _danger_amount_right * antenna_multiplier
+  ## Check "antenna" raycasts
+  #var _danger_amount_left := 0.0
+  #var _danger_amount_right := 0.0
+  #for _raycast in antenna_raycasts:
+    #if _raycast.is_colliding():
+      #var _danger_distance: float = _raycast.get_collision_point().distance_to(_raycast.global_position)
+      #if _raycast.target_position.x < 0:
+        #_danger_amount_left = 1 - clampf(_danger_distance / antenna_length, 0.0, 1.0)
+      #else:
+        #_danger_amount_right = 1 - clampf(_danger_distance / antenna_length, 0.0, 1.0)
+  #left_antenna_mesh.transparency = 1 - clampf(_danger_amount_left, 0.1, 1.0)
+  #right_antenna_mesh.transparency = 1 - clampf(_danger_amount_right, 0.1, 1.0)
+  #if _danger_amount_left > 0.0:
+    #interest_vectors[steering_ray_count / 4] *= _danger_amount_left * antenna_multiplier
+    #interest_vectors[steering_ray_count / 2].z = minf(-1.0, interest_vectors[steering_ray_count / 2].z)
+    #interest_vectors[steering_ray_count / 2] *= _danger_amount_left * antenna_multiplier
+  #if _danger_amount_right > 0.0:
+    #interest_vectors[(steering_ray_count / 4) * 3] *= _danger_amount_right * antenna_multiplier
+    #interest_vectors[steering_ray_count / 2].z = minf(-1.0, interest_vectors[steering_ray_count / 2].z)
+    #interest_vectors[steering_ray_count / 2] *= _danger_amount_right * antenna_multiplier
   return
 
 ## Sum up our interest vectors to get the direction of travel
@@ -176,9 +176,10 @@ func set_summed_interest_vector() -> void:
   var _summed_interest_vector := Vector3.ZERO
   for _interest_vector in interest_vectors:
     _summed_interest_vector += _interest_vector
-  summed_interest_vector = _summed_interest_vector.reflect(Vector3.FORWARD)
+  summed_interest_vector = _summed_interest_vector
 
-  interest_direction_mesh.position = (-summed_interest_vector / 2)
+  interest_direction_mesh.position = (summed_interest_vector / 2)
+  print(summed_interest_vector)
   interest_direction_mesh.rotation.y = Vector3.FORWARD.signed_angle_to(summed_interest_vector, Vector3.UP)
   interest_direction_mesh.mesh.height = summed_interest_vector.length()
 
@@ -186,4 +187,4 @@ func set_summed_interest_vector() -> void:
 
 ## Get the angle difference on the Y axis between the car's rotation and the interest vector
 func get_interest_vector_y_difference() -> float:
-  return transform.looking_at(to_global(summed_interest_vector)).basis.rotated(Vector3.UP, PI).get_euler().y
+  return transform.looking_at(to_global(summed_interest_vector)).basis.get_euler().y
