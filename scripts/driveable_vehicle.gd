@@ -10,7 +10,7 @@ var steering_ray_length := 8
 var antenna_length := 16
 var antenna_angle := PI / 32
 var avoidance_multiplier := 2
-var antenna_multiplier := 32
+var antenna_multiplier := 64
 var left_antenna_mesh: MeshInstance3D
 var right_antenna_mesh: MeshInstance3D
 var antenna_raycasts: Array[RayCast3D] = []
@@ -108,15 +108,15 @@ func start_ai() -> void:
   for _raycast in antenna_raycasts:
     _raycast.enabled = true
 
-  # Add interest direction pointer mesh
-  interest_direction_mesh = MeshInstance3D.new()
-  var _cylinder_mesh := CylinderMesh.new()
-  _cylinder_mesh.height = 0.01
-  _cylinder_mesh.top_radius = 0.05
-  _cylinder_mesh.bottom_radius = 0.05
-  interest_direction_mesh.mesh = _cylinder_mesh
-  interest_direction_mesh.rotate_x(PI / 2)
-  add_child(interest_direction_mesh)
+  ## Add interest direction pointer mesh
+  #interest_direction_mesh = MeshInstance3D.new()
+  #var _cylinder_mesh := CylinderMesh.new()
+  #_cylinder_mesh.height = 0.01
+  #_cylinder_mesh.top_radius = 0.05
+  #_cylinder_mesh.bottom_radius = 0.05
+  #interest_direction_mesh.mesh = _cylinder_mesh
+  #interest_direction_mesh.rotate_x(PI / 2)
+  #add_child(interest_direction_mesh)
 
   return
 
@@ -183,9 +183,9 @@ func set_summed_interest_vector() -> void:
     _summed_interest_vector += _interest_vector
   summed_interest_vector = _summed_interest_vector
 
-  interest_direction_mesh.position = (summed_interest_vector / 2)
-  interest_direction_mesh.rotation.y = get_interest_angle()
-  interest_direction_mesh.mesh.height = summed_interest_vector.length()
+  #interest_direction_mesh.position = (summed_interest_vector / 2)
+  #interest_direction_mesh.rotation.y = get_interest_angle()
+  #interest_direction_mesh.mesh.height = summed_interest_vector.length()
 
   return
 

@@ -339,19 +339,19 @@ player = NodePath("../Player")
 script = ExtResource("11_b02xr")
 
 [node name="TrafficLightA" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -9, 0.7, -7)
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -9, 0.75, -7)
 reset_time = 10.0
 
 [node name="TrafficLightA2" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(7.54979e-08, 0, 1, 0, 1, 0, -1, 0, 7.54979e-08, 5, 0.7, -7)
+transform = Transform3D(7.54979e-08, 0, 1, 0, 1, 0, -1, 0, 7.54979e-08, 5, 0.75, -7)
 reset_time = 10.0
 
 [node name="TrafficLightA3" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.7, 7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.75, 7)
 reset_time = 10.0
 
 [node name="TrafficLightA4" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0.7, 7)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0.75, 7)
 reset_time = 10.0
 
 [node name="SpringyTrashBinSquare" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
@@ -827,7 +827,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -89)
 reset_time = 10.0
 
 [node name="SpringyGasPump" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0.75, 30)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3, 0.75, 56)
+reset_time = 10.0
+
+[node name="SpringyGasPump3" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0.75, 11)
 reset_time = 10.0
 
 [node name="SpringyGasPump2" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
@@ -920,6 +924,7 @@ shape = SubResource("ConvexPolygonShape3D_sc38f")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -2)
 curve = SubResource("Curve3D_svt11")
 script = ExtResource("20_jlqe1")
+number_of_vehicles = 10
 
 [node name="TrafficPathFollower" parent="TrafficManager/TrafficPath" instance=ExtResource("21_u0y4w")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
