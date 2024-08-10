@@ -309,13 +309,7 @@ collision_mask = 82
 size = Vector3(5, 3, 3)
 
 [node name="Ramp5" type="CSGBox3D" parent="Terrain" groups=["Road"]]
-transform = Transform3D(-1, -1.49012e-08, -7.45058e-08, -2.68656e-08, 1, 0, 8.53623e-08, 0, -1, 2.5, 1.5, 16)
-use_collision = true
-collision_mask = 82
-size = Vector3(2, 2, 2)
-
-[node name="Ramp6" type="CSGBox3D" parent="Terrain" groups=["Road"]]
-transform = Transform3D(-1, -1.49012e-08, -7.45058e-08, -2.68656e-08, 1, 0, 8.53623e-08, 0, -1, -1.5, 1.5, 30)
+transform = Transform3D(-1, -1.49012e-08, -7.45058e-08, -2.68656e-08, 1, 0, 8.53623e-08, 0, -1, -32.5, 1.5, 16)
 use_collision = true
 collision_mask = 82
 size = Vector3(2, 2, 2)
@@ -827,7 +821,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.75, -89)
 reset_time = 10.0
 
 [node name="SpringyGasPump" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3, 0.75, 56)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0.75, 30)
 reset_time = 10.0
 
 [node name="SpringyGasPump3" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
@@ -851,7 +845,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0.75, 40)
 reset_time = 10.0
 
 [node name="SpringyTrashBinRound6" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.75, 40)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.75, 40)
 reset_time = 10.0
 
 [node name="SpringyTrashBinRound7" parent="SpringyPropsManager" instance=ExtResource("16_sloab")]
@@ -925,6 +919,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -2)
 curve = SubResource("Curve3D_svt11")
 script = ExtResource("20_jlqe1")
 number_of_vehicles = 10
+road_speed = 15.0
 
 [node name="TrafficPathFollower" parent="TrafficManager/TrafficPath" instance=ExtResource("21_u0y4w")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)

@@ -8,7 +8,7 @@ extends CharacterBody3D
 ## Jump impulse
 @export var jump_initial_impulse := 12.0
 ## Jump impulse when player keeps pressing jump
-@export var jump_additional_force := 4.5
+@export var jump_additional_force := 24.0
 ## Player model rotation speed
 @export var rotation_speed := 12.0
 ## Minimum horizontal speed on the ground. This controls when the character's animation tree changes

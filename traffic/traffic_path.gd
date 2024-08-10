@@ -4,11 +4,15 @@ class_name TrafficPath extends Path3D
 @export var number_of_vehicles := 1
 @export var road_speed := 20.0
 @export var road_reversing_speed := -5.0
+var min_speed := 0.1
+var brake_force := 0.5
 var compact_car_scene:= preload("res://cars/compact.tscn")
 var traffic_follower_scene:= preload("res://traffic/traffic_path_follower.tscn")
 var followers: Array[TrafficPathFollower] = []
+## Tracks the last vehicle that this TrafficPath processed avoidance & inputs for
+var last_follower_updated_index := -1
 var path_length: float
-var path_distance_limit := 1.0
+var path_distance_limit := 2.0
 
 
 func _ready() -> void:
@@ -25,73 +29,87 @@ func _physics_process(_delta: float) -> void:
     followers.push_back(new_follower)
     add_child(new_follower)
   for follower in followers:
+    if last_follower_updated_index >= len(followers) - 1:
+      last_follower_updated_index = -1
     if follower.vehicle != null and not follower.vehicle.is_being_driven:
+      var _follower_index := followers.find(follower)
+      if last_follower_updated_index >= _follower_index:
+        continue
+      else:
+        last_follower_updated_index = _follower_index
       if follower.vehicle.get_wheel_contact_count() >= 3:
         var closest_offset := curve.get_closest_offset(follower.vehicle.position)
-        var speed := follower.vehicle.linear_velocity.length()
-        # Get the Y axis rotation of the nearest position on the path
-        follower.progress = closest_offset + speed
-        var closest_path_rotation_y: float = follower.rotation.y
+        var _speed := follower.vehicle.speed
+        follower.progress = closest_offset + _speed
         var target_speed := road_speed
         # If we are far from the path, aim towards nearby path point
-        var _closest_position := curve.get_closest_point(follower.vehicle.position)
-        if _closest_position.distance_to(follower.vehicle.position) < path_distance_limit:
+        var _distance_to_path := curve.get_closest_point(follower.vehicle.position).distance_to(follower.vehicle.position)
+        var _angle_to_path := follower.vehicle.transform.basis.z.signed_angle_to(follower.transform.basis.z, Vector3.UP)
+        if _distance_to_path < path_distance_limit and _angle_to_path > -0.1 and _angle_to_path < 0.1:
           # Move TrafficPathFollower forward a bit, then aim for it
-          follower.progress += follower.progress + speed
+          follower.vehicle.is_on_path = true
+        else:
+          follower.vehicle.is_on_path = false
+        # Set the vehicle's interest vectors and calculate the average direction of interest
         follower.vehicle.set_interest_vectors(follower.global_transform.origin)
         follower.vehicle.set_summed_interest_vector()
+        var _turning_angle := follower.vehicle.get_interest_angle()
         var _interest_vector := follower.vehicle.summed_interest_vector
-        var _interest_strength := clampf(_interest_vector.length() / follower.vehicle.steering_ray_length, 0.0, 1.0)
-        if _interest_vector.z > follower.vehicle.steering_ray_length * 1.0:
-          if follower.vehicle.linear_velocity.z < 0.1:
+
+        if _interest_vector.z > follower.vehicle.steering_ray_length * 0.75:
+          if not follower.vehicle.is_on_path and follower.vehicle.linear_velocity.z < min_speed:
             target_speed = road_reversing_speed
           else:
             target_speed = 0.0
-        elif _interest_vector.z > follower.vehicle.steering_ray_length * 0.25:
+        elif _turning_angle < -PI / 8 or _turning_angle > PI / 8:
           target_speed *= 0.25
-        elif _interest_vector.z > follower.vehicle.steering_ray_length * 0.75:
-          target_speed *= 0.5
 
-        follower.vehicle.ignition_on = true
         if target_speed == road_reversing_speed:
-          if not follower.vehicle.is_shifting and not follower.vehicle.current_gear == -1:
+          if _speed < 0.5 and not follower.vehicle.is_shifting and not follower.vehicle.current_gear == -1:
             follower.vehicle.shift(-1)
           else:
             follower.vehicle.throttle_input = 0.5
             follower.vehicle.brake_input = 0.0
             follower.vehicle.handbrake_input = 0.0
         else:
-          if not follower.vehicle.is_shifting and follower.vehicle.current_gear < 1:
-            follower.vehicle.shift(1)  
+          if follower.vehicle.current_gear < 1 and not follower.vehicle.is_shifting:
+            follower.vehicle.shift(1)
           elif target_speed == 0.0:
             follower.vehicle.throttle_input = 0.0
-            follower.vehicle.brake_input = 0.0
+            if _speed < min_speed:
+              follower.vehicle.brake_input = 0.0
+            else:
+              follower.vehicle.brake_input = 1.0
             follower.vehicle.handbrake_input = 1.0
-          elif speed < target_speed:
-            if speed < target_speed / 2:
-              follower.vehicle.throttle_input = 0.5
+          elif _speed < target_speed:
+            if _speed < target_speed / 2:
+              follower.vehicle.throttle_input = 0.75
               follower.vehicle.brake_input = 0.0
               follower.vehicle.handbrake_input = 0.0
             else:
-              follower.vehicle.throttle_input = clampf(1 - (target_speed / speed), 0.0, 0.5)
+              follower.vehicle.throttle_input = clampf(_speed / target_speed, 0.5, 1.0)
               follower.vehicle.brake_input = 0.0
               follower.vehicle.handbrake_input = 0.0
-          elif speed > target_speed * 1.2:
+          elif _speed > target_speed * 1.2:
             follower.vehicle.throttle_input = 0.0
-            follower.vehicle.brake_input = 0.2
+            follower.vehicle.brake_input = brake_force
             follower.vehicle.handbrake_input = 0.0
           else:
             follower.vehicle.throttle_input = 0.0
             follower.vehicle.brake_input = 0.0
             follower.vehicle.handbrake_input = 0.0
-          # Steer to match the rotation of the nearest path position
-        var turning_angle := follower.vehicle.get_interest_angle()
-        if turning_angle > PI / 128:
-          follower.vehicle.steering_input = clampf(turning_angle, 0.1, 1.0)
-        elif turning_angle < -PI / 128:
-          follower.vehicle.steering_input = clampf(turning_angle, -1.0, -0.1)
+
+        if follower.vehicle.throttle_input > 0.0:
+          follower.vehicle.ignition_on = true
+
+        # Steer to match the rotation of the nearest path position
+        if _turning_angle > -PI * 0.8 and _turning_angle < PI * 0.8:
+          follower.vehicle.steering_input = clampf(_turning_angle, -1.0, 1.0)
         else:
           follower.vehicle.steering_input = 0.0
+        if follower.vehicle.current_gear == -1:
+          follower.vehicle.steering_input = -follower.vehicle.steering_input
+        break
       else:
         follower.vehicle.steering_input = 0.0
         follower.vehicle.throttle_input = 0.0
