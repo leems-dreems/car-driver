@@ -27,6 +27,10 @@ window/size/mode=2
 
 project/assembly_name="Fast Traffic"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/road-generator/plugin.cfg")
+
 [input]
 
 "Steer Left"={

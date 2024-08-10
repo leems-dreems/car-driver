@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=3 uid="uid://nyu33jcyd77i"]
+
+[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_xqse3"]
+[ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="2_rl3eo"]
+[ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="3_uwai4"]
+[ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="4_skgyp"]
+[ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="5_obnrt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_aa5c5"]
+
+[sub_resource type="Sky" id="Sky_en3uj"]
+sky_material = SubResource("ProceduralSkyMaterial_aa5c5")
+
+[sub_resource type="Environment" id="Environment_j2cg0"]
+background_mode = 2
+sky = SubResource("Sky_en3uj")
+
+[node name="RoadGeneratorMap" type="Node3D"]
+
+[node name="CompactCar" parent="." node_paths=PackedStringArray("front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") instance=ExtResource("1_xqse3")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -16, 2, -30)
+front_left_wheel = NodePath("")
+front_right_wheel = NodePath("")
+rear_left_wheel = NodePath("")
+rear_right_wheel = NodePath("")
+
+[node name="VehicleController" parent="." node_paths=PackedStringArray("vehicle_node") instance=ExtResource("2_rl3eo")]
+vehicle_node = NodePath("")
+
+[node name="Player" parent="." instance=ExtResource("3_uwai4")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, -37)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_j2cg0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 13, 0)
+light_color = Color(1, 0.952941, 1, 1)
+shadow_enabled = true
+
+[node name="PauseAndHUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_skgyp")]
+player = NodePath("")
+
+[node name="RoadManager" type="Node3D" parent="."]
+script = ExtResource("5_obnrt")
