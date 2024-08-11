@@ -20,23 +20,23 @@
 [ext_resource type="Script" path="res://missions/mission.gd" id="17_a4v38"]
 [ext_resource type="Script" path="res://missions/objective_area.gd" id="18_y7o6o"]
 
-[sub_resource type="Gradient" id="Gradient_u6ph6"]
+[sub_resource type="Gradient" id="Gradient_fjgfb"]
 colors = PackedColorArray(0.746094, 0.746094, 0.746094, 1, 1, 1, 1, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_jwgtv"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h8cqd"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7y14v"]
 seamless = true
-color_ramp = SubResource("Gradient_u6ph6")
-noise = SubResource("FastNoiseLite_jwgtv")
+color_ramp = SubResource("Gradient_fjgfb")
+noise = SubResource("FastNoiseLite_h8cqd")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pklv7"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iqulw"]
 albedo_color = Color(0, 0.4, 0.00784314, 1)
 albedo_texture = SubResource("NoiseTexture2D_7y14v")
 uv1_scale = Vector3(100, 100, 100)
 
 [sub_resource type="BoxMesh" id="BoxMesh_w5he8"]
-material = SubResource("StandardMaterial3D_pklv7")
+material = SubResource("StandardMaterial3D_iqulw")
 size = Vector3(1000, 1, 1000)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_40nde"]

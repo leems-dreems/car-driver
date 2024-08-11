@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Fast Traffic"
-run/main_scene="res://maps/KayKitCity/kay_kit_city.tscn"
+run/main_scene="res://maps/road_generator_map.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 

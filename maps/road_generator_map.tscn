@@ -1,10 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://nyu33jcyd77i"]
+[gd_scene load_steps=19 format=3 uid="uid://nyu33jcyd77i"]
 
+[ext_resource type="Script" path="res://maps/road_generator_map.gd" id="1_h3erf"]
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_xqse3"]
 [ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="2_rl3eo"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="3_uwai4"]
 [ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="4_skgyp"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="5_obnrt"]
+[ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="6_sjs0l"]
+[ext_resource type="Material" path="res://addons/road-generator/resources/road_texture.material" id="7_ld7fj"]
+[ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="8_uedyw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_aa5c5"]
 
@@ -15,20 +19,39 @@ sky_material = SubResource("ProceduralSkyMaterial_aa5c5")
 background_mode = 2
 sky = SubResource("Sky_en3uj")
 
-[node name="RoadGeneratorMap" type="Node3D"]
+[sub_resource type="Gradient" id="Gradient_u6ph6"]
+colors = PackedColorArray(0.746094, 0.746094, 0.746094, 1, 1, 1, 1, 1)
 
-[node name="CompactCar" parent="." node_paths=PackedStringArray("front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") instance=ExtResource("1_xqse3")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -16, 2, -30)
-front_left_wheel = NodePath("")
-front_right_wheel = NodePath("")
-rear_left_wheel = NodePath("")
-rear_right_wheel = NodePath("")
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jwgtv"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r6e7o"]
+seamless = true
+color_ramp = SubResource("Gradient_u6ph6")
+noise = SubResource("FastNoiseLite_jwgtv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pklv7"]
+albedo_color = Color(0, 0.4, 0.00784314, 1)
+albedo_texture = SubResource("NoiseTexture2D_r6e7o")
+uv1_scale = Vector3(100, 100, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_entgg"]
+material = SubResource("StandardMaterial3D_pklv7")
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kn3sq"]
+size = Vector3(1000, 1, 1000)
+
+[node name="RoadGeneratorMap" type="Node3D"]
+script = ExtResource("1_h3erf")
+
+[node name="CompactCar" parent="." instance=ExtResource("1_xqse3")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2, 2, 40)
 
 [node name="VehicleController" parent="." node_paths=PackedStringArray("vehicle_node") instance=ExtResource("2_rl3eo")]
-vehicle_node = NodePath("")
+vehicle_node = NodePath("../CompactCar")
 
 [node name="Player" parent="." instance=ExtResource("3_uwai4")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, -37)
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, 30)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_j2cg0")
@@ -39,7 +62,87 @@ light_color = Color(1, 0.952941, 1, 1)
 shadow_enabled = true
 
 [node name="PauseAndHUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_skgyp")]
-player = NodePath("")
+player = NodePath("../Player")
 
 [node name="RoadManager" type="Node3D" parent="."]
 script = ExtResource("5_obnrt")
+
+[node name="Road_001" type="Node3D" parent="RoadManager"]
+script = ExtResource("6_sjs0l")
+material_resource = ExtResource("7_ld7fj")
+use_lowpoly_preview = true
+generate_ai_lanes = true
+draw_lanes_editor = true
+draw_lanes_game = true
+edge_containers = Array[NodePath]([NodePath("../Road_002"), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath("RP_002"), NodePath("")])
+edge_rp_target_dirs = Array[int]([0, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_003")])
+edge_rp_local_dirs = Array[int]([1, 0])
+
+[node name="RP_001" type="Node3D" parent="RoadManager/Road_001"]
+script = ExtResource("8_uedyw")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+next_pt_init = NodePath("../RP_002")
+
+[node name="RP_002" type="Node3D" parent="RoadManager/Road_001"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32)
+script = ExtResource("8_uedyw")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+prior_pt_init = NodePath("../RP_001")
+next_pt_init = NodePath("../RP_003")
+prior_mag = 16.0
+next_mag = 16.0
+
+[node name="RP_003" type="Node3D" parent="RoadManager/Road_001"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 64)
+script = ExtResource("8_uedyw")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+prior_pt_init = NodePath("../RP_002")
+prior_mag = 8.0
+next_mag = 8.0
+
+[node name="Road_002" type="Node3D" parent="RoadManager"]
+script = ExtResource("6_sjs0l")
+material_resource = ExtResource("7_ld7fj")
+use_lowpoly_preview = true
+generate_ai_lanes = true
+draw_lanes_editor = true
+draw_lanes_game = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("../Road_001")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("RP_001")])
+edge_rp_target_dirs = Array[int]([-1, 1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
+edge_rp_local_dirs = Array[int]([0, 0])
+
+[node name="RP_001" type="Node3D" parent="RoadManager/Road_002"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -32, 1, 0)
+script = ExtResource("8_uedyw")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+prior_pt_init = NodePath("../RP_002")
+prior_mag = 4.9594
+
+[node name="RP_002" type="Node3D" parent="RoadManager/Road_002"]
+script = ExtResource("8_uedyw")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+prior_pt_init = NodePath("../RP_001")
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="Ground" type="StaticBody3D" parent="Terrain" groups=["Grass"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7, 0)
+collision_mask = 18
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_entgg")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_kn3sq")
