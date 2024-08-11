@@ -123,5 +123,5 @@ func _physics_process(_delta: float) -> void:
       add_child(new_vehicle)
       new_vehicle.start_ai()
     else:
-      _follower.vehicle.just_moved = false
+      _follower.just_moved = false
   return
