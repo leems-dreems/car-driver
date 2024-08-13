@@ -8,7 +8,7 @@ extends CharacterBody3D
 ## Jump impulse
 @export var jump_initial_impulse := 12.0
 ## Jump impulse when player keeps pressing jump
-@export var jump_additional_force := 4.5
+@export var jump_additional_force := 24.0
 ## Player model rotation speed
 @export var rotation_speed := 12.0
 ## Minimum horizontal speed on the ground. This controls when the character's animation tree changes
@@ -24,6 +24,7 @@ extends CharacterBody3D
 var useable_target : Node3D = null
 
 @onready var _rotation_root: Node3D = $CharacterRotationRoot
+@onready var _vehicle_controller: VehicleController = $VehicleController
 @onready var _camera_controller: CameraController = $CameraController
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
 @onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummySkin
@@ -190,6 +191,7 @@ func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
 
 func enterVehicle (vehicle: DriveableVehicle) -> void:
   current_vehicle = vehicle
+  _vehicle_controller.vehicle_node = vehicle
   vehicle.is_being_driven = true
   $CharacterCollisionShape.disabled = true
   visible = false
@@ -198,6 +200,7 @@ func enterVehicle (vehicle: DriveableVehicle) -> void:
 
 func exitVehicle () -> void:
   current_vehicle.is_being_driven = false
+  _vehicle_controller.vehicle_node = null
   global_position = current_vehicle.global_position
   global_position.y += 5
   current_vehicle = null
