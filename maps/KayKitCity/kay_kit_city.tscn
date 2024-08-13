@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://defp4i4n5dard"]
+[gd_scene load_steps=39 format=3 uid="uid://defp4i4n5dard"]
 
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
 [ext_resource type="PackedScene" uid="uid://wrut3fs81xjv" path="res://maps/KayKitCity/terrain_pieces/road_junction.tscn" id="3_6tcif"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://missions/mission.gd" id="17_a4v38"]
 [ext_resource type="Script" path="res://missions/objective_area.gd" id="18_y7o6o"]
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="20_jlqe1"]
+[ext_resource type="PackedScene" uid="uid://dnl62emnb36yw" path="res://traffic/stop_zone.tscn" id="21_25nhv"]
 [ext_resource type="PackedScene" uid="uid://lfmcun5yh37r" path="res://traffic/traffic_path_follower.tscn" id="21_u0y4w"]
 
 [sub_resource type="Gradient" id="Gradient_u6ph6"]
@@ -68,6 +69,47 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 14
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dv1os"]
+size = Vector3(20, 1, 1)
+
+[sub_resource type="Animation" id="Animation_b2rd7"]
+resource_name = "StopZoneCycle"
+length = 24.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 24),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3xg72"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5e4k0"]
+_data = {
+"RESET": SubResource("Animation_3xg72"),
+"StopZoneCycle": SubResource("Animation_b2rd7")
+}
 
 [node name="KayKitCity" type="Node3D"]
 
@@ -925,3 +967,25 @@ road_speed = 15.0
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Testing Stuff" type="Node3D" parent="."]
+
+[node name="Intersection" type="Node3D" parent="."]
+
+[node name="StopZone" parent="Intersection" instance=ExtResource("21_25nhv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.1576, 1.33791, 0.486911)
+
+[node name="StopZone2" parent="Intersection" instance=ExtResource("21_25nhv")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 1, -7)
+
+[node name="StopController" type="Area3D" parent="Intersection" groups=["StopSignal"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.33656, 0, 0)
+collision_layer = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Intersection/StopController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_dv1os")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Intersection/StopController"]
+libraries = {
+"": SubResource("AnimationLibrary_5e4k0")
+}
+autoplay = "StopZoneCycle"

@@ -100,6 +100,7 @@ func start_ai() -> void:
     # Add steering raycasts for close avoidance
     for i: int in steering_ray_count:
       var _new_raycast := RayCast3D.new()
+      _new_raycast.collide_with_areas = true #added this for traffic signals
       _new_raycast.add_to_group(steering_ray_group)
       _new_raycast.position = Vector3(0, 0, 0)
       for _mask_value in steering_ray_collision_masks:
@@ -111,6 +112,7 @@ func start_ai() -> void:
     # Add antenna raycasts for far avoidance
     for i: int in [-1, 1]:
       var _new_raycast := RayCast3D.new()
+      _new_raycast.collide_with_areas = true #added this for traffic signals
       _new_raycast.add_to_group(steering_ray_group)
       _new_raycast.position = Vector3.ZERO
       for _mask_value in steering_ray_collision_masks:

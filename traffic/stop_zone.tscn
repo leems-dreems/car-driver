@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnl62emnb36yw"]
+
+[ext_resource type="Script" path="res://scripts/stop_zone.gd" id="1_mqoak"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ygnjv"]
+size = Vector3(1, 2.4292, 13.012)
+
+[node name="StopZone" type="Area3D"]
+collision_mask = 257
+script = ExtResource("1_mqoak")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7146, -0.594116)
+shape = SubResource("BoxShape3D_ygnjv")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
