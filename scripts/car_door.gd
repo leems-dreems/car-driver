@@ -1,5 +1,6 @@
 extends RigidBody3D
 
+@export var parent_car : DriveableVehicle
 @export var shutDoorMesh : MeshInstance3D
 @export var hingeJoint : HingeJoint3D
 @export var doorOpenSFX : AudioStreamPlayer3D

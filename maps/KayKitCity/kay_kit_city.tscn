@@ -1,7 +1,6 @@
-[gd_scene load_steps=32 format=3 uid="uid://defp4i4n5dard"]
+[gd_scene load_steps=34 format=3 uid="uid://defp4i4n5dard"]
 
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
-[ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="2_7fuac"]
 [ext_resource type="PackedScene" uid="uid://wrut3fs81xjv" path="res://maps/KayKitCity/terrain_pieces/road_junction.tscn" id="3_6tcif"]
 [ext_resource type="PackedScene" uid="uid://djoco1viojc80" path="res://maps/KayKitCity/terrain_pieces/road_straight.tscn" id="4_1u4ly"]
 [ext_resource type="PackedScene" uid="uid://maofgh0s33e8" path="res://maps/KayKitCity/terrain_pieces/road_corner_curved.tscn" id="5_cfag0"]
@@ -19,6 +18,8 @@
 [ext_resource type="Script" path="res://missions/missions_manager.gd" id="16_xckov"]
 [ext_resource type="Script" path="res://missions/mission.gd" id="17_a4v38"]
 [ext_resource type="Script" path="res://missions/objective_area.gd" id="18_y7o6o"]
+[ext_resource type="Script" path="res://traffic/traffic_path.gd" id="20_jlqe1"]
+[ext_resource type="PackedScene" uid="uid://lfmcun5yh37r" path="res://traffic/traffic_path_follower.tscn" id="21_u0y4w"]
 
 [sub_resource type="Gradient" id="Gradient_u6ph6"]
 colors = PackedColorArray(0.746094, 0.746094, 0.746094, 1, 1, 1, 1, 1)
@@ -61,13 +62,17 @@ albedo_color = Color(0, 1, 0, 0.439216)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_sc38f"]
 points = PackedVector3Array(-3, -2, -3, -3, 2, -3, 3, -2, -3, -3, -2, 3, -3, 2, 3, 3, 2, -3, 3, -2, 3, 3, 2, 3)
 
+[sub_resource type="Curve3D" id="Curve3D_svt11"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 65, 9, 0, 0, -9, 0, 0, -9, 0, 74, 9, 0, 0, -9, 0, 0, -37, 0, 74, 0, 0, 9, 0, 0, -9, -46, 0, 65, 0, 0, 9, 0, 0, -9, -46, 0, 9, -9, 0, 0, 9, 0, 0, -37, 0, 0, 0, 0, 0, 5, 0, 0, 19, 0, 0, 0, 0, 5, 0, 0, 0, 24, 0, -5, 0, 0, 0, 0, 0, -5, 24, 0, -33, 5, 0, 0, 0, 0, 0, 19, 0, -38, 0, 0, 0, -5, 0, 0, 5, 0, -38, 0, 0, -5, 0, 0, 0, 0, 0, -33, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 14
+
 [node name="KayKitCity" type="Node3D"]
 
 [node name="CompactCar" parent="." instance=ExtResource("1_djukj")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -16, 2, -30)
-
-[node name="VehicleController" parent="." node_paths=PackedStringArray("vehicle_node") instance=ExtResource("2_7fuac")]
-vehicle_node = NodePath("../CompactCar")
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -17, 2, -30)
 
 [node name="Terrain" type="Node3D" parent="."]
 
@@ -267,13 +272,16 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 0,
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 26, 0, 0)
 
 [node name="BuildingA" parent="Terrain" instance=ExtResource("9_ov5pk")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 28)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 38)
 
 [node name="BuildingA2" parent="Terrain" instance=ExtResource("9_ov5pk")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 42)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 47)
 
 [node name="BuildingA3" parent="Terrain" instance=ExtResource("9_ov5pk")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 56)
+
+[node name="BuildingA4" parent="Terrain" instance=ExtResource("9_ov5pk")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, 29)
 
 [node name="Ground" type="StaticBody3D" parent="Terrain" groups=["Grass"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
@@ -294,23 +302,17 @@ use_collision = true
 collision_mask = 82
 size = Vector3(5, 1, 9)
 
-[node name="Ramp3" type="CSGBox3D" parent="Terrain" groups=["Road"]]
-transform = Transform3D(-1, -1.49012e-08, -7.45058e-08, 1.94149e-08, 0.866026, -0.5, 8.73587e-08, -0.5, -0.866026, 13, 1, -15)
-use_collision = true
-collision_mask = 82
-size = Vector3(5, 1, 9)
-
 [node name="Ramp4" type="CSGBox3D" parent="Terrain" groups=["Road"]]
 transform = Transform3D(-1, -1.49012e-08, -7.45058e-08, 4.13634e-08, 0.707107, -0.707107, 7.93571e-08, -0.707107, -0.707107, -20, 0.189339, -67.9455)
 use_collision = true
 collision_mask = 82
 size = Vector3(5, 3, 3)
 
-[node name="Ramp2" type="CSGBox3D" parent="Terrain" groups=["Road"]]
-transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, -32, 1, -17)
+[node name="Ramp5" type="CSGBox3D" parent="Terrain" groups=["Road"]]
+transform = Transform3D(-1, -1.49012e-08, -7.45058e-08, -2.68656e-08, 1, 0, 8.53623e-08, 0, -1, -32.5, 1.5, 16)
 use_collision = true
 collision_mask = 82
-size = Vector3(5, 1, 9)
+size = Vector3(2, 2, 2)
 
 [node name="Player" parent="." instance=ExtResource("7_1k2ef")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, -37)
@@ -323,26 +325,27 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 light_color = Color(1, 0.952941, 1, 1)
 shadow_enabled = true
 
-[node name="PauseAndHUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("11_w4w4x")]
+[node name="PauseAndHUD" parent="." node_paths=PackedStringArray("vehicle", "player") instance=ExtResource("11_w4w4x")]
+vehicle = NodePath("../CompactCar")
 player = NodePath("../Player")
 
 [node name="SpringyPropsManager" type="Node3D" parent="."]
 script = ExtResource("11_b02xr")
 
 [node name="TrafficLightA" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -9, 0.7, -7)
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -9, 0.75, -7)
 reset_time = 10.0
 
 [node name="TrafficLightA2" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(7.54979e-08, 0, 1, 0, 1, 0, -1, 0, 7.54979e-08, 5, 0.7, -7)
+transform = Transform3D(7.54979e-08, 0, 1, 0, 1, 0, -1, 0, 7.54979e-08, 5, 0.75, -7)
 reset_time = 10.0
 
 [node name="TrafficLightA3" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.7, 7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.75, 7)
 reset_time = 10.0
 
 [node name="TrafficLightA4" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0.7, 7)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0.75, 7)
 reset_time = 10.0
 
 [node name="SpringyTrashBinSquare" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
@@ -821,6 +824,10 @@ reset_time = 10.0
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0.75, 30)
 reset_time = 10.0
 
+[node name="SpringyGasPump3" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0.75, 11)
+reset_time = 10.0
+
 [node name="SpringyGasPump2" parent="SpringyPropsManager" instance=ExtResource("14_xgfoh")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17, 0.75, 26)
 reset_time = 10.0
@@ -904,3 +911,17 @@ surface_material_override/0 = SubResource("StandardMaterial3D_oncjh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MissionsManager/Mission_1/End"]
 shape = SubResource("ConvexPolygonShape3D_sc38f")
+
+[node name="TrafficManager" type="Node3D" parent="."]
+
+[node name="TrafficPath" type="Path3D" parent="TrafficManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -2)
+curve = SubResource("Curve3D_svt11")
+script = ExtResource("20_jlqe1")
+number_of_vehicles = 10
+road_speed = 15.0
+
+[node name="TrafficPathFollower" parent="TrafficManager/TrafficPath" instance=ExtResource("21_u0y4w")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Testing Stuff" type="Node3D" parent="."]

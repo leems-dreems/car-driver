@@ -9,7 +9,7 @@ var stages_dictionary = {
 }
 
 func _ready() -> void:
-    stage_list.select_mode = 0 #set single select only
+    stage_list.select_mode = ItemList.SELECT_SINGLE
     for stage in stages_dictionary:
         var i = stage_list.add_item(stage)
         stage_list.set_item_metadata(i, stages_dictionary[stage])
