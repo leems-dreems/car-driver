@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://defp4i4n5dard"]
+[gd_scene load_steps=33 format=3 uid="uid://defp4i4n5dard"]
 
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
 [ext_resource type="PackedScene" uid="uid://wrut3fs81xjv" path="res://maps/KayKitCity/terrain_pieces/road_junction.tscn" id="3_6tcif"]
@@ -19,7 +19,6 @@
 [ext_resource type="Script" path="res://missions/mission.gd" id="17_a4v38"]
 [ext_resource type="Script" path="res://missions/objective_area.gd" id="18_y7o6o"]
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="20_jlqe1"]
-[ext_resource type="PackedScene" uid="uid://lfmcun5yh37r" path="res://traffic/traffic_path_follower.tscn" id="21_u0y4w"]
 
 [sub_resource type="Gradient" id="Gradient_u6ph6"]
 colors = PackedColorArray(0.746094, 0.746094, 0.746094, 1, 1, 1, 1, 1)
@@ -919,9 +918,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -2)
 curve = SubResource("Curve3D_svt11")
 script = ExtResource("20_jlqe1")
 number_of_vehicles = 10
-road_speed = 15.0
-
-[node name="TrafficPathFollower" parent="TrafficManager/TrafficPath" instance=ExtResource("21_u0y4w")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+path_max_speed = 15.0
 
 [node name="Testing Stuff" type="Node3D" parent="."]

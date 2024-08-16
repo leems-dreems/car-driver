@@ -165,7 +165,7 @@ func set_interest_vectors(_target_global_position: Vector3) -> void:
     var _interest_amount := _raycast.target_position.normalized().dot(_target_position)
     _interest_amount = maxf(0, _interest_amount)
     interest_vectors.push_back(_raycast.target_position.normalized() * _interest_amount)
-  # Loop through again and check for collisions
+  # Loop through raycasts again and check for danger to avoid
   var i := 0
   for _raycast in steering_raycasts:
     if _raycast.is_colliding():
