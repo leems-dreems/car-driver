@@ -19,23 +19,26 @@ var min_speed := 0.1
 var brake_force := 0.5
 ## The Curve3D of the parent TrafficPath
 var parent_curve: Curve3D
+## Indicates that this vehicle is close to the path and facing the right direction
+var _is_on_path := false
 
 ## Update interest vectors & avoidance info for the vehicle, then adjust its inputs accordingly
 func set_inputs() -> void:
   if vehicle.get_wheel_contact_count() >= 3:
     var _closest_offset: float = parent_curve.get_closest_offset(vehicle.position)
     var _closest_point: Vector3 = parent_curve.get_closest_point(vehicle.position)
-    var _speed := vehicle.speed
-    progress = _closest_offset + _speed
     var target_speed := path_max_speed
-    # If we are far from the path, aim towards nearby path point
     var _distance_to_path := _closest_point.distance_to(vehicle.position)
-    var _angle_to_path := vehicle.transform.basis.z.signed_angle_to(transform.basis.z, Vector3.UP)
-    if _distance_to_path < path_distance_limit and _angle_to_path > -0.1 and _angle_to_path < 0.1:
-      # Move TrafficPathFollower forward a bit, then aim for it
-      vehicle.is_on_path = true
+
+    # Move this TrafficPathFollower forward along the path
+    progress = _closest_offset + vehicle.speed
+    # Get the difference in rotation on the Y axis between this TrafficPathFollower and its vehicle
+    var _angle_to_vehicle := vehicle.transform.basis.z.signed_angle_to(transform.basis.z, Vector3.UP)
+    if _distance_to_path < path_distance_limit and _angle_to_vehicle > -0.1 and _angle_to_vehicle < 0.1:
+      _is_on_path = true
     else:
-      vehicle.is_on_path = false
+      _is_on_path = false
+
     # Set the vehicle's interest vectors and calculate the average direction of interest
     vehicle.set_interest_vectors(global_transform.origin)
     vehicle.set_summed_interest_vector()
@@ -43,7 +46,7 @@ func set_inputs() -> void:
     var _interest_vector := vehicle.summed_interest_vector
 
     if _interest_vector.z > vehicle.steering_ray_length * 0.75:
-      if not vehicle.is_on_path and vehicle.linear_velocity.z < min_speed:
+      if not _is_on_path and vehicle.linear_velocity.z < min_speed:
         target_speed = path_reversing_speed
       else:
         target_speed = 0.0
@@ -51,7 +54,7 @@ func set_inputs() -> void:
       target_speed *= 0.25
 
     if target_speed == path_reversing_speed:
-      if _speed < 0.5 and not vehicle.is_shifting and not vehicle.current_gear == -1:
+      if vehicle.speed < 0.5 and not vehicle.is_shifting and not vehicle.current_gear == -1:
         vehicle.shift(-1)
       else:
         vehicle.throttle_input = 0.5
@@ -62,21 +65,21 @@ func set_inputs() -> void:
         vehicle.shift(1)
       elif target_speed == 0.0:
         vehicle.throttle_input = 0.0
-        if _speed < min_speed:
+        if vehicle.speed < min_speed:
           vehicle.brake_input = 0.0
         else:
           vehicle.brake_input = 1.0
         vehicle.handbrake_input = 1.0
-      elif _speed < target_speed:
-        if _speed < target_speed / 2:
+      elif vehicle.speed < target_speed:
+        if vehicle.speed < target_speed / 2:
           vehicle.throttle_input = 0.75
           vehicle.brake_input = 0.0
           vehicle.handbrake_input = 0.0
         else:
-          vehicle.throttle_input = clampf(_speed / target_speed, 0.5, 1.0)
+          vehicle.throttle_input = clampf(vehicle.speed / target_speed, 0.5, 1.0)
           vehicle.brake_input = 0.0
           vehicle.handbrake_input = 0.0
-      elif _speed > target_speed * 1.2:
+      elif vehicle.speed > target_speed * 1.2:
         vehicle.throttle_input = 0.0
         vehicle.brake_input = brake_force
         ## How much braking should be applied = brake_force

@@ -2,8 +2,6 @@ class_name DriveableVehicle extends Vehicle
 
 var is_being_driven := false
 var is_ai_on := false
-## Set by the parent [TrafficPath] to indicate that this car is properly aligned with the road
-var is_on_path := false
 var waiting_to_respawn := false
 ## The number of RayCast3Ds that this vehicle uses for close avoidance
 var steering_ray_count: int = 16
