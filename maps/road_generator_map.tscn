@@ -144,7 +144,7 @@ prior_mag = 8.0
 next_mag = 8.0
 
 [node name="RP_007" type="Node3D" parent="RoadManager/Road_001"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 32, -0.0700001, -16)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 32, 0, -16)
 script = ExtResource("8_uedyw")
 traffic_dir = [2, 1]
 lanes = [5, 5]
@@ -153,7 +153,7 @@ prior_mag = 16.0
 next_mag = 16.0
 
 [node name="RP_008" type="Node3D" parent="RoadManager/Road_001"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16, -0.0700001, -16)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16, 0, -16)
 script = ExtResource("8_uedyw")
 traffic_dir = [2, 1]
 lanes = [5, 5]
@@ -161,10 +161,10 @@ prior_pt_init = NodePath("../RP_001")
 
 [node name="JunctionT" parent="RoadManager" instance=ExtResource("10_m4hl7")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 24, -1.57, -16)
+material_resource = ExtResource("7_ld7fj")
 edge_containers = Array[NodePath]([NodePath("../Road_001"), NodePath(""), NodePath(""), NodePath("../Road_001"), NodePath(""), NodePath("")])
 edge_rp_targets = Array[NodePath]([NodePath("RP_008"), NodePath(""), NodePath(""), NodePath("RP_007"), NodePath(""), NodePath("")])
 edge_rp_target_dirs = Array[int]([1, -1, -1, 0, -1, -1])
-edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_001"), NodePath("RP_002"), NodePath("RP_002"), NodePath("RP_003"), NodePath("RP_003")])
 
 [node name="RoadContainer" type="Node3D" parent="RoadManager"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -1, -24)

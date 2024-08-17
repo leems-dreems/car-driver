@@ -1,3 +1,4 @@
+@tool
 class_name TrafficPath extends Path3D
 ## A path that spawns traffic driving along it
 
@@ -16,6 +17,14 @@ var path_distance_limit := 2.0
 
 
 func _ready() -> void:
+  if Engine.is_editor_hint():
+    var entrance_label := Label3D.new()
+    entrance_label.text = name
+    var _baked_curve_points := curve.get_baked_points()
+    entrance_label.position = _baked_curve_points[len(_baked_curve_points) / 2]
+    entrance_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+    entrance_label.font_size = 48
+    add_child(entrance_label)
   path_length = curve.get_baked_length()
   for _child in get_children():
     if _child is TrafficPathFollower:
@@ -24,6 +33,9 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+  if Engine.is_editor_hint():
+    return
+
   if len(followers) < number_of_vehicles:
     var new_follower: TrafficPathFollower = traffic_follower_scene.instantiate()
     followers.push_back(new_follower)
