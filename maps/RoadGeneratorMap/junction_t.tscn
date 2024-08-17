@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://ct8yjvgxqmshn"]
+[gd_scene load_steps=13 format=3 uid="uid://ct8yjvgxqmshn"]
 
 [ext_resource type="Script" path="res://maps/RoadGeneratorMap/junction_t.gd" id="1_ctjbw"]
+[ext_resource type="Material" path="res://addons/road-generator/resources/road_texture.material" id="2_hv2m1"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="3_aq7pd"]
 [ext_resource type="ArrayMesh" uid="uid://djw15g04xy86" path="res://assets/KayKit_City_Builder_Bits_1.0_SOURCE/Assets/obj/road_tsplit.obj" id="4_m0hvx"]
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="5_uo5ol"]
@@ -52,6 +53,7 @@ point_count = 2
 
 [node name="JunctionT" type="Node3D"]
 script = ExtResource("1_ctjbw")
+material_resource = ExtResource("2_hv2m1")
 create_geo = false
 use_lowpoly_preview = true
 edge_containers = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")])
@@ -99,32 +101,38 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 [node name="TP_t_junction_1-2" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_8xu7g")
 script = ExtResource("5_uo5ol")
-road_speed = 15.0
+number_of_vehicles = 0
+road_speed = 10.0
 
 [node name="TP_t_junction_2-1" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_lsg5h")
 script = ExtResource("5_uo5ol")
-road_speed = 15.0
+number_of_vehicles = 0
+road_speed = 10.0
 
 [node name="TP_t_junction_1-3" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_tm2eu")
 script = ExtResource("5_uo5ol")
-road_speed = 15.0
+number_of_vehicles = 0
+road_speed = 10.0
 
 [node name="TP_t_junction_2-3" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_6gayf")
 script = ExtResource("5_uo5ol")
-road_speed = 15.0
+number_of_vehicles = 0
+road_speed = 10.0
 
 [node name="TP_t_junction_3-1" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_u44kg")
 script = ExtResource("5_uo5ol")
-road_speed = 15.0
+number_of_vehicles = 0
+road_speed = 10.0
 
 [node name="TP_t_junction_3-2" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_u8hed")
 script = ExtResource("5_uo5ol")
-road_speed = 15.0
+number_of_vehicles = 0
+road_speed = 10.0
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.6, -8)

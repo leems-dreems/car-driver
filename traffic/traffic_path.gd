@@ -2,6 +2,9 @@
 class_name TrafficPath extends Path3D
 ## A path that spawns traffic driving along it
 
+## Array of paths that this path connects to. If more than 1 path is connected, TrafficPathFollower 
+## will pick one at random when reaching the end of this path
+@export var next_traffic_paths: Array[TrafficPath] = []
 @export var number_of_vehicles := 1
 @export var road_speed := 20.0
 @export var road_reversing_speed := -5.0
@@ -41,7 +44,10 @@ func _physics_process(_delta: float) -> void:
     followers.push_back(new_follower)
     add_child(new_follower)
     return
+
   # Loop through one vehicle each physics tick, updating interest vectors and input values
+  if len(followers) == 0:
+    return
   if last_follower_updated_index >= len(followers) - 1:
     last_follower_updated_index = -1
   last_follower_updated_index += 1
