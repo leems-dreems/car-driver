@@ -15,6 +15,8 @@ var traffic_follower_scene := preload("res://traffic/traffic_path_follower.tscn"
 @export var path_reversing_speed := -5.0
 ## Vehicles will aim to stay this close to this path
 @export var path_distance_limit := 2.0
+## Vehicles on this path will display their inputs above themselves
+@export var show_vehicle_inputs := false
 
 ## Follower nodes currently assigned to this TrafficPath
 var followers: Array[TrafficPathFollower] = []
@@ -58,6 +60,8 @@ func _physics_process(_delta: float) -> void:
       _follower.vehicle = new_vehicle
       new_vehicle.position = _follower.position
       new_vehicle.rotation = _follower.rotation
+      if show_vehicle_inputs:
+        new_vehicle.show_debug_label = true
       add_child(new_vehicle)
       new_vehicle.start_ai()
   elif not _follower.vehicle.is_being_driven:

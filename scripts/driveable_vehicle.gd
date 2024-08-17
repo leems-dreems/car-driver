@@ -31,6 +31,8 @@ var summed_interest_vector := Vector3.ZERO
 var steering_ray_group := "SteeringRayCast"
 ## The collision layers this vehicle's steering rays collide with
 var steering_ray_collision_masks: Array[int] = [1, 2, 5, 7, 8]
+## Show the debug label for this vehicle
+var show_debug_label := false
 @onready var debug_label: Label3D = $DebugLabel3D
 @onready var door_left: RigidBody3D = $ColliderBits/OpenDoorLeft
 @onready var door_right: RigidBody3D = $ColliderBits/OpenDoorRight
@@ -38,6 +40,8 @@ var steering_ray_collision_masks: Array[int] = [1, 2, 5, 7, 8]
 
 func _ready () -> void:
   super()
+  if show_debug_label:
+    debug_label.visible = true
   $ColliderBits/EnterCarCollider.vehicle = self
   await get_tree().create_timer(0.2).timeout
   unfreeze_bodies()

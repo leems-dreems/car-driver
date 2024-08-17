@@ -919,5 +919,6 @@ curve = SubResource("Curve3D_svt11")
 script = ExtResource("20_jlqe1")
 number_of_vehicles = 10
 path_max_speed = 15.0
+show_vehicle_inputs = true
 
 [node name="Testing Stuff" type="Node3D" parent="."]
