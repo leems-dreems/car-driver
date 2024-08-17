@@ -4,9 +4,6 @@ class_name TrafficPathFollower extends PathFollow3D
 @export var vehicle: DriveableVehicle = null
 ## Used to check if a vehicle can be spawned here
 @onready var collision_area: Area3D = $Area3D
-## This bool is flipped after this follower is moved, so that we can get overlapping bodies/areas
-## during the next physics step
-var just_moved := false
 ## The speed limit on this road
 var path_max_speed: float
 ## The speed limit when reversing on this road
@@ -39,39 +36,43 @@ func set_inputs() -> void:
     else:
       _is_on_path = false
 
-    # Set the vehicle's interest vectors and calculate the average direction of interest
+    # Set the vehicle's interest vectors and calculate the overall direction of interest
     vehicle.set_interest_vectors(global_transform.origin)
     vehicle.set_summed_interest_vector()
     var _turning_angle := vehicle.get_interest_angle()
     var _interest_vector := vehicle.summed_interest_vector
 
-    if _interest_vector.z > vehicle.steering_ray_length * 0.75:
+    # Adjust our target_speed based on direction of interest and turning angle
+    # Note: vehicles face towards -Z, so a positive Z value means the interest vector is to the rear
+    if _interest_vector.z > vehicle.steering_ray_length * 0.75: # Interest vector is strongly to the rear
       if not _is_on_path and vehicle.linear_velocity.z < min_speed:
-        target_speed = path_reversing_speed
+        target_speed = path_reversing_speed # If we are stopped and not on the road, start reversing
       else:
-        target_speed = 0.0
+        target_speed = 0.0 # If we are on the road, slow to a stop
     elif _turning_angle < -PI / 8 or _turning_angle > PI / 8:
-      target_speed *= 0.25
+      target_speed *= 0.25 # Slow down for turn
 
-    if target_speed == path_reversing_speed:
-      if vehicle.speed < 0.5 and not vehicle.is_shifting and not vehicle.current_gear == -1:
+    # Use our adjusted target_speed to set throttle and brake inputs
+    if target_speed == path_reversing_speed: # We are trying to reverse
+      if vehicle.speed < min_speed and not vehicle.is_shifting and vehicle.current_gear > -1:
         vehicle.shift(-1)
-      else:
+      elif vehicle.current_gear == -1:
         vehicle.throttle_input = 0.5
         vehicle.brake_input = 0.0
         vehicle.handbrake_input = 0.0
-    else:
+    else: # We are either stopped or going forward
       if vehicle.current_gear < 1 and not vehicle.is_shifting:
         vehicle.shift(1)
-      elif target_speed == 0.0:
+      elif target_speed == 0.0: # We are trying to stop
         vehicle.throttle_input = 0.0
         if vehicle.speed < min_speed:
+          # Let off the brakes when we're stopped, because brake_input doubles as reversing input
           vehicle.brake_input = 0.0
         else:
           vehicle.brake_input = 1.0
         vehicle.handbrake_input = 1.0
-      elif vehicle.speed < target_speed:
-        if vehicle.speed < target_speed / 2:
+      elif vehicle.speed < target_speed: # Our speed is lower than the target speed
+        if vehicle.speed < target_speed / 2: # Our speed is less than half the target speed
           vehicle.throttle_input = 0.75
           vehicle.brake_input = 0.0
           vehicle.handbrake_input = 0.0
@@ -79,12 +80,11 @@ func set_inputs() -> void:
           vehicle.throttle_input = clampf(vehicle.speed / target_speed, 0.5, 1.0)
           vehicle.brake_input = 0.0
           vehicle.handbrake_input = 0.0
-      elif vehicle.speed > target_speed * 1.2:
+      elif vehicle.speed > target_speed * 1.2: # Our speed is higher than the target speed
         vehicle.throttle_input = 0.0
         vehicle.brake_input = brake_force
-        ## How much braking should be applied = brake_force
         vehicle.handbrake_input = 0.0
-      else:
+      else: # Set all inputs to 0 and coast
         vehicle.throttle_input = 0.0
         vehicle.brake_input = 0.0
         vehicle.handbrake_input = 0.0
@@ -93,12 +93,12 @@ func set_inputs() -> void:
       vehicle.ignition_on = true
 
     # Steer to match the rotation of the nearest path position
-    if _turning_angle > -PI * 0.8 and _turning_angle < PI * 0.8:
-      vehicle.steering_input = clampf(_turning_angle, -1.0, 1.0)
-    else:
-      vehicle.steering_input = 0.0
-    if vehicle.current_gear == -1:
+    vehicle.steering_input = clampf(_turning_angle, -1.0, 1.0)
+    if vehicle.current_gear == -1: # Flip steering input if we're reversing
+      # TODO: subtract turning angle from either PI or -PI to allow reversing in a straight line
+      # The vehicle will currently always steer while reversing, which is fine for getting un-stuck from props
       vehicle.steering_input = -vehicle.steering_input
-  else:
+
+  else: # Take our hands off the steering wheel until 3 tires are touching the ground
     vehicle.steering_input = 0.0
     vehicle.throttle_input = 0.0

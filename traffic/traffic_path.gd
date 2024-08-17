@@ -33,7 +33,7 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-  if len(followers) < number_of_vehicles:
+  while len(followers) < number_of_vehicles:
     var new_follower: TrafficPathFollower = traffic_follower_scene.instantiate()
     new_follower.path_max_speed = path_max_speed
     new_follower.path_reversing_speed = path_reversing_speed
@@ -41,26 +41,26 @@ func _physics_process(_delta: float) -> void:
     new_follower.parent_curve = curve
     followers.push_back(new_follower)
     add_child(new_follower)
-    return
+
   # Loop through one vehicle each physics tick, updating interest vectors and input values
   if last_follower_updated_index >= len(followers) - 1:
     last_follower_updated_index = -1
   last_follower_updated_index += 1
   var _follower := followers[last_follower_updated_index]
-  var _vehicle := _follower.vehicle
-  if _vehicle != null and not _vehicle.is_being_driven:
-    _follower.set_inputs()
-  else:
-    if _follower.just_moved == false:
-      _follower.progress = randf_range(0, path_length)
-      _follower.just_moved = true
-    elif not (_follower.collision_area.has_overlapping_areas() or _follower.collision_area.has_overlapping_bodies()):
+
+  if _follower.vehicle == null:
+    # Note: Area3Ds update their lists of overlapping areas/bodies once at the start of each physics
+    # tick, so moving the follower and then looking for collisions in the same tick won't work
+    if _follower.collision_area.has_overlapping_areas() or _follower.collision_area.has_overlapping_bodies():
+      _follower.progress = randf_range(0, path_length) # Move to a random position on the path
+    else: # Spawn a vehicle and start its AI
       var new_vehicle: DriveableVehicle = compact_car_scene.instantiate()
       _follower.vehicle = new_vehicle
       new_vehicle.position = _follower.position
       new_vehicle.rotation = _follower.rotation
       add_child(new_vehicle)
       new_vehicle.start_ai()
-    else:
-      _follower.just_moved = false
+  elif not _follower.vehicle.is_being_driven:
+    _follower.set_inputs()
+
   return

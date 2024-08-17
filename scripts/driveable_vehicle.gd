@@ -22,8 +22,6 @@ var antenna_angle := PI / 32
 var avoidance_multiplier := 2
 # Multiplier applied to the side & behind vectors when an antenna raycast collides with something
 var antenna_multiplier := 32
-var left_antenna_mesh: MeshInstance3D
-var right_antenna_mesh: MeshInstance3D
 var antenna_raycasts: Array[RayCast3D] = []
 var steering_raycasts: Array[RayCast3D] = []
 var interest_vectors: Array[Vector3] = []
@@ -33,10 +31,6 @@ var summed_interest_vector := Vector3.ZERO
 var steering_ray_group := "SteeringRayCast"
 ## The collision layers this vehicle's steering rays collide with
 var steering_ray_collision_masks: Array[int] = [1, 2, 5, 7, 8]
-var interest_direction_mesh: MeshInstance3D
-# Debug
-var _show_antennae := false
-var raycast_debug_material := preload('res://assets/materials/raycast_debug.tres')
 @onready var debug_label: Label3D = $DebugLabel3D
 @onready var door_left: RigidBody3D = $ColliderBits/OpenDoorLeft
 @onready var door_right: RigidBody3D = $ColliderBits/OpenDoorRight
@@ -115,27 +109,9 @@ func start_ai() -> void:
         _new_raycast.set_collision_mask_value(_mask_value, true)
       var _angle := i * antenna_angle
       _new_raycast.target_position = Vector3.FORWARD.rotated(Vector3.UP, _angle) * max_antenna_length
+      _new_raycast.debug_shape_custom_color = Color(0, 1, 0, 1)
       add_child(_new_raycast)
       antenna_raycasts.push_back(_new_raycast)
-
-      if _show_antennae:
-        # Add visible antenna meshes
-        var _line_mesh := MeshInstance3D.new()
-        var _cylinder_mesh := CylinderMesh.new()
-        _cylinder_mesh.height = max_antenna_length
-        _cylinder_mesh.top_radius = 0.05
-        _cylinder_mesh.bottom_radius = 0.05
-        _line_mesh.mesh = _cylinder_mesh
-        _line_mesh.position = _new_raycast.target_position / 2
-        _line_mesh.rotate_x(PI / 2)
-        _line_mesh.rotate_y(_angle)
-        _line_mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-        _line_mesh.set_surface_override_material(0, raycast_debug_material)
-        add_child(_line_mesh)
-        if _new_raycast.target_position.x < 0:
-          left_antenna_mesh = _line_mesh
-        else:
-          right_antenna_mesh = _line_mesh
 
   for _raycast in steering_raycasts:
     _raycast.enabled = true
@@ -185,24 +161,15 @@ func set_interest_vectors(_target_global_position: Vector3) -> void:
     if _raycast.target_position.x < 0:
       var _antenna_position := Vector3.FORWARD.rotated(Vector3.UP, 1 * antenna_angle) * current_antenna_length
       _raycast.target_position = _antenna_position
-      if _show_antennae:
-        left_antenna_mesh.mesh.height = current_antenna_length
-        left_antenna_mesh.position = _antenna_position / 2
     else:
       var _antenna_position := Vector3.FORWARD.rotated(Vector3.UP, -1 * antenna_angle) * current_antenna_length
       _raycast.target_position = _antenna_position
-      if _show_antennae:
-        right_antenna_mesh.mesh.height = current_antenna_length
-        right_antenna_mesh.position = _antenna_position / 2
     if _raycast.is_colliding():
       var _danger_distance: float = _raycast.get_collision_point().distance_to(_raycast.global_position)
       if _raycast.target_position.x < 0:
         _danger_amount_left = 1 - clampf(_danger_distance / current_antenna_length, 0.0, 1.0)
       else:
         _danger_amount_right = 1 - clampf(_danger_distance / current_antenna_length, 0.0, 1.0)
-  if _show_antennae:
-    left_antenna_mesh.transparency = 1 - clampf(_danger_amount_left, 0.05, 1.0)
-    right_antenna_mesh.transparency = 1 - clampf(_danger_amount_right, 0.05, 1.0)
   if _danger_amount_left > 0.0:
     interest_vectors[steering_ray_index_right] *= _danger_amount_left * antenna_multiplier
   if _danger_amount_right > 0.0:
