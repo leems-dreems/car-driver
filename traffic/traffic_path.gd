@@ -52,10 +52,7 @@ func _physics_process(_delta: float) -> void:
 
   while len(followers) < number_of_vehicles:
     var new_follower: TrafficPathFollower = traffic_follower_scene.instantiate()
-    new_follower.path_max_speed = path_max_speed
-    new_follower.path_reversing_speed = path_reversing_speed
-    new_follower.path_distance_limit = path_distance_limit
-    new_follower.parent_curve = curve
+    new_follower.copy_path_settings(self)
     followers.push_back(new_follower)
     add_child(new_follower)
 

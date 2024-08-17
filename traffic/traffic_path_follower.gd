@@ -16,8 +16,19 @@ var min_speed := 0.1
 var brake_force := 0.5
 ## The Curve3D of the parent TrafficPath
 var parent_curve: Curve3D
+## Baked length of the parent_curve
+var parent_curve_length: float
 ## Indicates that this vehicle is close to the path and facing the right direction
 var _is_on_path := false
+
+## Copy settings from [traffic_path]
+func copy_path_settings(traffic_path: Path3D) -> void:
+  path_max_speed = traffic_path.path_max_speed
+  path_reversing_speed = traffic_path.path_reversing_speed
+  path_distance_limit = traffic_path.path_distance_limit
+  parent_curve = traffic_path.curve
+  parent_curve_length = traffic_path.path_length
+  return
 
 ## Update interest vectors & avoidance info for the vehicle, then adjust its inputs accordingly
 func set_inputs() -> void:
@@ -28,7 +39,20 @@ func set_inputs() -> void:
     var _distance_to_path := _closest_point.distance_to(vehicle.position)
 
     # Move this TrafficPathFollower forward along the path
-    progress = _closest_offset + vehicle.speed
+    if _distance_to_path < path_distance_limit:
+      progress = _closest_offset + vehicle.speed
+    else:
+      progress = _closest_offset + 2
+
+    if progress >= parent_curve_length:
+      var _next_paths: Array[TrafficPath] = get_parent_node_3d().next_traffic_paths
+      if len(_next_paths) > 0:
+        var _chosen_path: Path3D = _next_paths.pick_random()
+        get_parent_node_3d().remove_child(self)
+        copy_path_settings(_chosen_path)
+        _chosen_path.add_child(self)
+        progress = 0
+
     # Get the difference in rotation on the Y axis between this TrafficPathFollower and its vehicle
     var _angle_to_vehicle := vehicle.transform.basis.z.signed_angle_to(transform.basis.z, Vector3.UP)
     if _distance_to_path < path_distance_limit and _angle_to_vehicle > -0.1 and _angle_to_vehicle < 0.1:
