@@ -33,19 +33,8 @@ func copy_path_settings(traffic_path: Path3D) -> void:
 ## Update interest vectors & avoidance info for the vehicle, then adjust its inputs accordingly
 func set_inputs() -> void:
   if vehicle.get_wheel_contact_count() >= 3:
-    var _closest_offset: float = parent_curve.get_closest_offset(vehicle.position)
-    var _closest_point: Vector3 = parent_curve.get_closest_point(vehicle.position)
-    var target_speed := path_max_speed
-    var _distance_to_path := _closest_point.distance_to(vehicle.position)
-
-    # Move this TrafficPathFollower forward along the path
-    if _distance_to_path < path_distance_limit:
-      progress = _closest_offset + vehicle.speed
-    else:
-      progress = _closest_offset + 2
-
-    if progress >= parent_curve_length:
-      var _next_paths: Array[TrafficPath] = get_parent_node_3d().next_traffic_paths
+    if progress_ratio >= 1.0: # If follower has reached end of path, move to next path
+      var _next_paths: Array = get_parent_node_3d().next_traffic_paths
       if len(_next_paths) > 0:
         var _chosen_path: Path3D = _next_paths.pick_random()
         get_parent_node_3d().remove_child(self)
@@ -53,8 +42,20 @@ func set_inputs() -> void:
         _chosen_path.add_child(self)
         progress = 0
 
+    var _local_vehicle_position := get_parent_node_3d().to_local(vehicle.global_position)
+    var _closest_offset: float = parent_curve.get_closest_offset(_local_vehicle_position)
+    var _closest_point: Vector3 = parent_curve.get_closest_point(_local_vehicle_position)
+    var _distance_to_path := _closest_point.distance_to(_local_vehicle_position)
+    var target_speed := path_max_speed
+
+    # Move this TrafficPathFollower forward along the path
+    if _distance_to_path < path_distance_limit:
+      progress = _closest_offset + (vehicle.speed / 2)
+    else:
+      progress = _closest_offset + 2
+
     # Get the difference in rotation on the Y axis between this TrafficPathFollower and its vehicle
-    var _angle_to_vehicle := vehicle.transform.basis.z.signed_angle_to(transform.basis.z, Vector3.UP)
+    var _angle_to_vehicle := vehicle.global_transform.basis.z.signed_angle_to(global_transform.basis.z, Vector3.UP)
     if _distance_to_path < path_distance_limit and _angle_to_vehicle > -0.1 and _angle_to_vehicle < 0.1:
       _is_on_path = true
     else:
@@ -73,8 +74,8 @@ func set_inputs() -> void:
         target_speed = path_reversing_speed # If we are stopped and not on the road, start reversing
       else:
         target_speed = 0.0 # If we are on the road, slow to a stop
-    elif _turning_angle < -PI / 8 or _turning_angle > PI / 8:
-      target_speed *= 0.25 # Slow down for turn
+    elif _turning_angle < -PI / 12 or _turning_angle > PI / 12:
+      target_speed *= 0.5 # Slow down for turn
 
     # Use our adjusted target_speed to set throttle and brake inputs
     if target_speed == path_reversing_speed: # We are trying to reverse
