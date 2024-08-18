@@ -192,7 +192,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 8, 0.6
 text = "3"
 font_size = 128
 
-[node name="TrafficStop1" type="Area3D" parent="."]
+[node name="TrafficStop1" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -8)
 collision_layer = 1024
 collision_mask = 0
@@ -200,12 +200,13 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficStop1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 0)
 shape = SubResource("BoxShape3D_s71qk")
+disabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TrafficStop1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4, 0)
 mesh = SubResource("SphereMesh_yrhay")
 
-[node name="TrafficStop2" type="Area3D" parent="."]
+[node name="TrafficStop2" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 8)
 collision_layer = 1024
 collision_mask = 0
@@ -213,12 +214,13 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficStop2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 0)
 shape = SubResource("BoxShape3D_1yyrx")
+disabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TrafficStop2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4, 0)
 mesh = SubResource("SphereMesh_yrhay")
 
-[node name="TrafficStop3" type="Area3D" parent="."]
+[node name="TrafficStop3" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 3, 0)
 collision_layer = 1024
 collision_mask = 0
@@ -226,6 +228,7 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficStop3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.5)
 shape = SubResource("BoxShape3D_12pbp")
+disabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TrafficStop3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 2.5)

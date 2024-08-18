@@ -33,14 +33,18 @@ func copy_path_settings(traffic_path: Path3D) -> void:
 ## Update interest vectors & avoidance info for the vehicle, then adjust its inputs accordingly
 func set_inputs() -> void:
   if vehicle.get_wheel_contact_count() >= 3:
+    var _is_path_ahead_blocked := false
     if progress_ratio >= 1.0: # If follower has reached end of path, move to next path
       var _next_paths: Array = get_parent_node_3d().next_traffic_paths
       if len(_next_paths) > 0:
         var _chosen_path: Path3D = _next_paths.pick_random()
-        get_parent_node_3d().remove_child(self)
-        copy_path_settings(_chosen_path)
-        _chosen_path.add_child(self)
-        progress = 0
+        if _chosen_path.is_blocked:
+          _is_path_ahead_blocked = true
+        else:
+          get_parent_node_3d().remove_child(self)
+          copy_path_settings(_chosen_path)
+          _chosen_path.add_child(self)
+          progress = 0
 
     var _local_vehicle_position := get_parent_node_3d().to_local(vehicle.global_position)
     var _closest_offset: float = parent_curve.get_closest_offset(_local_vehicle_position)
@@ -48,11 +52,12 @@ func set_inputs() -> void:
     var _distance_to_path := _closest_point.distance_to(_local_vehicle_position)
     var target_speed := path_max_speed
 
-    # Move this TrafficPathFollower forward along the path
-    if _distance_to_path < path_distance_limit:
-      progress = _closest_offset + (vehicle.speed / 2)
-    else:
-      progress = _closest_offset + 2
+    if not _is_path_ahead_blocked:
+      # Move this TrafficPathFollower forward along the path
+      if _distance_to_path < path_distance_limit:
+        progress = _closest_offset + (vehicle.speed / 2)
+      else:
+        progress = _closest_offset + 2
 
     # Get the difference in rotation on the Y axis between this TrafficPathFollower and its vehicle
     var _angle_to_vehicle := vehicle.global_transform.basis.z.signed_angle_to(global_transform.basis.z, Vector3.UP)
@@ -69,7 +74,9 @@ func set_inputs() -> void:
 
     # Adjust our target_speed based on direction of interest and turning angle
     # Note: vehicles face towards -Z, so a positive Z value means the interest vector is to the rear
-    if _interest_vector.z > vehicle.steering_ray_length * 0.75: # Interest vector is strongly to the rear
+    if _is_path_ahead_blocked:
+      target_speed = 0.0
+    elif _interest_vector.z > vehicle.steering_ray_length * 0.75: # Interest vector is strongly to the rear
       if not _is_on_path and vehicle.linear_velocity.z < min_speed:
         target_speed = path_reversing_speed # If we are stopped and not on the road, start reversing
       else:

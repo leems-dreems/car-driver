@@ -1,6 +1,8 @@
 @tool
 extends RoadContainer
 
+var green_material := preload("res://assets/materials/raycast_debug.tres")
+var red_material := preload("res://assets/materials/raycast_debug_red.tres")
 @export var path_entering_RP_001: TrafficPath
 @export var path_exiting_RP_001: TrafficPath
 @export var path_entering_RP_002: TrafficPath
@@ -28,27 +30,36 @@ func _ready() -> void:
 
 
 func green_light_rp_1() -> void:
-  $TrafficStop1/CollisionShape3D.disabled = true
-  $TrafficStop1/MeshInstance3D.visible = true
-  $TrafficStop2/CollisionShape3D.disabled = false
-  $TrafficStop2/MeshInstance3D.visible = false
-  $TrafficStop3/CollisionShape3D.disabled = false
-  $TrafficStop3/MeshInstance3D.visible = false
+  $"TrafficPaths/TP_t_junction_1-2".is_blocked = false
+  $"TrafficPaths/TP_t_junction_1-3".is_blocked = false
+  $TrafficStop1/MeshInstance3D.set_surface_override_material(0, green_material)
+  $"TrafficPaths/TP_t_junction_2-1".is_blocked = true
+  $"TrafficPaths/TP_t_junction_2-3".is_blocked = true
+  $TrafficStop2/MeshInstance3D.set_surface_override_material(0, red_material)
+  $"TrafficPaths/TP_t_junction_3-1".is_blocked = true
+  $"TrafficPaths/TP_t_junction_3-2".is_blocked = true
+  $TrafficStop3/MeshInstance3D.set_surface_override_material(0, red_material)
 
 
 func green_light_rp_2() -> void:
-  $TrafficStop1/CollisionShape3D.disabled = false
-  $TrafficStop1/MeshInstance3D.visible = false
-  $TrafficStop2/CollisionShape3D.disabled = true
-  $TrafficStop2/MeshInstance3D.visible = true
-  $TrafficStop3/CollisionShape3D.disabled = false
-  $TrafficStop3/MeshInstance3D.visible = false
+  $"TrafficPaths/TP_t_junction_1-2".is_blocked = true
+  $"TrafficPaths/TP_t_junction_1-3".is_blocked = true
+  $TrafficStop1/MeshInstance3D.set_surface_override_material(0, red_material)
+  $"TrafficPaths/TP_t_junction_2-1".is_blocked = false
+  $"TrafficPaths/TP_t_junction_2-3".is_blocked = false
+  $TrafficStop2/MeshInstance3D.set_surface_override_material(0, green_material)
+  $"TrafficPaths/TP_t_junction_3-1".is_blocked = true
+  $"TrafficPaths/TP_t_junction_3-2".is_blocked = true
+  $TrafficStop3/MeshInstance3D.set_surface_override_material(0, red_material)
 
 
 func green_light_rp_3() -> void:
-  $TrafficStop1/CollisionShape3D.disabled = false
-  $TrafficStop1/MeshInstance3D.visible = false
-  $TrafficStop2/CollisionShape3D.disabled = false
-  $TrafficStop2/MeshInstance3D.visible = false
-  $TrafficStop3/CollisionShape3D.disabled = true
-  $TrafficStop3/MeshInstance3D.visible = true
+  $"TrafficPaths/TP_t_junction_1-2".is_blocked = true
+  $"TrafficPaths/TP_t_junction_1-3".is_blocked = true
+  $TrafficStop1/MeshInstance3D.set_surface_override_material(0, red_material)
+  $"TrafficPaths/TP_t_junction_2-1".is_blocked = true
+  $"TrafficPaths/TP_t_junction_2-3".is_blocked = true
+  $TrafficStop2/MeshInstance3D.set_surface_override_material(0, red_material)
+  $"TrafficPaths/TP_t_junction_3-1".is_blocked = false
+  $"TrafficPaths/TP_t_junction_3-2".is_blocked = false
+  $TrafficStop3/MeshInstance3D.set_surface_override_material(0, green_material)

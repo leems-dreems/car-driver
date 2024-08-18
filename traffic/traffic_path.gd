@@ -14,7 +14,7 @@ var traffic_follower_scene := preload("res://traffic/traffic_path_follower.tscn"
 
 @export_group("Follower Settings")
 ## The speed limit on this path
-@export var path_max_speed := 20.0
+@export var path_max_speed := 15.0
 ## The speed to aim for when reversing on this path
 @export var path_reversing_speed := -5.0
 ## Vehicles will aim to stay this close to this path
@@ -28,6 +28,8 @@ var followers: Array[TrafficPathFollower] = []
 var last_follower_updated_index := -1
 ## Length of this path
 var path_length: float
+## When set to true, vehicles will not move onto this path
+var is_blocked := false
 
 
 func _ready() -> void:
