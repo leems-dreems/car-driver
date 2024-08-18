@@ -1,5 +1,9 @@
 class_name DriveableVehicle extends Vehicle
 
+@export var lights_on := true
+var headlight_energy := 10.0
+var brake_light_energy := 5.0
+var reverse_light_energy := 5.0
 var is_being_driven := false
 var is_ai_on := false
 var waiting_to_respawn := false
@@ -36,6 +40,12 @@ var show_debug_label := false
 @onready var debug_label: Label3D = $DebugLabel3D
 @onready var door_left: RigidBody3D = $ColliderBits/OpenDoorLeft
 @onready var door_right: RigidBody3D = $ColliderBits/OpenDoorRight
+@onready var headlight_left: SpotLight3D = $HeadlightLeft
+@onready var headlight_right: SpotLight3D = $HeadlightRight
+@onready var brake_light_left: OmniLight3D = $BrakeLightLeft
+@onready var brake_light_right: OmniLight3D = $BrakeLightRight
+@onready var reverse_light_left: OmniLight3D = $ReverseLightLeft
+@onready var reverse_light_right: OmniLight3D = $ReverseLightRight
 
 
 func _ready () -> void:
@@ -43,6 +53,9 @@ func _ready () -> void:
   if show_debug_label:
     debug_label.visible = true
   $ColliderBits/EnterCarCollider.vehicle = self
+  if lights_on:
+    headlight_left.light_energy = headlight_energy
+    headlight_right.light_energy = headlight_energy
   await get_tree().create_timer(0.2).timeout
   unfreeze_bodies()
   return
@@ -58,6 +71,22 @@ func _process(_delta: float) -> void:
       debug_label.text += "Steer: " + "%.2f" % steering_input
     else:
       debug_label.text = ""
+
+
+func _physics_process(delta: float) -> void:
+  super(delta)
+  var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
+  brake_light_left.light_energy = _current_brake_light_energy
+  brake_light_right.light_energy = _current_brake_light_energy
+  if current_gear == -1:
+    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, reverse_light_energy, delta * 20)
+    reverse_light_left.light_energy = _current_reverse_light_energy
+    reverse_light_right.light_energy = _current_reverse_light_energy
+  else:
+    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 20)
+    reverse_light_left.light_energy = _current_reverse_light_energy
+    reverse_light_right.light_energy = _current_reverse_light_energy
+  return
 
 
 func respawn () -> void:
