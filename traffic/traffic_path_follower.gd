@@ -55,7 +55,7 @@ func set_inputs() -> void:
     if not _is_path_ahead_blocked:
       # Move this TrafficPathFollower forward along the path
       if _distance_to_path < path_distance_limit:
-        progress = _closest_offset + (vehicle.speed / 2)
+        progress = _closest_offset + (vehicle.speed * 0.75)
       else:
         progress = _closest_offset + 2
 
@@ -81,7 +81,7 @@ func set_inputs() -> void:
         target_speed = path_reversing_speed # If we are stopped and not on the road, start reversing
       else:
         target_speed = 0.0 # If we are on the road, slow to a stop
-    elif _turning_angle < -PI / 12 or _turning_angle > PI / 12:
+    elif _turning_angle < -PI / 16 or _turning_angle > PI / 16:
       target_speed *= 0.5 # Slow down for turn
 
     # Use our adjusted target_speed to set throttle and brake inputs
