@@ -371,7 +371,8 @@ skeleton = NodePath("")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
 stream = ExtResource("3_k3j0m")
-unit_size = 2.0
+unit_size = 1.0
+max_db = 0.5
 doppler_tracking = 2
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "screechSFX")]
