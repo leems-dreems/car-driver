@@ -30,7 +30,7 @@ var summed_interest_vector := Vector3.ZERO
 ## The group that steering & avoidance raycasts belong to, used for cleanup when stopping AI
 var steering_ray_group := "SteeringRayCast"
 ## The collision layers this vehicle's steering rays collide with
-var steering_ray_collision_masks: Array[int] = [1, 2, 5, 7, 8]
+var steering_ray_collision_masks: Array[int] = [1, 2, 5, 7, 8, 11]
 ## Show the debug label for this vehicle
 var show_debug_label := false
 @onready var debug_label: Label3D = $DebugLabel3D

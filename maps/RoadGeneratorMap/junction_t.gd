@@ -25,3 +25,30 @@ func _ready() -> void:
   path_entering_RP_003.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_3-2")
   $"TrafficPaths/TP_t_junction_1-3".next_traffic_paths.push_back(path_exiting_RP_003)
   $"TrafficPaths/TP_t_junction_2-3".next_traffic_paths.push_back(path_exiting_RP_003)
+
+
+func green_light_rp_1() -> void:
+  $TrafficStop1/CollisionShape3D.disabled = true
+  $TrafficStop1/MeshInstance3D.visible = true
+  $TrafficStop2/CollisionShape3D.disabled = false
+  $TrafficStop2/MeshInstance3D.visible = false
+  $TrafficStop3/CollisionShape3D.disabled = false
+  $TrafficStop3/MeshInstance3D.visible = false
+
+
+func green_light_rp_2() -> void:
+  $TrafficStop1/CollisionShape3D.disabled = false
+  $TrafficStop1/MeshInstance3D.visible = false
+  $TrafficStop2/CollisionShape3D.disabled = true
+  $TrafficStop2/MeshInstance3D.visible = true
+  $TrafficStop3/CollisionShape3D.disabled = false
+  $TrafficStop3/MeshInstance3D.visible = false
+
+
+func green_light_rp_3() -> void:
+  $TrafficStop1/CollisionShape3D.disabled = false
+  $TrafficStop1/MeshInstance3D.visible = false
+  $TrafficStop2/CollisionShape3D.disabled = false
+  $TrafficStop2/MeshInstance3D.visible = false
+  $TrafficStop3/CollisionShape3D.disabled = true
+  $TrafficStop3/MeshInstance3D.visible = true

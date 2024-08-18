@@ -89,7 +89,7 @@ size = Vector3(1000, 1, 1000)
 script = ExtResource("1_h3erf")
 
 [node name="CompactCar" parent="." instance=ExtResource("1_xqse3")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2, 2, 40)
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 12, 2, 40)
 
 [node name="VehicleController" parent="." node_paths=PackedStringArray("vehicle_node") instance=ExtResource("2_rl3eo")]
 vehicle_node = NodePath("../CompactCar")
@@ -206,17 +206,13 @@ prior_pt_init = NodePath("../RP_001")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1.5, -18.5)
 curve = SubResource("Curve3D_a31b2")
 script = ExtResource("11_vdbko")
-number_of_vehicles = 0
 path_max_speed = 15.0
-show_vehicle_inputs = true
 
 [node name="TrafficPath2" type="Path3D" parent="RoadManager/Road_001"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.5, -13.5)
 curve = SubResource("Curve3D_1v8bd")
 script = ExtResource("11_vdbko")
-number_of_vehicles = 0
 path_max_speed = 15.0
-show_vehicle_inputs = true
 
 [node name="JunctionT" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003") instance=ExtResource("10_m4hl7")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 24, -2.07, -16)
@@ -260,19 +256,22 @@ next_mag = 8.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.45, 0)
 curve = SubResource("Curve3D_1d03j")
 script = ExtResource("11_vdbko")
-number_of_vehicles = 0
 path_max_speed = 15.0
-show_vehicle_inputs = true
 
 [node name="TrafficPath2" type="Path3D" parent="RoadManager/Road_002"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.45, 0)
 curve = SubResource("Curve3D_ct8qf")
 script = ExtResource("11_vdbko")
 path_max_speed = 15.0
-show_vehicle_inputs = true
 
-[node name="JunctionT2" parent="RoadManager" instance=ExtResource("10_m4hl7")]
+[node name="JunctionT2" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003") instance=ExtResource("10_m4hl7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -2.07, -64)
+path_entering_RP_001 = NodePath("../Road_003/TrafficPath2")
+path_exiting_RP_001 = NodePath("../Road_003/TrafficPath")
+path_entering_RP_002 = NodePath("../Road_002/TrafficPath")
+path_exiting_RP_002 = NodePath("../Road_002/TrafficPath2")
+path_entering_RP_003 = NodePath("../Road_003/TrafficPath")
+path_exiting_RP_003 = NodePath("../Road_003/TrafficPath2")
 
 [node name="Road_003" type="Node3D" parent="RoadManager"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -1.5, -72)
