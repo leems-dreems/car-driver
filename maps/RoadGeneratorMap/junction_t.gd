@@ -9,6 +9,8 @@ extends RoadContainer
 @export var path_entering_RP_003: TrafficPath ## The TrafficPath entering RoadPoint 003
 @export var path_exiting_RP_003: TrafficPath  ## The TrafficPath exiting RoadPoint 003
 @export_group("TrafficLightProp Connections")
+## How long to wait between closing one entry point and opening another
+@export var green_light_delay := 1.0
 ## Array of TrafficLightProps that will turn green when RoadPoint 001 is open
 @export var traffic_lights_RP_001: Array[TrafficLightProp]
 ## Array of TrafficLightProps that will turn green when RoadPoint 002 is open
@@ -36,33 +38,39 @@ func _ready() -> void:
 
 
 func green_light_rp_1() -> void:
-  $"TrafficPaths/TP_t_junction_1-2".is_blocked = false
-  $"TrafficPaths/TP_t_junction_1-3".is_blocked = false
   $"TrafficPaths/TP_t_junction_2-1".is_blocked = true
   $"TrafficPaths/TP_t_junction_2-3".is_blocked = true
   $"TrafficPaths/TP_t_junction_3-1".is_blocked = true
   $"TrafficPaths/TP_t_junction_3-2".is_blocked = true
-  for _traffic_light in traffic_lights_RP_001:
-    _traffic_light.green_light()
   for _traffic_light in traffic_lights_RP_002:
     _traffic_light.red_light()
   for _traffic_light in traffic_lights_RP_003:
     _traffic_light.red_light()
+
+  await get_tree().create_timer(green_light_delay).timeout
+  $"TrafficPaths/TP_t_junction_1-2".is_blocked = false
+  $"TrafficPaths/TP_t_junction_1-3".is_blocked = false
+  for _traffic_light in traffic_lights_RP_001:
+    _traffic_light.green_light()
+  return
 
 
 func green_light_rp_2() -> void:
   $"TrafficPaths/TP_t_junction_1-2".is_blocked = true
   $"TrafficPaths/TP_t_junction_1-3".is_blocked = true
-  $"TrafficPaths/TP_t_junction_2-1".is_blocked = false
-  $"TrafficPaths/TP_t_junction_2-3".is_blocked = false
   $"TrafficPaths/TP_t_junction_3-1".is_blocked = true
   $"TrafficPaths/TP_t_junction_3-2".is_blocked = true
   for _traffic_light in traffic_lights_RP_001:
     _traffic_light.red_light()
-  for _traffic_light in traffic_lights_RP_002:
-    _traffic_light.green_light()
   for _traffic_light in traffic_lights_RP_003:
     _traffic_light.red_light()
+
+  await get_tree().create_timer(green_light_delay).timeout
+  $"TrafficPaths/TP_t_junction_2-1".is_blocked = false
+  $"TrafficPaths/TP_t_junction_2-3".is_blocked = false
+  for _traffic_light in traffic_lights_RP_002:
+    _traffic_light.green_light()
+  return
 
 
 func green_light_rp_3() -> void:
@@ -70,11 +78,14 @@ func green_light_rp_3() -> void:
   $"TrafficPaths/TP_t_junction_1-3".is_blocked = true
   $"TrafficPaths/TP_t_junction_2-1".is_blocked = true
   $"TrafficPaths/TP_t_junction_2-3".is_blocked = true
-  $"TrafficPaths/TP_t_junction_3-1".is_blocked = false
-  $"TrafficPaths/TP_t_junction_3-2".is_blocked = false
   for _traffic_light in traffic_lights_RP_001:
     _traffic_light.red_light()
   for _traffic_light in traffic_lights_RP_002:
     _traffic_light.red_light()
+
+  await get_tree().create_timer(green_light_delay).timeout
+  $"TrafficPaths/TP_t_junction_3-1".is_blocked = false
+  $"TrafficPaths/TP_t_junction_3-2".is_blocked = false
   for _traffic_light in traffic_lights_RP_003:
     _traffic_light.green_light()
+  return
