@@ -133,7 +133,7 @@ func start_ai() -> void:
       var _new_raycast := RayCast3D.new()
       _new_raycast.add_to_group(steering_ray_group)
       _new_raycast.position = Vector3(0, 0, 0)
-      for _mask_value in steering_ray_collision_masks:
+      for _mask_value in steering_ray_collision_masks: # 1235
         _new_raycast.set_collision_mask_value(_mask_value, true)
       var _angle := (i * (2 * PI)) / steering_ray_count
       _new_raycast.target_position = Vector3.FORWARD.rotated(Vector3.UP, _angle) * steering_ray_length
@@ -181,6 +181,8 @@ func set_interest_vectors(_target_global_position: Vector3) -> void:
   # Loop through raycasts again and check for danger to avoid
   var i := 0
   for _raycast in steering_raycasts:
+    _raycast.enabled = true
+    _raycast.force_raycast_update()
     if _raycast.is_colliding():
       # Use the distance to the collision point to reduce the aligned interest vector
       var _danger_distance: float = _raycast.get_collision_point().distance_to(_raycast.global_position)
@@ -191,12 +193,15 @@ func set_interest_vectors(_target_global_position: Vector3) -> void:
         interest_vectors[i + (steering_ray_index_behind)] /= _danger_amount * avoidance_multiplier
       else:
         interest_vectors[i - (steering_ray_index_behind)] /= _danger_amount * avoidance_multiplier
+    _raycast.enabled = false
     i += 1
   # Check "antenna" raycasts
   var _danger_amount_left := 0.0
   var _danger_amount_right := 0.0
   var current_antenna_length := clampf(speed, min_antenna_length, max_antenna_length)
   for _raycast in antenna_raycasts:
+    _raycast.enabled = true
+    _raycast.force_raycast_update()
     if _raycast.target_position.x < 0:
       var _antenna_position := Vector3.FORWARD.rotated(Vector3.UP, 1 * antenna_angle) * current_antenna_length
       _raycast.target_position = _antenna_position
@@ -209,6 +214,7 @@ func set_interest_vectors(_target_global_position: Vector3) -> void:
         _danger_amount_left = 1 - clampf(_danger_distance / current_antenna_length, 0.0, 1.0)
       else:
         _danger_amount_right = 1 - clampf(_danger_distance / current_antenna_length, 0.0, 1.0)
+    _raycast.enabled = false
   if _danger_amount_left > 0.0:
     interest_vectors[steering_ray_index_right] *= _danger_amount_left * antenna_multiplier
   if _danger_amount_right > 0.0:

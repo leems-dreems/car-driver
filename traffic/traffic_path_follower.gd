@@ -20,6 +20,8 @@ var parent_curve: Curve3D
 var parent_curve_length: float
 ## Indicates that this vehicle is close to the path and facing the right direction
 var _is_on_path := false
+## This vehicle will not calculate avoidance & inputs for the next X ticks
+var ticks_to_skip: int = 0
 
 ## Copy settings from [traffic_path]. 
 func copy_path_settings(traffic_path: Path3D) -> void:
@@ -32,6 +34,10 @@ func copy_path_settings(traffic_path: Path3D) -> void:
 
 ## Update interest vectors & avoidance info for the vehicle, then adjust its inputs accordingly
 func set_inputs() -> void:
+  if ticks_to_skip > 0:
+    ticks_to_skip -= 1
+    return
+
   if vehicle.get_wheel_contact_count() >= 3:
     var _is_path_ahead_blocked := false
     if progress_ratio >= 1.0: # If follower has reached end of path, move to next path
@@ -72,9 +78,9 @@ func set_inputs() -> void:
     var _turning_angle := vehicle.get_interest_angle()
     var _interest_vector := vehicle.summed_interest_vector
 
-    # Check if this Follower is colliding with another Follower ahead
-    var _vehicle_in_front := collision_area.get_overlapping_areas().any(func(_area: Area3D):
-      return _area.get_parent_node_3d() != vehicle and _area.get_collision_layer_value(11)
+    # Check if this Follower is colliding with another vehicle ahead
+    var _vehicle_in_front := collision_area.get_overlapping_bodies().any(func(_body: Node3D):
+      return _body is DriveableVehicle and _body != vehicle
     )
 
     # Adjust our target_speed based on direction of interest and turning angle
@@ -105,6 +111,7 @@ func set_inputs() -> void:
         if vehicle.speed < min_speed:
           # Let off the brakes when we're stopped, because brake_input doubles as reversing input
           vehicle.brake_input = 0.0
+          ticks_to_skip = 10 # Skip the next 5 physics ticks
         else:
           vehicle.brake_input = 1.0
         vehicle.handbrake_input = 1.0

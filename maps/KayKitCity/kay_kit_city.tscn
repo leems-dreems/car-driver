@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://defp4i4n5dard"]
+[gd_scene load_steps=34 format=3 uid="uid://defp4i4n5dard"]
 
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
 [ext_resource type="PackedScene" uid="uid://wrut3fs81xjv" path="res://maps/KayKitCity/terrain_pieces/road_junction.tscn" id="3_6tcif"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://ds0e0h6kkjqxj" path="res://collidables/springy_trash_can_round.tscn" id="16_sloab"]
 [ext_resource type="Script" path="res://missions/missions_manager.gd" id="16_xckov"]
 [ext_resource type="Script" path="res://missions/mission.gd" id="17_a4v38"]
+[ext_resource type="Script" path="res://traffic/traffic_manager.gd" id="18_smx86"]
 [ext_resource type="Script" path="res://missions/objective_area.gd" id="18_y7o6o"]
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="20_jlqe1"]
 
@@ -330,22 +331,6 @@ player = NodePath("../Player")
 
 [node name="SpringyPropsManager" type="Node3D" parent="."]
 script = ExtResource("11_b02xr")
-
-[node name="TrafficLightA" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -9, 0.75, -7)
-reset_time = 10.0
-
-[node name="TrafficLightA2" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(7.54979e-08, 0, 1, 0, 1, 0, -1, 0, 7.54979e-08, 5, 0.75, -7)
-reset_time = 10.0
-
-[node name="TrafficLightA3" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.75, 7)
-reset_time = 10.0
-
-[node name="TrafficLightA4" parent="SpringyPropsManager" instance=ExtResource("8_pdcgg")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0.75, 7)
-reset_time = 10.0
 
 [node name="SpringyTrashBinSquare" parent="SpringyPropsManager" instance=ExtResource("13_gd1lj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.75, 28)
@@ -912,12 +897,31 @@ surface_material_override/0 = SubResource("StandardMaterial3D_oncjh")
 shape = SubResource("ConvexPolygonShape3D_sc38f")
 
 [node name="TrafficManager" type="Node3D" parent="."]
+script = ExtResource("18_smx86")
 
 [node name="TrafficPath" type="Path3D" parent="TrafficManager"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -2)
 curve = SubResource("Curve3D_svt11")
 script = ExtResource("20_jlqe1")
-number_of_vehicles = 10
+spawn_vehicles = true
 show_vehicle_inputs = true
 
 [node name="Testing Stuff" type="Node3D" parent="."]
+
+[node name="TrafficLights" type="Node3D" parent="."]
+
+[node name="TrafficLightA" parent="TrafficLights" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -9, 0.75, -7)
+reset_time = 10.0
+
+[node name="TrafficLightA2" parent="TrafficLights" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(7.54979e-08, 0, 1, 0, 1, 0, -1, 0, 7.54979e-08, 5, 0.75, -7)
+reset_time = 10.0
+
+[node name="TrafficLightA3" parent="TrafficLights" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.75, 7)
+reset_time = 10.0
+
+[node name="TrafficLightA4" parent="TrafficLights" instance=ExtResource("8_pdcgg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0.75, 7)
+reset_time = 10.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=29 format=3 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://scripts/driveable_vehicle.gd" id="1_47vdl"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_2ri1h"]
@@ -125,14 +125,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7qo4e")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_dpbid"]
-size = Vector3(2.5, 2, 5.5)
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_sp4ri"]
 radius = 0.25
 
 [sub_resource type="SystemFont" id="SystemFont_ylexk"]
 font_names = PackedStringArray("Courier New")
+subpixel_positioning = 0
 
 [node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
@@ -432,14 +430,6 @@ skeleton = NodePath("")
 stream = ExtResource("3_k3j0m")
 unit_size = 2.0
 doppler_tracking = 2
-
-[node name="TrafficPathFollowerCollider" type="Area3D" parent="."]
-collision_layer = 1024
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficPathFollowerCollider"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
-shape = SubResource("BoxShape3D_dpbid")
 
 [node name="ExplosionCatcher" type="StaticBody3D" parent="." groups=["ExplosionCatcher"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.3, -2.5)

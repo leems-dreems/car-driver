@@ -83,7 +83,6 @@ _data = {
 
 [node name="JunctionT" type="Node3D"]
 script = ExtResource("1_ctjbw")
-green_light_delay = null
 material_resource = ExtResource("2_hv2m1")
 create_geo = false
 use_lowpoly_preview = true
