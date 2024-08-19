@@ -72,12 +72,17 @@ func set_inputs() -> void:
     var _turning_angle := vehicle.get_interest_angle()
     var _interest_vector := vehicle.summed_interest_vector
 
+    # Check if this Follower is colliding with another Follower ahead
+    var _vehicle_in_front := collision_area.get_overlapping_areas().any(func(_area: Area3D):
+      return _area.get_parent_node_3d() != vehicle and _area.get_collision_layer_value(11)
+    )
+
     # Adjust our target_speed based on direction of interest and turning angle
     # Note: vehicles face towards -Z, so a positive Z value means the interest vector is to the rear
-    if _is_path_ahead_blocked:
+    if _is_path_ahead_blocked or _vehicle_in_front:
       target_speed = 0.0
     elif _interest_vector.z > vehicle.steering_ray_length * 0.75: # Interest vector is strongly to the rear
-      if not _is_on_path and vehicle.linear_velocity.z < min_speed:
+      if not _is_on_path and vehicle.linear_velocity.z < min_speed and not _vehicle_in_front:
         target_speed = path_reversing_speed # If we are stopped and not on the road, start reversing
       else:
         target_speed = 0.0 # If we are on the road, slow to a stop
