@@ -79,13 +79,19 @@ func _physics_process(delta: float) -> void:
   brake_light_left.light_energy = _current_brake_light_energy
   brake_light_right.light_energy = _current_brake_light_energy
   if current_gear == -1:
-    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, reverse_light_energy, delta * 20)
+    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, reverse_light_energy, delta * 10)
     reverse_light_left.light_energy = _current_reverse_light_energy
     reverse_light_right.light_energy = _current_reverse_light_energy
   else:
-    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 20)
+    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 10)
     reverse_light_left.light_energy = _current_reverse_light_energy
     reverse_light_right.light_energy = _current_reverse_light_energy
+  var _target_headlight_energy := 0.0
+  if lights_on:
+    _target_headlight_energy = headlight_energy
+  var _current_headlight_energy := lerpf(headlight_left.light_energy, _target_headlight_energy, delta * 10)
+  headlight_left.light_energy = _current_headlight_energy
+  headlight_right.light_energy = _current_headlight_energy
   return
 
 

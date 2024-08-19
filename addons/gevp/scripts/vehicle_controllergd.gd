@@ -2,7 +2,7 @@ class_name VehicleController extends Node3D
 
 @export var vehicle_node : DriveableVehicle
 
-func _physics_process (delta) -> void:
+func _physics_process(_delta: float) -> void:
   if not vehicle_node: return
   if not vehicle_node.is_being_driven:
     vehicle_node.ignition_on = false
@@ -17,11 +17,14 @@ func _physics_process (delta) -> void:
   if Input.is_action_just_pressed("Toggle Transmission"):
     vehicle_node.automatic_transmission = !vehicle_node.automatic_transmission
   
-  if Input.is_action_just_pressed("Shift Up"):
-    vehicle_node.manual_shift(1)
-  
-  if Input.is_action_just_pressed("Shift Down"):
-    vehicle_node.manual_shift(-1)
+  if Input.is_action_just_pressed("Headlights"):
+    vehicle_node.lights_on = !vehicle_node.lights_on
+
+  #if Input.is_action_just_pressed("Shift Up"):
+    #vehicle_node.manual_shift(1)
+  #
+  #if Input.is_action_just_pressed("Shift Down"):
+    #vehicle_node.manual_shift(-1)
   
   if vehicle_node.current_gear == -1:
     vehicle_node.brake_input = Input.get_action_strength("Accelerate")
