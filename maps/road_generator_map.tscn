@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://nyu33jcyd77i"]
+[gd_scene load_steps=28 format=3 uid="uid://nyu33jcyd77i"]
 
 [ext_resource type="Script" path="res://maps/road_generator_map.gd" id="1_h3erf"]
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_xqse3"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="8_uedyw"]
 [ext_resource type="PackedScene" uid="uid://ct8yjvgxqmshn" path="res://maps/RoadGeneratorMap/junction_t.tscn" id="10_m4hl7"]
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="11_vdbko"]
+[ext_resource type="Script" path="res://traffic/traffic_manager.gd" id="12_7w6l3"]
 [ext_resource type="PackedScene" uid="uid://ba0xtl41qmm3s" path="res://maps/KayKitCity/props/traffic_light_a.tscn" id="13_kqpm8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_aa5c5"]
@@ -21,7 +22,7 @@ sky_material = SubResource("ProceduralSkyMaterial_aa5c5")
 background_mode = 2
 sky = SubResource("Sky_en3uj")
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.01
+volumetric_fog_density = 0.005
 
 [sub_resource type="Curve3D" id="Curve3D_a31b2"]
 _data = {
@@ -100,9 +101,8 @@ transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, 3
 environment = SubResource("Environment_j2cg0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 13, 0)
+transform = Transform3D(0.965926, 0.0669873, -0.25, 0, 0.965926, 0.258819, 0.258819, -0.25, 0.933013, 0, 13, 0)
 light_color = Color(1, 0.952941, 1, 1)
-light_energy = 0.01
 shadow_enabled = true
 
 [node name="PauseAndHUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_skgyp")]
@@ -206,11 +206,13 @@ prior_pt_init = NodePath("../RP_001")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1.5, -18.5)
 curve = SubResource("Curve3D_a31b2")
 script = ExtResource("11_vdbko")
+spawn_vehicles = true
 
 [node name="TrafficPath2" type="Path3D" parent="RoadManager/Road_001"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.5, -13.5)
 curve = SubResource("Curve3D_1v8bd")
 script = ExtResource("11_vdbko")
+spawn_vehicles = true
 
 [node name="JunctionT" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("10_m4hl7")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 24, -2.07, -16)
@@ -257,11 +259,13 @@ next_mag = 8.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.45, 0)
 curve = SubResource("Curve3D_1d03j")
 script = ExtResource("11_vdbko")
+spawn_vehicles = true
 
 [node name="TrafficPath2" type="Path3D" parent="RoadManager/Road_002"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.45, 0)
 curve = SubResource("Curve3D_ct8qf")
 script = ExtResource("11_vdbko")
+spawn_vehicles = true
 
 [node name="JunctionT2" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("10_m4hl7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -2.07, -64)
@@ -345,11 +349,13 @@ next_mag = 8.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, 0)
 curve = SubResource("Curve3D_jkk7c")
 script = ExtResource("11_vdbko")
+spawn_vehicles = true
 
 [node name="TrafficPath2" type="Path3D" parent="RoadManager/Road_003"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5, 5.5)
 curve = SubResource("Curve3D_c8p2k")
 script = ExtResource("11_vdbko")
+spawn_vehicles = true
 
 [node name="Terrain" type="Node3D" parent="."]
 
@@ -385,3 +391,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 31.75,
 
 [node name="TJunction1TrafficLightA3" parent="TrafficLights" instance=ExtResource("13_kqpm8")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 31.75, -1.2, -23.75)
+
+[node name="TrafficManager" type="Node3D" parent="."]
+script = ExtResource("12_7w6l3")
+vehicle_count = 8

@@ -21,7 +21,7 @@ var parent_curve_length: float
 ## Indicates that this vehicle is close to the path and facing the right direction
 var _is_on_path := false
 
-## Copy settings from [traffic_path]
+## Copy settings from [traffic_path]. 
 func copy_path_settings(traffic_path: Path3D) -> void:
   path_max_speed = traffic_path.path_max_speed
   path_reversing_speed = traffic_path.path_reversing_speed

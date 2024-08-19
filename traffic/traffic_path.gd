@@ -2,10 +2,11 @@
 class_name TrafficPath extends Path3D
 ## Supports [TrafficPathFollower] nodes, which spawn & control AI-driven vehicles
 
-var compact_car_scene := preload("res://cars/compact.tscn")
 var traffic_follower_scene := preload("res://traffic/traffic_path_follower.tscn")
 
 @export_group("Path Settings")
+## If true, TrafficManager will spawn vehicles on this path
+@export var spawn_vehicles := false
 ## The maximum number of vehicles that this path can support at a time
 @export var number_of_vehicles := 1
 ## Array of paths that this path connects to. If more than 1 path is connected, TrafficPathFollower 
@@ -48,39 +49,9 @@ func _ready() -> void:
   return
 
 
-func _physics_process(_delta: float) -> void:
-  if Engine.is_editor_hint():
-    return
-
-  while len(followers) < number_of_vehicles:
-    var new_follower: TrafficPathFollower = traffic_follower_scene.instantiate()
-    new_follower.copy_path_settings(self)
-    followers.push_back(new_follower)
-    add_child(new_follower)
-
-  # Loop through one vehicle each physics tick, updating interest vectors and input values
-  if len(followers) == 0:
-    return
-  if last_follower_updated_index >= len(followers) - 1:
-    last_follower_updated_index = -1
-  last_follower_updated_index += 1
-  var _follower := followers[last_follower_updated_index]
-
-  if _follower.vehicle == null:
-    # Note: Area3Ds update their lists of overlapping areas/bodies once at the start of each physics
-    # tick, so moving the follower and then looking for collisions in the same tick won't work
-    if _follower.collision_area.has_overlapping_areas() or _follower.collision_area.has_overlapping_bodies():
-      _follower.progress = randf_range(0, path_length) # Move to a random position on the path
-    else: # Spawn a vehicle and start its AI
-      var new_vehicle: DriveableVehicle = compact_car_scene.instantiate()
-      _follower.vehicle = new_vehicle
-      new_vehicle.position = _follower.position
-      new_vehicle.rotation = _follower.rotation
-      if show_vehicle_inputs:
-        new_vehicle.show_debug_label = true
-      add_child(new_vehicle)
-      new_vehicle.start_ai()
-  elif not _follower.vehicle.is_being_driven:
-    _follower.set_inputs()
-
-  return
+func spawn_follower(vehicle_container: Node3D = null) -> TrafficPathFollower:
+  var _follower: TrafficPathFollower = traffic_follower_scene.instantiate()
+  _follower.copy_path_settings(self)
+  followers.push_back(_follower)
+  add_child(_follower)
+  return _follower
