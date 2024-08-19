@@ -904,7 +904,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -2)
 curve = SubResource("Curve3D_svt11")
 script = ExtResource("20_jlqe1")
 spawn_vehicles = true
-show_vehicle_inputs = true
 
 [node name="Testing Stuff" type="Node3D" parent="."]
 

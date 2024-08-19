@@ -1,7 +1,7 @@
 class_name TrafficLightBodies extends StandalonePropBodies
 
-var green_light_energy := 5.0
-var red_light_energy := 5.0
+var green_light_energy := 2.0
+var red_light_energy := 2.0
 var light_fade_time := 0.2
 
 
