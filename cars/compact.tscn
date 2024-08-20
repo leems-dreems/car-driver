@@ -509,6 +509,7 @@ light_color = Color(1, 0.215686, 0.215686, 1)
 light_energy = 0.0
 shadow_enabled = true
 omni_range = 2.0
+omni_shadow_mode = 0
 
 [node name="BrakeLightRight" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.838, 0.577, 2.743)
@@ -516,15 +517,18 @@ light_color = Color(1, 0.215686, 0.215686, 1)
 light_energy = 0.0
 shadow_enabled = true
 omni_range = 2.0
+omni_shadow_mode = 0
 
 [node name="ReverseLightLeft" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.675, 0.577, 2.743)
 light_energy = 0.0
 shadow_enabled = true
 omni_range = 2.0
+omni_shadow_mode = 0
 
 [node name="ReverseLightRight" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.67537, 0.577, 2.743)
 light_energy = 0.0
 shadow_enabled = true
 omni_range = 2.0
+omni_shadow_mode = 0
