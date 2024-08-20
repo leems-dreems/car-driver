@@ -64,6 +64,7 @@ light_color = Color(0.313726, 1, 0.313726, 1)
 light_energy = 0.0
 shadow_enabled = true
 omni_range = 2.0
+omni_shadow_mode = 0
 
 [node name="RedLight" type="OmniLight3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.812, 0.8)
@@ -71,6 +72,7 @@ light_color = Color(1, 0.313726, 0.313726, 1)
 light_energy = 0.0
 shadow_enabled = true
 omni_range = 2.0
+omni_shadow_mode = 0
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

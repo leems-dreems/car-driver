@@ -52,18 +52,18 @@ func set_inputs() -> void:
           _chosen_path.add_child(self)
           progress = 0
 
-    var _local_vehicle_position := get_parent_node_3d().to_local(vehicle.global_position)
-    var _closest_offset: float = parent_curve.get_closest_offset(_local_vehicle_position)
-    var _closest_point: Vector3 = parent_curve.get_closest_point(_local_vehicle_position)
-    var _distance_to_path := _closest_point.distance_to(_local_vehicle_position)
+    var _local_vehicle_pos := get_parent_node_3d().to_local(vehicle.global_position)
+    var _closest_offset: float = parent_curve.get_closest_offset(_local_vehicle_pos)
+    var _closest_point: Vector3 = parent_curve.get_closest_point(_local_vehicle_pos)
+    var _distance_to_path := _closest_point.distance_to(Vector3(_local_vehicle_pos.x, _closest_point.y, _local_vehicle_pos.z))
     var target_speed := path_max_speed
 
     if not _is_path_ahead_blocked:
       # Move this TrafficPathFollower forward along the path
       if _distance_to_path < path_distance_limit:
-        progress = _closest_offset + (vehicle.speed * 0.75)
+        progress = _closest_offset + 3 + (vehicle.speed * 0.5)
       else:
-        progress = _closest_offset + 2
+        progress = _closest_offset + 3
 
     # Get the difference in rotation on the Y axis between this TrafficPathFollower and its vehicle
     var _angle_to_vehicle := vehicle.global_transform.basis.z.signed_angle_to(global_transform.basis.z, Vector3.UP)
@@ -111,7 +111,7 @@ func set_inputs() -> void:
         if vehicle.speed < min_speed:
           # Let off the brakes when we're stopped, because brake_input doubles as reversing input
           vehicle.brake_input = 0.0
-          ticks_to_skip = 10 # Skip the next 5 physics ticks
+          ticks_to_skip = 10 # Skip the next 10 physics ticks
         else:
           vehicle.brake_input = 1.0
         vehicle.handbrake_input = 1.0
