@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkgfw60uv84fp"]
+[gd_scene load_steps=12 format=3 uid="uid://dkgfw60uv84fp"]
 
 [ext_resource type="Script" path="res://maps/KayKitCity/props/traffic_light_a_bodies.gd" id="1_egxgu"]
 [ext_resource type="ArrayMesh" uid="uid://b4uey6sj07txa" path="res://assets/KayKit_City_Builder_Bits_1.0_SOURCE/Assets/obj/trafficlight_A.obj" id="1_mu2bn"]
@@ -15,6 +15,23 @@ points = PackedVector3Array(0.0333008, 0.225758, 0.0237842, -0.0361754, -0.00573
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_sus0v"]
 points = PackedVector3Array(0.0332963, 0.526899, 0.012214, -0.117231, 0.550058, -0.0341058, -0.117231, 0.550058, 0.0353659, 0.0448802, 0.73529, 0.0585019, -0.0940473, 0.73529, -0.0456897, -0.0361754, 0.71213, 0.116421, 0.0332963, 0.550058, 0.116421, 0.0101285, 0.492123, -0.0225219, 0.0101285, 0.723674, -0.0225219, -0.117231, 0.723674, 0.0237978, -0.0477276, 0.515283, 0.0932378, -0.0824634, 0.503739, -0.0456897, 0.0448802, 0.503739, 0.0816539, 0.0448802, 0.73529, 0.0932378, -0.0477276, 0.723674, -0.0456897, -0.0361754, 0.550058, 0.116421, -0.0477276, 0.73529, 0.0932378, -0.117231, 0.71213, -0.0341058, -0.0940473, 0.515283, 0.046918, -0.0130235, 0.492123, 0.012214, -0.0477276, 0.515283, -0.0456897, -0.117231, 0.71213, 0.0353659, 0.0217124, 0.723674, -0.010938, 0.0448802, 0.515283, 0.046918, -0.0246074, 0.723674, 0.116421, 0.0448802, 0.723674, 0.046918, 0.0217124, 0.492123, -0.010938, -0.0130235, 0.723674, -0.0341058, 0.0255653, 0.701177, 0.107401, -0.0940473, 0.73529, 0.046918, -0.0593115, 0.73529, -0.0456897, -0.0940473, 0.515283, -0.0456897)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_q7r7w"]
+top_radius = 0.16
+bottom_radius = 0.16
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oa5pu"]
+albedo_color = Color(0.215686, 1, 0.215686, 1)
+emission_enabled = true
+emission = Color(0.215686, 1, 0.215686, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bn6mr"]
+albedo_color = Color(1, 0.215686, 0.215686, 1)
+emission_enabled = true
+emission = Color(1, 0.215686, 0.215686, 1)
+emission_energy_multiplier = 2.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_a40gc"]
 radius = 0.1
@@ -62,19 +79,31 @@ shape = SubResource("ConvexPolygonShape3D_sus0v")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.888, 0.8)
 light_color = Color(0.313726, 1, 0.313726, 1)
 light_energy = 0.0
+light_bake_mode = 0
 shadow_enabled = true
 distance_fade_enabled = true
 omni_range = 2.0
 omni_shadow_mode = 0
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/GreenLight"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.133496)
+mesh = SubResource("CylinderMesh_q7r7w")
+surface_material_override/0 = SubResource("StandardMaterial3D_oa5pu")
+
 [node name="RedLight" type="OmniLight3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.812, 0.8)
 light_color = Color(1, 0.313726, 0.313726, 1)
 light_energy = 0.0
+light_bake_mode = 0
 shadow_enabled = true
 distance_fade_enabled = true
 omni_range = 2.0
 omni_shadow_mode = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/RedLight"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.133496)
+mesh = SubResource("CylinderMesh_q7r7w")
+surface_material_override/0 = SubResource("StandardMaterial3D_bn6mr")
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

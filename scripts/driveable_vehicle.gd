@@ -46,6 +46,10 @@ var show_debug_label := false
 @onready var brake_light_right: OmniLight3D = $BrakeLightRight
 @onready var reverse_light_left: OmniLight3D = $ReverseLightLeft
 @onready var reverse_light_right: OmniLight3D = $ReverseLightRight
+@onready var brake_light_left_mesh: MeshInstance3D = $BrakeLightLeft/MeshInstance3D
+@onready var brake_light_right_mesh: MeshInstance3D = $BrakeLightRight/MeshInstance3D
+@onready var reverse_light_left_mesh: MeshInstance3D = $ReverseLightLeft/MeshInstance3D
+@onready var reverse_light_right_mesh: MeshInstance3D = $ReverseLightRight/MeshInstance3D
 
 
 func _ready () -> void:
@@ -77,15 +81,21 @@ func _physics_process(delta: float) -> void:
   super(delta)
   var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
   brake_light_left.light_energy = _current_brake_light_energy
+  brake_light_left_mesh.transparency = 1.0 - brake_amount
   brake_light_right.light_energy = _current_brake_light_energy
+  brake_light_right_mesh.transparency = 1.0 - brake_amount
   if current_gear == -1:
     var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, reverse_light_energy, delta * 10)
     reverse_light_left.light_energy = _current_reverse_light_energy
     reverse_light_right.light_energy = _current_reverse_light_energy
+    reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 0.0, delta * 10)
+    reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 0.0, delta * 10)
   else:
     var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 10)
     reverse_light_left.light_energy = _current_reverse_light_energy
     reverse_light_right.light_energy = _current_reverse_light_energy
+    reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 1.0, delta * 10)
+    reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 1.0, delta * 10)
   var _target_headlight_energy := 0.0
   if lights_on:
     _target_headlight_energy = headlight_energy
