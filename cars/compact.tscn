@@ -508,6 +508,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.838408, 0.576664, 2.77796)
 light_color = Color(1, 0.215686, 0.215686, 1)
 light_energy = 0.0
 shadow_enabled = true
+distance_fade_enabled = true
 omni_range = 2.0
 omni_shadow_mode = 0
 
@@ -516,6 +517,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.838, 0.577, 2.77761)
 light_color = Color(1, 0.215686, 0.215686, 1)
 light_energy = 0.0
 shadow_enabled = true
+distance_fade_enabled = true
 omni_range = 2.0
 omni_shadow_mode = 0
 
@@ -523,6 +525,7 @@ omni_shadow_mode = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.675, 0.577, 2.77761)
 light_energy = 0.0
 shadow_enabled = true
+distance_fade_enabled = true
 omni_range = 2.0
 omni_shadow_mode = 0
 
@@ -530,5 +533,6 @@ omni_shadow_mode = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.67537, 0.577, 2.77761)
 light_energy = 0.0
 shadow_enabled = true
+distance_fade_enabled = true
 omni_range = 2.0
 omni_shadow_mode = 0
