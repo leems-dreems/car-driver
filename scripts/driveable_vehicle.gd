@@ -1,9 +1,11 @@
 class_name DriveableVehicle extends Vehicle
 
+@export var lights_on := false
+var headlight_energy := 10.0
+var brake_light_energy := 5.0
+var reverse_light_energy := 5.0
 var is_being_driven := false
 var is_ai_on := false
-## Set by the parent [TrafficPath] to indicate that this car is properly aligned with the road
-var is_on_path := false
 var waiting_to_respawn := false
 ## The number of RayCast3Ds that this vehicle uses for close avoidance
 var steering_ray_count: int = 16
@@ -24,8 +26,6 @@ var antenna_angle := PI / 32
 var avoidance_multiplier := 2
 # Multiplier applied to the side & behind vectors when an antenna raycast collides with something
 var antenna_multiplier := 32
-var left_antenna_mesh: MeshInstance3D
-var right_antenna_mesh: MeshInstance3D
 var antenna_raycasts: Array[RayCast3D] = []
 var steering_raycasts: Array[RayCast3D] = []
 var interest_vectors: Array[Vector3] = []
@@ -34,19 +34,32 @@ var summed_interest_vector := Vector3.ZERO
 ## The group that steering & avoidance raycasts belong to, used for cleanup when stopping AI
 var steering_ray_group := "SteeringRayCast"
 ## The collision layers this vehicle's steering rays collide with
-var steering_ray_collision_masks: Array[int] = [1, 2, 5, 7, 8]
-var interest_direction_mesh: MeshInstance3D
-# Debug
-var _show_antennae := false
-var raycast_debug_material := preload('res://assets/materials/raycast_debug.tres')
+var steering_ray_collision_masks: Array[int] = [1, 2, 5, 7, 8, 11]
+## Show the debug label for this vehicle
+var show_debug_label := false
 @onready var debug_label: Label3D = $DebugLabel3D
 @onready var door_left: RigidBody3D = $ColliderBits/OpenDoorLeft
 @onready var door_right: RigidBody3D = $ColliderBits/OpenDoorRight
+@onready var headlight_left: SpotLight3D = $HeadlightLeft
+@onready var headlight_right: SpotLight3D = $HeadlightRight
+@onready var brake_light_left: OmniLight3D = $BrakeLightLeft
+@onready var brake_light_right: OmniLight3D = $BrakeLightRight
+@onready var reverse_light_left: OmniLight3D = $ReverseLightLeft
+@onready var reverse_light_right: OmniLight3D = $ReverseLightRight
+@onready var brake_light_left_mesh: MeshInstance3D = $BrakeLightLeft/MeshInstance3D
+@onready var brake_light_right_mesh: MeshInstance3D = $BrakeLightRight/MeshInstance3D
+@onready var reverse_light_left_mesh: MeshInstance3D = $ReverseLightLeft/MeshInstance3D
+@onready var reverse_light_right_mesh: MeshInstance3D = $ReverseLightRight/MeshInstance3D
 
 
 func _ready () -> void:
   super()
+  if show_debug_label:
+    debug_label.visible = true
   $ColliderBits/EnterCarCollider.vehicle = self
+  if lights_on:
+    headlight_left.light_energy = headlight_energy
+    headlight_right.light_energy = headlight_energy
   await get_tree().create_timer(0.2).timeout
   unfreeze_bodies()
   return
@@ -62,6 +75,34 @@ func _process(_delta: float) -> void:
       debug_label.text += "Steer: " + "%.2f" % steering_input
     else:
       debug_label.text = ""
+
+
+func _physics_process(delta: float) -> void:
+  super(delta)
+  var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
+  brake_light_left.light_energy = _current_brake_light_energy
+  brake_light_left_mesh.transparency = 1.0 - brake_amount
+  brake_light_right.light_energy = _current_brake_light_energy
+  brake_light_right_mesh.transparency = 1.0 - brake_amount
+  if current_gear == -1:
+    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, reverse_light_energy, delta * 10)
+    reverse_light_left.light_energy = _current_reverse_light_energy
+    reverse_light_right.light_energy = _current_reverse_light_energy
+    reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 0.0, delta * 10)
+    reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 0.0, delta * 10)
+  else:
+    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 10)
+    reverse_light_left.light_energy = _current_reverse_light_energy
+    reverse_light_right.light_energy = _current_reverse_light_energy
+    reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 1.0, delta * 10)
+    reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 1.0, delta * 10)
+  var _target_headlight_energy := 0.0
+  if lights_on:
+    _target_headlight_energy = headlight_energy
+  var _current_headlight_energy := lerpf(headlight_left.light_energy, _target_headlight_energy, delta * 10)
+  headlight_left.light_energy = _current_headlight_energy
+  headlight_right.light_energy = _current_headlight_energy
+  return
 
 
 func respawn () -> void:
@@ -102,7 +143,7 @@ func start_ai() -> void:
       var _new_raycast := RayCast3D.new()
       _new_raycast.add_to_group(steering_ray_group)
       _new_raycast.position = Vector3(0, 0, 0)
-      for _mask_value in steering_ray_collision_masks:
+      for _mask_value in steering_ray_collision_masks: # 1235
         _new_raycast.set_collision_mask_value(_mask_value, true)
       var _angle := (i * (2 * PI)) / steering_ray_count
       _new_raycast.target_position = Vector3.FORWARD.rotated(Vector3.UP, _angle) * steering_ray_length
@@ -117,27 +158,9 @@ func start_ai() -> void:
         _new_raycast.set_collision_mask_value(_mask_value, true)
       var _angle := i * antenna_angle
       _new_raycast.target_position = Vector3.FORWARD.rotated(Vector3.UP, _angle) * max_antenna_length
+      _new_raycast.debug_shape_custom_color = Color(0, 1, 0, 1)
       add_child(_new_raycast)
       antenna_raycasts.push_back(_new_raycast)
-
-      if _show_antennae:
-        # Add visible antenna meshes
-        var _line_mesh := MeshInstance3D.new()
-        var _cylinder_mesh := CylinderMesh.new()
-        _cylinder_mesh.height = max_antenna_length
-        _cylinder_mesh.top_radius = 0.05
-        _cylinder_mesh.bottom_radius = 0.05
-        _line_mesh.mesh = _cylinder_mesh
-        _line_mesh.position = _new_raycast.target_position / 2
-        _line_mesh.rotate_x(PI / 2)
-        _line_mesh.rotate_y(_angle)
-        _line_mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-        _line_mesh.set_surface_override_material(0, raycast_debug_material)
-        add_child(_line_mesh)
-        if _new_raycast.target_position.x < 0:
-          left_antenna_mesh = _line_mesh
-        else:
-          right_antenna_mesh = _line_mesh
 
   for _raycast in steering_raycasts:
     _raycast.enabled = true
@@ -165,9 +188,11 @@ func set_interest_vectors(_target_global_position: Vector3) -> void:
     var _interest_amount := _raycast.target_position.normalized().dot(_target_position)
     _interest_amount = maxf(0, _interest_amount)
     interest_vectors.push_back(_raycast.target_position.normalized() * _interest_amount)
-  # Loop through again and check for collisions
+  # Loop through raycasts again and check for danger to avoid
   var i := 0
   for _raycast in steering_raycasts:
+    _raycast.enabled = true
+    _raycast.force_raycast_update()
     if _raycast.is_colliding():
       # Use the distance to the collision point to reduce the aligned interest vector
       var _danger_distance: float = _raycast.get_collision_point().distance_to(_raycast.global_position)
@@ -178,33 +203,28 @@ func set_interest_vectors(_target_global_position: Vector3) -> void:
         interest_vectors[i + (steering_ray_index_behind)] /= _danger_amount * avoidance_multiplier
       else:
         interest_vectors[i - (steering_ray_index_behind)] /= _danger_amount * avoidance_multiplier
+    _raycast.enabled = false
     i += 1
   # Check "antenna" raycasts
   var _danger_amount_left := 0.0
   var _danger_amount_right := 0.0
   var current_antenna_length := clampf(speed, min_antenna_length, max_antenna_length)
   for _raycast in antenna_raycasts:
+    _raycast.enabled = true
+    _raycast.force_raycast_update()
     if _raycast.target_position.x < 0:
       var _antenna_position := Vector3.FORWARD.rotated(Vector3.UP, 1 * antenna_angle) * current_antenna_length
       _raycast.target_position = _antenna_position
-      if _show_antennae:
-        left_antenna_mesh.mesh.height = current_antenna_length
-        left_antenna_mesh.position = _antenna_position / 2
     else:
       var _antenna_position := Vector3.FORWARD.rotated(Vector3.UP, -1 * antenna_angle) * current_antenna_length
       _raycast.target_position = _antenna_position
-      if _show_antennae:
-        right_antenna_mesh.mesh.height = current_antenna_length
-        right_antenna_mesh.position = _antenna_position / 2
     if _raycast.is_colliding():
       var _danger_distance: float = _raycast.get_collision_point().distance_to(_raycast.global_position)
       if _raycast.target_position.x < 0:
         _danger_amount_left = 1 - clampf(_danger_distance / current_antenna_length, 0.0, 1.0)
       else:
         _danger_amount_right = 1 - clampf(_danger_distance / current_antenna_length, 0.0, 1.0)
-  if _show_antennae:
-    left_antenna_mesh.transparency = 1 - clampf(_danger_amount_left, 0.05, 1.0)
-    right_antenna_mesh.transparency = 1 - clampf(_danger_amount_right, 0.05, 1.0)
+    _raycast.enabled = false
   if _danger_amount_left > 0.0:
     interest_vectors[steering_ray_index_right] *= _danger_amount_left * antenna_multiplier
   if _danger_amount_right > 0.0:

@@ -1,22 +1,42 @@
-extends SpringyProp
+class_name TrafficLightProp extends StandaloneSpringyProp
 
-func register_scene_with_manager() -> void:
-  if get_parent_node_3d().has_method("add_traffic_light_a"):
-    springy_props_manager_node = get_parent_node_3d()
-  return
+enum LIGHT_COLORS { NONE, GREEN, AMBER, RED }
+var current_light := LIGHT_COLORS.NONE
+
+
+func _ready() -> void:
+  super()
+  _bodies_scene = preload("res://maps/KayKitCity/props/traffic_light_a_bodies.tscn")
+  _bodies = $StandalonePropBodies
 
 
 func respawn() -> void:
-  if springy_props_manager_node != null:
-    springy_props_manager_node.add_traffic_light_a(global_position, global_rotation)
+  super()
+  match current_light:
+    LIGHT_COLORS.NONE: _bodies.no_lights()
+    LIGHT_COLORS.GREEN: _bodies.green_light()
+    LIGHT_COLORS.RED: _bodies.red_light()
 
 
 func play_effect() -> void:
   $Sparks.emitting = true
   $AudioStreamPlayer3D.play()
+  _bodies.no_lights()
 
 
 func stop_effect() -> void:
   $Sparks.emitting = false
   $AudioStreamPlayer3D.stop()
   $AudioStreamPlayer3D.seek(0)
+
+
+func green_light() -> void:
+  current_light = LIGHT_COLORS.GREEN
+  if not is_detached:
+    _bodies.green_light()
+
+
+func red_light() -> void:
+  current_light = LIGHT_COLORS.RED
+  if not is_detached:
+    _bodies.red_light()

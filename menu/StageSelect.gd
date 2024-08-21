@@ -5,7 +5,8 @@ extends Node2D
 #you just have to manually name levels and put paths here
 var stages_dictionary = {
     OG_City = "res://city_scene.tscn",
-    Kay_Kit_City = "res://maps/KayKitCity/kay_kit_city.tscn"
+    Kay_Kit_City = "res://maps/KayKitCity/kay_kit_city.tscn",
+    Road_Generator_City = "res://maps/road_generator_map.tscn"
 }
 
 func _ready() -> void:
