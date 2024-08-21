@@ -1,7 +1,7 @@
 [gd_scene load_steps=33 format=3 uid="uid://civapmbuqx1uv"]
 
-[ext_resource type="Script" path="res://scripts/driveable_vehicle.gd" id="1_47vdl"]
-[ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_2ri1h"]
+[ext_resource type="Script" path="res://cars/compact.gd" id="1_pg53u"]
+[ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_kvrte"]
 [ext_resource type="PackedScene" uid="uid://h6vdpba71kpr" path="res://addons/gevp/scenes/smoke_effect.tscn" id="2_negof"]
 [ext_resource type="Script" path="res://addons/gevp/scripts/wheel.gd" id="2_rwko2"]
 [ext_resource type="ArrayMesh" uid="uid://2le86icjy0e2" path="res://assets/models/car_cricket_body.obj" id="3_6oki7"]
@@ -159,7 +159,7 @@ center_of_mass = Vector3(0, 0, -0.1)
 freeze = true
 freeze_mode = 1
 continuous_cd = true
-script = ExtResource("1_47vdl")
+script = ExtResource("1_pg53u")
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
 rear_left_wheel = NodePath("WheelRearLeft")
@@ -175,7 +175,7 @@ stability_upright_spring = 0.0
 stability_upright_damping = 0.0
 max_torque = 900.0
 max_rpm = 5000.0
-torque_curve = ExtResource("2_2ri1h")
+torque_curve = ExtResource("2_kvrte")
 final_drive = 4.2
 shift_time = 0.2
 automatic_time_between_shifts = 500.0
