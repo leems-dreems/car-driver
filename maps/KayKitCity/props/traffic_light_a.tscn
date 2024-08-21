@@ -40,13 +40,9 @@ size = Vector3(0.1, 0.1, 0.1)
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2mhpn"]
 streams_count = 4
 stream_0/stream = ExtResource("3_nbwdu")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("4_wut4u")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("5_wum4e")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("6_kbk60")
-stream_3/weight = 1.0
 
 [node name="TrafficLightA" type="Node3D"]
 script = ExtResource("1_seoio")

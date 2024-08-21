@@ -55,8 +55,8 @@ mass = 100.0
 physics_material_override = SubResource("PhysicsMaterial_jcshc")
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, 3, 0)
-max_contacts_reported = 10
 contact_monitor = true
+max_contacts_reported = 10
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0)

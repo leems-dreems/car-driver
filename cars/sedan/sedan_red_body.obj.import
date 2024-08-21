@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://checdapcbvshx"
+path="res://.godot/imported/sedan_red_body.obj-42d1fcba1d39b9369564f001ff83b74a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/sedan_red_body.obj-42d1fcba1d39b9369564f001ff83b74a.mesh"]
+
+source_file="res://cars/sedan/sedan_red_body.obj"
+dest_files=["res://.godot/imported/sedan_red_body.obj-42d1fcba1d39b9369564f001ff83b74a.mesh", "res://.godot/imported/sedan_red_body.obj-42d1fcba1d39b9369564f001ff83b74a.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

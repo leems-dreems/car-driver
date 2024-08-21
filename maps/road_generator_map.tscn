@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://nyu33jcyd77i"]
+[gd_scene load_steps=29 format=3 uid="uid://nyu33jcyd77i"]
 
 [ext_resource type="Script" path="res://maps/road_generator_map.gd" id="1_h3erf"]
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_xqse3"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://ct8yjvgxqmshn" path="res://maps/RoadGeneratorMap/junction_t.tscn" id="10_m4hl7"]
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="11_vdbko"]
 [ext_resource type="Script" path="res://traffic/traffic_manager.gd" id="12_7w6l3"]
+[ext_resource type="PackedScene" uid="uid://dtmdisvihiftt" path="res://cars/sedan.tscn" id="13_5vvid"]
 [ext_resource type="PackedScene" uid="uid://ba0xtl41qmm3s" path="res://maps/KayKitCity/props/traffic_light_a.tscn" id="13_kqpm8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_aa5c5"]
@@ -394,3 +395,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 31.75,
 
 [node name="TrafficManager" type="Node3D" parent="."]
 script = ExtResource("12_7w6l3")
+
+[node name="SedanCar" parent="." instance=ExtResource("13_5vvid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 29)

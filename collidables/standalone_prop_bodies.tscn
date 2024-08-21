@@ -32,8 +32,8 @@ axis_lock_angular_z = true
 mass = 30.0
 physics_material_override = SubResource("PhysicsMaterial_j5txw")
 gravity_scale = 0.0
-max_contacts_reported = 10
 contact_monitor = true
+max_contacts_reported = 10
 angular_damp = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
