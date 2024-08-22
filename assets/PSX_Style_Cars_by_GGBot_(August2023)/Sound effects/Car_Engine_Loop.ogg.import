@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Car_Engine_Loop.ogg-56cbf8ee72dc50092478ce816
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

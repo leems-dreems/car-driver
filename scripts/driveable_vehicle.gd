@@ -3,7 +3,7 @@ class_name DriveableVehicle extends Vehicle
 @export var lights_on := false
 var headlight_energy := 10.0
 var brake_light_energy := 5.0
-var reverse_light_energy := 5.0
+var reverse_light_energy := 1.0
 var is_being_driven := false
 var is_ai_on := false
 var waiting_to_respawn := false

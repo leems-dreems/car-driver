@@ -104,6 +104,7 @@ environment = SubResource("Environment_j2cg0")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.965926, 0.0669873, -0.25, 0, 0.965926, 0.258819, 0.258819, -0.25, 0.933013, 0, 13, 0)
 light_color = Color(1, 0.952941, 1, 1)
+light_energy = 2.0
 shadow_enabled = true
 
 [node name="PauseAndHUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_skgyp")]

@@ -137,7 +137,7 @@ func set_inputs() -> void:
       vehicle.ignition_on = true
 
     # Steer to match the rotation of the nearest path position
-    vehicle.steering_input = clampf(_turning_angle, -1.0, 1.0)
+    vehicle.steering_input = clampf(_turning_angle * 2, -1.0, 1.0)
     if vehicle.current_gear == -1: # Flip steering input if we're reversing
       # TODO: subtract turning angle from either PI or -PI to allow reversing in a straight line
       # The vehicle will currently always steer while reversing, which is fine for getting un-stuck from props
@@ -146,3 +146,6 @@ func set_inputs() -> void:
   else: # Take our hands off the steering wheel until 3 tires are touching the ground
     vehicle.steering_input = 0.0
     vehicle.throttle_input = 0.0
+
+  # Engage clutch if we're not throttling, to reduce oversteer
+  vehicle.clutch_input = 1.0 - vehicle.throttle_input

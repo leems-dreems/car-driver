@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=34 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact.gd" id="1_pg53u"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_kvrte"]
@@ -9,6 +9,7 @@
 [ext_resource type="ArrayMesh" uid="uid://c2lo5sd57qci7" path="res://assets/models/car_cricket_door_FL.obj" id="4_d7yiy"]
 [ext_resource type="PackedScene" uid="uid://b2hlchrj4h2b7" path="res://addons/gevp/scenes/engine_sound.tscn" id="4_dercd"]
 [ext_resource type="Script" path="res://scripts/car_door.gd" id="5_6gdjk"]
+[ext_resource type="AudioStream" uid="uid://cfqlem3v5t0y6" path="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Sound effects/Car_Engine_Loop.ogg" id="5_bnnwg"]
 [ext_resource type="ArrayMesh" uid="uid://bhui0qh4i80lg" path="res://assets/models/car_cricket_door_FR.obj" id="5_trfuy"]
 [ext_resource type="PhysicsMaterial" uid="uid://bgc5lkrsa84nb" path="res://cars/car_door_physics_material.tres" id="7_2j5l5"]
 [ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="7_ngr1s"]
@@ -183,7 +184,7 @@ front_torque_split = 1.0
 variable_torque_split = true
 front_variable_split = 0.5
 front_weight_distribution = 0.51
-center_of_gravity_height_offset = 0.0
+center_of_gravity_height_offset = -0.1
 front_damping_ratio = 0.9
 front_bump_damp_multiplier = 1.5
 front_rebound_damp_multiplier = 0.667
@@ -215,8 +216,11 @@ longitudinal_slip_threshold = 1.0
 lateral_slip_threshold = 0.8
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_dercd")]
-unit_size = 2.0
+stream = ExtResource("5_bnnwg")
+unit_size = 6.0
+max_db = -8.0
 vehicle = NodePath("..")
+sample_rpm = 3000.0
 
 [node name="body" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
@@ -364,7 +368,7 @@ visible = false
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("10_61kxu")
-vehicle_name = "Compact Car"
+vehicle_name = "Compact"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/EnterCarCollider"]
 transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 0.693126, -0.00113106)
