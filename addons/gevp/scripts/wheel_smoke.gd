@@ -5,6 +5,12 @@ extends GPUParticles3D
 @export var longitudinal_slip_threshold := 0.5
 @export var lateral_slip_threshold := 1.0
 
+
+func _ready() -> void:
+  for wheel: Wheel in vehicle.wheel_array:
+    wheel.squeal_audio.volume_db = linear_to_db(0)
+
+
 func _process(delta):
   if is_instance_valid(vehicle):
     for wheel: Wheel in vehicle.wheel_array:
@@ -26,7 +32,7 @@ func _process(delta):
           squeal_amount = clampf(1.0 - wheel.slip_vector.y, 0, 1.0)
 
         var skid_amount: float
-        if wheel.slip_vector.y > 0:
+        if wheel.slip_vector.x > 0:
           skid_amount = clampf(wheel.slip_vector.x, 0, 1.0)
         else:
           skid_amount = clampf(1.0 - wheel.slip_vector.x, 0, 1.0)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=29 format=3 uid="uid://nyu33jcyd77i"]
 
-[ext_resource type="Script" path="res://maps/road_generator_map.gd" id="1_h3erf"]
+[ext_resource type="Script" path="res://maps/RoadGeneratorMap/road_generator_map.gd" id="1_h3erf"]
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_xqse3"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="3_uwai4"]
 [ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="4_skgyp"]

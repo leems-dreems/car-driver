@@ -396,12 +396,12 @@ skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
 stream = ExtResource("15_rmw2m")
-unit_size = 2.0
+unit_size = 3.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
 stream = ExtResource("16_v1p2m")
-unit_size = 2.0
+unit_size = 3.0
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, -1.7702)
@@ -419,13 +419,13 @@ skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
 stream = ExtResource("15_rmw2m")
-unit_size = 2.0
+unit_size = 3.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 0, 0)
 stream = ExtResource("16_v1p2m")
-unit_size = 2.0
+unit_size = 3.0
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, 1.83657)
@@ -444,13 +444,13 @@ skeleton = NodePath("")
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0, -3.60677)
 stream = ExtResource("15_rmw2m")
-unit_size = 2.0
+unit_size = 3.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.60677)
 stream = ExtResource("16_v1p2m")
-unit_size = 2.0
+unit_size = 3.0
 
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, 1.83657)
@@ -469,13 +469,13 @@ skeleton = NodePath("")
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.60677)
 stream = ExtResource("15_rmw2m")
-unit_size = 2.0
+unit_size = 3.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 0, -3.60677)
 stream = ExtResource("16_v1p2m")
-unit_size = 2.0
+unit_size = 3.0
 
 [node name="ExplosionCatcher" type="StaticBody3D" parent="." groups=["ExplosionCatcher"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.3, -2.5)
