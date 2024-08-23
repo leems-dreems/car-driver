@@ -8,7 +8,8 @@ class_name Wheel
 extends RayCast3D
 
 @export var wheel_node : Node3D
-@export var screechSFX : AudioStreamPlayer3D
+@export var squeal_audio : AudioStreamPlayer3D
+@export var skid_audio : AudioStreamPlayer3D
 
 var wheel_mass := 15.0
 var tire_radius := 0.3
