@@ -32,5 +32,5 @@ func _physics_process(_delta: float) -> void:
 
   vehicle_node.clutch_input = 1.0 - vehicle_node.throttle_input
 
-  if vehicle_node.ignition_on == false and vehicle_node.throttle_input > 0.0:
+  if vehicle_node.ignition_on == false and vehicle_node.throttle_input > 0 and vehicle_node.current_hit_points > 0:
     vehicle_node.ignition_on = true

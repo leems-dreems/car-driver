@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://dtmdisvihiftt"]
+[gd_scene load_steps=40 format=4 uid="uid://cvsdhdj7875dx"]
 
 [ext_resource type="Script" path="res://cars/sedan.gd" id="1_srhgv"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_o2fgs"]
@@ -16,6 +16,9 @@
 [ext_resource type="Script" path="res://addons/gevp/scripts/wheel.gd" id="13_fnewd"]
 [ext_resource type="AudioStream" uid="uid://d2gr5emhyehgo" path="res://assets/sfx/tires_squal_loop.wav" id="15_og8l0"]
 [ext_resource type="AudioStream" uid="uid://x2riq63vqy7j" path="res://assets/sfx/skid-loop.wav" id="16_2hwg3"]
+[ext_resource type="AudioStream" uid="uid://bw7d3mhbykib" path="res://assets/audio/Hanna-Barbera SFX/clash.wav" id="17_l4ecl"]
+[ext_resource type="Texture2D" uid="uid://dmiaxbl8mrfpf" path="res://assets/materials/smoke_scale_curve.tres" id="18_k56vm"]
+[ext_resource type="Material" uid="uid://bwi02sbjj4ipa" path="res://assets/materials/engine_smoke_material_3d.tres" id="19_pla2v"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.2
@@ -150,6 +153,18 @@ emission_energy_multiplier = 2.0
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_60g1j"]
+gravity = Vector3(0, 2, 0)
+scale_min = 0.01
+scale_curve = ExtResource("18_k56vm")
+
+[sub_resource type="SphereMesh" id="SphereMesh_l6ohs"]
+material = ExtResource("19_pla2v")
+radius = 0.3
+height = 0.6
+radial_segments = 16
+rings = 8
+
 [node name="SedanCar" type="RigidBody3D" node_paths=PackedStringArray("front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
 collision_mask = 83
@@ -160,6 +175,8 @@ center_of_mass = Vector3(0, 0, -0.1)
 freeze = true
 freeze_mode = 1
 continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 24
 script = ExtResource("1_srhgv")
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
@@ -175,8 +192,6 @@ torque_curve = ExtResource("2_o2fgs")
 shift_time = 0.2
 vehicle_mass = 2000.0
 front_weight_distribution = 0.55
-front_spring_length = 0.2
-rear_spring_length = 0.25
 braking_grip_multiplier = 5.0
 coefficient_of_friction = {
 "Dirt": 1.5,
@@ -599,3 +614,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.011, 0, -0.128)
 gi_mode = 2
 mesh = SubResource("BoxMesh_6up4h")
 surface_material_override/0 = SubResource("StandardMaterial3D_ltwxu")
+
+[node name="AudioStreams" type="Node3D" parent="."]
+
+[node name="CollisionAudio1" type="AudioStreamPlayer3D" parent="AudioStreams"]
+stream = ExtResource("17_l4ecl")
+max_polyphony = 16
+
+[node name="EngineSmoke" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+cast_shadow = 0
+amount = 30
+amount_ratio = 0.0
+lifetime = 2.0
+randomness = 0.5
+process_material = SubResource("ParticleProcessMaterial_60g1j")
+draw_pass_1 = SubResource("SphereMesh_l6ohs")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

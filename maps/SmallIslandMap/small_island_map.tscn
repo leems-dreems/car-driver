@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="5_b12oo"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="5_s1vds"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="6_c10gt"]
-[ext_resource type="PackedScene" path="res://cars/sedan.tscn" id="7_tthab"]
+[ext_resource type="PackedScene" uid="uid://cvsdhdj7875dx" path="res://cars/sedan.tscn" id="7_tthab"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="8_sg2bm"]
 [ext_resource type="Material" path="res://addons/road-generator/resources/road_texture.material" id="9_em06u"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="12_xaxqb"]
@@ -45,17 +45,17 @@ volumetric_fog_density = 0.005
 
 [sub_resource type="Curve3D" id="Curve3D_ce0hj"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 2.5, 0, 0, 0, 0, 0, 0, 0, 16, 2.5, 0, 48, -2, 0, -8, 0, 0, 0, 6.5, -1, 83, 0, 0, 0, 2, 0, 12, 15, -3, 113, 18, 0, -2, 0, 0, 0, -24.5, -3, 168.5, 0, 0, 0, 0, 0, 0, -55, 2, 177, 0, 0, 0, -10, 0, 0, -86, -1, 180, 0, 1, 10, 0, -1, -8, -120, -3.25, 151, 0, 0, 0, 0, 0, 0, -120, -3.25, 96.5, 0, 0, 0, 0, 0, -8, -120, -6.25, 26.5, 0, 0, 8, 0, 0, 0, -120, 0, 0),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 2.5, 0, 0, 0, 0, 0, 0, 0, 16, 2.5, 0, 48, -2, 0, -8, 0, 0, 0, 6.5, -1, 83, 0, 0, 0, 2, 0, 12, 15, -3, 113, 18, 0, -2, 0, 0, 0, -24.5, -3, 168.5, 0, 0, 0, 0, 0, 0, -55, 2, 177, 0, 0, 0, -10, 0, 0, -86, -1, 180, 0, 1, 10, 0, -1, -8, -120, -3.25, 151, 0, 0, 0, 0, 0, 0, -120, -3.25, 96.5, 0, 0, 0, 0, 0, -8, -120, -3, 26.5, 0, 0, 8, 0, 0, 0, -120, 0, 8, 0, 0, 0, 0, 0, 0, -120, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
-point_count = 11
+point_count = 12
 
 [sub_resource type="Curve3D" id="Curve3D_6oefx"]
 _data = {
-"points": PackedVector3Array(0, 0, 8, 0, 0, 8, -114.5, 0, 0, 0, 0, -8, 0, 0, 0, -114.5, -6.25, 26.5, 0, 0, -8, 0, 0, 8, -114.5, -3.25, 96.5, 1.56893, 0, -7.84465, -1, 0, 5, -114.5, -3.25, 151, -8, 0, -1, 9.92278, 0, 1.24035, -86, -1, 175, 0, 0, 0, 0, 0, 0, -55, 2, 171.5, 0, 0, 0, 12, 0, -2, -24.5, -3, 163.5, 0, 0, 12, -2, 0, -7, 10, -3, 115, 1, 0, 2, -1, 0, -2, 1, -1, 83, 0, 0, 8, 0, 0, 0, -2.5, 0, 48, 0, 0, 0, 0, 0, 0, -2.5, 0, 0),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+"points": PackedVector3Array(0, 0, 8, 0, 0, 8, -114.5, 0, 0, 0, 0, -8, 0, 0, 8, -114.5, 0, 8, 0, 0, -8, 0, 0, 0, -114.5, -3, 26.5, 0, 0, -8, 0, 0, 8, -114.5, -3.25, 96.5, 1.56893, 0, -7.84465, -1, 0, 5, -114.5, -3.25, 151, -8, 0, -1, 9.92278, 0, 1.24035, -86, -1, 175, 0, 0, 0, 0, 0, 0, -55, 2, 171.5, 0, 0, 0, 12, 0, -2, -24.5, -3, 163.5, 0, 0, 12, -2, 0, -7, 10, -3, 115, 1, 0, 2, -1, 0, -2, 1, -1, 83, 0, 0, 8, 0, 0, 0, -2.5, 0, 48, 0, 0, 0, 0, 0, 0, -2.5, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
-point_count = 11
+point_count = 12
 
 [sub_resource type="Curve3D" id="Curve3D_x21bv"]
 _data = {
@@ -178,7 +178,7 @@ use_lowpoly_preview = true
 edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
 edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
 edge_rp_target_dirs = Array[int]([-1, -1])
-edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_011")])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_012")])
 edge_rp_local_dirs = Array[int]([1, 0])
 
 [node name="RP_001" type="Node3D" parent="RoadManager/Scenic_Road"]
@@ -295,7 +295,7 @@ prior_mag = 8.0
 next_mag = 8.0
 
 [node name="RP_010" type="Node3D" parent="RoadManager/Scenic_Road"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -117.164, -6.28221, 26.3832)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -117.164, -3.28221, 26.3832)
 script = ExtResource("12_xaxqb")
 traffic_dir = [2, 1]
 lanes = [5, 5]
@@ -308,7 +308,7 @@ prior_mag = 8.0
 next_mag = 8.0
 
 [node name="RP_011" type="Node3D" parent="RoadManager/Scenic_Road"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -117, 0, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -117, 0, 8)
 script = ExtResource("12_xaxqb")
 traffic_dir = [2, 1]
 lanes = [5, 5]
@@ -316,6 +316,19 @@ shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(10, -5)
 prior_pt_init = NodePath("../RP_010")
+next_pt_init = NodePath("../RP_012")
+prior_mag = 8.0
+next_mag = 8.0
+
+[node name="RP_012" type="Node3D" parent="RoadManager/Scenic_Road"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -117, 0, 0)
+script = ExtResource("12_xaxqb")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(10, -5)
+prior_pt_init = NodePath("../RP_011")
 prior_mag = 8.0
 next_mag = 8.0
 
@@ -548,12 +561,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 curve = SubResource("Curve3D_3sj8n")
 script = ExtResource("16_te4i7")
 spawn_vehicles = true
+path_max_speed = 20.0
 
 [node name="TP_South_Road_East" type="Path3D" parent="RoadManager/South_Road"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 curve = SubResource("Curve3D_530a1")
 script = ExtResource("16_te4i7")
 spawn_vehicles = true
+path_max_speed = 20.0
 
 [node name="SouthTJunction" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("14_2ag3q")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 32, 14.43, -122)
@@ -670,12 +685,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 curve = SubResource("Curve3D_n285w")
 script = ExtResource("16_te4i7")
 spawn_vehicles = true
+path_max_speed = 20.0
 
 [node name="TP_West_Road_North" type="Path3D" parent="RoadManager/West_Road"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 curve = SubResource("Curve3D_2holf")
 script = ExtResource("16_te4i7")
 spawn_vehicles = true
+path_max_speed = 20.0
 
 [node name="SpringyPropsManager" type="Node3D" parent="."]
 script = ExtResource("16_pgv02")

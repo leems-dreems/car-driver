@@ -57,9 +57,7 @@ points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.02732
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_efm52"]
 streams_count = 2
 stream_0/stream = ExtResource("4_h23ki")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("5_kxdrc")
-stream_1/weight = 1.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_83axv"]
 radius = 1.0
@@ -89,8 +87,8 @@ axis_lock_angular_y = true
 axis_lock_angular_z = true
 mass = 400.0
 physics_material_override = SubResource("PhysicsMaterial_3og3g")
-max_contacts_reported = 10
 contact_monitor = true
+max_contacts_reported = 10
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 mesh = ExtResource("2_5obv0")

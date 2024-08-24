@@ -7,6 +7,11 @@ var reverse_light_energy := 1.0
 var is_being_driven := false
 var is_ai_on := false
 var waiting_to_respawn := false
+## Damage this vehicle can take before setting on fire and exploding
+var max_hit_points := 20.0
+var current_hit_points: float
+## Velocity as of the last physics tick
+var _previous_velocity: Vector3 = Vector3.ZERO
 ## The number of RayCast3Ds that this vehicle uses for close avoidance
 var steering_ray_count: int = 16
 ## The index of the steering ray which points left. Set to 3/4 of `steering_ray_count`
@@ -40,6 +45,7 @@ var show_debug_label := false
 @onready var debug_label: Label3D = $DebugLabel3D
 @onready var door_left: RigidBody3D = $ColliderBits/OpenDoorLeft
 @onready var door_right: RigidBody3D = $ColliderBits/OpenDoorRight
+# Lights
 @onready var headlight_left: SpotLight3D = $HeadlightLeft
 @onready var headlight_right: SpotLight3D = $HeadlightRight
 @onready var brake_light_left: OmniLight3D = $BrakeLightLeft
@@ -50,6 +56,10 @@ var show_debug_label := false
 @onready var brake_light_right_mesh: MeshInstance3D = $BrakeLightRight/MeshInstance3D
 @onready var reverse_light_left_mesh: MeshInstance3D = $ReverseLightLeft/MeshInstance3D
 @onready var reverse_light_right_mesh: MeshInstance3D = $ReverseLightRight/MeshInstance3D
+# Audio streams
+@onready var collision_audio_1: AudioStreamPlayer3D = $AudioStreams/CollisionAudio1
+# Particle emitters
+@onready var engine_smoke_emitter: GPUParticles3D = $EngineSmoke
 
 
 func _ready () -> void:
@@ -60,6 +70,7 @@ func _ready () -> void:
   if lights_on:
     headlight_left.light_energy = headlight_energy
     headlight_right.light_energy = headlight_energy
+  current_hit_points = max_hit_points
   await get_tree().create_timer(0.2).timeout
   unfreeze_bodies()
   return
@@ -79,6 +90,9 @@ func _process(_delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
   super(delta)
+  # Record current velocity, to refer to when processing collision signals
+  _previous_velocity = Vector3(linear_velocity)
+  # Update energy of various lights
   var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
   brake_light_left.light_energy = _current_brake_light_energy
   brake_light_left_mesh.transparency = 1.0 - brake_amount
@@ -102,7 +116,24 @@ func _physics_process(delta: float) -> void:
   var _current_headlight_energy := lerpf(headlight_left.light_energy, _target_headlight_energy, delta * 10)
   headlight_left.light_energy = _current_headlight_energy
   headlight_right.light_energy = _current_headlight_energy
+  # Adjust engine smoke level to reflect damage
+  var damage_ratio := current_hit_points / max_hit_points
+  engine_smoke_emitter.amount_ratio = 1.0 - damage_ratio
+  engine_smoke_emitter.transparency = damage_ratio
+  # Turn engine off if hit points are low
+  if current_hit_points <= 0:
+    ignition_on = false
+
   return
+
+
+func _on_body_entered(_body: Node) -> void:
+  if _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D:
+    if collision_audio_1.playing == false:
+      var _impact_force := (_previous_velocity - linear_velocity).length() * 0.1
+      collision_audio_1.volume_db = linear_to_db(clampf(_impact_force, 0.0, 1.0))
+      collision_audio_1.play()
+      current_hit_points -= _impact_force
 
 
 func respawn () -> void:

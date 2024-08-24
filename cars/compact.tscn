@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=40 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact.gd" id="1_pg53u"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_kvrte"]
@@ -16,6 +16,9 @@
 [ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="10_61kxu"]
 [ext_resource type="AudioStream" uid="uid://d2gr5emhyehgo" path="res://assets/sfx/tires_squal_loop.wav" id="15_rmw2m"]
 [ext_resource type="AudioStream" uid="uid://x2riq63vqy7j" path="res://assets/sfx/skid-loop.wav" id="16_v1p2m"]
+[ext_resource type="AudioStream" uid="uid://bw7d3mhbykib" path="res://assets/audio/Hanna-Barbera SFX/clash.wav" id="17_sa2so"]
+[ext_resource type="Texture2D" uid="uid://dmiaxbl8mrfpf" path="res://assets/materials/smoke_scale_curve.tres" id="18_gom66"]
+[ext_resource type="Material" uid="uid://bwi02sbjj4ipa" path="res://assets/materials/engine_smoke_material_3d.tres" id="19_qr57y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.2
@@ -151,6 +154,18 @@ emission_enabled = true
 emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 2.0
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qi8ui"]
+gravity = Vector3(0, 2, 0)
+scale_min = 0.01
+scale_curve = ExtResource("18_gom66")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ygiiw"]
+material = ExtResource("19_qr57y")
+radius = 0.3
+height = 0.6
+radial_segments = 16
+rings = 8
+
 [node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
 collision_mask = 83
@@ -161,6 +176,8 @@ center_of_mass = Vector3(0, 0, -0.1)
 freeze = true
 freeze_mode = 1
 continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 24
 script = ExtResource("1_pg53u")
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
@@ -185,7 +202,6 @@ front_torque_split = 1.0
 variable_torque_split = true
 front_variable_split = 0.5
 front_weight_distribution = 0.51
-center_of_gravity_height_offset = -0.1
 front_damping_ratio = 0.9
 front_bump_damp_multiplier = 1.5
 front_rebound_damp_multiplier = 0.667
@@ -194,9 +210,9 @@ rear_bump_damp_multiplier = 1.5
 rear_rebound_damp_multiplier = 0.667
 braking_grip_multiplier = 3.0
 coefficient_of_friction = {
-"Dirt": 1.2,
-"Grass": 1.2,
-"Road": 1.5
+"Dirt": 1.5,
+"Grass": 2.0,
+"Road": 2.5
 }
 lateral_grip_assist = {
 "Dirt": 0.0,
@@ -616,3 +632,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.011, 0, -0.128)
 gi_mode = 2
 mesh = SubResource("BoxMesh_6up4h")
 surface_material_override/0 = SubResource("StandardMaterial3D_ltwxu")
+
+[node name="AudioStreams" type="Node3D" parent="."]
+
+[node name="CollisionAudio1" type="AudioStreamPlayer3D" parent="AudioStreams"]
+stream = ExtResource("17_sa2so")
+max_polyphony = 16
+
+[node name="EngineSmoke" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+cast_shadow = 0
+amount = 10
+amount_ratio = 0.0
+lifetime = 2.0
+randomness = 0.5
+process_material = SubResource("ParticleProcessMaterial_qi8ui")
+draw_pass_1 = SubResource("SphereMesh_ygiiw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
