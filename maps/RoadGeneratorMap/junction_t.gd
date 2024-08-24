@@ -26,18 +26,24 @@ func _ready() -> void:
   # Skip animation player forward a few seconds
   $AnimationPlayer.seek(randf_range(0, 9))
 
-  path_entering_RP_001.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_1-2")
-  path_entering_RP_001.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_1-3")
-  $"TrafficPaths/TP_t_junction_3-1".next_traffic_paths.push_back(path_exiting_RP_001)
-  $"TrafficPaths/TP_t_junction_2-1".next_traffic_paths.push_back(path_exiting_RP_001)
-  path_entering_RP_002.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_2-1")
-  path_entering_RP_002.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_2-3")
-  $"TrafficPaths/TP_t_junction_3-2".next_traffic_paths.push_back(path_exiting_RP_002)
-  $"TrafficPaths/TP_t_junction_1-2".next_traffic_paths.push_back(path_exiting_RP_002)
-  path_entering_RP_003.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_3-1")
-  path_entering_RP_003.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_3-2")
-  $"TrafficPaths/TP_t_junction_1-3".next_traffic_paths.push_back(path_exiting_RP_003)
-  $"TrafficPaths/TP_t_junction_2-3".next_traffic_paths.push_back(path_exiting_RP_003)
+  if path_entering_RP_001:
+    path_entering_RP_001.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_1-2")
+    path_entering_RP_001.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_1-3")
+  if path_exiting_RP_001:
+    $"TrafficPaths/TP_t_junction_3-1".next_traffic_paths.push_back(path_exiting_RP_001)
+    $"TrafficPaths/TP_t_junction_2-1".next_traffic_paths.push_back(path_exiting_RP_001)
+  if path_entering_RP_002:
+    path_entering_RP_002.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_2-1")
+    path_entering_RP_002.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_2-3")
+  if path_exiting_RP_002:
+    $"TrafficPaths/TP_t_junction_3-2".next_traffic_paths.push_back(path_exiting_RP_002)
+    $"TrafficPaths/TP_t_junction_1-2".next_traffic_paths.push_back(path_exiting_RP_002)
+  if path_entering_RP_003:
+    path_entering_RP_003.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_3-1")
+    path_entering_RP_003.next_traffic_paths.push_back($"TrafficPaths/TP_t_junction_3-2")
+  if path_exiting_RP_003:
+    $"TrafficPaths/TP_t_junction_1-3".next_traffic_paths.push_back(path_exiting_RP_003)
+    $"TrafficPaths/TP_t_junction_2-3".next_traffic_paths.push_back(path_exiting_RP_003)
 
 
 func green_light_rp_1() -> void:

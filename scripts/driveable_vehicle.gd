@@ -34,7 +34,7 @@ var summed_interest_vector := Vector3.ZERO
 ## The group that steering & avoidance raycasts belong to, used for cleanup when stopping AI
 var steering_ray_group := "SteeringRayCast"
 ## The collision layers this vehicle's steering rays collide with
-var steering_ray_collision_masks: Array[int] = [1, 2, 5, 7, 8, 11]
+var steering_ray_collision_masks: Array[int] = [2, 5, 7, 8, 11]
 ## Show the debug label for this vehicle
 var show_debug_label := false
 @onready var debug_label: Label3D = $DebugLabel3D
@@ -143,6 +143,7 @@ func start_ai() -> void:
       var _new_raycast := RayCast3D.new()
       _new_raycast.add_to_group(steering_ray_group)
       _new_raycast.position = Vector3(0, 0, 0)
+      _new_raycast.collision_mask = 0
       for _mask_value in steering_ray_collision_masks: # 1235
         _new_raycast.set_collision_mask_value(_mask_value, true)
       var _angle := (i * (2 * PI)) / steering_ray_count
@@ -154,6 +155,7 @@ func start_ai() -> void:
       var _new_raycast := RayCast3D.new()
       _new_raycast.add_to_group(steering_ray_group)
       _new_raycast.position = Vector3.ZERO
+      _new_raycast.collision_mask = 0
       for _mask_value in steering_ray_collision_masks:
         _new_raycast.set_collision_mask_value(_mask_value, true)
       var _angle := i * antenna_angle
