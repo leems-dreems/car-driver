@@ -8,8 +8,9 @@ var is_being_driven := false
 var is_ai_on := false
 var waiting_to_respawn := false
 ## Damage this vehicle can take before setting on fire and exploding
-var max_hit_points := 20.0
+var max_hit_points := 5.0
 var current_hit_points: float
+var has_caught_fire := false
 ## Velocity as of the last physics tick
 var _previous_velocity: Vector3 = Vector3.ZERO
 ## The number of RayCast3Ds that this vehicle uses for close avoidance
@@ -60,6 +61,10 @@ var show_debug_label := false
 @onready var collision_audio_1: AudioStreamPlayer3D = $AudioStreams/CollisionAudio1
 # Particle emitters
 @onready var engine_smoke_emitter: GPUParticles3D = $EngineSmoke
+@onready var engine_sparks_emitter: GPUParticles3D = $Sparks
+@onready var engine_fire_emitter: GPUParticles3D = $Fire
+# Explosion
+@onready var explosion: Explosion = $Explosion
 
 
 func _ready () -> void:
@@ -120,10 +125,16 @@ func _physics_process(delta: float) -> void:
   var damage_ratio := current_hit_points / max_hit_points
   engine_smoke_emitter.amount_ratio = 1.0 - damage_ratio
   engine_smoke_emitter.transparency = damage_ratio
-  # Turn engine off if hit points are low
+  # Turn engine off & catch fire if hit points are low
   if current_hit_points <= 0:
     ignition_on = false
-
+    if not engine_fire_emitter.emitting and not has_caught_fire:
+      has_caught_fire = true
+      engine_sparks_emitter.emitting = true
+      engine_fire_emitter.emitting = true
+      engine_fire_emitter.finished.connect(func():
+        explode()
+      )
   return
 
 
@@ -134,10 +145,22 @@ func _on_body_entered(_body: Node) -> void:
       collision_audio_1.volume_db = linear_to_db(clampf(_impact_force, 0.0, 1.0))
       collision_audio_1.play()
       current_hit_points -= _impact_force
+  return
 
 
-func respawn () -> void:
+func respawn() -> void:
   waiting_to_respawn = true
+  return
+
+
+func explode() -> void:
+  explosion.top_level = true
+  explosion.start_explosion()
+  apply_burnt_material()
+  await get_tree().create_timer(5.0).timeout
+  queue_free()
+  return
+
 
 ## Freeze the car, as well as the various bodies attached to it
 func freeze_bodies() -> void:
@@ -278,3 +301,7 @@ func set_summed_interest_vector() -> void:
 ## Get the angle difference on the Y axis between the car's rotation and the interest vector
 func get_interest_angle() -> float:
   return Vector3.FORWARD.signed_angle_to(summed_interest_vector, Vector3.UP)
+
+## Override to apply a different material when the vehicle has exploded
+func apply_burnt_material() -> void:
+  pass

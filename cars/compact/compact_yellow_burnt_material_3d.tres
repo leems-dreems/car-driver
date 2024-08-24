@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bt442lx0ew70"]
+
+[ext_resource type="Texture2D" uid="uid://c8hhktsht5gmi" path="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Car 03/car3_yellow-burnt.png" id="1_4gqsu"]
+
+[resource]
+albedo_texture = ExtResource("1_4gqsu")

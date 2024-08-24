@@ -3,24 +3,46 @@ extends DriveableVehicle
 var skins := [
   {
     "skin_name": "green",
-    "body_mesh": preload("res://cars/sedan/sedan_green_body.obj"),
-    "door_mesh_FR": preload("res://cars/sedan/sedan_green_door_FR.obj"),
-    "door_mesh_FL": preload("res://cars/sedan/sedan_green_door_FL.obj")
+    "material": preload("res://cars/sedan/sedan_green_material_3d.tres"),
+    "burnt_material": preload("res://cars/sedan/sedan_green_burnt_material_3d.tres")
   },
   {
     "skin_name": "red",
-    "body_mesh": preload("res://cars/sedan/sedan_red_body.obj"),
-    "door_mesh_FR": preload("res://cars/sedan/sedan_red_door_FR.obj"),
-    "door_mesh_FL": preload("res://cars/sedan/sedan_red_door_FL.obj")
+    "material": preload("res://cars/sedan/sedan_red_material_3d.tres"),
+    "burnt_material": preload("res://cars/sedan/sedan_red_burnt_material_3d.tres")
+  },
+  {
+    "skin_name": "grey",
+    "material": preload("res://cars/sedan/sedan_grey_material_3d.tres"),
+    "burnt_material": preload("res://cars/sedan/sedan_grey_burnt_material_3d.tres")
   }
 ]
+
+var burnt_material: StandardMaterial3D
 
 
 func _ready() -> void:
   var _skin : Dictionary = skins.pick_random()
-  $body.mesh = _skin.body_mesh
-  $ColliderBits/OpenDoorRight/MeshInstance3D.mesh = _skin.door_mesh_FR
-  $ColliderBits/ShutDoorRight.mesh = _skin.door_mesh_FR
-  $ColliderBits/OpenDoorLeft/MeshInstance3D.mesh = _skin.door_mesh_FL
-  $ColliderBits/ShutDoorLeft.mesh = _skin.door_mesh_FL
+  burnt_material = _skin.burnt_material
+  $body.set_surface_override_material(0, _skin.material)
+  $ColliderBits/ShutDoorLeft.set_surface_override_material(0, _skin.material)
+  $ColliderBits/ShutDoorLeft.set_surface_override_material(1, _skin.material)
+  $ColliderBits/OpenDoorLeft/MeshInstance3D.set_surface_override_material(0, _skin.material)
+  $ColliderBits/OpenDoorLeft/MeshInstance3D.set_surface_override_material(1, _skin.material)
+  $ColliderBits/ShutDoorRight.set_surface_override_material(0, _skin.material)
+  $ColliderBits/ShutDoorRight.set_surface_override_material(1, _skin.material)
+  $ColliderBits/OpenDoorRight/MeshInstance3D.set_surface_override_material(0, _skin.material)
+  $ColliderBits/OpenDoorRight/MeshInstance3D.set_surface_override_material(1, _skin.material)
   super()
+
+
+func apply_burnt_material() -> void:
+  $body.set_surface_override_material(0, burnt_material)
+  $ColliderBits/ShutDoorLeft.set_surface_override_material(0, burnt_material)
+  $ColliderBits/ShutDoorLeft.set_surface_override_material(1, burnt_material)
+  $ColliderBits/OpenDoorLeft/MeshInstance3D.set_surface_override_material(0, burnt_material)
+  $ColliderBits/OpenDoorLeft/MeshInstance3D.set_surface_override_material(1, burnt_material)
+  $ColliderBits/ShutDoorRight.set_surface_override_material(0, burnt_material)
+  $ColliderBits/ShutDoorRight.set_surface_override_material(1, burnt_material)
+  $ColliderBits/OpenDoorRight/MeshInstance3D.set_surface_override_material(0, burnt_material)
+  $ColliderBits/OpenDoorRight/MeshInstance3D.set_surface_override_material(1, burnt_material)

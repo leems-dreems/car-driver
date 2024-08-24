@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://cvsdhdj7875dx"]
+[gd_scene load_steps=50 format=4 uid="uid://cvsdhdj7875dx"]
 
 [ext_resource type="Script" path="res://cars/sedan.gd" id="1_srhgv"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_o2fgs"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://cfqlem3v5t0y6" path="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Sound effects/Car_Engine_Loop.ogg" id="5_frqug"]
 [ext_resource type="ArrayMesh" uid="uid://checdapcbvshx" path="res://cars/sedan/sedan_red_body.obj" id="5_qdyed"]
 [ext_resource type="ArrayMesh" uid="uid://d4aps6rif410g" path="res://cars/sedan/sedan_red_door_FL.obj" id="6_6o4iy"]
+[ext_resource type="Material" uid="uid://dav6lcuv0frnj" path="res://cars/sedan/sedan_red_material_3d.tres" id="7_k5wcl"]
 [ext_resource type="PhysicsMaterial" uid="uid://bgc5lkrsa84nb" path="res://cars/car_door_physics_material.tres" id="7_y85en"]
 [ext_resource type="Script" path="res://scripts/car_door.gd" id="8_wns8c"]
 [ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="9_pju2v"]
@@ -19,6 +20,8 @@
 [ext_resource type="AudioStream" uid="uid://bw7d3mhbykib" path="res://assets/audio/Hanna-Barbera SFX/clash.wav" id="17_l4ecl"]
 [ext_resource type="Texture2D" uid="uid://dmiaxbl8mrfpf" path="res://assets/materials/smoke_scale_curve.tres" id="18_k56vm"]
 [ext_resource type="Material" uid="uid://bwi02sbjj4ipa" path="res://assets/materials/engine_smoke_material_3d.tres" id="19_pla2v"]
+[ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="20_50l6o"]
+[ext_resource type="PackedScene" uid="uid://qj5wm2wpuawj" path="res://effects/explosion.tscn" id="21_h67jm"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.2
@@ -165,6 +168,36 @@ height = 0.6
 radial_segments = 16
 rings = 8
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rbbef"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="Gradient" id="Gradient_r84rk"]
+offsets = PackedFloat32Array(0, 0.484582, 0.819383, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.932249, 0.891119, 2.31028e-06, 1, 0.920752, 0.355072, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8vd53"]
+gradient = SubResource("Gradient_r84rk")
+
+[sub_resource type="Curve" id="Curve_b0xvc"]
+_data = [Vector2(0.0392157, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.84081, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_keco3"]
+curve = SubResource("Curve_b0xvc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fhj64"]
+direction = Vector3(0, 1, 0)
+spread = 75.0
+initial_velocity_min = 8.0
+initial_velocity_max = 12.0
+damping_min = 5.0
+damping_max = 10.0
+color_ramp = SubResource("GradientTexture1D_8vd53")
+emission_curve = SubResource("CurveTexture_keco3")
+
+[sub_resource type="BoxMesh" id="BoxMesh_c0nq2"]
+size = Vector3(0.1, 0.1, 0.1)
+
 [node name="SedanCar" type="RigidBody3D" node_paths=PackedStringArray("front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
 collision_mask = 83
@@ -227,6 +260,7 @@ vehicle = NodePath("..")
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
 mesh = ExtResource("5_qdyed")
 skeleton = NodePath("")
+surface_material_override/0 = ExtResource("7_k5wcl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
@@ -249,6 +283,7 @@ motor/target_velocity = -3.14159
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
 mesh = ExtResource("6_6o4iy")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("7_k5wcl")
 
 [node name="LeftDoorBodyLatch" type="Area3D" parent="ColliderBits"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.061, 0.877, 1.304)
@@ -279,6 +314,7 @@ body_latch = NodePath("../LeftDoorBodyLatch")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/OpenDoorLeft"]
 mesh = ExtResource("6_6o4iy")
+surface_material_override/0 = ExtResource("7_k5wcl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/OpenDoorLeft"]
 shape = SubResource("ConvexPolygonShape3D_u4gt3")
@@ -314,6 +350,7 @@ motor/target_velocity = 3.14159
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
 mesh = ExtResource("11_w6uj4")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("7_k5wcl")
 
 [node name="RightDoorBodyLatch" type="Area3D" parent="ColliderBits"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.061, 0.877, 1.304)
@@ -344,6 +381,7 @@ body_latch = NodePath("../RightDoorBodyLatch")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/OpenDoorRight"]
 mesh = ExtResource("11_w6uj4")
+surface_material_override/0 = ExtResource("7_k5wcl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/OpenDoorRight"]
 shape = SubResource("ConvexPolygonShape3D_5mqv6")
@@ -630,5 +668,30 @@ lifetime = 2.0
 randomness = 0.5
 process_material = SubResource("ParticleProcessMaterial_60g1j")
 draw_pass_1 = SubResource("SphereMesh_l6ohs")
+
+[node name="Sparks" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+material_override = SubResource("StandardMaterial3D_rbbef")
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.78
+randomness = 0.35
+visibility_aabb = AABB(-4.84702, -4, -4, 9.7204, 8, 8)
+process_material = SubResource("ParticleProcessMaterial_fhj64")
+draw_pass_1 = SubResource("BoxMesh_c0nq2")
+
+[node name="Fire" parent="." instance=ExtResource("20_50l6o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+emitting = false
+amount = 50
+lifetime = 5.0
+one_shot = true
+
+[node name="Explosion" parent="." instance=ExtResource("21_h67jm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+explosion_scale = 15.0
+explosion_delay = 0.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

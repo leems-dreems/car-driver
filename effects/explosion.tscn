@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://qj5wm2wpuawj"]
+
+[ext_resource type="Script" path="res://effects/explosion.gd" id="1_dmlp3"]
+[ext_resource type="AudioStream" uid="uid://4icv5wfjnole" path="res://assets/audio/Hanna-Barbera SFX/bomb_1.wav" id="2_byo7q"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_44s0b"]
+radius = 1.0
+height = 2.0
+radial_segments = 16
+rings = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dy22p"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.164706)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yj2xt"]
+radius = 1.0
+
+[node name="Explosion" type="Node3D"]
+script = ExtResource("1_dmlp3")
+
+[node name="ExplosionArea" type="Area3D" parent="."]
+collision_layer = 1048576
+collision_mask = 2490450
+monitoring = false
+monitorable = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ExplosionArea"]
+mesh = SubResource("SphereMesh_44s0b")
+surface_material_override/0 = SubResource("StandardMaterial3D_dy22p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExplosionArea"]
+shape = SubResource("SphereShape3D_yj2xt")
+
+[node name="ExplosionAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_byo7q")
