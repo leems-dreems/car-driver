@@ -60,7 +60,8 @@ var show_debug_label := false
 # Audio streams
 @onready var collision_audio_1: AudioStreamPlayer3D = $AudioStreams/CollisionAudio1
 # Particle emitters
-@onready var engine_smoke_emitter: GPUParticles3D = $EngineSmoke
+@onready var engine_black_smoke_emitter: GPUParticles3D = $EngineSmokeBlack
+@onready var engine_white_smoke_emitter: GPUParticles3D = $EngineSmokeWhite
 @onready var engine_sparks_emitter: GPUParticles3D = $Sparks
 @onready var engine_fire_emitter: GPUParticles3D = $Fire
 # Explosion
@@ -98,21 +99,24 @@ func _physics_process(delta: float) -> void:
   # Record current velocity, to refer to when processing collision signals
   _previous_velocity = Vector3(linear_velocity)
   # Update energy of various lights
-  var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
-  brake_light_left.light_energy = _current_brake_light_energy
+  if is_being_driven:
+    var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
+    brake_light_left.light_energy = _current_brake_light_energy
+    brake_light_right.light_energy = _current_brake_light_energy
   brake_light_left_mesh.transparency = 1.0 - brake_amount
-  brake_light_right.light_energy = _current_brake_light_energy
   brake_light_right_mesh.transparency = 1.0 - brake_amount
   if current_gear == -1:
-    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, reverse_light_energy, delta * 10)
-    reverse_light_left.light_energy = _current_reverse_light_energy
-    reverse_light_right.light_energy = _current_reverse_light_energy
+    if is_being_driven:
+      var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, reverse_light_energy, delta * 10)
+      reverse_light_left.light_energy = _current_reverse_light_energy
+      reverse_light_right.light_energy = _current_reverse_light_energy
     reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 0.0, delta * 10)
     reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 0.0, delta * 10)
   else:
-    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 10)
-    reverse_light_left.light_energy = _current_reverse_light_energy
-    reverse_light_right.light_energy = _current_reverse_light_energy
+    if is_being_driven:
+      var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 10)
+      reverse_light_left.light_energy = _current_reverse_light_energy
+      reverse_light_right.light_energy = _current_reverse_light_energy
     reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 1.0, delta * 10)
     reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 1.0, delta * 10)
   var _target_headlight_energy := 0.0
@@ -122,9 +126,13 @@ func _physics_process(delta: float) -> void:
   headlight_left.light_energy = _current_headlight_energy
   headlight_right.light_energy = _current_headlight_energy
   # Adjust engine smoke level to reflect damage
-  var damage_ratio := current_hit_points / max_hit_points
-  engine_smoke_emitter.amount_ratio = 1.0 - damage_ratio
-  engine_smoke_emitter.transparency = damage_ratio
+  var damage_ratio := 1.0 - (current_hit_points / max_hit_points)
+  if damage_ratio > 0.1:
+    engine_white_smoke_emitter.amount_ratio = damage_ratio
+  if damage_ratio > 0.5:
+    engine_black_smoke_emitter.amount_ratio = damage_ratio
+  if damage_ratio > 0.75:
+    engine_white_smoke_emitter.amount_ratio = 0
   # Turn engine off & catch fire if hit points are low
   if current_hit_points <= 0:
     ignition_on = false
@@ -132,9 +140,10 @@ func _physics_process(delta: float) -> void:
       has_caught_fire = true
       engine_sparks_emitter.emitting = true
       engine_fire_emitter.emitting = true
-      engine_fire_emitter.finished.connect(func():
-        explode()
-      )
+      await get_tree().create_timer(5.0).timeout
+      engine_sparks_emitter.emitting = false
+      engine_fire_emitter.emitting = false
+      explode()
   return
 
 
@@ -157,7 +166,7 @@ func explode() -> void:
   explosion.top_level = true
   explosion.start_explosion()
   apply_burnt_material()
-  await get_tree().create_timer(5.0).timeout
+  await get_tree().create_timer(7.0).timeout
   queue_free()
   return
 

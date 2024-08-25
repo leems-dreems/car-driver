@@ -11,6 +11,9 @@ signal finished
 @export var damage_multiplier := 0.1
 @onready var explosion_area : Area3D = $ExplosionArea
 @onready var explosion_audio : AudioStreamPlayer3D = $ExplosionAudio
+@onready var debris_emitter := $DebrisEmitter
+@onready var fire_emitter := $FireEmitter
+@onready var smoke_emitter := $SmokeEmitter
 ## RigidBodies get given an initial impulse when hit by an explosion, and then have a force applied
 ## each physics step after that. We track those bodies here so we only apply that impulse once.
 var impulsed_bodies : Array[RigidBody3D] = []
@@ -62,6 +65,9 @@ func start_explosion() -> void:
 #  Engine.time_scale = 0.02
   explosion_area.set_deferred("monitoring", true)
   explosion_area.set_deferred("monitorable", true)
+  debris_emitter.emitting = true
+  fire_emitter.emitting = true
+  smoke_emitter.emitting = true
   var explosion_tween := create_tween()
   explosion_tween.tween_property(explosion_area, "scale", Vector3(explosion_scale, explosion_scale, explosion_scale), explosion_duration)
   explosion_tween.tween_callback(stop_explosion)
@@ -71,6 +77,9 @@ func start_explosion() -> void:
 
 func stop_explosion() -> void:
 #  Engine.time_scale = 1.0
+  debris_emitter.emitting = false
+  fire_emitter.emitting = false
+  smoke_emitter.emitting = false
   explosion_area.set_deferred("monitoring", false)
   explosion_area.set_deferred("monitorable", false)
   explosion_area.scale = Vector3(0.01, 0.01, 0.01)
