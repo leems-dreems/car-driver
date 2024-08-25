@@ -208,18 +208,23 @@ rear_right_wheel = NodePath("WheelRearRight")
 steering_slip_assist = 10.0
 countersteer_assist = 0.2
 front_brake_bias = 0.75
-traction_control_max_slip = 4.0
+traction_control_max_slip = 0.01
 enable_stability = false
-max_torque = 700.0
+max_torque = 500.0
+max_rpm = 5000.0
 torque_curve = ExtResource("2_o2fgs")
 shift_time = 0.2
+front_torque_split = -1.0
 vehicle_mass = 2000.0
 front_weight_distribution = 0.55
+center_of_gravity_height_offset = 0.0
+front_arb_ratio = 0.75
+rear_arb_ratio = 0.75
 braking_grip_multiplier = 5.0
 coefficient_of_friction = {
-"Dirt": 1.5,
-"Grass": 2.0,
-"Road": 2.5
+"Dirt": 1.0,
+"Grass": 1.5,
+"Road": 2.0
 }
 lateral_grip_assist = {
 "Dirt": 0.0,
@@ -232,9 +237,7 @@ longitudinal_grip_ratio = {
 "Road": 1.0
 }
 front_tire_radius = 0.45
-front_tire_width = 280.0
 rear_tire_radius = 0.45
-rear_tire_width = 280.0
 
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("3_km4wf")]
 vehicle = NodePath("..")
@@ -409,7 +412,7 @@ shape = SubResource("ConcavePolygonShape3D_100sx")
 disabled = true
 
 [node name="WheelFrontLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, -2.25368)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, -0.1, -2.25368)
 script = ExtResource("13_fnewd")
 wheel_node = NodePath("FrontLeftWheel")
 squeal_audio = NodePath("SquealAudio")
@@ -432,7 +435,7 @@ stream = ExtResource("16_2hwg3")
 unit_size = 3.0
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, -2.25368)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, -0.1, -2.25368)
 script = ExtResource("13_fnewd")
 wheel_node = NodePath("FrontRightWheel")
 squeal_audio = NodePath("SquealAudio")
@@ -456,7 +459,7 @@ stream = ExtResource("16_2hwg3")
 unit_size = 3.0
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, 1.83657)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, -0.1, 1.83657)
 script = ExtResource("13_fnewd")
 wheel_node = NodePath("RearLeftWheel")
 squeal_audio = NodePath("SquealAudio")
@@ -480,7 +483,7 @@ stream = ExtResource("16_2hwg3")
 unit_size = 3.0
 
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, 1.83657)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, -0.1, 1.83657)
 script = ExtResource("13_fnewd")
 wheel_node = NodePath("RearRightWheel")
 squeal_audio = NodePath("SquealAudio")

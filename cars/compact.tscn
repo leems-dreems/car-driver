@@ -211,12 +211,9 @@ countersteer_assist = 0.2
 front_brake_bias = 0.3
 traction_control_max_slip = 16.0
 enable_stability = false
-stability_yaw_strength = 0.0
-stability_yaw_ground_multiplier = 0.0
-stability_upright_spring = 0.0
-stability_upright_damping = 0.0
-max_torque = 900.0
-max_rpm = 5000.0
+stability_yaw_strength = 1.0
+max_torque = 500.0
+idle_rpm = 1200.0
 torque_curve = ExtResource("2_kvrte")
 final_drive = 4.2
 shift_time = 0.2
@@ -225,17 +222,16 @@ front_torque_split = 1.0
 variable_torque_split = true
 front_variable_split = 0.5
 front_weight_distribution = 0.51
+center_of_gravity_height_offset = 0.0
 front_damping_ratio = 0.9
-front_bump_damp_multiplier = 1.5
-front_rebound_damp_multiplier = 0.667
 rear_damping_ratio = 0.9
 rear_bump_damp_multiplier = 1.5
 rear_rebound_damp_multiplier = 0.667
 braking_grip_multiplier = 3.0
 coefficient_of_friction = {
-"Dirt": 1.5,
-"Grass": 2.0,
-"Road": 2.5
+"Dirt": 1.0,
+"Grass": 1.5,
+"Road": 2.0
 }
 lateral_grip_assist = {
 "Dirt": 0.0,

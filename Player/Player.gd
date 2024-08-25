@@ -122,6 +122,9 @@ func _physics_process(delta: float) -> void:
         if useable_target.start_mission:
           current_mission = useable_target.get_parent()
         useable_target.trigger(self)
+      elif useable_target is VehicleDispenserButton:
+        var dispenser: VehicleDispenser = useable_target.get_parent()
+        dispenser.spawn_vehicle(useable_target.vehicle_type)
 
     velocity.y += _gravity * delta
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cym6l6knpf4fk"]
+[gd_scene load_steps=42 format=3 uid="uid://cym6l6knpf4fk"]
 
 [ext_resource type="ArrayMesh" uid="uid://crfeja5v21eb" path="res://assets/maps/small-island.obj" id="1_vr5hg"]
 [ext_resource type="Material" uid="uid://ch2c6lk1pa5iw" path="res://maps/RoadGeneratorMap/grass_material.tres" id="2_qdwts"]
@@ -22,6 +22,8 @@
 [ext_resource type="PackedScene" uid="uid://dnhe41455c4fi" path="res://collidables/springy_trash_bin_square.tscn" id="19_vek3d"]
 [ext_resource type="Script" path="res://traffic/traffic_manager.gd" id="21_p1sui"]
 [ext_resource type="PackedScene" uid="uid://ba0xtl41qmm3s" path="res://maps/KayKitCity/props/traffic_light_a.tscn" id="22_m1lh7"]
+[ext_resource type="Script" path="res://maps/SmallIslandMap/vehicle_dispenser.gd" id="23_q0egl"]
+[ext_resource type="Script" path="res://maps/SmallIslandMap/dispenser_button.gd" id="24_xlwly"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vin4a"]
 friction = 0.1
@@ -113,14 +115,17 @@ _data = {
 }
 point_count = 7
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_spxxv"]
+albedo_color = Color(0, 0, 0, 1)
+
 [node name="SmallIslandMap" type="Node3D"]
 
 [node name="Terrain" type="Node3D" parent="."]
 
 [node name="GasStationFoundation" type="CSGBox3D" parent="Terrain" groups=["Road"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 9.9, -61.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 9.9, -57.5)
 use_collision = true
-size = Vector3(112, 10, 71)
+size = Vector3(112, 10, 79)
 material = ExtResource("5_s1vds")
 
 [node name="Sea" type="StaticBody3D" parent="Terrain"]
@@ -767,3 +772,43 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -92.58
 
 [node name="EastTJunctionTrafficLightA3" parent="TrafficLights" instance=ExtResource("22_m1lh7")]
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -92.5833, 15.3, -58.25)
+
+[node name="VehicleDispenser" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 17.9, -28)
+script = ExtResource("23_q0egl")
+show_debug_label = true
+
+[node name="DispenserBox" type="CSGBox3D" parent="VehicleDispenser"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+use_collision = true
+size = Vector3(5, 6, 4)
+
+[node name="DispenserButtonSedan" type="CSGBox3D" parent="VehicleDispenser"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.5, -1.6)
+material_override = SubResource("StandardMaterial3D_spxxv")
+use_collision = true
+collision_layer = 9
+size = Vector3(4, 1, 1)
+script = ExtResource("24_xlwly")
+vehicle_type = 1
+
+[node name="Label3D" type="Label3D" parent="VehicleDispenser/DispenserButtonSedan"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.51)
+text = "Sedan"
+
+[node name="DispenserButtonCompact" type="CSGBox3D" parent="VehicleDispenser"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -2, -1.6)
+material_override = SubResource("StandardMaterial3D_spxxv")
+use_collision = true
+collision_layer = 9
+size = Vector3(4, 1, 1)
+script = ExtResource("24_xlwly")
+
+[node name="Label3D" type="Label3D" parent="VehicleDispenser/DispenserButtonCompact"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.51)
+text = "Compact"
+
+[node name="VehiclePlatform" type="CSGBox3D" parent="VehicleDispenser"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -2.95, -3)
+use_collision = true
+size = Vector3(4, 0.1, 10)
