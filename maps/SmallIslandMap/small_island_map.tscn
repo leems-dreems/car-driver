@@ -1,5 +1,6 @@
-[gd_scene load_steps=42 format=3 uid="uid://cym6l6knpf4fk"]
+[gd_scene load_steps=44 format=3 uid="uid://cym6l6knpf4fk"]
 
+[ext_resource type="Script" path="res://maps/SmallIslandMap/small_island_map.gd" id="1_1bgpi"]
 [ext_resource type="ArrayMesh" uid="uid://crfeja5v21eb" path="res://assets/maps/small-island.obj" id="1_vr5hg"]
 [ext_resource type="Material" uid="uid://ch2c6lk1pa5iw" path="res://maps/RoadGeneratorMap/grass_material.tres" id="2_qdwts"]
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="3_5g7p7"]
@@ -7,6 +8,7 @@
 [ext_resource type="Material" uid="uid://dpf5o0j7adasj" path="res://maps/SmallIslandMap/sea_material_3d.tres" id="3_j88u5"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="4_o4gjc"]
 [ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="5_b12oo"]
+[ext_resource type="PhysicsMaterial" uid="uid://glnpx028ehvi" path="res://assets/materials/grass_physics_material.tres" id="5_nljd6"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="5_s1vds"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="6_c10gt"]
 [ext_resource type="PackedScene" uid="uid://cvsdhdj7875dx" path="res://cars/sedan.tscn" id="7_tthab"]
@@ -119,6 +121,7 @@ point_count = 7
 albedo_color = Color(0, 0, 0, 1)
 
 [node name="SmallIslandMap" type="Node3D"]
+script = ExtResource("1_1bgpi")
 
 [node name="Terrain" type="Node3D" parent="."]
 
@@ -142,6 +145,7 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_ikx87")
 
 [node name="Island" type="StaticBody3D" parent="Terrain" groups=["Grass"]]
+physics_material_override = ExtResource("5_nljd6")
 
 [node name="IslandMesh" type="MeshInstance3D" parent="Terrain/Island"]
 mesh = ExtResource("1_vr5hg")
@@ -152,10 +156,10 @@ surface_material_override/0 = ExtResource("2_qdwts")
 shape = SubResource("ConcavePolygonShape3D_2qr3q")
 
 [node name="CompactCar" parent="." instance=ExtResource("3_5g7p7")]
-transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 12, 26, -50)
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 12, 16, -50)
 
 [node name="SedanCar" parent="." instance=ExtResource("7_tthab")]
-transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0, 23, -40)
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0, 16, -40)
 
 [node name="Player" parent="." instance=ExtResource("4_o4gjc")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 17, -53)
@@ -809,6 +813,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 text = "Compact"
 
 [node name="VehiclePlatform" type="CSGBox3D" parent="VehicleDispenser"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -2.95, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -2.95, 0)
 use_collision = true
 size = Vector3(4, 0.1, 10)

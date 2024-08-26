@@ -27,6 +27,7 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.2
+rough = true
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nkjoq"]
 points = PackedVector3Array(1.23162, 1.19937, 1.21057, 1.23162, 0.868014, 1.21057, 1.23162, 1.19937, -2.02294, 1.15157, 1.43686, 1.21057, 1.15157, 1.21406, 3.432, 1.21378, 0.779544, 3.5535, 1.17182, 0.351562, 1.21057, 1.23162, 0.868014, -1.39611, 1.17906, 0.47235, 3.52205, 1.23162, 1.01655, -1.82067, 1.22969, 0.973459, -2.05725, 1.21378, 0.81121, -3.55392, 1.15157, 1.28196, -3.44671, 1.15157, 1.43686, -1.98148, 0.874768, 2.01909, 0.410054, -0.000241041, 1.21406, 3.52777, -0.000241041, 0.779544, 3.66429, -0.000241041, 2.01909, 0.515121, 1.16724, 0.351562, 1.49146, 1.17182, 0.351562, -1.16524, -0.000241041, 0.47235, 3.62784, 1.17906, 0.550047, -3.52319, -0.000241041, 0.81121, -3.63755, -0.000241041, 1.28196, -3.50175, -0.000241041, 2.01909, -1.41183, 0.874768, 2.01909, -1.35036, -1.15181, 1.21406, 3.432, -1.21402, 0.779544, 3.5535, -1.17954, 0.47235, 3.52205, -0.87501, 2.01909, 0.410054, -1.16748, 0.351562, 1.49146, -1.17206, 0.351562, -1.16524, -0.000241041, 0.550047, -3.60181, -1.17954, 0.550047, -3.52319, -1.21402, 0.81121, -3.55392, -1.15181, 1.28196, -3.44671, -0.87501, 2.01909, -1.35036, -1.15181, 1.43686, 1.21057, -1.23162, 1.19937, 1.21057, -1.23162, 0.868014, 1.21057, -1.17206, 0.351562, 1.21057, -1.22053, 0.770567, -1.31606, -1.23162, 0.868014, -1.39611, -1.23162, 1.19937, -2.02294, -1.22993, 0.973459, -2.05725, -1.15181, 1.43686, -1.98148, -1.23162, 1.01655, -1.82067)
@@ -205,26 +206,33 @@ front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
 rear_left_wheel = NodePath("WheelRearLeft")
 rear_right_wheel = NodePath("WheelRearRight")
+steering_speed_decay = 0.1
 steering_slip_assist = 10.0
-countersteer_assist = 0.2
-front_brake_bias = 0.75
-traction_control_max_slip = 0.01
+countersteer_assist = 0.3
+brake_force_multiplier = 2.0
+front_brake_bias = 0.25
 enable_stability = false
-max_torque = 500.0
-max_rpm = 5000.0
+max_torque = 400.0
+max_rpm = 6000.0
 torque_curve = ExtResource("2_o2fgs")
+clutch_out_rpm = 2000.0
+max_clutch_torque_ratio = 1.0
 shift_time = 0.2
 front_torque_split = -1.0
+rear_locking_differential_engage_torque = 1000.0
 vehicle_mass = 2000.0
-front_weight_distribution = 0.55
+front_weight_distribution = 0.51
 center_of_gravity_height_offset = 0.0
-front_arb_ratio = 0.75
-rear_arb_ratio = 0.75
-braking_grip_multiplier = 5.0
+front_damping_ratio = 0.8
+front_bump_stop_multiplier = 0.5
+rear_damping_ratio = 0.8
+rear_bump_stop_multiplier = 0.5
+braking_grip_multiplier = 3.0
+wheel_to_body_torque_multiplier = 0.1
 coefficient_of_friction = {
 "Dirt": 1.0,
-"Grass": 1.5,
-"Road": 2.0
+"Grass": 1.25,
+"Road": 1.5
 }
 lateral_grip_assist = {
 "Dirt": 0.0,
@@ -232,21 +240,22 @@ lateral_grip_assist = {
 "Road": 0.0
 }
 longitudinal_grip_ratio = {
-"Dirt": 1.0,
-"Grass": 1.0,
-"Road": 1.0
+"Dirt": 2.0,
+"Grass": 2.0,
+"Road": 2.0
 }
 front_tire_radius = 0.45
+front_wheel_mass = 25.0
 rear_tire_radius = 0.45
+rear_wheel_mass = 25.0
 
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("3_km4wf")]
 vehicle = NodePath("..")
-longitudinal_slip_threshold = 0.9
 lateral_slip_threshold = 0.9
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_ati4s")]
 stream = ExtResource("5_frqug")
-unit_size = 2.0
+unit_size = 4.0
 vehicle = NodePath("..")
 
 [node name="body" type="MeshInstance3D" parent="."]
@@ -412,7 +421,7 @@ shape = SubResource("ConcavePolygonShape3D_100sx")
 disabled = true
 
 [node name="WheelFrontLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, -0.1, -2.25368)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -2.25368)
 script = ExtResource("13_fnewd")
 wheel_node = NodePath("FrontLeftWheel")
 squeal_audio = NodePath("SquealAudio")
@@ -427,7 +436,8 @@ skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
 stream = ExtResource("15_og8l0")
-unit_size = 3.0
+unit_size = 2.0
+max_db = -4.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
@@ -435,7 +445,7 @@ stream = ExtResource("16_2hwg3")
 unit_size = 3.0
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, -0.1, -2.25368)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2.25368)
 script = ExtResource("13_fnewd")
 wheel_node = NodePath("FrontRightWheel")
 squeal_audio = NodePath("SquealAudio")
@@ -450,7 +460,8 @@ skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
 stream = ExtResource("15_og8l0")
-unit_size = 3.0
+unit_size = 2.0
+max_db = -4.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
@@ -459,7 +470,7 @@ stream = ExtResource("16_2hwg3")
 unit_size = 3.0
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, -0.1, 1.83657)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1.83657)
 script = ExtResource("13_fnewd")
 wheel_node = NodePath("RearLeftWheel")
 squeal_audio = NodePath("SquealAudio")
@@ -474,7 +485,8 @@ skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
 stream = ExtResource("15_og8l0")
-unit_size = 3.0
+unit_size = 2.0
+max_db = -4.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
@@ -483,7 +495,7 @@ stream = ExtResource("16_2hwg3")
 unit_size = 3.0
 
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, -0.1, 1.83657)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1.83657)
 script = ExtResource("13_fnewd")
 wheel_node = NodePath("RearRightWheel")
 squeal_audio = NodePath("SquealAudio")
@@ -498,7 +510,8 @@ skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
 stream = ExtResource("15_og8l0")
-unit_size = 3.0
+unit_size = 2.0
+max_db = -4.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
@@ -555,12 +568,12 @@ collision_mask = 0
 shape = SubResource("SphereShape3D_sp4ri")
 
 [node name="DebugLabel3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 visible = false
 billboard = 1
 text = "Test"
 font = SubResource("SystemFont_ylexk")
-font_size = 128
+font_size = 72
 
 [node name="HeadlightRight" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.77, 0.45, -3.65404)

@@ -121,7 +121,7 @@ func set_inputs() -> void:
           vehicle.brake_input = 0.0
           vehicle.handbrake_input = 0.0
         else:
-          vehicle.throttle_input = clampf(vehicle.speed / target_speed, 0.5, 1.0)
+          vehicle.throttle_input = 1.0 - clampf(vehicle.speed / target_speed, 0.5, 1.0)
           vehicle.brake_input = 0.0
           vehicle.handbrake_input = 0.0
       elif vehicle.speed > target_speed * 1.2: # Our speed is higher than the target speed

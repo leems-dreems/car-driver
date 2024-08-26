@@ -86,10 +86,11 @@ func _process(_delta: float) -> void:
   # Update the debug label, if it's set to visible
   if debug_label.visible:
     debug_label.text = "Speed: " + "%.2f" % speed + "\n"
-    debug_label.text += "Accel: " + "%.2f" % throttle_input + "\n"
+    debug_label.text += "Accel: " + "%.2f" % throttle_amount + "\n"
     debug_label.text += "Cltch: " + "%.2f" % clutch_amount + "\n"
-    debug_label.text += "Brake: " + "%.2f" % brake_input + "\n"
-    debug_label.text += "Steer: " + "%.2f" % steering_input
+    debug_label.text += "Brake: " + "%.2f" % brake_amount + "\n"
+    debug_label.text += "RPM: " + "%.2f" % motor_rpm + "\n"
+    debug_label.text += "Steer: " + "%.2f" % steering_amount
 
 
 func _physics_process(delta: float) -> void:
