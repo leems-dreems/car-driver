@@ -1,7 +1,7 @@
 class_name DriveableVehicle extends Vehicle
 
 @export var lights_on := false
-@export var downforce_multiplier := 500.0
+@export var downforce_multiplier := 4.0
 var headlight_energy := 10.0
 var brake_light_energy := 5.0
 var reverse_light_energy := 1.0
@@ -101,11 +101,9 @@ func _physics_process(delta: float) -> void:
   # Apply downforce if any wheels are touching the ground
   if get_wheel_contact_count() > 1:
     # Get Z rotation, then get the square-root of its square to ensure that it's positive
-    var _downforce_amount := (PI / 2) - sqrt(pow(rotation.z, 2))
-    if _downforce_amount > 0:
-      apply_central_force(Vector3.DOWN * _downforce_amount * downforce_multiplier * speed)
-    if is_being_driven:
-      print(_downforce_amount)
+    var _angle_from_upright := (PI / 2) - sqrt(pow(rotation.z, 2))
+    if _angle_from_upright > 0:
+      apply_central_force(Vector3.DOWN * _angle_from_upright * downforce_multiplier * pow(speed, 2))
   # Update energy of various lights
   if is_being_driven:
     var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
@@ -159,9 +157,10 @@ func _on_body_entered(_body: Node) -> void:
   if _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D:
     if collision_audio_1.playing == false:
       var _impact_force := (_previous_velocity - linear_velocity).length() * 0.1
-      collision_audio_1.volume_db = linear_to_db(clampf(_impact_force, 0.0, 1.0))
-      collision_audio_1.play()
-      current_hit_points -= _impact_force
+      if _impact_force > 0.5:
+        collision_audio_1.volume_db = linear_to_db(clampf(_impact_force, 0.0, 1.0))
+        collision_audio_1.play()
+        current_hit_points -= _impact_force
   return
 
 

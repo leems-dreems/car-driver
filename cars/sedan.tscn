@@ -202,7 +202,6 @@ continuous_cd = true
 contact_monitor = true
 max_contacts_reported = 24
 script = ExtResource("1_srhgv")
-downforce_multiplier = 200.0
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
 rear_left_wheel = NodePath("WheelRearLeft")
@@ -252,7 +251,8 @@ rear_wheel_mass = 25.0
 
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("3_km4wf")]
 vehicle = NodePath("..")
-lateral_slip_threshold = 0.5
+longitudinal_slip_threshold = 0.3
+lateral_slip_threshold = 0.3
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_ati4s")]
 stream = ExtResource("5_frqug")
