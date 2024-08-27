@@ -203,6 +203,10 @@ func enterVehicle (vehicle: DriveableVehicle) -> void:
 
 func exitVehicle () -> void:
   current_vehicle.is_being_driven = false
+  current_vehicle.steering_input = 0
+  current_vehicle.throttle_input = 0
+  current_vehicle.clutch_input = 0
+  current_vehicle.brake_input = 0
   _vehicle_controller.vehicle_node = null
   global_position = current_vehicle.global_position
   global_position.y += 5

@@ -1,6 +1,7 @@
 class_name DriveableVehicle extends Vehicle
 
 @export var lights_on := false
+@export var downforce_multiplier := 500.0
 var headlight_energy := 10.0
 var brake_light_energy := 5.0
 var reverse_light_energy := 1.0
@@ -97,6 +98,14 @@ func _physics_process(delta: float) -> void:
   super(delta)
   # Record current velocity, to refer to when processing collision signals
   _previous_velocity = Vector3(linear_velocity)
+  # Apply downforce if any wheels are touching the ground
+  if get_wheel_contact_count() > 1:
+    # Get Z rotation, then get the square-root of its square to ensure that it's positive
+    var _downforce_amount := (PI / 2) - sqrt(pow(rotation.z, 2))
+    if _downforce_amount > 0:
+      apply_central_force(Vector3.DOWN * _downforce_amount * downforce_multiplier * speed)
+    if is_being_driven:
+      print(_downforce_amount)
   # Update energy of various lights
   if is_being_driven:
     var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)

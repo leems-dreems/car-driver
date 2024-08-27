@@ -208,13 +208,13 @@ front_right_wheel = NodePath("WheelFrontRight")
 rear_left_wheel = NodePath("WheelRearLeft")
 rear_right_wheel = NodePath("WheelRearRight")
 steering_speed = 20.0
-steering_speed_decay = 0.1
+steering_speed_decay = 0.15
 steering_slip_assist = 10.0
 countersteer_assist = 0.3
 front_brake_bias = 0.3
 enable_stability = false
 stability_yaw_strength = 1.0
-max_torque = 600.0
+max_torque = 800.0
 idle_rpm = 1200.0
 torque_curve = ExtResource("2_kvrte")
 max_clutch_torque_ratio = 1.0
@@ -223,12 +223,9 @@ shift_time = 0.2
 automatic_time_between_shifts = 500.0
 front_torque_split = 1.0
 front_variable_split = 0.5
-front_locking_differential_engage_torque = 1000.0
 front_weight_distribution = 0.51
 center_of_gravity_height_offset = 0.0
-front_resting_ratio = 0.3
 front_damping_ratio = 0.8
-rear_resting_ratio = 0.3
 rear_damping_ratio = 0.8
 braking_grip_multiplier = 3.0
 coefficient_of_friction = {
@@ -242,17 +239,16 @@ lateral_grip_assist = {
 "Road": 0.0
 }
 longitudinal_grip_ratio = {
-"Dirt": 2.0,
-"Grass": 2.0,
-"Road": 2.0
+"Dirt": 1.5,
+"Grass": 1.5,
+"Road": 1.5
 }
 front_tire_radius = 0.4
 rear_tire_radius = 0.4
 
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("2_negof")]
 vehicle = NodePath("..")
-longitudinal_slip_threshold = 0.9
-lateral_slip_threshold = 0.9
+lateral_slip_threshold = 0.5
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_dercd")]
 stream = ExtResource("5_bnnwg")
@@ -420,7 +416,7 @@ shape = SubResource("ConcavePolygonShape3D_100sx")
 disabled = true
 
 [node name="WheelFrontLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, -1.7702)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0, -1.7702)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("FrontLeftWheel")
 squeal_audio = NodePath("SquealAudio")
@@ -444,7 +440,7 @@ stream = ExtResource("16_v1p2m")
 unit_size = 3.0
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, -1.7702)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0, -1.7702)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("FrontRightWheel")
 squeal_audio = NodePath("SquealAudio")
@@ -464,12 +460,11 @@ max_db = -4.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 0, 0)
 stream = ExtResource("16_v1p2m")
 unit_size = 3.0
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, 1.83657)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0, 1.83657)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("RearLeftWheel")
 squeal_audio = NodePath("SquealAudio")
@@ -483,19 +478,17 @@ mesh = SubResource("ArrayMesh_0m480")
 skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0, -3.60677)
 stream = ExtResource("15_rmw2m")
 unit_size = 2.0
 max_db = -4.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.60677)
 stream = ExtResource("16_v1p2m")
 unit_size = 3.0
 
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, 1.83657)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0, 1.83657)
 script = ExtResource("2_rwko2")
 wheel_node = NodePath("RearRightWheel")
 squeal_audio = NodePath("SquealAudio")
@@ -509,14 +502,12 @@ mesh = SubResource("ArrayMesh_0m480")
 skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.60677)
 stream = ExtResource("15_rmw2m")
 unit_size = 2.0
 max_db = -4.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 0, -3.60677)
 stream = ExtResource("16_v1p2m")
 unit_size = 3.0
 
