@@ -1,0 +1,288 @@
+[gd_scene load_steps=33 format=3 uid="uid://cr77wenw0lh5c"]
+
+[ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
+[ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
+[ext_resource type="PhysicsMaterial" uid="uid://xvg1njhe0wed" path="res://assets/materials/road_physics_material.tres" id="3_csym3"]
+[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="8_dvnrp"]
+[ext_resource type="PackedScene" uid="uid://cvsdhdj7875dx" path="res://cars/sedan.tscn" id="9_bvo1c"]
+[ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="10_b2bvt"]
+[ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="11_r5ic5"]
+[ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="12_n3gia"]
+[ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="13_fg0qv"]
+[ext_resource type="PackedScene" uid="uid://2g4icv655eh3" path="res://maps/SmallCityMap/4_way_junction.tscn" id="14_4imh1"]
+[ext_resource type="Material" path="res://addons/road-generator/resources/road_texture.material" id="14_vie48"]
+[ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="15_0gxjo"]
+[ext_resource type="PackedScene" uid="uid://4whew70l87gh" path="res://maps/SmallCityMap/t_junction.tscn" id="15_fat5n"]
+[ext_resource type="Script" path="res://traffic/traffic_path.gd" id="16_k8s8v"]
+[ext_resource type="Script" path="res://collidables/springy_props_manager.gd" id="19_7htru"]
+[ext_resource type="PackedScene" uid="uid://bol1qtccjchrx" path="res://collidables/springy_gas_pump.tscn" id="20_v1fy2"]
+[ext_resource type="PackedScene" uid="uid://ds0e0h6kkjqxj" path="res://collidables/springy_trash_can_round.tscn" id="21_r0v4o"]
+[ext_resource type="PackedScene" uid="uid://dnhe41455c4fi" path="res://collidables/springy_trash_bin_square.tscn" id="22_q1qst"]
+[ext_resource type="Script" path="res://traffic/traffic_manager.gd" id="23_0pkuc"]
+[ext_resource type="PackedScene" uid="uid://ba0xtl41qmm3s" path="res://maps/KayKitCity/props/traffic_light_a.tscn" id="24_geihi"]
+[ext_resource type="Script" path="res://maps/SmallIslandMap/vehicle_dispenser.gd" id="25_yx1ur"]
+[ext_resource type="Script" path="res://maps/SmallIslandMap/dispenser_button.gd" id="26_0bws6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vpdbc"]
+size = Vector3(1000, 2, 1000)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4pvb3"]
+points = PackedVector3Array(-500, -1, -500, -500, 1, -500, 500, -1, -500, -500, -1, 500, -500, 1, 500, 500, 1, -500, 500, -1, 500, 500, 1, 500)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jykgi"]
+
+[sub_resource type="Sky" id="Sky_en3uj"]
+sky_material = SubResource("ProceduralSkyMaterial_jykgi")
+
+[sub_resource type="Environment" id="Environment_pbxeh"]
+background_mode = 2
+sky = SubResource("Sky_en3uj")
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.005
+
+[sub_resource type="Curve3D" id="Curve3D_x21bv"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -4, 0, 0, 0, 0, 0, 0, 0, 0, -4, 0, -40),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_hta15"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 4, 0, -40, 0, 0, 0, 0, 0, 0, 4, 0, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_mmcjk"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, -96, 0, 4),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_1i6o2"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -96, 0, -4, 0, 0, 0, 0, 0, 0, 0, 0, -4),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_spxxv"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="SmallCityMap" type="Node3D"]
+script = ExtResource("1_a23al")
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="CityFoundation" type="StaticBody3D" parent="Terrain" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+physics_material_override = ExtResource("3_csym3")
+
+[node name="BoxMesh" type="MeshInstance3D" parent="Terrain/CityFoundation"]
+mesh = SubResource("BoxMesh_vpdbc")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_upi0u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/CityFoundation"]
+shape = SubResource("ConvexPolygonShape3D_4pvb3")
+
+[node name="CompactCar" parent="." instance=ExtResource("8_dvnrp")]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 12, 1, -50)
+
+[node name="SedanCar" parent="." instance=ExtResource("9_bvo1c")]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0, 1, -40)
+
+[node name="Player" parent="." instance=ExtResource("10_b2bvt")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 1, -53)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pbxeh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.965926, 0.25, -0.0669873, 0, 0.258819, 0.965926, 0.258819, -0.933013, 0.25, 0, 13, 0)
+light_color = Color(1, 0.952941, 1, 1)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="PauseAndHUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("11_r5ic5")]
+player = NodePath("../Player")
+
+[node name="RoadManager" type="Node3D" parent="."]
+script = ExtResource("12_n3gia")
+
+[node name="Gas_station_South_Road" type="Node3D" parent="RoadManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.5, -78)
+script = ExtResource("13_fg0qv")
+material_resource = ExtResource("14_vie48")
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
+edge_rp_local_dirs = Array[int]([1, 0])
+
+[node name="RP_001" type="Node3D" parent="RoadManager/Gas_station_South_Road"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+next_pt_init = NodePath("../RP_002")
+
+[node name="RP_002" type="Node3D" parent="RoadManager/Gas_station_South_Road"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.90735e-06, 0, -40)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+prior_pt_init = NodePath("../RP_001")
+prior_mag = 8.0
+next_mag = 8.0
+
+[node name="TP_Gas_station_South_Road_South" type="Path3D" parent="RoadManager/Gas_station_South_Road"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_x21bv")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
+[node name="TP_Gas_station_South_Road_North" type="Path3D" parent="RoadManager/Gas_station_South_Road"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_hta15")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
+[node name="T-Junction" parent="RoadManager" instance=ExtResource("15_fat5n")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 36, 0.5, -130)
+
+[node name="T-Junction2" parent="RoadManager" instance=ExtResource("15_fat5n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84, 0.5, -66)
+
+[node name="Gas_station_Road" type="Node3D" parent="RoadManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.5, -66)
+script = ExtResource("13_fg0qv")
+material_resource = ExtResource("14_vie48")
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
+edge_rp_local_dirs = Array[int]([1, 0])
+
+[node name="RP_001" type="Node3D" parent="RoadManager/Gas_station_Road"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+next_pt_init = NodePath("../RP_002")
+
+[node name="RP_002" type="Node3D" parent="RoadManager/Gas_station_Road"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+prior_pt_init = NodePath("../RP_001")
+prior_mag = 16.0
+next_mag = 16.0
+
+[node name="TP_Gas_station_East" type="Path3D" parent="RoadManager/Gas_station_Road"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_mmcjk")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
+[node name="TP_Gas_station_West" type="Path3D" parent="RoadManager/Gas_station_Road"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_1i6o2")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
+[node name="Junction4" parent="RoadManager" instance=ExtResource("14_4imh1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.5, -66)
+
+[node name="SpringyPropsManager" type="Node3D" parent="."]
+script = ExtResource("19_7htru")
+
+[node name="SpringyGasPump" parent="SpringyPropsManager" instance=ExtResource("20_v1fy2")]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -19, 0.1, -42)
+reset_time = 10.0
+
+[node name="SpringyTrashBinRound" parent="SpringyPropsManager" instance=ExtResource("21_r0v4o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.2, -42)
+reset_time = 10.0
+
+[node name="SpringyTrashBinSquare62" parent="SpringyPropsManager" instance=ExtResource("22_q1qst")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0.1, -50)
+reset_time = 10.0
+
+[node name="TrafficManager" type="Node3D" parent="."]
+script = ExtResource("23_0pkuc")
+
+[node name="TrafficLights" type="Node3D" parent="."]
+
+[node name="4JunctionTrafficLightA1" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 47.5, 1, -77.5)
+
+[node name="4JunctionTrafficLightA2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 1, -54.5)
+
+[node name="4JunctionTrafficLightA3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.5, 1, -54.5)
+
+[node name="4JunctionTrafficLightA4" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.5, 1, -77.5)
+
+[node name="VehicleDispenser" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -28)
+script = ExtResource("25_yx1ur")
+show_debug_label = true
+
+[node name="DispenserBox" type="CSGBox3D" parent="VehicleDispenser"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+use_collision = true
+size = Vector3(5, 6, 4)
+
+[node name="DispenserButtonSedan" type="CSGBox3D" parent="VehicleDispenser"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.5, -1.6)
+material_override = SubResource("StandardMaterial3D_spxxv")
+use_collision = true
+collision_layer = 9
+size = Vector3(4, 1, 1)
+script = ExtResource("26_0bws6")
+vehicle_type = 1
+
+[node name="Label3D" type="Label3D" parent="VehicleDispenser/DispenserButtonSedan"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.51)
+text = "Sedan"
+
+[node name="DispenserButtonCompact" type="CSGBox3D" parent="VehicleDispenser"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -2, -1.6)
+material_override = SubResource("StandardMaterial3D_spxxv")
+use_collision = true
+collision_layer = 9
+size = Vector3(4, 1, 1)
+script = ExtResource("26_0bws6")
+
+[node name="Label3D" type="Label3D" parent="VehicleDispenser/DispenserButtonCompact"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.51)
+text = "Compact"
+
+[node name="VehiclePlatform" type="CSGBox3D" parent="VehicleDispenser"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -2.95, 0)
+use_collision = true
+size = Vector3(4, 0.1, 10)
