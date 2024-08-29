@@ -125,7 +125,7 @@ _data = {
 "green_light_1": SubResource("Animation_tm8dt")
 }
 
-[node name="Junction4" type="Node3D"]
+[node name="4WayJunction" type="Node3D"]
 script = ExtResource("1_tgvg4")
 create_geo = false
 use_lowpoly_preview = true
@@ -136,13 +136,13 @@ edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_001"), NodePa
 edge_rp_local_dirs = Array[int]([0, 1, 0, 1, 0, 1])
 
 [node name="RP_001" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -12)
 script = ExtResource("2_8m6vp")
 traffic_dir = [1, 1]
 lanes = [0, 2]
 
 [node name="RP_002" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 12)
 script = ExtResource("2_8m6vp")
 traffic_dir = [1, 1]
 lanes = [0, 2]
@@ -150,7 +150,7 @@ prior_mag = 16.0
 next_mag = 16.0
 
 [node name="RP_003" type="Node3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8, 0.5, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12, 0.5, 0)
 script = ExtResource("2_8m6vp")
 traffic_dir = [1, 1]
 lanes = [0, 2]
@@ -159,7 +159,7 @@ prior_mag = 16.0
 next_mag = 16.0
 
 [node name="RP_004" type="Node3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0.5, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12, 0.5, 0)
 script = ExtResource("2_8m6vp")
 traffic_dir = [1, 1]
 lanes = [0, 2]
@@ -254,22 +254,22 @@ number_of_vehicles = 0
 path_max_speed = 10.0
 
 [node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(-1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 0, 0.6, -8)
+transform = Transform3D(-1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 0, 0.6, -12)
 text = "1"
 font_size = 128
 
 [node name="Label3D2" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.6, 8)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.6, 12)
 text = "2"
 font_size = 128
 
 [node name="Label3D3" type="Label3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 8, 0.6, 0)
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 12, 0.6, 0)
 text = "3"
 font_size = 128
 
 [node name="Label3D4" type="Label3D" parent="."]
-transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, -8, 0.6, 0)
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, -12, 0.6, 0)
 text = "4"
 font_size = 128
 

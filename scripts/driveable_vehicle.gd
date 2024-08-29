@@ -103,7 +103,7 @@ func _physics_process(delta: float) -> void:
     # Get Z rotation, then get the square-root of its square to ensure that it's positive
     var _angle_from_upright := (PI / 2) - sqrt(pow(rotation.z, 2))
     if _angle_from_upright > 0:
-      apply_central_force(Vector3.DOWN * _angle_from_upright * downforce_multiplier * pow(speed, 2))
+      apply_central_force(-basis.y * _angle_from_upright * downforce_multiplier * pow(speed, 2))
   # Update energy of various lights
   if is_being_driven:
     var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)

@@ -23,6 +23,10 @@ func _ready() -> void:
   if Engine.is_editor_hint():
     return
 
+  $Label3D.visible = false
+  $Label3D2.visible = false
+  $Label3D3.visible = false
+
   # Skip animation player forward a few seconds
   $AnimationPlayer.seek(randf_range(0, 9))
 
