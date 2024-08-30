@@ -68,6 +68,20 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="Curve3D" id="Curve3D_mmcjk"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, -96, 0, 4),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_1i6o2"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -96, 0, -4, 0, 0, 0, 0, 0, 0, 0, 0, -4),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
 [sub_resource type="Curve3D" id="Curve3D_qxcgu"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, -4, 0, 0, 0, 0, 0, 0, 0, 0, -4, 0, -180),
@@ -109,20 +123,6 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0)
 }
 point_count = 3
-
-[sub_resource type="Curve3D" id="Curve3D_mmcjk"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, -96, 0, 4),
-"tilts": PackedFloat32Array(0, 0)
-}
-point_count = 2
-
-[sub_resource type="Curve3D" id="Curve3D_1i6o2"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -96, 0, -4, 0, 0, 0, 0, 0, 0, 0, 0, -4),
-"tilts": PackedFloat32Array(0, 0)
-}
-point_count = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_spxxv"]
 albedo_color = Color(0, 0, 0, 1)
@@ -734,6 +734,194 @@ curve = SubResource("Curve3D_lcwbk")
 script = ExtResource("16_k8s8v")
 spawn_vehicles = true
 
+[node name="Medium_Road" type="Node3D" parent="RoadManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.5, -130)
+script = ExtResource("13_fg0qv")
+material_resource = ExtResource("14_vie48")
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
+edge_rp_local_dirs = Array[int]([1, 0])
+
+[node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+next_pt_init = NodePath("../RP_002")
+
+[node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+prior_pt_init = NodePath("../RP_001")
+prior_mag = 16.0
+next_mag = 16.0
+
+[node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_mmcjk")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
+[node name="TP_West" type="Path3D" parent="RoadManager/Medium_Road"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_1i6o2")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
+[node name="Medium_Road2" type="Node3D" parent="RoadManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.5, -66)
+script = ExtResource("13_fg0qv")
+material_resource = ExtResource("14_vie48")
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
+edge_rp_local_dirs = Array[int]([1, 0])
+
+[node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+next_pt_init = NodePath("../RP_002")
+
+[node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+prior_pt_init = NodePath("../RP_001")
+prior_mag = 16.0
+next_mag = 16.0
+
+[node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_mmcjk")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
+[node name="TP_West" type="Path3D" parent="RoadManager/Medium_Road2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_1i6o2")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
+[node name="Medium_Road3" type="Node3D" parent="RoadManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.5, -2)
+script = ExtResource("13_fg0qv")
+material_resource = ExtResource("14_vie48")
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
+edge_rp_local_dirs = Array[int]([1, 0])
+
+[node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road3"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+next_pt_init = NodePath("../RP_002")
+
+[node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road3"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+prior_pt_init = NodePath("../RP_001")
+prior_mag = 16.0
+next_mag = 16.0
+
+[node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_mmcjk")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
+[node name="TP_West" type="Path3D" parent="RoadManager/Medium_Road3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_1i6o2")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
+[node name="Medium_Road4" type="Node3D" parent="RoadManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.5, 202)
+script = ExtResource("13_fg0qv")
+material_resource = ExtResource("14_vie48")
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
+edge_rp_local_dirs = Array[int]([1, 0])
+
+[node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+next_pt_init = NodePath("../RP_002")
+
+[node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
+script = ExtResource("15_0gxjo")
+traffic_dir = [2, 1]
+lanes = [5, 5]
+lane_width = 6.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(5, -1)
+prior_pt_init = NodePath("../RP_001")
+prior_mag = 16.0
+next_mag = 16.0
+
+[node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_mmcjk")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
+[node name="TP_West" type="Path3D" parent="RoadManager/Medium_Road4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+curve = SubResource("Curve3D_1i6o2")
+script = ExtResource("16_k8s8v")
+spawn_vehicles = true
+
 [node name="Long_Road" type="Node3D" parent="RoadManager"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84, 0.5, 190)
 script = ExtResource("13_fg0qv")
@@ -948,7 +1136,7 @@ curve = SubResource("Curve3D_uuhjt")
 script = ExtResource("16_k8s8v")
 spawn_vehicles = true
 
-[node name="T-Junction" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003") instance=ExtResource("15_fat5n")]
+[node name="T-Junction_A" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("15_fat5n")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 36, 0.5, -130)
 path_entering_RP_001 = NodePath("../Short_Curved_Road2/TP_SE")
 path_exiting_RP_001 = NodePath("../Short_Curved_Road2/TP_NW")
@@ -956,8 +1144,11 @@ path_entering_RP_002 = NodePath("../Medium_Road/TP_West")
 path_exiting_RP_002 = NodePath("../Medium_Road/TP_East")
 path_entering_RP_003 = NodePath("../Short_Road2/TP_S")
 path_exiting_RP_003 = NodePath("../Short_Road2/TP_N")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/T-Junction_A")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/T-Junction_A2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/T-Junction_A3")]
 
-[node name="T-Junction3" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003") instance=ExtResource("15_fat5n")]
+[node name="T-Junction_B" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("15_fat5n")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -84, 0.5, -130)
 path_entering_RP_001 = NodePath("../Medium_Road/TP_East")
 path_exiting_RP_001 = NodePath("../Medium_Road/TP_West")
@@ -965,8 +1156,11 @@ path_entering_RP_002 = NodePath("../Short_Curved_Road/TP_SW")
 path_exiting_RP_002 = NodePath("../Short_Curved_Road/TP_NE")
 path_entering_RP_003 = NodePath("../Short_Road4/TP_S")
 path_exiting_RP_003 = NodePath("../Short_Road4/TP_N")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/T-Junction_B")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/T-Junction_B2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/T-Junction_B3")]
 
-[node name="T-Junction4" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003") instance=ExtResource("15_fat5n")]
+[node name="T-Junction_C" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("15_fat5n")]
 transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -148, 0.5, -66)
 path_entering_RP_001 = NodePath("../Short_Curved_Road/TP_NE")
 path_exiting_RP_001 = NodePath("../Short_Curved_Road/TP_SW")
@@ -974,26 +1168,11 @@ path_entering_RP_002 = NodePath("../Short_Road8/TP_S")
 path_exiting_RP_002 = NodePath("../Short_Road8/TP_N")
 path_entering_RP_003 = NodePath("../Short_Road/TP_E")
 path_exiting_RP_003 = NodePath("../Short_Road/TP_W")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/T-Junction_C")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/T-Junction_C2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/T-Junction_C3")]
 
-[node name="T-Junction5" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003") instance=ExtResource("15_fat5n")]
-transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -84, 0.5, 202)
-path_entering_RP_001 = NodePath("../Long_Curved_Road/TP_NW")
-path_exiting_RP_001 = NodePath("../Long_Curved_Road/TP_SE")
-path_entering_RP_002 = NodePath("../Medium_Road4/TP_East")
-path_exiting_RP_002 = NodePath("../Medium_Road4/TP_West")
-path_entering_RP_003 = NodePath("../Long_Road/TP_N")
-path_exiting_RP_003 = NodePath("../Long_Road/TP_S")
-
-[node name="T-Junction6" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003") instance=ExtResource("15_fat5n")]
-transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 36, 0.5, 202)
-path_entering_RP_001 = NodePath("../Medium_Road4/TP_West")
-path_exiting_RP_001 = NodePath("../Medium_Road4/TP_East")
-path_entering_RP_002 = NodePath("../Long_Curved_Road2/TP_NE")
-path_exiting_RP_002 = NodePath("../Long_Curved_Road2/TP_SW")
-path_entering_RP_003 = NodePath("../Long_Road2/TP_N")
-path_exiting_RP_003 = NodePath("../Long_Road2/TP_S")
-
-[node name="T-Junction7" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003") instance=ExtResource("15_fat5n")]
+[node name="T-Junction_D" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("15_fat5n")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 100, 0.5, -66)
 path_entering_RP_001 = NodePath("../Short_Road7/TP_S")
 path_exiting_RP_001 = NodePath("../Short_Road7/TP_N")
@@ -1001,17 +1180,11 @@ path_entering_RP_002 = NodePath("../Short_Curved_Road2/TP_NW")
 path_exiting_RP_002 = NodePath("../Short_Curved_Road2/TP_SE")
 path_entering_RP_003 = NodePath("../Short_Road6/TP_W")
 path_exiting_RP_003 = NodePath("../Short_Road6/TP_E")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/T-Junction_D")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/T-Junction_D2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/T-Junction_D3")]
 
-[node name="T-Junction8" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003") instance=ExtResource("15_fat5n")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 100, 0.5, -2)
-path_entering_RP_001 = NodePath("../Long_Curved_Road2/TP_SW")
-path_exiting_RP_001 = NodePath("../Long_Curved_Road2/TP_NE")
-path_entering_RP_002 = NodePath("../Short_Road7/TP_N")
-path_exiting_RP_002 = NodePath("../Short_Road7/TP_S")
-path_entering_RP_003 = NodePath("../Short_Road9/TP_W")
-path_exiting_RP_003 = NodePath("../Short_Road9/TP_E")
-
-[node name="T-Junction9" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003") instance=ExtResource("15_fat5n")]
+[node name="T-Junction_E" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("15_fat5n")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -148, 0.5, -2)
 path_entering_RP_001 = NodePath("../Short_Road8/TP_N")
 path_exiting_RP_001 = NodePath("../Short_Road8/TP_S")
@@ -1019,196 +1192,47 @@ path_entering_RP_002 = NodePath("../Long_Curved_Road/TP_SE")
 path_exiting_RP_002 = NodePath("../Long_Curved_Road/TP_NW")
 path_entering_RP_003 = NodePath("../Short_Road10/TP_E")
 path_exiting_RP_003 = NodePath("../Short_Road10/TP_W")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/T-Junction_E")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/T-Junction_E2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/T-Junction_E3")]
 
-[node name="Medium_Road" type="Node3D" parent="RoadManager"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.5, -130)
-script = ExtResource("13_fg0qv")
-material_resource = ExtResource("14_vie48")
-use_lowpoly_preview = true
-edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_target_dirs = Array[int]([-1, -1])
-edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
-edge_rp_local_dirs = Array[int]([1, 0])
+[node name="T-Junction_F" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("15_fat5n")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 100, 0.5, -2)
+path_entering_RP_001 = NodePath("../Long_Curved_Road2/TP_SW")
+path_exiting_RP_001 = NodePath("../Long_Curved_Road2/TP_NE")
+path_entering_RP_002 = NodePath("../Short_Road7/TP_N")
+path_exiting_RP_002 = NodePath("../Short_Road7/TP_S")
+path_entering_RP_003 = NodePath("../Short_Road9/TP_W")
+path_exiting_RP_003 = NodePath("../Short_Road9/TP_E")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/T-Junction_F")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/T-Junction_F2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/T-Junction_F3")]
 
-[node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
-lane_width = 6.0
-shoulder_width_l = 4.0
-shoulder_width_r = 4.0
-gutter_profile = Vector2(5, -1)
-next_pt_init = NodePath("../RP_002")
+[node name="T-Junction_G" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("15_fat5n")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -84, 0.5, 202)
+path_entering_RP_001 = NodePath("../Long_Curved_Road/TP_NW")
+path_exiting_RP_001 = NodePath("../Long_Curved_Road/TP_SE")
+path_entering_RP_002 = NodePath("../Medium_Road4/TP_East")
+path_exiting_RP_002 = NodePath("../Medium_Road4/TP_West")
+path_entering_RP_003 = NodePath("../Long_Road/TP_N")
+path_exiting_RP_003 = NodePath("../Long_Road/TP_S")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/T-Junction_G")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/T-Junction_G2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/T-Junction_G3")]
 
-[node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
-script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
-lane_width = 6.0
-shoulder_width_l = 4.0
-shoulder_width_r = 4.0
-gutter_profile = Vector2(5, -1)
-prior_pt_init = NodePath("../RP_001")
-prior_mag = 16.0
-next_mag = 16.0
+[node name="T-Junction_H" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("15_fat5n")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 36, 0.5, 202)
+path_entering_RP_001 = NodePath("../Medium_Road4/TP_West")
+path_exiting_RP_001 = NodePath("../Medium_Road4/TP_East")
+path_entering_RP_002 = NodePath("../Long_Curved_Road2/TP_NE")
+path_exiting_RP_002 = NodePath("../Long_Curved_Road2/TP_SW")
+path_entering_RP_003 = NodePath("../Long_Road2/TP_N")
+path_exiting_RP_003 = NodePath("../Long_Road2/TP_S")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/T-Junction_H")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/T-Junction_H2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/T-Junction_H3")]
 
-[node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-curve = SubResource("Curve3D_mmcjk")
-script = ExtResource("16_k8s8v")
-spawn_vehicles = true
-
-[node name="TP_West" type="Path3D" parent="RoadManager/Medium_Road"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-curve = SubResource("Curve3D_1i6o2")
-script = ExtResource("16_k8s8v")
-spawn_vehicles = true
-
-[node name="Medium_Road2" type="Node3D" parent="RoadManager"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.5, -66)
-script = ExtResource("13_fg0qv")
-material_resource = ExtResource("14_vie48")
-use_lowpoly_preview = true
-edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_target_dirs = Array[int]([-1, -1])
-edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
-edge_rp_local_dirs = Array[int]([1, 0])
-
-[node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road2"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
-lane_width = 6.0
-shoulder_width_l = 4.0
-shoulder_width_r = 4.0
-gutter_profile = Vector2(5, -1)
-next_pt_init = NodePath("../RP_002")
-
-[node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road2"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
-script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
-lane_width = 6.0
-shoulder_width_l = 4.0
-shoulder_width_r = 4.0
-gutter_profile = Vector2(5, -1)
-prior_pt_init = NodePath("../RP_001")
-prior_mag = 16.0
-next_mag = 16.0
-
-[node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-curve = SubResource("Curve3D_mmcjk")
-script = ExtResource("16_k8s8v")
-spawn_vehicles = true
-
-[node name="TP_West" type="Path3D" parent="RoadManager/Medium_Road2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-curve = SubResource("Curve3D_1i6o2")
-script = ExtResource("16_k8s8v")
-spawn_vehicles = true
-
-[node name="Medium_Road3" type="Node3D" parent="RoadManager"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.5, -2)
-script = ExtResource("13_fg0qv")
-material_resource = ExtResource("14_vie48")
-use_lowpoly_preview = true
-edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_target_dirs = Array[int]([-1, -1])
-edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
-edge_rp_local_dirs = Array[int]([1, 0])
-
-[node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road3"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
-lane_width = 6.0
-shoulder_width_l = 4.0
-shoulder_width_r = 4.0
-gutter_profile = Vector2(5, -1)
-next_pt_init = NodePath("../RP_002")
-
-[node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road3"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
-script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
-lane_width = 6.0
-shoulder_width_l = 4.0
-shoulder_width_r = 4.0
-gutter_profile = Vector2(5, -1)
-prior_pt_init = NodePath("../RP_001")
-prior_mag = 16.0
-next_mag = 16.0
-
-[node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-curve = SubResource("Curve3D_mmcjk")
-script = ExtResource("16_k8s8v")
-spawn_vehicles = true
-
-[node name="TP_West" type="Path3D" parent="RoadManager/Medium_Road3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-curve = SubResource("Curve3D_1i6o2")
-script = ExtResource("16_k8s8v")
-spawn_vehicles = true
-
-[node name="Medium_Road4" type="Node3D" parent="RoadManager"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.5, 202)
-script = ExtResource("13_fg0qv")
-material_resource = ExtResource("14_vie48")
-use_lowpoly_preview = true
-edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_target_dirs = Array[int]([-1, -1])
-edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
-edge_rp_local_dirs = Array[int]([1, 0])
-
-[node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road4"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
-lane_width = 6.0
-shoulder_width_l = 4.0
-shoulder_width_r = 4.0
-gutter_profile = Vector2(5, -1)
-next_pt_init = NodePath("../RP_002")
-
-[node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road4"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
-script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
-lane_width = 6.0
-shoulder_width_l = 4.0
-shoulder_width_r = 4.0
-gutter_profile = Vector2(5, -1)
-prior_pt_init = NodePath("../RP_001")
-prior_mag = 16.0
-next_mag = 16.0
-
-[node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-curve = SubResource("Curve3D_mmcjk")
-script = ExtResource("16_k8s8v")
-spawn_vehicles = true
-
-[node name="TP_West" type="Path3D" parent="RoadManager/Medium_Road4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-curve = SubResource("Curve3D_1i6o2")
-script = ExtResource("16_k8s8v")
-spawn_vehicles = true
-
-[node name="4WayJunction" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "path_entering_RP_004", "path_exiting_RP_004") instance=ExtResource("14_4imh1")]
+[node name="4WayJunction_A" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "path_entering_RP_004", "path_exiting_RP_004", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003", "traffic_lights_RP_004") instance=ExtResource("14_4imh1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.5, -66)
 path_entering_RP_001 = NodePath("../Short_Road2/TP_N")
 path_exiting_RP_001 = NodePath("../Short_Road2/TP_S")
@@ -1218,8 +1242,12 @@ path_entering_RP_003 = NodePath("../Short_Road6/TP_E")
 path_exiting_RP_003 = NodePath("../Short_Road6/TP_W")
 path_entering_RP_004 = NodePath("../Medium_Road2/TP_West")
 path_exiting_RP_004 = NodePath("../Medium_Road2/TP_East")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/4WayJunction_A")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/4WayJunction_A2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/4WayJunction_A3")]
+traffic_lights_RP_004 = [NodePath("../../TrafficLights/4WayJunction_A4")]
 
-[node name="4WayJunction2" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "path_entering_RP_004", "path_exiting_RP_004") instance=ExtResource("14_4imh1")]
+[node name="4WayJunction_B" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "path_entering_RP_004", "path_exiting_RP_004", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003", "traffic_lights_RP_004") instance=ExtResource("14_4imh1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84, 0.5, -66)
 path_entering_RP_001 = NodePath("../Short_Road4/TP_N")
 path_exiting_RP_001 = NodePath("../Short_Road4/TP_S")
@@ -1229,8 +1257,12 @@ path_entering_RP_003 = NodePath("../Medium_Road2/TP_East")
 path_exiting_RP_003 = NodePath("../Medium_Road2/TP_West")
 path_entering_RP_004 = NodePath("../Short_Road/TP_W")
 path_exiting_RP_004 = NodePath("../Short_Road/TP_E")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/4WayJunction_B")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/4WayJunction_B2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/4WayJunction_B3")]
+traffic_lights_RP_004 = [NodePath("../../TrafficLights/4WayJunction_B4")]
 
-[node name="4WayJunction3" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "path_entering_RP_004", "path_exiting_RP_004") instance=ExtResource("14_4imh1")]
+[node name="4WayJunction_C" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "path_entering_RP_004", "path_exiting_RP_004", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003", "traffic_lights_RP_004") instance=ExtResource("14_4imh1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.5, -2)
 path_entering_RP_001 = NodePath("../Short_Road5/TP_N")
 path_exiting_RP_001 = NodePath("../Short_Road5/TP_S")
@@ -1240,8 +1272,12 @@ path_entering_RP_003 = NodePath("../Short_Road9/TP_E")
 path_exiting_RP_003 = NodePath("../Short_Road9/TP_W")
 path_entering_RP_004 = NodePath("../Medium_Road3/TP_West")
 path_exiting_RP_004 = NodePath("../Medium_Road3/TP_East")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/4WayJunction_C")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/4WayJunction_C2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/4WayJunction_C3")]
+traffic_lights_RP_004 = [NodePath("../../TrafficLights/4WayJunction_C4")]
 
-[node name="4WayJunction4" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "path_entering_RP_004", "path_exiting_RP_004") instance=ExtResource("14_4imh1")]
+[node name="4WayJunction_D" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "path_entering_RP_004", "path_exiting_RP_004", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003", "traffic_lights_RP_004") instance=ExtResource("14_4imh1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84, 0.5, -2)
 path_entering_RP_001 = NodePath("../Short_Road3/TP_N")
 path_exiting_RP_001 = NodePath("../Short_Road3/TP_S")
@@ -1251,6 +1287,10 @@ path_entering_RP_003 = NodePath("../Medium_Road3/TP_East")
 path_exiting_RP_003 = NodePath("../Medium_Road3/TP_West")
 path_entering_RP_004 = NodePath("../Short_Road10/TP_W")
 path_exiting_RP_004 = NodePath("../Short_Road10/TP_E")
+traffic_lights_RP_001 = [NodePath("../../TrafficLights/4WayJunction_D")]
+traffic_lights_RP_002 = [NodePath("../../TrafficLights/4WayJunction_D2")]
+traffic_lights_RP_003 = [NodePath("../../TrafficLights/4WayJunction_D3")]
+traffic_lights_RP_004 = [NodePath("../../TrafficLights/4WayJunction_D4")]
 
 [node name="SpringyPropsManager" type="Node3D" parent="."]
 script = ExtResource("19_7htru")
@@ -1272,17 +1312,125 @@ script = ExtResource("23_0pkuc")
 
 [node name="TrafficLights" type="Node3D" parent="."]
 
-[node name="4JunctionTrafficLightA1" parent="TrafficLights" instance=ExtResource("24_geihi")]
+[node name="T-Junction_A" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.5, 1, -118.5)
+
+[node name="T-Junction_A2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.5, 1, -141.5)
+
+[node name="T-Junction_A3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 1, -118.5)
+
+[node name="T-Junction_B" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -72.5, 1, -118.5)
+
+[node name="T-Junction_B2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -95.5, 1, -141.5)
+
+[node name="T-Junction_B3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.5, 1, -118.5)
+
+[node name="T-Junction_C" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -136.467, 1, -77.5)
+
+[node name="T-Junction_C2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -159.467, 1, -54.5)
+
+[node name="T-Junction_C3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -136.467, 1, -54.5)
+
+[node name="T-Junction_D" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 88.5, 1, -54.4333)
+
+[node name="T-Junction_D2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 111.5, 1, -77.4333)
+
+[node name="T-Junction_D3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 88.5, 1, -77.4333)
+
+[node name="T-Junction_E" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -136.467, 1, -13.5)
+
+[node name="T-Junction_E2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -159.467, 1, 9.5)
+
+[node name="T-Junction_E3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -136.467, 1, 9.5)
+
+[node name="T-Junction_F" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, 88.5, 1, 9.56667)
+
+[node name="T-Junction_F2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 111.5, 1, -13.4333)
+
+[node name="T-Junction_F3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 88.5, 1, -13.4333)
+
+[node name="T-Junction_G" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -95.4667, 1, 190.467)
+
+[node name="T-Junction_G2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -72.4667, 1, 213.467)
+
+[node name="T-Junction_G3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -72.4667, 1, 190.467)
+
+[node name="T-Junction_H" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.5333, 1, 190.467)
+
+[node name="T-Junction_H2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 47.5333, 1, 213.467)
+
+[node name="T-Junction_H3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 47.5333, 1, 190.467)
+
+[node name="4WayJunction_A" parent="TrafficLights" instance=ExtResource("24_geihi")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 47.5, 1, -77.5)
 
-[node name="4JunctionTrafficLightA2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+[node name="4WayJunction_A2" parent="TrafficLights" instance=ExtResource("24_geihi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 1, -54.5)
 
-[node name="4JunctionTrafficLightA3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+[node name="4WayJunction_A3" parent="TrafficLights" instance=ExtResource("24_geihi")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.5, 1, -54.5)
 
-[node name="4JunctionTrafficLightA4" parent="TrafficLights" instance=ExtResource("24_geihi")]
+[node name="4WayJunction_A4" parent="TrafficLights" instance=ExtResource("24_geihi")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.5, 1, -77.5)
+
+[node name="4WayJunction_B" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -72.5, 1, -77.5)
+
+[node name="4WayJunction_B2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.5, 1, -54.5)
+
+[node name="4WayJunction_B3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -72.5, 1, -54.5)
+
+[node name="4WayJunction_B4" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -95.5, 1, -77.5)
+
+[node name="4WayJunction_C" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 47.5, 1, -13.5)
+
+[node name="4WayJunction_C2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 1, 9.5)
+
+[node name="4WayJunction_C3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.5, 1, 9.5)
+
+[node name="4WayJunction_C4" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.5, 1, -13.5)
+
+[node name="4WayJunction_D" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -72.5, 1, -13.5)
+
+[node name="4WayJunction_D2" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.5, 1, 9.5)
+
+[node name="4WayJunction_D3" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -72.5, 1, 9.5)
+
+[node name="4WayJunction_D4" parent="TrafficLights" instance=ExtResource("24_geihi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -95.5, 1, -13.5)
 
 [node name="VehicleDispenser" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -28)
