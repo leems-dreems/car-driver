@@ -38,6 +38,8 @@ var useable_target : Node3D = null
 @onready var _start_position := global_transform.origin
 @onready var _is_on_floor_buffer := false
 
+var is_ragdolling := false
+
 
 func _ready() -> void:
   Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -58,6 +60,15 @@ func _physics_process(delta: float) -> void:
   var is_just_jumping := Input.is_action_just_pressed("jump") and is_on_floor()
   var is_air_boosting := Input.is_action_pressed("jump") and not is_on_floor() and velocity.y > 0.0
   var is_just_on_floor := is_on_floor() and not _is_on_floor_buffer
+  var should_ragdoll := Input.is_action_just_pressed("Ragdoll")
+
+  if not is_ragdolling and should_ragdoll:
+    _dummy_skin.skeleton.physical_bones_start_simulation()
+    is_ragdolling = true
+    get_tree().create_timer(5.0).timeout.connect(func():
+      _dummy_skin.skeleton.physical_bones_stop_simulation()
+      is_ragdolling = false
+    )
 
   # Respond to pause button
   var is_pausing := Input.is_action_just_pressed("Pause")
@@ -134,7 +145,9 @@ func _physics_process(delta: float) -> void:
       velocity.y += jump_additional_force * delta
 
     # Set character animation
-    if is_just_jumping:
+    if is_ragdolling:
+      _dummy_skin.ragdoll()
+    elif is_just_jumping:
       _dummy_skin.jump()
     elif not is_on_floor() and velocity.y < 0:
       _dummy_skin.fall()

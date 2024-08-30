@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://qj5wm2wpuawj"]
+[gd_scene load_steps=26 format=3 uid="uid://qj5wm2wpuawj"]
 
 [ext_resource type="Script" path="res://effects/explosion.gd" id="1_dmlp3"]
 [ext_resource type="AudioStream" uid="uid://4icv5wfjnole" path="res://assets/audio/Hanna-Barbera SFX/bomb_1.wav" id="2_byo7q"]
@@ -19,7 +19,7 @@ albedo_color = Color(1, 1, 1, 0.164706)
 radius = 1.0
 
 [sub_resource type="Curve" id="Curve_c7kii"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.743083, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.501114, 1), 0.0, 0.0, 0, 0, Vector2(0.750557, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_3x0cj"]
@@ -28,8 +28,8 @@ curve = SubResource("Curve_c7kii")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bby8d"]
 particle_flag_align_y = true
 spread = 180.0
-initial_velocity_min = 20.0
-initial_velocity_max = 24.0
+initial_velocity_min = 48.0
+initial_velocity_max = 48.0
 scale_min = 0.5
 scale_max = 1.5
 scale_curve = SubResource("CurveTexture_3x0cj")
@@ -65,15 +65,18 @@ emission_shape = 1
 emission_sphere_radius = 1.0
 direction = Vector3(0, -1, 0)
 spread = 90.0
-initial_velocity_min = 4.0
-initial_velocity_max = 8.0
-gravity = Vector3(0, 5, 0)
+initial_velocity_min = 8.0
+initial_velocity_max = 12.0
+gravity = Vector3(0, 10, 0)
 scale_min = 0.5
 scale_max = 1.5
 scale_curve = SubResource("CurveTexture_jei2l")
 color = Color(0.941176, 0.94902, 0.0470588, 1)
 color_ramp = SubResource("GradientTexture1D_lu8fk")
 emission_curve = SubResource("CurveTexture_n874j")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_noyy7"]
 material = ExtResource("4_sthou")
@@ -107,6 +110,10 @@ scale_curve = SubResource("CurveTexture_kkyro")
 color = Color(0.207843, 0.207843, 0.223529, 1)
 alpha_curve = SubResource("CurveTexture_36bq6")
 
+[sub_resource type="SphereMesh" id="SphereMesh_c4xr1"]
+radius = 10.0
+height = 20.0
+
 [node name="Explosion" type="Node3D"]
 script = ExtResource("1_dmlp3")
 
@@ -130,7 +137,7 @@ stream = ExtResource("2_byo7q")
 [node name="DebrisEmitter" type="GPUParticles3D" parent="."]
 emitting = false
 amount = 24
-lifetime = 0.5
+lifetime = 0.3
 one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
@@ -148,10 +155,15 @@ draw_pass_1 = SubResource("SphereMesh_noyy7")
 
 [node name="SmokeEmitter" type="GPUParticles3D" parent="."]
 emitting = false
-amount = 12
+amount = 16
 lifetime = 2.0
 one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_mn81p")
 draw_pass_1 = SubResource("SphereMesh_noyy7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+transparency = 0.9
+mesh = SubResource("SphereMesh_c4xr1")

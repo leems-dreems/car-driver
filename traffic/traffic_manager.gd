@@ -16,6 +16,7 @@ func _ready() -> void:
   for _traffic_path: TrafficPath in get_tree().current_scene.find_children("*", "TrafficPath"):
     if _traffic_path.spawn_vehicles:
       traffic_paths.push_back(_traffic_path)
+  traffic_paths.shuffle()
   return
 
 

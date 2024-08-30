@@ -216,6 +216,8 @@ transform = Transform3D(0.965926, 0.25, -0.0669873, 0, 0.258819, 0.965926, 0.258
 light_color = Color(1, 0.952941, 1, 1)
 light_energy = 2.0
 shadow_enabled = true
+directional_shadow_mode = 1
+directional_shadow_max_distance = 200.0
 
 [node name="PauseAndHUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("11_r5ic5")]
 player = NodePath("../Player")
@@ -1017,12 +1019,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 curve = SubResource("Curve3D_qxcgu")
 script = ExtResource("16_k8s8v")
 spawn_vehicles = true
+path_max_speed = 22.0
 
 [node name="TP_N" type="Path3D" parent="RoadManager/Long_Road"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 curve = SubResource("Curve3D_5yswf")
 script = ExtResource("16_k8s8v")
 spawn_vehicles = true
+path_max_speed = 22.0
 
 [node name="Long_Road2" type="Node3D" parent="RoadManager"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.5, 190)
@@ -1064,12 +1068,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 curve = SubResource("Curve3D_qxcgu")
 script = ExtResource("16_k8s8v")
 spawn_vehicles = true
+path_max_speed = 22.0
 
 [node name="TP_N" type="Path3D" parent="RoadManager/Long_Road2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 curve = SubResource("Curve3D_5yswf")
 script = ExtResource("16_k8s8v")
 spawn_vehicles = true
+path_max_speed = 22.0
 
 [node name="Long_Curved_Road" type="Node3D" parent="RoadManager"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -148, 0.5, 10)
@@ -1124,12 +1130,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 curve = SubResource("Curve3D_fs333")
 script = ExtResource("16_k8s8v")
 spawn_vehicles = true
+path_max_speed = 22.0
 
 [node name="TP_NW" type="Path3D" parent="RoadManager/Long_Curved_Road"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 curve = SubResource("Curve3D_1nqir")
 script = ExtResource("16_k8s8v")
 spawn_vehicles = true
+path_max_speed = 22.0
 
 [node name="Long_Curved_Road2" type="Node3D" parent="RoadManager"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0.5, 10)
@@ -1184,12 +1192,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 curve = SubResource("Curve3D_nj2lt")
 script = ExtResource("16_k8s8v")
 spawn_vehicles = true
+path_max_speed = 22.0
 
 [node name="TP_NE" type="Path3D" parent="RoadManager/Long_Curved_Road2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 curve = SubResource("Curve3D_uuhjt")
 script = ExtResource("16_k8s8v")
 spawn_vehicles = true
+path_max_speed = 22.0
 
 [node name="T-Junction_A" parent="RoadManager" node_paths=PackedStringArray("path_entering_RP_001", "path_exiting_RP_001", "path_entering_RP_002", "path_exiting_RP_002", "path_entering_RP_003", "path_exiting_RP_003", "traffic_lights_RP_001", "traffic_lights_RP_002", "traffic_lights_RP_003") instance=ExtResource("15_fat5n")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 36, 0.5, -130)

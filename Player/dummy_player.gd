@@ -3,6 +3,7 @@ class_name DummyCharacterSkin extends Node3D
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var state_machine : AnimationNodeStateMachinePlayback = animation_tree.get("parameters/StateMachine/playback")
+@onready var skeleton : Skeleton3D = $Rig/Skeleton3D
 var moving_blend_path := "parameters/StateMachine/Move/blend_position"
 ## False : set animation to "idle"
 ## True : set animation to "move"
@@ -18,6 +19,7 @@ func _ready() -> void:
   animation_player.get_animation("Running_A").loop_mode = Animation.LOOP_LINEAR
   animation_player.get_animation("Idle").loop_mode = Animation.LOOP_LINEAR
   animation_player.get_animation("Jump_Idle").loop_mode = Animation.LOOP_LINEAR
+  animation_player.get_animation("T-Pose").loop_mode = Animation.LOOP_LINEAR
 
 
 func set_moving(value : bool):
@@ -51,3 +53,9 @@ func fall() -> void:
 
 func land() -> void:
   state_machine.travel("Jump_Land")
+
+
+func ragdoll() -> void:
+  if state_machine.is_playing():
+    state_machine.stop()
+  #state_machine.travel("T-Pose")
