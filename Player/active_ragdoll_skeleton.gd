@@ -11,19 +11,18 @@ extends Skeleton3D
 @export var max_angular_force: float = 10.0
 
 var physics_bones: Array[PhysicalBone3D]
-var physical_bone_simulator: PhysicalBoneSimulator3D
 
 
 func _ready() -> void:
   for _bone: PhysicalBone3D in find_children("*", "PhysicalBone3D"):
     physics_bones.push_back(_bone)
-  physical_bone_simulator = find_child("PhysicalBoneSimulator3D")
+  #physical_bone_simulator = find_child("PhysicalBoneSimulator3D")
   return
 
 
 func _physics_process(delta: float) -> void:
-  if not physical_bone_simulator.is_simulating_physics():
-    return
+  #if not is_simulating_physics():
+    #return
 
   for b in physics_bones:
     var _target_bone_transform := target_skeleton.get_bone_global_pose(b.get_bone_id())
