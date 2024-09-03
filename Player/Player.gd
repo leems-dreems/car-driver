@@ -27,7 +27,9 @@ var useable_target : Node3D = null
 @onready var _vehicle_controller: VehicleController = $VehicleController
 @onready var _camera_controller: CameraController = $CameraController
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
-@onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummySkin
+@onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummySkin_Animated
+@onready var _ragdoll_skeleton: Skeleton3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D
+#@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 
@@ -63,10 +65,17 @@ func _physics_process(delta: float) -> void:
   var should_ragdoll := Input.is_action_just_pressed("Ragdoll")
 
   if not is_ragdolling and should_ragdoll:
-    _dummy_skin.skeleton.physical_bones_start_simulation()
+    #_ragdoll_skeleton.physical_bones_start_simulation()
+    # Get list of bone names, remove names we don't want to simulate
+    var _bone_names: Array[StringName] = []
+    for _bone: Node in _ragdoll_skeleton.get_children():
+      if _bone is PhysicalBone3D:
+        _bone_names.push_back(_bone.name)
+    _ragdoll_skeleton.physical_bones_start_simulation(_bone_names)
     is_ragdolling = true
-    get_tree().create_timer(5.0).timeout.connect(func():
-      _dummy_skin.skeleton.physical_bones_stop_simulation()
+    get_tree().create_timer(10.0).timeout.connect(func():
+      #_ragdoll_skeleton.physical_bones_stop_simulation()
+      _ragdoll_skeleton.physical_bones_stop_simulation()
       is_ragdolling = false
     )
 
@@ -145,9 +154,7 @@ func _physics_process(delta: float) -> void:
       velocity.y += jump_additional_force * delta
 
     # Set character animation
-    if is_ragdolling:
-      _dummy_skin.ragdoll()
-    elif is_just_jumping:
+    if is_just_jumping:
       _dummy_skin.jump()
     elif not is_on_floor() and velocity.y < 0:
       _dummy_skin.fall()

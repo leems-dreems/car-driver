@@ -43,14 +43,23 @@ points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.02732
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o1yf6"]
 streams_count = 9
 stream_0/stream = ExtResource("3_g156r")
+stream_0/weight = 1.62551e-43
 stream_1/stream = ExtResource("4_ubaik")
+stream_1/weight = 1.66755e-43
 stream_2/stream = ExtResource("5_oy64b")
+stream_2/weight = 1.41531e-43
 stream_3/stream = ExtResource("6_584nw")
+stream_3/weight = 6.72623e-44
 stream_4/stream = ExtResource("7_8wgmo")
+stream_4/weight = 7.70714e-44
 stream_5/stream = ExtResource("8_83oow")
+stream_5/weight = 7.84727e-44
 stream_6/stream = ExtResource("9_upqea")
+stream_6/weight = 7.70714e-44
 stream_7/stream = ExtResource("10_1b68x")
+stream_7/weight = 1.41531e-43
 stream_8/stream = ExtResource("11_njm3p")
+stream_8/weight = 6.72623e-44
 
 [node name="SpringyTrashBinRound" type="Node3D"]
 script = ExtResource("1_chnk8")
@@ -64,8 +73,8 @@ axis_lock_angular_y = true
 axis_lock_angular_z = true
 mass = 60.0
 physics_material_override = SubResource("PhysicsMaterial_43kg8")
-contact_monitor = true
 max_contacts_reported = 10
+contact_monitor = true
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84827, 0)

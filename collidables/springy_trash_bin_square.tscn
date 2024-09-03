@@ -32,14 +32,23 @@ points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.02732
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3uuiw"]
 streams_count = 9
 stream_0/stream = ExtResource("3_hicbd")
+stream_0/weight = 3.40936e+14
 stream_1/stream = ExtResource("4_qycs8")
+stream_1/weight = 3.40902e+14
 stream_2/stream = ExtResource("5_v1xoi")
+stream_2/weight = 3.40885e+14
 stream_3/stream = ExtResource("6_gjv7k")
+stream_3/weight = 3.40919e+14
 stream_4/stream = ExtResource("7_tfwh5")
+stream_4/weight = 3.4097e+14
 stream_5/stream = ExtResource("8_wfcqn")
+stream_5/weight = 3.40876e+14
 stream_6/stream = ExtResource("9_7wixv")
+stream_6/weight = 3.40915e+14
 stream_7/stream = ExtResource("10_x7tns")
+stream_7/weight = 3.4085e+14
 stream_8/stream = ExtResource("11_ghpkv")
+stream_8/weight = 3.40889e+14
 
 [node name="SpringyTrashBinSquare" type="Node3D"]
 script = ExtResource("1_qq57t")
@@ -54,8 +63,8 @@ axis_lock_angular_z = true
 mass = 30.0
 physics_material_override = SubResource("PhysicsMaterial_8cs2y")
 center_of_mass_mode = 1
-contact_monitor = true
 max_contacts_reported = 10
+contact_monitor = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 mesh = ExtResource("2_ynqp0")
