@@ -2,13 +2,13 @@ extends Skeleton3D
 
 @export var target_skeleton: Skeleton3D
 
-@export var linear_spring_stiffness: float = 1000.0
+@export var linear_spring_stiffness: float = 500.0
 @export var linear_spring_damping: float = 40.0
-@export var max_linear_force: float = 500.0
+@export var max_linear_force: float = 1000.0
 
-@export var angular_spring_stiffness: float = 100.0
+@export var angular_spring_stiffness: float = 5000.0
 @export var angular_spring_damping: float = 80.0
-@export var max_angular_force: float = 10.0
+@export var max_angular_force: float = 1000.0
 
 var physics_bones: Array[PhysicalBone3D]
 
@@ -28,9 +28,7 @@ func _physics_process(delta: float) -> void:
     var _target_bone_transform := target_skeleton.get_bone_global_pose(b.get_bone_id())
     var target_transform: Transform3D = target_skeleton.global_transform * _target_bone_transform
 
-    var _current_bone_transform := get_bone_global_pose(b.get_bone_id())
-    #_current_bone_transform = _current_bone_transform.rotated(Vector3.UP, PI / 2).rotated(Vector3.LEFT, PI / 2).rotated(Vector3.FORWARD, PI / 2)
-    var current_transform: Transform3D = global_transform * _current_bone_transform
+    var current_transform: Transform3D = global_transform * get_bone_global_pose(b.get_bone_id())
 
     var rotation_difference: Basis = (target_transform.basis * current_transform.basis.inverse())
     var position_difference: Vector3 = target_transform.origin - current_transform.origin

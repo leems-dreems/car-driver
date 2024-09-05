@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=49 format=3 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact.gd" id="1_pg53u"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_kvrte"]
@@ -11,7 +11,6 @@
 [ext_resource type="AudioStream" uid="uid://cfqlem3v5t0y6" path="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Sound effects/Car_Engine_Loop.ogg" id="5_bnnwg"]
 [ext_resource type="ArrayMesh" uid="uid://bhui0qh4i80lg" path="res://assets/models/car_cricket_door_FR.obj" id="5_trfuy"]
 [ext_resource type="PhysicsMaterial" uid="uid://bgc5lkrsa84nb" path="res://cars/car_door_physics_material.tres" id="7_2j5l5"]
-[ext_resource type="Material" uid="uid://d3c0j36xceoqj" path="res://cars/compact/compact_green_material_3d.tres" id="7_lewlb"]
 [ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="7_ngr1s"]
 [ext_resource type="AudioStream" uid="uid://d02vhghagqdjw" path="res://assets/sfx/car-door-shut.wav" id="8_n0lig"]
 [ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="10_61kxu"]
@@ -262,7 +261,6 @@ sample_rpm = 3000.0
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
 mesh = ExtResource("3_6oki7")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("7_lewlb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)

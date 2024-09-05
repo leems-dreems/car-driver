@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ddfgi7pf4dynb" path="res://assets/KayKit prototype character/Dummy.glb" id="1_7nd1n"]
 [ext_resource type="Script" path="res://Player/dummy_player.gd" id="2_uttsm"]
 
-[sub_resource type="Animation" id="Animation_fuggp"]
+[sub_resource type="Animation" id="Animation_l3kdk"]
 resource_name = "1H_Melee_Attack_Chop"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -406,7 +406,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_dckcv"]
+[sub_resource type="Animation" id="Animation_duyh0"]
 resource_name = "1H_Melee_Attack_Slice_Diagonal"
 tracks/0/type = "position_3d"
 tracks/0/imported = true
@@ -808,7 +808,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_emht4"]
+[sub_resource type="Animation" id="Animation_8w0cm"]
 resource_name = "1H_Melee_Attack_Slice_Horizontal"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -1211,7 +1211,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_a2e4n"]
+[sub_resource type="Animation" id="Animation_bcmyp"]
 resource_name = "1H_Melee_Attack_Stab"
 length = 1.6
 tracks/0/type = "position_3d"
@@ -1614,7 +1614,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_v0bbv"]
+[sub_resource type="Animation" id="Animation_7tr4f"]
 resource_name = "1H_Ranged_Aiming"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -2017,7 +2017,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_mbcbg"]
+[sub_resource type="Animation" id="Animation_w7ol1"]
 resource_name = "1H_Ranged_Reload"
 length = 1.16667
 tracks/0/type = "position_3d"
@@ -2420,7 +2420,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_ndiny"]
+[sub_resource type="Animation" id="Animation_57d5p"]
 resource_name = "1H_Ranged_Shoot"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -2823,7 +2823,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_5hqsv"]
+[sub_resource type="Animation" id="Animation_pbcq0"]
 resource_name = "1H_Ranged_Shooting"
 length = 1.6
 tracks/0/type = "position_3d"
@@ -3226,7 +3226,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_b8ytu"]
+[sub_resource type="Animation" id="Animation_cobpy"]
 resource_name = "2H_Melee_Attack_Chop"
 length = 1.63333
 tracks/0/type = "position_3d"
@@ -3629,7 +3629,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_qibie"]
+[sub_resource type="Animation" id="Animation_u5bir"]
 resource_name = "2H_Melee_Attack_Slice"
 length = 1.1
 tracks/0/type = "position_3d"
@@ -4032,7 +4032,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_bmx8e"]
+[sub_resource type="Animation" id="Animation_e4rbp"]
 resource_name = "2H_Melee_Attack_Spin"
 length = 2.4
 tracks/0/type = "position_3d"
@@ -4435,7 +4435,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_jnyvq"]
+[sub_resource type="Animation" id="Animation_nq7u6"]
 resource_name = "2H_Melee_Attack_Spinning"
 length = 0.666667
 tracks/0/type = "position_3d"
@@ -4838,7 +4838,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_o1b0n"]
+[sub_resource type="Animation" id="Animation_33p43"]
 resource_name = "2H_Melee_Attack_Stab"
 length = 1.6
 tracks/0/type = "position_3d"
@@ -5241,7 +5241,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_k6kae"]
+[sub_resource type="Animation" id="Animation_qoqsf"]
 resource_name = "2H_Melee_Idle"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -5644,7 +5644,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_bgggy"]
+[sub_resource type="Animation" id="Animation_68p4j"]
 resource_name = "2H_Ranged_Aiming"
 length = 1.6
 tracks/0/type = "position_3d"
@@ -6047,7 +6047,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_alofc"]
+[sub_resource type="Animation" id="Animation_c5irk"]
 resource_name = "2H_Ranged_Reload"
 length = 1.6
 tracks/0/type = "position_3d"
@@ -6450,7 +6450,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_8pava"]
+[sub_resource type="Animation" id="Animation_obv64"]
 resource_name = "2H_Ranged_Shoot"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -6853,7 +6853,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_7wl61"]
+[sub_resource type="Animation" id="Animation_5qcyp"]
 resource_name = "2H_Ranged_Shooting"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -7256,7 +7256,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_qrdc8"]
+[sub_resource type="Animation" id="Animation_275yu"]
 resource_name = "Block"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -7659,7 +7659,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_onh47"]
+[sub_resource type="Animation" id="Animation_yuc1o"]
 resource_name = "Block_Attack"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -8062,7 +8062,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_sevx7"]
+[sub_resource type="Animation" id="Animation_q088j"]
 resource_name = "Block_Hit"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -8465,7 +8465,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_fe2oa"]
+[sub_resource type="Animation" id="Animation_5i8y1"]
 resource_name = "Blocking"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -8868,7 +8868,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_hab00"]
+[sub_resource type="Animation" id="Animation_skq0w"]
 resource_name = "Cheer"
 length = 1.66667
 tracks/0/type = "position_3d"
@@ -9271,7 +9271,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_sln5v"]
+[sub_resource type="Animation" id="Animation_6dhcx"]
 resource_name = "Death_A"
 length = 0.8
 tracks/0/type = "position_3d"
@@ -9674,7 +9674,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_0qr8r"]
+[sub_resource type="Animation" id="Animation_ujmnr"]
 resource_name = "Death_A_Pose"
 length = 0.001
 tracks/0/type = "position_3d"
@@ -10077,7 +10077,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_flrh7"]
+[sub_resource type="Animation" id="Animation_qnqlf"]
 resource_name = "Death_B"
 length = 2.63333
 tracks/0/type = "position_3d"
@@ -10480,7 +10480,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_n61bk"]
+[sub_resource type="Animation" id="Animation_mbmgw"]
 resource_name = "Death_B_Pose"
 length = 0.001
 tracks/0/type = "position_3d"
@@ -10883,7 +10883,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_6d6m2"]
+[sub_resource type="Animation" id="Animation_qyu3d"]
 resource_name = "Dodge_Backward"
 length = 0.4
 tracks/0/type = "position_3d"
@@ -11286,7 +11286,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_a877o"]
+[sub_resource type="Animation" id="Animation_4aywc"]
 resource_name = "Dodge_Forward"
 length = 0.4
 tracks/0/type = "position_3d"
@@ -11689,7 +11689,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1.04035e-07, -0.391084, -0.920355, 2.95261e-08)
 
-[sub_resource type="Animation" id="Animation_bpt32"]
+[sub_resource type="Animation" id="Animation_nx01y"]
 resource_name = "Dodge_Left"
 length = 0.4
 tracks/0/type = "position_3d"
@@ -12092,7 +12092,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1.04035e-07, -0.391084, -0.920355, 2.95261e-08)
 
-[sub_resource type="Animation" id="Animation_ebdlr"]
+[sub_resource type="Animation" id="Animation_hcy77"]
 resource_name = "Dodge_Right"
 length = 0.4
 tracks/0/type = "position_3d"
@@ -12495,7 +12495,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_4ogyg"]
+[sub_resource type="Animation" id="Animation_orjm4"]
 resource_name = "Dualwield_Melee_Attack_Chop"
 length = 1.26667
 tracks/0/type = "position_3d"
@@ -12898,7 +12898,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_u80un"]
+[sub_resource type="Animation" id="Animation_who5q"]
 resource_name = "Dualwield_Melee_Attack_Slice"
 length = 1.16667
 tracks/0/type = "position_3d"
@@ -13301,7 +13301,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_t8qac"]
+[sub_resource type="Animation" id="Animation_as4n0"]
 resource_name = "Dualwield_Melee_Attack_Stab"
 length = 1.6
 tracks/0/type = "position_3d"
@@ -13704,7 +13704,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_6rqoe"]
+[sub_resource type="Animation" id="Animation_2dost"]
 resource_name = "Hit_A"
 length = 0.666667
 tracks/0/type = "position_3d"
@@ -14107,7 +14107,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_uc8hi"]
+[sub_resource type="Animation" id="Animation_1wqfh"]
 resource_name = "Hit_B"
 length = 0.866667
 tracks/0/type = "position_3d"
@@ -14510,7 +14510,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_4hcni"]
+[sub_resource type="Animation" id="Animation_08c1i"]
 resource_name = "Idle"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -14913,7 +14913,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_vud2c"]
+[sub_resource type="Animation" id="Animation_2owxe"]
 resource_name = "Interact"
 length = 1.3
 tracks/0/type = "position_3d"
@@ -15316,7 +15316,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_u6c1i"]
+[sub_resource type="Animation" id="Animation_5k06k"]
 resource_name = "Jump_Full_Long"
 length = 2.33333
 tracks/0/type = "position_3d"
@@ -15719,7 +15719,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_j8pgl"]
+[sub_resource type="Animation" id="Animation_5vkph"]
 resource_name = "Jump_Full_Short"
 length = 1.16667
 tracks/0/type = "position_3d"
@@ -16122,7 +16122,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_uelpo"]
+[sub_resource type="Animation" id="Animation_48nhx"]
 resource_name = "Jump_Idle"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -16525,7 +16525,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_cl80k"]
+[sub_resource type="Animation" id="Animation_atrgy"]
 resource_name = "Jump_Land"
 length = 0.666667
 tracks/0/type = "position_3d"
@@ -16928,7 +16928,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_usbwm"]
+[sub_resource type="Animation" id="Animation_wd32i"]
 resource_name = "Jump_Start"
 length = 0.6
 tracks/0/type = "position_3d"
@@ -17331,7 +17331,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_y36ps"]
+[sub_resource type="Animation" id="Animation_eubn8"]
 resource_name = "Lie_Down"
 length = 3.0
 tracks/0/type = "position_3d"
@@ -17734,7 +17734,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_274ei"]
+[sub_resource type="Animation" id="Animation_bxocu"]
 resource_name = "Lie_Idle"
 length = 2.66667
 tracks/0/type = "position_3d"
@@ -18137,7 +18137,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_t2w57"]
+[sub_resource type="Animation" id="Animation_01h4t"]
 resource_name = "Lie_Pose"
 length = 0.001
 tracks/0/type = "position_3d"
@@ -18540,7 +18540,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_ecog8"]
+[sub_resource type="Animation" id="Animation_t3cud"]
 resource_name = "Lie_StandUp"
 length = 2.33333
 tracks/0/type = "position_3d"
@@ -18943,7 +18943,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_c5oyb"]
+[sub_resource type="Animation" id="Animation_hugfh"]
 resource_name = "PickUp"
 length = 1.3
 tracks/0/type = "position_3d"
@@ -19346,7 +19346,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_ohruv"]
+[sub_resource type="Animation" id="Animation_a18kf"]
 resource_name = "Running_A"
 length = 0.8
 tracks/0/type = "position_3d"
@@ -19749,7 +19749,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1.04035e-07, -0.391084, -0.920355, 2.95261e-08)
 
-[sub_resource type="Animation" id="Animation_ouye6"]
+[sub_resource type="Animation" id="Animation_606ke"]
 resource_name = "Running_B"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -20152,7 +20152,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 0, -8.47033e-22, 0, 1)
 
-[sub_resource type="Animation" id="Animation_qksca"]
+[sub_resource type="Animation" id="Animation_o6txc"]
 resource_name = "Running_Strafe_Left"
 length = 0.8
 tracks/0/type = "position_3d"
@@ -20555,7 +20555,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_kahm1"]
+[sub_resource type="Animation" id="Animation_lwhq3"]
 resource_name = "Running_Strafe_Right"
 length = 0.8
 tracks/0/type = "position_3d"
@@ -20958,7 +20958,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1.04035e-07, -0.391084, -0.920355, 2.95261e-08)
 
-[sub_resource type="Animation" id="Animation_hxodr"]
+[sub_resource type="Animation" id="Animation_2il47"]
 resource_name = "Sit_Chair_Down"
 length = 0.8
 tracks/0/type = "position_3d"
@@ -21361,7 +21361,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1.04035e-07, -0.391084, -0.920355, 2.95261e-08)
 
-[sub_resource type="Animation" id="Animation_pq8kc"]
+[sub_resource type="Animation" id="Animation_fhiyu"]
 resource_name = "Sit_Chair_Idle"
 length = 3.6
 tracks/0/type = "position_3d"
@@ -21764,7 +21764,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1.04035e-07, -0.391084, -0.920355, 2.95261e-08)
 
-[sub_resource type="Animation" id="Animation_vox33"]
+[sub_resource type="Animation" id="Animation_dl7jc"]
 resource_name = "Sit_Chair_Pose"
 length = 0.001
 tracks/0/type = "position_3d"
@@ -22167,7 +22167,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 0, 4.23516e-22, 0, 1)
 
-[sub_resource type="Animation" id="Animation_o62l4"]
+[sub_resource type="Animation" id="Animation_bvapx"]
 resource_name = "Sit_Chair_StandUp"
 length = 0.8
 tracks/0/type = "position_3d"
@@ -22570,7 +22570,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -6.31128e-09, 0.16565, 1.36608e-09)
 
-[sub_resource type="Animation" id="Animation_spl1q"]
+[sub_resource type="Animation" id="Animation_je8qa"]
 resource_name = "Sit_Floor_Down"
 tracks/0/type = "position_3d"
 tracks/0/imported = true
@@ -22972,7 +22972,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_mhnsa"]
+[sub_resource type="Animation" id="Animation_ofkdt"]
 resource_name = "Sit_Floor_Idle"
 length = 4.0
 tracks/0/type = "position_3d"
@@ -23375,7 +23375,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_umube"]
+[sub_resource type="Animation" id="Animation_grxeu"]
 resource_name = "Sit_Floor_Pose"
 length = 0.001
 tracks/0/type = "position_3d"
@@ -23778,7 +23778,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_i0252"]
+[sub_resource type="Animation" id="Animation_m7euh"]
 resource_name = "Sit_Floor_StandUp"
 length = 1.13333
 tracks/0/type = "position_3d"
@@ -24181,7 +24181,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_wk0ta"]
+[sub_resource type="Animation" id="Animation_wd5wy"]
 resource_name = "Spellcast_Long"
 length = 2.53333
 tracks/0/type = "position_3d"
@@ -24584,7 +24584,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_1ne3t"]
+[sub_resource type="Animation" id="Animation_pxd6p"]
 resource_name = "Spellcast_Raise"
 length = 2.1
 tracks/0/type = "position_3d"
@@ -24987,7 +24987,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_7uskr"]
+[sub_resource type="Animation" id="Animation_kklgg"]
 resource_name = "Spellcast_Shoot"
 length = 0.933333
 tracks/0/type = "position_3d"
@@ -25390,7 +25390,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_40i21"]
+[sub_resource type="Animation" id="Animation_yfc2c"]
 resource_name = "Spellcasting"
 length = 0.666667
 tracks/0/type = "position_3d"
@@ -25793,7 +25793,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_gav3e"]
+[sub_resource type="Animation" id="Animation_bh3vq"]
 resource_name = "T-Pose"
 length = 0.001
 tracks/0/type = "position_3d"
@@ -26196,7 +26196,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_gglmx"]
+[sub_resource type="Animation" id="Animation_lung2"]
 resource_name = "Throw"
 length = 1.36667
 tracks/0/type = "position_3d"
@@ -26599,7 +26599,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_w43e2"]
+[sub_resource type="Animation" id="Animation_ir6ru"]
 resource_name = "Unarmed_Idle"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -27002,7 +27002,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_caetq"]
+[sub_resource type="Animation" id="Animation_gu3q4"]
 resource_name = "Unarmed_Melee_Attack_Kick"
 length = 0.933333
 tracks/0/type = "position_3d"
@@ -27405,7 +27405,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_hgc8h"]
+[sub_resource type="Animation" id="Animation_7dmcg"]
 resource_name = "Unarmed_Melee_Attack_Punch_A"
 length = 1.46667
 tracks/0/type = "position_3d"
@@ -27808,7 +27808,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_uaied"]
+[sub_resource type="Animation" id="Animation_gaf3h"]
 resource_name = "Unarmed_Melee_Attack_Punch_B"
 length = 1.66667
 tracks/0/type = "position_3d"
@@ -28211,7 +28211,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_i7cui"]
+[sub_resource type="Animation" id="Animation_kbuao"]
 resource_name = "Unarmed_Pose"
 length = 0.001
 tracks/0/type = "position_3d"
@@ -28614,7 +28614,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, -1, 3.10863e-15, -1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_i4v58"]
+[sub_resource type="Animation" id="Animation_xfjf7"]
 resource_name = "Use_Item"
 length = 1.6
 tracks/0/type = "position_3d"
@@ -29017,7 +29017,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_7ncmk"]
+[sub_resource type="Animation" id="Animation_pilwn"]
 resource_name = "Walking_A"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -29420,7 +29420,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_qhsor"]
+[sub_resource type="Animation" id="Animation_xp28k"]
 resource_name = "Walking_B"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -29823,7 +29823,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_7tr62"]
+[sub_resource type="Animation" id="Animation_eyo5d"]
 resource_name = "Walking_Backwards"
 length = 1.06667
 tracks/0/type = "position_3d"
@@ -30226,7 +30226,7 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="Animation" id="Animation_5crlp"]
+[sub_resource type="Animation" id="Animation_ghlfg"]
 resource_name = "Walking_C"
 length = 1.6
 tracks/0/type = "position_3d"
@@ -30629,84 +30629,84 @@ tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = PackedFloat32Array(0, 1, 1, 4.44086e-16, 1.94707e-07, 6.91739e-22)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_vcuuy"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jobw7"]
 _data = {
-"1H_Melee_Attack_Chop": SubResource("Animation_fuggp"),
-"1H_Melee_Attack_Slice_Diagonal": SubResource("Animation_dckcv"),
-"1H_Melee_Attack_Slice_Horizontal": SubResource("Animation_emht4"),
-"1H_Melee_Attack_Stab": SubResource("Animation_a2e4n"),
-"1H_Ranged_Aiming": SubResource("Animation_v0bbv"),
-"1H_Ranged_Reload": SubResource("Animation_mbcbg"),
-"1H_Ranged_Shoot": SubResource("Animation_ndiny"),
-"1H_Ranged_Shooting": SubResource("Animation_5hqsv"),
-"2H_Melee_Attack_Chop": SubResource("Animation_b8ytu"),
-"2H_Melee_Attack_Slice": SubResource("Animation_qibie"),
-"2H_Melee_Attack_Spin": SubResource("Animation_bmx8e"),
-"2H_Melee_Attack_Spinning": SubResource("Animation_jnyvq"),
-"2H_Melee_Attack_Stab": SubResource("Animation_o1b0n"),
-"2H_Melee_Idle": SubResource("Animation_k6kae"),
-"2H_Ranged_Aiming": SubResource("Animation_bgggy"),
-"2H_Ranged_Reload": SubResource("Animation_alofc"),
-"2H_Ranged_Shoot": SubResource("Animation_8pava"),
-"2H_Ranged_Shooting": SubResource("Animation_7wl61"),
-"Block": SubResource("Animation_qrdc8"),
-"Block_Attack": SubResource("Animation_onh47"),
-"Block_Hit": SubResource("Animation_sevx7"),
-"Blocking": SubResource("Animation_fe2oa"),
-"Cheer": SubResource("Animation_hab00"),
-"Death_A": SubResource("Animation_sln5v"),
-"Death_A_Pose": SubResource("Animation_0qr8r"),
-"Death_B": SubResource("Animation_flrh7"),
-"Death_B_Pose": SubResource("Animation_n61bk"),
-"Dodge_Backward": SubResource("Animation_6d6m2"),
-"Dodge_Forward": SubResource("Animation_a877o"),
-"Dodge_Left": SubResource("Animation_bpt32"),
-"Dodge_Right": SubResource("Animation_ebdlr"),
-"Dualwield_Melee_Attack_Chop": SubResource("Animation_4ogyg"),
-"Dualwield_Melee_Attack_Slice": SubResource("Animation_u80un"),
-"Dualwield_Melee_Attack_Stab": SubResource("Animation_t8qac"),
-"Hit_A": SubResource("Animation_6rqoe"),
-"Hit_B": SubResource("Animation_uc8hi"),
-"Idle": SubResource("Animation_4hcni"),
-"Interact": SubResource("Animation_vud2c"),
-"Jump_Full_Long": SubResource("Animation_u6c1i"),
-"Jump_Full_Short": SubResource("Animation_j8pgl"),
-"Jump_Idle": SubResource("Animation_uelpo"),
-"Jump_Land": SubResource("Animation_cl80k"),
-"Jump_Start": SubResource("Animation_usbwm"),
-"Lie_Down": SubResource("Animation_y36ps"),
-"Lie_Idle": SubResource("Animation_274ei"),
-"Lie_Pose": SubResource("Animation_t2w57"),
-"Lie_StandUp": SubResource("Animation_ecog8"),
-"PickUp": SubResource("Animation_c5oyb"),
-"Running_A": SubResource("Animation_ohruv"),
-"Running_B": SubResource("Animation_ouye6"),
-"Running_Strafe_Left": SubResource("Animation_qksca"),
-"Running_Strafe_Right": SubResource("Animation_kahm1"),
-"Sit_Chair_Down": SubResource("Animation_hxodr"),
-"Sit_Chair_Idle": SubResource("Animation_pq8kc"),
-"Sit_Chair_Pose": SubResource("Animation_vox33"),
-"Sit_Chair_StandUp": SubResource("Animation_o62l4"),
-"Sit_Floor_Down": SubResource("Animation_spl1q"),
-"Sit_Floor_Idle": SubResource("Animation_mhnsa"),
-"Sit_Floor_Pose": SubResource("Animation_umube"),
-"Sit_Floor_StandUp": SubResource("Animation_i0252"),
-"Spellcast_Long": SubResource("Animation_wk0ta"),
-"Spellcast_Raise": SubResource("Animation_1ne3t"),
-"Spellcast_Shoot": SubResource("Animation_7uskr"),
-"Spellcasting": SubResource("Animation_40i21"),
-"T-Pose": SubResource("Animation_gav3e"),
-"Throw": SubResource("Animation_gglmx"),
-"Unarmed_Idle": SubResource("Animation_w43e2"),
-"Unarmed_Melee_Attack_Kick": SubResource("Animation_caetq"),
-"Unarmed_Melee_Attack_Punch_A": SubResource("Animation_hgc8h"),
-"Unarmed_Melee_Attack_Punch_B": SubResource("Animation_uaied"),
-"Unarmed_Pose": SubResource("Animation_i7cui"),
-"Use_Item": SubResource("Animation_i4v58"),
-"Walking_A": SubResource("Animation_7ncmk"),
-"Walking_B": SubResource("Animation_qhsor"),
-"Walking_Backwards": SubResource("Animation_7tr62"),
-"Walking_C": SubResource("Animation_5crlp")
+"1H_Melee_Attack_Chop": SubResource("Animation_l3kdk"),
+"1H_Melee_Attack_Slice_Diagonal": SubResource("Animation_duyh0"),
+"1H_Melee_Attack_Slice_Horizontal": SubResource("Animation_8w0cm"),
+"1H_Melee_Attack_Stab": SubResource("Animation_bcmyp"),
+"1H_Ranged_Aiming": SubResource("Animation_7tr4f"),
+"1H_Ranged_Reload": SubResource("Animation_w7ol1"),
+"1H_Ranged_Shoot": SubResource("Animation_57d5p"),
+"1H_Ranged_Shooting": SubResource("Animation_pbcq0"),
+"2H_Melee_Attack_Chop": SubResource("Animation_cobpy"),
+"2H_Melee_Attack_Slice": SubResource("Animation_u5bir"),
+"2H_Melee_Attack_Spin": SubResource("Animation_e4rbp"),
+"2H_Melee_Attack_Spinning": SubResource("Animation_nq7u6"),
+"2H_Melee_Attack_Stab": SubResource("Animation_33p43"),
+"2H_Melee_Idle": SubResource("Animation_qoqsf"),
+"2H_Ranged_Aiming": SubResource("Animation_68p4j"),
+"2H_Ranged_Reload": SubResource("Animation_c5irk"),
+"2H_Ranged_Shoot": SubResource("Animation_obv64"),
+"2H_Ranged_Shooting": SubResource("Animation_5qcyp"),
+"Block": SubResource("Animation_275yu"),
+"Block_Attack": SubResource("Animation_yuc1o"),
+"Block_Hit": SubResource("Animation_q088j"),
+"Blocking": SubResource("Animation_5i8y1"),
+"Cheer": SubResource("Animation_skq0w"),
+"Death_A": SubResource("Animation_6dhcx"),
+"Death_A_Pose": SubResource("Animation_ujmnr"),
+"Death_B": SubResource("Animation_qnqlf"),
+"Death_B_Pose": SubResource("Animation_mbmgw"),
+"Dodge_Backward": SubResource("Animation_qyu3d"),
+"Dodge_Forward": SubResource("Animation_4aywc"),
+"Dodge_Left": SubResource("Animation_nx01y"),
+"Dodge_Right": SubResource("Animation_hcy77"),
+"Dualwield_Melee_Attack_Chop": SubResource("Animation_orjm4"),
+"Dualwield_Melee_Attack_Slice": SubResource("Animation_who5q"),
+"Dualwield_Melee_Attack_Stab": SubResource("Animation_as4n0"),
+"Hit_A": SubResource("Animation_2dost"),
+"Hit_B": SubResource("Animation_1wqfh"),
+"Idle": SubResource("Animation_08c1i"),
+"Interact": SubResource("Animation_2owxe"),
+"Jump_Full_Long": SubResource("Animation_5k06k"),
+"Jump_Full_Short": SubResource("Animation_5vkph"),
+"Jump_Idle": SubResource("Animation_48nhx"),
+"Jump_Land": SubResource("Animation_atrgy"),
+"Jump_Start": SubResource("Animation_wd32i"),
+"Lie_Down": SubResource("Animation_eubn8"),
+"Lie_Idle": SubResource("Animation_bxocu"),
+"Lie_Pose": SubResource("Animation_01h4t"),
+"Lie_StandUp": SubResource("Animation_t3cud"),
+"PickUp": SubResource("Animation_hugfh"),
+"Running_A": SubResource("Animation_a18kf"),
+"Running_B": SubResource("Animation_606ke"),
+"Running_Strafe_Left": SubResource("Animation_o6txc"),
+"Running_Strafe_Right": SubResource("Animation_lwhq3"),
+"Sit_Chair_Down": SubResource("Animation_2il47"),
+"Sit_Chair_Idle": SubResource("Animation_fhiyu"),
+"Sit_Chair_Pose": SubResource("Animation_dl7jc"),
+"Sit_Chair_StandUp": SubResource("Animation_bvapx"),
+"Sit_Floor_Down": SubResource("Animation_je8qa"),
+"Sit_Floor_Idle": SubResource("Animation_ofkdt"),
+"Sit_Floor_Pose": SubResource("Animation_grxeu"),
+"Sit_Floor_StandUp": SubResource("Animation_m7euh"),
+"Spellcast_Long": SubResource("Animation_wd5wy"),
+"Spellcast_Raise": SubResource("Animation_pxd6p"),
+"Spellcast_Shoot": SubResource("Animation_kklgg"),
+"Spellcasting": SubResource("Animation_yfc2c"),
+"T-Pose": SubResource("Animation_bh3vq"),
+"Throw": SubResource("Animation_lung2"),
+"Unarmed_Idle": SubResource("Animation_ir6ru"),
+"Unarmed_Melee_Attack_Kick": SubResource("Animation_gu3q4"),
+"Unarmed_Melee_Attack_Punch_A": SubResource("Animation_7dmcg"),
+"Unarmed_Melee_Attack_Punch_B": SubResource("Animation_gaf3h"),
+"Unarmed_Pose": SubResource("Animation_kbuao"),
+"Use_Item": SubResource("Animation_xfjf7"),
+"Walking_A": SubResource("Animation_pilwn"),
+"Walking_B": SubResource("Animation_xp28k"),
+"Walking_Backwards": SubResource("Animation_eyo5d"),
+"Walking_C": SubResource("Animation_ghlfg")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_eg6g5"]
@@ -30786,26 +30786,40 @@ script = ExtResource("2_uttsm")
 
 [node name="Skeleton3D" parent="Rig" index="0"]
 bones/4/rotation = Quaternion(-0.514121, -0.485468, -0.485468, 0.514122)
+bones/4/scale = Vector3(0.999999, 0.999999, 1)
 bones/5/rotation = Quaternion(1.49426e-09, -6.22812e-08, -0.0552855, 0.998471)
+bones/6/rotation = Quaternion(5.11846e-11, -3.07743e-10, 0.0266581, 0.999645)
+bones/6/scale = Vector3(1, 1, 1)
 bones/8/rotation = Quaternion(1.68061e-09, 1.68061e-09, -0.707107, 0.707107)
+bones/8/scale = Vector3(1, 1, 1)
 bones/9/rotation = Quaternion(-0.514121, 0.485468, 0.485468, 0.514122)
+bones/9/scale = Vector3(0.999999, 0.999999, 1)
 bones/10/rotation = Quaternion(1.49426e-09, 6.22812e-08, 0.0552855, 0.998471)
+bones/11/rotation = Quaternion(5.11843e-11, 3.07737e-10, -0.0266581, 0.999645)
+bones/11/scale = Vector3(1, 1, 1)
 bones/13/rotation = Quaternion(1.68059e-09, -1.68059e-09, 0.707107, 0.707107)
+bones/13/scale = Vector3(1, 1, 1)
 bones/17/rotation = Quaternion(0.999849, -7.13276e-08, -1.20427e-08, 0.0173732)
+bones/17/scale = Vector3(1, 1, 1)
 bones/19/rotation = Quaternion(-0.455239, 1.61977e-08, -3.43566e-08, 0.890369)
 bones/20/rotation = Quaternion(4.77599e-08, 0.920355, -0.391084, 5.80156e-08)
 bones/21/rotation = Quaternion(0.999849, 7.42656e-08, -3.17263e-08, 0.0173732)
+bones/21/scale = Vector3(1, 1, 1)
 bones/23/rotation = Quaternion(-0.455239, 1.65982e-07, 2.25066e-09, 0.890369)
 bones/24/rotation = Quaternion(2.12198e-08, 0.920355, -0.391084, 6.45059e-08)
 bones/25/rotation = Quaternion(0.707107, -2.29302e-07, -4.60551e-08, 0.707107)
 bones/26/rotation = Quaternion(-0.707107, -7.05285e-08, -7.05285e-08, 0.707107)
 bones/27/rotation = Quaternion(7.10544e-15, -1.38321e-22, 1, -2.33983e-34)
 bones/28/rotation = Quaternion(-1.04035e-07, 0.391084, 0.920355, -2.9526e-08)
+bones/28/scale = Vector3(1, 1, 1)
+bones/29/scale = Vector3(1, 1, 1)
 bones/30/rotation = Quaternion(1, -3.10863e-15, 1.94707e-07, -6.91739e-22)
 bones/32/rotation = Quaternion(0.707107, -3.82385e-08, 1.45009e-07, 0.707107)
 bones/33/rotation = Quaternion(-0.707107, -7.05285e-08, -7.05285e-08, 0.707107)
 bones/34/rotation = Quaternion(7.10544e-15, -1.38321e-22, 1, -2.33983e-34)
 bones/35/rotation = Quaternion(-1.04035e-07, 0.391084, 0.920355, -2.95261e-08)
+bones/35/scale = Vector3(1, 1, 1)
+bones/36/scale = Vector3(1, 1, 1)
 bones/39/rotation = Quaternion(-0.707107, -7.27951e-08, -7.27951e-08, 0.707107)
 bones/40/rotation = Quaternion(0.5, 0.5, 0.5, -0.5)
 bones/41/rotation = Quaternion(-0.707107, -7.27951e-08, -7.27951e-08, 0.707107)
@@ -30819,7 +30833,7 @@ transform = Transform3D(1, -2.11758e-22, -1.69407e-21, 0, 0.984808, -0.173648, 1
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
 libraries = {
-"": SubResource("AnimationLibrary_vcuuy")
+"": SubResource("AnimationLibrary_jobw7")
 }
 tree_root = SubResource("AnimationNodeBlendTree_3lnfc")
 anim_player = NodePath("../AnimationPlayer")
