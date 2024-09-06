@@ -88,7 +88,11 @@ func _physics_process(delta: float) -> void:
           _euler_rotation.y = lerp_angle(_euler_rotation.y, camera_euler.y + PI, delta / 2)
   else:
     # Set camera controller to current ground level for the character
-    var target_position := _anchor.global_position + _offset
+    var target_position: Vector3
+    if _anchor.is_ragdolling:
+      target_position = _anchor.get_skeleton_position() + _offset
+    else:
+      target_position = _anchor.global_position + _offset
     target_position.y = lerp(global_position.y, _anchor._ground_height, 0.1)
     global_position = target_position
     # Lerp camera distance

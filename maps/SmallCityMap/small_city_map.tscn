@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://cr77wenw0lh5c"]
+[gd_scene load_steps=61 format=3 uid="uid://cr77wenw0lh5c"]
 
 [ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
@@ -16,7 +16,6 @@
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="16_k8s8v"]
 [ext_resource type="Script" path="res://collidables/springy_props_manager.gd" id="19_7htru"]
 [ext_resource type="PackedScene" uid="uid://bol1qtccjchrx" path="res://collidables/springy_gas_pump.tscn" id="20_v1fy2"]
-[ext_resource type="PackedScene" uid="uid://ds0e0h6kkjqxj" path="res://collidables/springy_trash_can_round.tscn" id="21_r0v4o"]
 [ext_resource type="PackedScene" uid="uid://dnhe41455c4fi" path="res://collidables/springy_trash_bin_square.tscn" id="22_q1qst"]
 [ext_resource type="Script" path="res://traffic/traffic_manager.gd" id="23_0pkuc"]
 [ext_resource type="PhysicsMaterial" uid="uid://cc6punypby5f5" path="res://assets/materials/building_physics_material.tres" id="23_s8icf"]
@@ -1377,24 +1376,12 @@ reset_time = 10.0
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -60, 0.1, -34)
 reset_time = 10.0
 
-[node name="SpringyTrashBinRound" parent="SpringyPropsManager" instance=ExtResource("21_r0v4o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0.2, -34)
-reset_time = 10.0
-
-[node name="SpringyTrashBinRound2" parent="SpringyPropsManager" instance=ExtResource("21_r0v4o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 0.2, -34)
-reset_time = 10.0
-
 [node name="SpringyGasPump5" parent="SpringyPropsManager" instance=ExtResource("20_v1fy2")]
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -36, 0.1, -34)
 reset_time = 10.0
 
 [node name="SpringyGasPump6" parent="SpringyPropsManager" instance=ExtResource("20_v1fy2")]
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -44, 0.1, -34)
-reset_time = 10.0
-
-[node name="SpringyTrashBinRound3" parent="SpringyPropsManager" instance=ExtResource("21_r0v4o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0.2, -34)
 reset_time = 10.0
 
 [node name="SpringyTrashBinSquare62" parent="SpringyPropsManager" instance=ExtResource("22_q1qst")]

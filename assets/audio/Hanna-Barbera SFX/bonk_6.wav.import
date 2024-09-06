@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cq7yfpfrco8bm"
+path="res://.godot/imported/bonk_6.wav-5aeae5f1d2eab94f57aafc4841ce8739.sample"
+
+[deps]
+
+source_file="res://assets/audio/Hanna-Barbera SFX/bonk_6.wav"
+dest_files=["res://.godot/imported/bonk_6.wav-5aeae5f1d2eab94f57aafc4841ce8739.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

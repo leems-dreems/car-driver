@@ -1,10 +1,11 @@
 extends Skeleton3D
 
 @export var target_skeleton: Skeleton3D
+@export var player: Player
 
-@export var linear_spring_stiffness: float = 500.0
-@export var linear_spring_damping: float = 40.0
-@export var max_linear_force: float = 1000.0
+@export var linear_spring_stiffness: float = 2000.0
+@export var linear_spring_damping: float = 100.0
+@export var max_linear_force: float = 5000.0
 
 @export var angular_spring_stiffness: float = 5000.0
 @export var angular_spring_damping: float = 80.0
@@ -21,8 +22,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-  #if not is_simulating_physics():
-    #return
+  if player.is_ragdolling:
+    return
 
   for b in physics_bones:
     var _target_bone_transform := target_skeleton.get_bone_global_pose(b.get_bone_id())
