@@ -37,6 +37,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
   if explosion_area.monitoring:
     for _body: Node3D in explosion_area.get_overlapping_bodies():
+      if _body.has_method("go_limp"):
+        _body.go_limp()
+      elif _body is PlayerPhysicalBone:
+        _body.target_linear_velocity += calculate_force_vector_for_body(_body) / 1000
       if _body is RigidBody3D:
         apply_explosion_force(_body, delta)
       elif _body is StaticBody3D and _body.is_in_group("ExplosionCatcher"):
@@ -46,10 +50,7 @@ func _physics_process(delta: float) -> void:
 ## Applies an explosion force to a body. If [local_offset] is unspecified, the force will be offset
 ## to slightly above the body's center of mass, to impart a bit of top-spin.
 func apply_explosion_force(_body: RigidBody3D, delta: float, local_offset: Vector3 = Vector3.INF, multiplier: float = 1.0) -> void:
-  var direction_vector: Vector3 = (_body.global_position + _body.center_of_mass) - explosion_area.global_position
-  # Compare the explosion's current scale to its max scale to get a strength multiplier
-  var fade_multiplier: float = explosion_scale / explosion_area.scale.x
-  var force_vector := direction_vector.normalized() * fade_multiplier * explosion_force_multiplier * multiplier
+  var force_vector := calculate_force_vector_for_body(_body) * multiplier
   if local_offset == Vector3.INF:
     # Adjust the target for the force to be above the body's CoM
     var adjusted_target: Vector3 = to_local(to_global(_body.center_of_mass) + Vector3(0, 0.1, 0))
@@ -59,6 +60,18 @@ func apply_explosion_force(_body: RigidBody3D, delta: float, local_offset: Vecto
   if _body is DriveableVehicle:
     _body.current_hit_points -= (explosion_area.scale.x / explosion_scale) * damage_multiplier
   return
+
+
+func calculate_force_vector_for_body(_body: Node3D) -> Vector3:
+  var direction_vector: Vector3
+  if _body is RigidBody3D:
+    direction_vector = (_body.global_position + _body.center_of_mass) - explosion_area.global_position
+  else:
+    direction_vector = (_body.global_position) - explosion_area.global_position
+  # Compare the explosion's current scale to its max scale to get a strength multiplier
+  var fade_multiplier: float = explosion_scale / explosion_area.scale.x
+  var force_vector := direction_vector.normalized() * fade_multiplier * explosion_force_multiplier
+  return force_vector
 
 
 func start_explosion() -> void:

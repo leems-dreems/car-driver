@@ -6,7 +6,7 @@ extends RigidBody3D
 ## Movement acceleration (how fast character achieve maximum speed)
 @export var acceleration := 40.0
 ## Jump impulse
-@export var jump_initial_impulse := 4.0
+@export var jump_initial_impulse := 8.0
 ## Jump impulse when player keeps pressing jump
 @export var jump_additional_force := 24.0
 ## Player model rotation speed
@@ -17,7 +17,9 @@ extends RigidBody3D
 ## Speed to switch from walking to running
 @export var running_speed := 4.0
 ## Minimum impact force that will cause player to start ragdolling
-@export var impact_resistance := 5.0
+@export var impact_resistance := 10.0
+## Minimum time the player will ragdoll for after getting hit
+@export var min_ragdoll_time := 4.0
 ## Vehicle the player is currently in
 @export var current_vehicle : DriveableVehicle = null
 @export var current_mission : Mission = null
@@ -30,6 +32,7 @@ var useable_target : Node3D = null
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
 @onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummyRigAnimated
 @onready var ragdoll_skeleton: Skeleton3D = $DummyRigPhysical/Rig/Skeleton3D
+@onready var _ragdoll_tracker_bone: PhysicalBone3D = $"DummyRigPhysical/Rig/Skeleton3D/Physical Bone spine"
 #@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
@@ -47,6 +50,8 @@ var is_ragdolling := false
 var is_waiting_to_reset := false
 ## Velocity as of the last physics tick
 var _previous_velocity: Vector3 = Vector3.ZERO
+## Timer used to space out how often we check if we can exit ragdoll
+var _ragdoll_reset_timer: SceneTreeTimer = null
 
 
 func _ready() -> void:
@@ -59,30 +64,28 @@ func _on_body_entered(_body: Node) -> void:
   if not is_ragdolling and _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D:
     var _impact_force := (_previous_velocity - linear_velocity).length()
     if _impact_force > impact_resistance:
-      $HitSound.play()
-      is_ragdolling = true
-      freeze = true
-      collision_layer = 0
-      get_tree().create_timer(5.0).timeout.connect(func():
-        is_ragdolling = false
-        collision_layer = _default_collision_layer
-        global_position = get_skeleton_position()
-        is_waiting_to_reset = true
-        freeze = false
-      )
+      go_limp()
   return
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-  if is_waiting_to_reset:
-    freeze = false
-    state.linear_velocity = Vector3.ZERO
-    state.angular_velocity = Vector3.ZERO
-    is_waiting_to_reset = false
+  if is_waiting_to_reset and _ragdoll_reset_timer == null:
+    if can_stand_up():
+      is_ragdolling = false
+      collision_layer = _default_collision_layer
+      global_position = get_skeleton_position()
+      state.linear_velocity = Vector3.ZERO
+      state.angular_velocity = Vector3.ZERO
+      is_waiting_to_reset = false
+    else:
+      _ragdoll_reset_timer = get_tree().create_timer(1.0)
+      _ragdoll_reset_timer.timeout.connect(func():
+        _ragdoll_reset_timer = null
+      )
 
 
 func _physics_process(delta: float) -> void:
-  var is_on_ground := checkIsOnGround()
+  var is_on_ground := is_on_ground()
   # Record current velocity, to refer to when processing collision signals
   _previous_velocity = Vector3(linear_velocity)
   # Calculate ground height for camera controller
@@ -253,12 +256,26 @@ func start_ragdoll() -> void:
   #)
 
 
-func checkIsOnGround () -> bool:
+func go_limp() -> void:
+  $HitSound.play()
+  is_ragdolling = true
+  freeze = true
+  collision_layer = 0
+  get_tree().create_timer(min_ragdoll_time).timeout.connect(func():
+    freeze = false
+    is_waiting_to_reset = true
+  )
+
+
+func is_on_ground() -> bool:
   return len(ground_collider.get_overlapping_bodies()) > 0
 
 
+func can_stand_up() -> bool:
+  return _ragdoll_tracker_bone.linear_velocity.length() < stopping_speed
+
 func get_skeleton_position() -> Vector3:
-  return $"DummyRigPhysical/Rig/Skeleton3D/Physical Bone spine".global_position
+  return _ragdoll_tracker_bone.global_position
 
 
 func enterVehicle (vehicle: DriveableVehicle) -> void:
