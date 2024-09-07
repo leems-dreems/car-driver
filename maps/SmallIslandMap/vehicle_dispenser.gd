@@ -2,8 +2,8 @@ class_name VehicleDispenser extends Node3D
 
 enum VehicleTypes { COMPACT, SEDAN }
 @export var show_debug_label := false
-var compact_scene := preload("res://cars/compact.tscn")
-var sedan_scene := preload("res://cars/sedan.tscn")
+var compact_scene := preload("res://cars/compact/compact.tscn")
+var sedan_scene := preload("res://cars/sedan/sedan.tscn")
 @onready var vehicle_platform: CSGBox3D = $VehiclePlatform
 
 

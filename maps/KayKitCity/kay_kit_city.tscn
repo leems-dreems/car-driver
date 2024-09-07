@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://defp4i4n5dard"]
 
-[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
+[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact/compact.tscn" id="1_djukj"]
 [ext_resource type="PackedScene" uid="uid://wrut3fs81xjv" path="res://maps/KayKitCity/terrain_pieces/road_junction.tscn" id="3_6tcif"]
 [ext_resource type="PhysicsMaterial" uid="uid://xvg1njhe0wed" path="res://assets/materials/road_physics_material.tres" id="3_daxai"]
 [ext_resource type="PackedScene" uid="uid://djoco1viojc80" path="res://maps/KayKitCity/terrain_pieces/road_straight.tscn" id="4_1u4ly"]

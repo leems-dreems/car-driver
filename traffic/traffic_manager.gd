@@ -1,8 +1,8 @@
 class_name TrafficManager extends Node3D
 
 var vehicle_scenes: Array[PackedScene] = [
-  preload("res://cars/compact.tscn"),
-  preload("res://cars/sedan.tscn")
+  preload("res://cars/compact/compact.tscn"),
+  preload("res://cars/sedan/sedan.tscn")
 ]
 
 @export var vehicle_count: int = 10             ## How many vehicles to spawn

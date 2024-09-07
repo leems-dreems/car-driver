@@ -1,28 +1,28 @@
 [gd_scene load_steps=49 format=3 uid="uid://civapmbuqx1uv"]
 
-[ext_resource type="Script" path="res://cars/compact.gd" id="1_pg53u"]
-[ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_kvrte"]
-[ext_resource type="PackedScene" uid="uid://h6vdpba71kpr" path="res://addons/gevp/scenes/smoke_effect.tscn" id="2_negof"]
-[ext_resource type="Script" path="res://addons/gevp/scripts/wheel.gd" id="2_rwko2"]
-[ext_resource type="ArrayMesh" uid="uid://2le86icjy0e2" path="res://assets/models/car_cricket_body.obj" id="3_6oki7"]
-[ext_resource type="ArrayMesh" uid="uid://c2lo5sd57qci7" path="res://assets/models/car_cricket_door_FL.obj" id="4_d7yiy"]
-[ext_resource type="PackedScene" uid="uid://b2hlchrj4h2b7" path="res://addons/gevp/scenes/engine_sound.tscn" id="4_dercd"]
-[ext_resource type="Script" path="res://scripts/car_door.gd" id="5_6gdjk"]
-[ext_resource type="AudioStream" uid="uid://cfqlem3v5t0y6" path="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Sound effects/Car_Engine_Loop.ogg" id="5_bnnwg"]
-[ext_resource type="ArrayMesh" uid="uid://bhui0qh4i80lg" path="res://assets/models/car_cricket_door_FR.obj" id="5_trfuy"]
-[ext_resource type="PhysicsMaterial" uid="uid://bgc5lkrsa84nb" path="res://cars/car_door_physics_material.tres" id="7_2j5l5"]
-[ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="7_ngr1s"]
-[ext_resource type="AudioStream" uid="uid://d02vhghagqdjw" path="res://assets/sfx/car-door-shut.wav" id="8_n0lig"]
-[ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="10_61kxu"]
-[ext_resource type="AudioStream" uid="uid://d2gr5emhyehgo" path="res://assets/sfx/tires_squal_loop.wav" id="15_rmw2m"]
-[ext_resource type="AudioStream" uid="uid://x2riq63vqy7j" path="res://assets/sfx/skid-loop.wav" id="16_v1p2m"]
-[ext_resource type="AudioStream" uid="uid://bw7d3mhbykib" path="res://assets/audio/Hanna-Barbera SFX/clash.wav" id="17_sa2so"]
-[ext_resource type="Material" uid="uid://bdg4152rp8j33" path="res://effects/smoke_particle_process_material.tres" id="19_1dmce"]
-[ext_resource type="QuadMesh" uid="uid://pxlxqqrg7rmf" path="res://effects/fire_quad_mesh.tres" id="20_janxj"]
-[ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="20_x33we"]
-[ext_resource type="Material" uid="uid://ci1rfkavqidwc" path="res://effects/smoke_white_particle_process_material.tres" id="21_p0tg2"]
-[ext_resource type="PackedScene" uid="uid://qj5wm2wpuawj" path="res://effects/explosion.tscn" id="21_tyub6"]
-[ext_resource type="Material" uid="uid://8342nbrtebf1" path="res://effects/fire_particle_process_material.tres" id="22_n3vrb"]
+[ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
+[ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
+[ext_resource type="PackedScene" uid="uid://h6vdpba71kpr" path="res://addons/gevp/scenes/smoke_effect.tscn" id="3_3utam"]
+[ext_resource type="PackedScene" uid="uid://b2hlchrj4h2b7" path="res://addons/gevp/scenes/engine_sound.tscn" id="4_i42xy"]
+[ext_resource type="AudioStream" uid="uid://cfqlem3v5t0y6" path="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Sound effects/Car_Engine_Loop.ogg" id="5_vu53n"]
+[ext_resource type="ArrayMesh" uid="uid://2le86icjy0e2" path="res://assets/models/car_cricket_body.obj" id="6_dgavk"]
+[ext_resource type="ArrayMesh" uid="uid://c2lo5sd57qci7" path="res://assets/models/car_cricket_door_FL.obj" id="7_5d7qu"]
+[ext_resource type="PhysicsMaterial" uid="uid://bgc5lkrsa84nb" path="res://cars/car_door_physics_material.tres" id="8_rpaed"]
+[ext_resource type="Script" path="res://scripts/car_door.gd" id="9_653cp"]
+[ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="10_vgexy"]
+[ext_resource type="AudioStream" uid="uid://d02vhghagqdjw" path="res://assets/sfx/car-door-shut.wav" id="11_0cx5o"]
+[ext_resource type="ArrayMesh" uid="uid://bhui0qh4i80lg" path="res://assets/models/car_cricket_door_FR.obj" id="12_mvqap"]
+[ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="13_3hex1"]
+[ext_resource type="Script" path="res://addons/gevp/scripts/wheel.gd" id="14_e025k"]
+[ext_resource type="AudioStream" uid="uid://d2gr5emhyehgo" path="res://assets/sfx/tires_squal_loop.wav" id="15_68n7x"]
+[ext_resource type="AudioStream" uid="uid://x2riq63vqy7j" path="res://assets/sfx/skid-loop.wav" id="16_wwqhn"]
+[ext_resource type="AudioStream" uid="uid://bw7d3mhbykib" path="res://assets/audio/Hanna-Barbera SFX/clash.wav" id="17_7w5y2"]
+[ext_resource type="Material" uid="uid://bdg4152rp8j33" path="res://effects/smoke_particle_process_material.tres" id="18_6yteg"]
+[ext_resource type="QuadMesh" uid="uid://pxlxqqrg7rmf" path="res://effects/fire_quad_mesh.tres" id="19_ku3tg"]
+[ext_resource type="Material" uid="uid://ci1rfkavqidwc" path="res://effects/smoke_white_particle_process_material.tres" id="20_ov1ny"]
+[ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="21_6fmka"]
+[ext_resource type="Material" uid="uid://8342nbrtebf1" path="res://effects/fire_particle_process_material.tres" id="22_blqn8"]
+[ext_resource type="PackedScene" uid="uid://qj5wm2wpuawj" path="res://effects/explosion.tscn" id="23_0aeo7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.2
@@ -201,7 +201,7 @@ freeze_mode = 1
 continuous_cd = true
 max_contacts_reported = 24
 contact_monitor = true
-script = ExtResource("1_pg53u")
+script = ExtResource("1_vk21t")
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
 rear_left_wheel = NodePath("WheelRearLeft")
@@ -215,7 +215,7 @@ enable_stability = false
 stability_yaw_strength = 1.0
 max_torque = 800.0
 idle_rpm = 1200.0
-torque_curve = ExtResource("2_kvrte")
+torque_curve = ExtResource("2_sg067")
 max_clutch_torque_ratio = 1.0
 final_drive = 4.2
 shift_time = 0.2
@@ -225,7 +225,9 @@ front_variable_split = 0.5
 front_weight_distribution = 0.51
 center_of_gravity_height_offset = 0.0
 front_damping_ratio = 0.8
+front_bump_stop_multiplier = 0.5
 rear_damping_ratio = 0.8
+rear_bump_stop_multiplier = 0.5
 braking_grip_multiplier = 3.0
 coefficient_of_friction = {
 "Dirt": 1.0,
@@ -245,13 +247,13 @@ longitudinal_grip_ratio = {
 front_tire_radius = 0.4
 rear_tire_radius = 0.4
 
-[node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("2_negof")]
+[node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("3_3utam")]
 vehicle = NodePath("..")
-longitudinal_slip_threshold = 0.3
-lateral_slip_threshold = 0.3
+longitudinal_slip_threshold = 0.6
+lateral_slip_threshold = 0.6
 
-[node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_dercd")]
-stream = ExtResource("5_bnnwg")
+[node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_i42xy")]
+stream = ExtResource("5_vu53n")
 unit_size = 2.0
 max_db = -8.0
 vehicle = NodePath("..")
@@ -259,7 +261,7 @@ sample_rpm = 3000.0
 
 [node name="body" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
-mesh = ExtResource("3_6oki7")
+mesh = ExtResource("6_dgavk")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -281,7 +283,7 @@ motor/target_velocity = -3.14159
 
 [node name="ShutDoorLeft" type="MeshInstance3D" parent="ColliderBits"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
-mesh = ExtResource("4_d7yiy")
+mesh = ExtResource("7_5d7qu")
 skeleton = NodePath("../..")
 
 [node name="LeftDoorBodyLatch" type="Area3D" parent="ColliderBits"]
@@ -298,10 +300,10 @@ visible = false
 collision_layer = 262152
 collision_mask = 83
 mass = 10.0
-physics_material_override = ExtResource("7_2j5l5")
+physics_material_override = ExtResource("8_rpaed")
 freeze = true
 freeze_mode = 1
-script = ExtResource("5_6gdjk")
+script = ExtResource("9_653cp")
 parent_car = NodePath("../..")
 shutDoorMesh = NodePath("../ShutDoorLeft")
 hingeJoint = NodePath("../HingeJointLeft")
@@ -312,17 +314,17 @@ door_latch = NodePath("LeftDoorLatch")
 body_latch = NodePath("../LeftDoorBodyLatch")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/OpenDoorLeft"]
-mesh = ExtResource("4_d7yiy")
+mesh = ExtResource("7_5d7qu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/OpenDoorLeft"]
 shape = SubResource("ConvexPolygonShape3D_g0cid")
 
 [node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="ColliderBits/OpenDoorLeft"]
-stream = ExtResource("7_ngr1s")
+stream = ExtResource("10_vgexy")
 unit_size = 2.0
 
 [node name="DoorShutSFX" type="AudioStreamPlayer3D" parent="ColliderBits/OpenDoorLeft"]
-stream = ExtResource("8_n0lig")
+stream = ExtResource("11_0cx5o")
 unit_size = 2.0
 
 [node name="LeftDoorLatch" type="Area3D" parent="ColliderBits/OpenDoorLeft"]
@@ -346,7 +348,7 @@ motor/target_velocity = 3.14159
 
 [node name="ShutDoorRight" type="MeshInstance3D" parent="ColliderBits"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
-mesh = ExtResource("5_trfuy")
+mesh = ExtResource("12_mvqap")
 skeleton = NodePath("../..")
 
 [node name="RightDoorBodyLatch" type="Area3D" parent="ColliderBits"]
@@ -363,10 +365,10 @@ visible = false
 collision_layer = 262152
 collision_mask = 83
 mass = 10.0
-physics_material_override = ExtResource("7_2j5l5")
+physics_material_override = ExtResource("8_rpaed")
 freeze = true
 freeze_mode = 1
-script = ExtResource("5_6gdjk")
+script = ExtResource("9_653cp")
 parent_car = NodePath("../..")
 shutDoorMesh = NodePath("../ShutDoorRight")
 hingeJoint = NodePath("../HingeJointRight")
@@ -377,17 +379,17 @@ door_latch = NodePath("RightDoorLatch")
 body_latch = NodePath("../RightDoorBodyLatch")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/OpenDoorRight"]
-mesh = ExtResource("5_trfuy")
+mesh = ExtResource("12_mvqap")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/OpenDoorRight"]
 shape = SubResource("ConvexPolygonShape3D_gm704")
 
 [node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="ColliderBits/OpenDoorRight"]
-stream = ExtResource("7_ngr1s")
+stream = ExtResource("10_vgexy")
 unit_size = 2.0
 
 [node name="DoorShutSFX" type="AudioStreamPlayer3D" parent="ColliderBits/OpenDoorRight"]
-stream = ExtResource("8_n0lig")
+stream = ExtResource("11_0cx5o")
 unit_size = 2.0
 
 [node name="RightDoorLatch" type="Area3D" parent="ColliderBits/OpenDoorRight"]
@@ -402,7 +404,7 @@ shape = SubResource("SphereShape3D_jv0dm")
 visible = false
 collision_layer = 8
 collision_mask = 0
-script = ExtResource("10_61kxu")
+script = ExtResource("13_3hex1")
 vehicle_name = "Compact Car"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/EnterCarCollider"]
@@ -415,13 +417,14 @@ shape = SubResource("ConcavePolygonShape3D_100sx")
 disabled = true
 
 [node name="WheelFrontLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, -1.7702)
-script = ExtResource("2_rwko2")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.1, -1.77)
+script = ExtResource("14_e025k")
 wheel_node = NodePath("FrontLeftWheel")
 squeal_audio = NodePath("SquealAudio")
 skid_audio = NodePath("SkidAudio")
 
 [node name="FrontLeftWheel" type="Node3D" parent="WheelFrontLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, 0)
 
 [node name="wheel_frontLeft" type="MeshInstance3D" parent="WheelFrontLeft/FrontLeftWheel"]
 transform = Transform3D(-1.5, 0, 0, 0, 1.5, -1.31134e-07, 0, 1.31134e-07, 1.5, 0, 0, 0)
@@ -429,23 +432,24 @@ mesh = SubResource("ArrayMesh_0m480")
 skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
-stream = ExtResource("15_rmw2m")
+stream = ExtResource("15_68n7x")
 unit_size = 2.0
 max_db = -4.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
-stream = ExtResource("16_v1p2m")
+stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, -1.7702)
-script = ExtResource("2_rwko2")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.1, -1.77)
+script = ExtResource("14_e025k")
 wheel_node = NodePath("FrontRightWheel")
 squeal_audio = NodePath("SquealAudio")
 skid_audio = NodePath("SkidAudio")
 
 [node name="FrontRightWheel" type="Node3D" parent="WheelFrontRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, 0)
 
 [node name="wheel_frontRight" type="MeshInstance3D" parent="WheelFrontRight/FrontRightWheel"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
@@ -453,23 +457,24 @@ mesh = SubResource("ArrayMesh_0m480")
 skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
-stream = ExtResource("15_rmw2m")
+stream = ExtResource("15_68n7x")
 unit_size = 2.0
 max_db = -4.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
-stream = ExtResource("16_v1p2m")
+stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.1, 1.83657)
-script = ExtResource("2_rwko2")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.1, 1.837)
+script = ExtResource("14_e025k")
 wheel_node = NodePath("RearLeftWheel")
 squeal_audio = NodePath("SquealAudio")
 skid_audio = NodePath("SkidAudio")
 
 [node name="RearLeftWheel" type="Node3D" parent="WheelRearLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, 0)
 
 [node name="wheel_backLeft" type="MeshInstance3D" parent="WheelRearLeft/RearLeftWheel"]
 transform = Transform3D(-1.5, 0, 0, 0, 1.5, -1.31134e-07, 0, 1.31134e-07, 1.5, 0, 0, 0)
@@ -477,23 +482,24 @@ mesh = SubResource("ArrayMesh_0m480")
 skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
-stream = ExtResource("15_rmw2m")
+stream = ExtResource("15_68n7x")
 unit_size = 2.0
 max_db = -4.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
-stream = ExtResource("16_v1p2m")
+stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node", "squeal_audio", "skid_audio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.1, 1.83657)
-script = ExtResource("2_rwko2")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.1, 1.837)
+script = ExtResource("14_e025k")
 wheel_node = NodePath("RearRightWheel")
 squeal_audio = NodePath("SquealAudio")
 skid_audio = NodePath("SkidAudio")
 
 [node name="RearRightWheel" type="Node3D" parent="WheelRearRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, 0)
 
 [node name="wheel_backRight" type="MeshInstance3D" parent="WheelRearRight/RearRightWheel"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
@@ -501,13 +507,13 @@ mesh = SubResource("ArrayMesh_0m480")
 skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
-stream = ExtResource("15_rmw2m")
+stream = ExtResource("15_68n7x")
 unit_size = 2.0
 max_db = -4.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
-stream = ExtResource("16_v1p2m")
+stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="ExplosionCatcher" type="StaticBody3D" parent="." groups=["ExplosionCatcher"]]
@@ -653,7 +659,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ltwxu")
 [node name="AudioStreams" type="Node3D" parent="."]
 
 [node name="CollisionAudio1" type="AudioStreamPlayer3D" parent="AudioStreams"]
-stream = ExtResource("17_sa2so")
+stream = ExtResource("17_7w5y2")
 max_polyphony = 16
 
 [node name="EngineSmokeBlack" type="GPUParticles3D" parent="."]
@@ -662,8 +668,8 @@ cast_shadow = 0
 amount = 20
 amount_ratio = 0.0
 randomness = 0.5
-process_material = ExtResource("19_1dmce")
-draw_pass_1 = ExtResource("20_janxj")
+process_material = ExtResource("18_6yteg")
+draw_pass_1 = ExtResource("19_ku3tg")
 
 [node name="EngineSmokeWhite" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
@@ -671,8 +677,8 @@ cast_shadow = 0
 amount = 10
 amount_ratio = 0.0
 randomness = 0.5
-process_material = ExtResource("21_p0tg2")
-draw_pass_1 = ExtResource("20_janxj")
+process_material = ExtResource("20_ov1ny")
+draw_pass_1 = ExtResource("19_ku3tg")
 
 [node name="Sparks" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
@@ -687,12 +693,12 @@ visibility_aabb = AABB(-4.84702, -4, -4, 9.7204, 8, 8)
 process_material = SubResource("ParticleProcessMaterial_phnmf")
 draw_pass_1 = SubResource("BoxMesh_gtwax")
 
-[node name="Fire" parent="." instance=ExtResource("20_x33we")]
+[node name="Fire" parent="." instance=ExtResource("21_6fmka")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
 emitting = false
-process_material = ExtResource("22_n3vrb")
+process_material = ExtResource("22_blqn8")
 
-[node name="Explosion" parent="." instance=ExtResource("21_tyub6")]
+[node name="Explosion" parent="." instance=ExtResource("23_0aeo7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 explosion_scale = 15.0
 explosion_delay = 0.0

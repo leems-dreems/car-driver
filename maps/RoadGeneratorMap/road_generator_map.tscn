@@ -1,7 +1,7 @@
 [gd_scene load_steps=29 format=3 uid="uid://ge0vjxflteqg"]
 
 [ext_resource type="Script" path="res://maps/RoadGeneratorMap/road_generator_map.gd" id="1_h3erf"]
-[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_xqse3"]
+[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact/compact.tscn" id="1_xqse3"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="3_uwai4"]
 [ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="4_skgyp"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="5_obnrt"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://ct8yjvgxqmshn" path="res://maps/RoadGeneratorMap/junction_t.tscn" id="10_m4hl7"]
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="11_vdbko"]
 [ext_resource type="Script" path="res://traffic/traffic_manager.gd" id="12_7w6l3"]
-[ext_resource type="PackedScene" uid="uid://cvsdhdj7875dx" path="res://cars/sedan.tscn" id="13_5vvid"]
+[ext_resource type="PackedScene" uid="uid://cvsdhdj7875dx" path="res://cars/sedan/sedan.tscn" id="13_5vvid"]
 [ext_resource type="PackedScene" uid="uid://ba0xtl41qmm3s" path="res://maps/KayKitCity/props/traffic_light_a.tscn" id="13_kqpm8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_aa5c5"]
