@@ -12,6 +12,8 @@ var waiting_to_respawn := false
 var max_hit_points := 5.0
 var current_hit_points: float
 var has_caught_fire := false
+## Timer that runs after this vehicle is requested to stop by something else
+var request_stop_timer: SceneTreeTimer = null
 ## Velocity as of the last physics tick
 var _previous_velocity: Vector3 = Vector3.ZERO
 ## The number of RayCast3Ds that this vehicle uses for close avoidance
@@ -99,11 +101,11 @@ func _physics_process(delta: float) -> void:
   # Record current velocity, to refer to when processing collision signals
   _previous_velocity = Vector3(linear_velocity)
   # Apply downforce if any wheels are touching the ground
-  if get_wheel_contact_count() > 1:
+  #if get_wheel_contact_count() > 1:
     # Get Z rotation, then get the square-root of its square to ensure that it's positive
-    var _angle_from_upright := (PI / 2) - sqrt(pow(rotation.z, 2))
-    if _angle_from_upright > 0:
-      apply_central_force(-basis.y * _angle_from_upright * downforce_multiplier * pow(speed, 2))
+    #var _angle_from_upright := (PI / 2) - sqrt(pow(rotation.z, 2))
+    #if _angle_from_upright > 0:
+      #apply_central_force(-basis.y * _angle_from_upright * downforce_multiplier * pow(speed, 2))
   # Update energy of various lights
   if is_being_driven:
     var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
@@ -152,7 +154,7 @@ func _physics_process(delta: float) -> void:
       explode()
   return
 
-
+## Connect the vehicle's `body_entered` signal to this method
 func _on_body_entered(_body: Node) -> void:
   if _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D:
     if collision_audio_1.playing == false:
@@ -176,7 +178,6 @@ func explode() -> void:
   await get_tree().create_timer(7.0).timeout
   queue_free()
   return
-
 
 ## Freeze the car, as well as the various bodies attached to it
 func freeze_bodies() -> void:
@@ -321,3 +322,13 @@ func get_interest_angle() -> float:
 ## Override to apply a different material when the vehicle has exploded
 func apply_burnt_material() -> void:
   pass
+
+## Ask this vehicle to stop
+func request_stop(_duration: float = 5.0) -> void:
+  if request_stop_timer == null:
+    request_stop_timer = get_tree().create_timer(_duration)
+    request_stop_timer.timeout.connect(func():
+      request_stop_timer = null
+    )
+  else:
+    request_stop_timer.time_left = _duration

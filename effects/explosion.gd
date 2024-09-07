@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
       if _body.has_method("go_limp"):
         _body.go_limp()
       elif _body is PlayerPhysicalBone:
-        _body.target_linear_velocity += calculate_force_vector_for_body(_body) / 1000
+        _body.target_linear_velocity = calculate_force_vector_for_body(_body) / 1000
       if _body is RigidBody3D:
         apply_explosion_force(_body, delta)
       elif _body is StaticBody3D and _body.is_in_group("ExplosionCatcher"):

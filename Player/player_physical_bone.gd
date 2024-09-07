@@ -11,11 +11,6 @@ func _ready() -> void:
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-  #if ["Physical Bone head"].has(name):
-    #state.transform.origin = target_transform.origin
-
-  #state.transform = target_transform
-
   state.apply_central_force(target_linear_velocity)
   state.angular_velocity += target_angular_velocity
   target_linear_velocity = Vector3.ZERO

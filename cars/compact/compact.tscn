@@ -195,7 +195,7 @@ collision_mask = 83
 mass = 1500.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, 0, -0.1)
+center_of_mass = Vector3(0, 0.5, -0.1)
 freeze = true
 freeze_mode = 1
 continuous_cd = true
@@ -206,8 +206,7 @@ front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
 rear_left_wheel = NodePath("WheelRearLeft")
 rear_right_wheel = NodePath("WheelRearRight")
-steering_speed = 20.0
-steering_speed_decay = 0.15
+steering_speed_decay = 0.1
 steering_slip_assist = 0.3
 countersteer_assist = 0.3
 front_brake_bias = 0.3
@@ -274,11 +273,9 @@ shape = SubResource("ConvexPolygonShape3D_4w5uj")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.11778, 0.835562, -0.593462)
 node_a = NodePath("../..")
 node_b = NodePath("../OpenDoorLeft")
-params/bias = 0.99
 angular_limit/enable = true
 angular_limit/upper = 0.0
 angular_limit/lower = -1.0472
-angular_limit/bias = 0.99
 motor/target_velocity = -3.14159
 
 [node name="ShutDoorLeft" type="MeshInstance3D" parent="ColliderBits"]
@@ -339,11 +336,9 @@ shape = SubResource("SphereShape3D_jv0dm")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.118, 0.836, -0.593)
 node_a = NodePath("../..")
 node_b = NodePath("../OpenDoorRight")
-params/bias = 0.99
 angular_limit/enable = true
 angular_limit/upper = 1.0472
 angular_limit/lower = 0.0
-angular_limit/bias = 0.99
 motor/target_velocity = 3.14159
 
 [node name="ShutDoorRight" type="MeshInstance3D" parent="ColliderBits"]
@@ -702,3 +697,5 @@ process_material = ExtResource("22_blqn8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 explosion_scale = 15.0
 explosion_delay = 0.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

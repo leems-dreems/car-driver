@@ -39,7 +39,6 @@ var useable_target : Node3D = null
 
 @onready var _move_direction := Vector3.ZERO
 @onready var _last_strong_direction := Vector3.FORWARD
-@onready var _gravity: float = -30.0
 @onready var _ground_height: float = 0.0
 @onready var _start_position := global_transform.origin
 @onready var _default_collision_layer := collision_layer
@@ -65,6 +64,8 @@ func _on_body_entered(_body: Node) -> void:
     var _impact_force := (_previous_velocity - linear_velocity).length()
     if _impact_force > impact_resistance:
       go_limp()
+      if _body is DriveableVehicle:
+        _body.request_stop()
   return
 
 
@@ -85,7 +86,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 
 func _physics_process(delta: float) -> void:
-  var is_on_ground := is_on_ground()
+  var _is_on_ground := is_on_ground()
   # Record current velocity, to refer to when processing collision signals
   _previous_velocity = Vector3(linear_velocity)
   # Calculate ground height for camera controller
@@ -97,26 +98,14 @@ func _physics_process(delta: float) -> void:
   if global_position.y < _ground_height:
     _ground_height = global_position.y
 
+  if _is_on_ground:
+    linear_damp = 5
+  else:
+    linear_damp = 0
+
   # Get input and movement state
-  var is_just_jumping := Input.is_action_just_pressed("jump") and is_on_ground
-  var is_air_boosting := Input.is_action_pressed("jump") and not is_on_ground and linear_velocity.y > 0.0
-  var is_just_on_floor := is_on_ground and not _is_on_floor_buffer
-  #var should_ragdoll := Input.is_action_just_pressed("Ragdoll")
-#
-  #if not is_ragdolling and should_ragdoll:
-    ##ragdoll_skeleton.physical_bones_start_simulation()
-    ## Get list of bone names, remove names we don't want to simulate
-    #var _bone_names: Array[StringName] = []
-    #for _bone: Node in ragdoll_skeleton.get_children(): 
-      #if _bone is PhysicalBone3D:
-        #_bone_names.push_back(_bone.name)
-    #ragdoll_skeleton.physical_bones_start_simulation(_bone_names)
-    #is_ragdolling = true
-    #get_tree().create_timer(10.0).timeout.connect(func():
-      ##ragdoll_skeleton.physical_bones_stop_simulation()
-      #ragdoll_skeleton.physical_bones_stop_simulation()
-      #is_ragdolling = false
-    #)
+  var is_just_jumping := Input.is_action_just_pressed("jump") and _is_on_ground
+  var is_just_on_floor := _is_on_ground and not _is_on_floor_buffer
 
   # Respond to pause button
   var is_pausing := Input.is_action_just_pressed("Pause")
@@ -129,7 +118,7 @@ func _physics_process(delta: float) -> void:
   var is_in_vehicle := current_vehicle != null
   var is_using := Input.is_action_just_pressed("use")
 
-  _is_on_floor_buffer = is_on_ground
+  _is_on_floor_buffer = _is_on_ground
   _move_direction = _get_camera_oriented_input()
 
   # To not orient quickly to the last input, we save a last strong direction,
@@ -182,15 +171,13 @@ func _physics_process(delta: float) -> void:
 
     if is_just_jumping:
       apply_central_impulse(Vector3.UP * jump_initial_impulse * mass)
-    #elif is_air_boosting:
-       #apply_central_force(Vector3.UP * jump_additional_force * mass)
 
     # Set character animation
     if is_just_jumping:
       _dummy_skin.jump()
-    elif not is_on_ground and linear_velocity.y < 0:
+    elif not _is_on_ground and linear_velocity.y < 0:
       _dummy_skin.fall()
-    elif is_on_ground:
+    elif _is_on_ground:
       var xz_velocity := Vector3(linear_velocity.x, 0, linear_velocity.z)
       if xz_velocity.length() > stopping_speed:
         _dummy_skin.set_moving(true)
@@ -200,17 +187,6 @@ func _physics_process(delta: float) -> void:
 
     if is_just_on_floor:
       _landing_sound.play()
-
-    #var position_before := global_position
-    #move_and_slide()
-    #var position_after := global_position
-#
-    ## If velocity is not 0 but the difference of positions after move_and_slide is,
-    ## character might be stuck somewhere!
-    #var delta_position := position_after - position_before
-    #var epsilon := 0.001
-    #if delta_position.length() < epsilon and velocity.length() > epsilon:
-      #global_position += get_wall_normal() * 0.1
 
 
 func reset_position() -> void:
@@ -250,10 +226,6 @@ func start_ragdoll() -> void:
     if _bone is PhysicalBone3D:
       _bone_names.push_back(_bone.name)
   ragdoll_skeleton.physical_bones_start_simulation(_bone_names)
-  #get_tree().create_timer(10.0).timeout.connect(func():
-    #ragdoll_skeleton.physical_bones_stop_simulation()
-    #is_ragdolling = false
-  #)
 
 
 func go_limp() -> void:
@@ -273,6 +245,7 @@ func is_on_ground() -> bool:
 
 func can_stand_up() -> bool:
   return _ragdoll_tracker_bone.linear_velocity.length() < stopping_speed
+
 
 func get_skeleton_position() -> Vector3:
   return _ragdoll_tracker_bone.global_position
@@ -298,7 +271,6 @@ func exitVehicle () -> void:
   global_position.y += 5
   current_vehicle = null
   Game.player_changed_vehicle.emit()
-
   await get_tree().create_timer(0.1).timeout
   $CharacterCollisionShape.disabled = false
   visible = true

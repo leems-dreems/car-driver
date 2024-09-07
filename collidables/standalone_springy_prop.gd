@@ -26,12 +26,15 @@ func detach() -> void:
   _bodies.rigid_body.axis_lock_angular_x = false
   _bodies.rigid_body.axis_lock_angular_y = false
   _bodies.rigid_body.axis_lock_angular_z = false
-  _bodies.joint.set_flag_x(Generic6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
-  _bodies.joint.set_flag_y(Generic6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
-  _bodies.joint.set_flag_z(Generic6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
-  _bodies.joint.set_flag_x(Generic6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
-  _bodies.joint.set_flag_y(Generic6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
-  _bodies.joint.set_flag_z(Generic6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
+  _bodies.joint.set_flag_x(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
+  _bodies.joint.set_flag_y(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
+  _bodies.joint.set_flag_z(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
+  _bodies.joint.set_flag_x(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_SPRING, false)
+  _bodies.joint.set_flag_y(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_SPRING, false)
+  _bodies.joint.set_flag_z(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_SPRING, false)
+  _bodies.joint.set_flag_x(JoltGeneric6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
+  _bodies.joint.set_flag_y(JoltGeneric6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
+  _bodies.joint.set_flag_z(JoltGeneric6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
   play_effect()
   if reset_timer == null:
     reset_timer = get_tree().create_timer(reset_time)

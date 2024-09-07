@@ -1,7 +1,7 @@
 [gd_scene load_steps=50 format=4 uid="uid://cvsdhdj7875dx"]
 
 [ext_resource type="Script" path="res://cars/sedan/sedan.gd" id="1_3u0ee"]
-[ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_87n68"]
+[ext_resource type="Curve" uid="uid://dxy3se1on0g30" path="res://cars/arcade_torque_curve.tres" id="2_y0l6j"]
 [ext_resource type="PackedScene" uid="uid://h6vdpba71kpr" path="res://addons/gevp/scenes/smoke_effect.tscn" id="3_mjcxl"]
 [ext_resource type="PackedScene" uid="uid://b2hlchrj4h2b7" path="res://addons/gevp/scenes/engine_sound.tscn" id="4_qtd2e"]
 [ext_resource type="AudioStream" uid="uid://cfqlem3v5t0y6" path="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Sound effects/Car_Engine_Loop.ogg" id="5_j8dhp"]
@@ -195,7 +195,7 @@ collision_mask = 83
 mass = 2000.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, 0, -0.1)
+center_of_mass = Vector3(0, 0.5, -0.1)
 freeze = true
 freeze_mode = 1
 continuous_cd = true
@@ -211,13 +211,12 @@ steering_speed_decay = 0.1
 brake_force_multiplier = 2.0
 front_brake_bias = 0.25
 enable_stability = false
-max_torque = 500.0
-max_rpm = 6000.0
-torque_curve = ExtResource("2_87n68")
-clutch_out_rpm = 2000.0
-max_clutch_torque_ratio = 1.0
+max_torque = 900.0
+torque_curve = ExtResource("2_y0l6j")
+motor_moment = 0.3
+max_clutch_torque_ratio = 1.2
+final_drive = 4.8
 shift_time = 0.2
-front_torque_split = -1.0
 vehicle_mass = 2000.0
 front_weight_distribution = 0.51
 center_of_gravity_height_offset = 0.0
@@ -239,9 +238,9 @@ lateral_grip_assist = {
 "Road": 0.0
 }
 longitudinal_grip_ratio = {
-"Dirt": 2.0,
-"Grass": 2.0,
-"Road": 2.0
+"Dirt": 1.0,
+"Grass": 1.0,
+"Road": 1.0
 }
 front_tire_radius = 0.45
 front_wheel_mass = 25.0
@@ -250,8 +249,8 @@ rear_wheel_mass = 25.0
 
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("3_mjcxl")]
 vehicle = NodePath("..")
-longitudinal_slip_threshold = 0.3
-lateral_slip_threshold = 0.3
+longitudinal_slip_threshold = 0.6
+lateral_slip_threshold = 0.6
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_qtd2e")]
 stream = ExtResource("5_j8dhp")
@@ -274,11 +273,9 @@ shape = SubResource("ConvexPolygonShape3D_nkjoq")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.23561, 0.69309, -1.21044)
 node_a = NodePath("../..")
 node_b = NodePath("../OpenDoorLeft")
-params/bias = 0.99
 angular_limit/enable = true
 angular_limit/upper = 0.0
 angular_limit/lower = -1.0472
-angular_limit/bias = 0.99
 motor/target_velocity = -3.14159
 
 [node name="ShutDoorLeft" type="MeshInstance3D" parent="ColliderBits"]
@@ -341,11 +338,9 @@ shape = SubResource("SphereShape3D_jv0dm")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.236, 0.693, -1.21)
 node_a = NodePath("../..")
 node_b = NodePath("../OpenDoorRight")
-params/bias = 0.99
 angular_limit/enable = true
 angular_limit/upper = 1.0472
 angular_limit/lower = 0.0
-angular_limit/bias = 0.99
 motor/target_velocity = 3.14159
 
 [node name="ShutDoorRight" type="MeshInstance3D" parent="ColliderBits"]
