@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://pntlr1220y5l"]
+[gd_scene load_steps=21 format=3 uid="uid://pntlr1220y5l"]
 
-[ext_resource type="PackedScene" uid="uid://ddfgi7pf4dynb" path="res://assets/KayKit prototype character/Dummy.glb" id="1_me1nf"]
+[ext_resource type="PackedScene" uid="uid://ckf8ost3xt5mg" path="res://assets/KayKit prototype character/Dummy.glb" id="1_me1nf"]
+[ext_resource type="Script" path="res://Player/dummy_player.gd" id="2_c610g"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_eg6g5"]
 animation = &"Idle"
@@ -68,19 +69,21 @@ states/Move/position = Vector2(493, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_a14o4"), "Idle", "Jump_Start", SubResource("AnimationNodeStateMachineTransition_tm334"), "Jump_Start", "Jump_Idle", SubResource("AnimationNodeStateMachineTransition_7tc8q"), "Jump_Idle", "Jump_Land", SubResource("AnimationNodeStateMachineTransition_euhfv"), "Jump_Land", "Idle", SubResource("AnimationNodeStateMachineTransition_e4suy"), "Idle", "Move", SubResource("AnimationNodeStateMachineTransition_owltg"), "Move", "Idle", SubResource("AnimationNodeStateMachineTransition_gq47n"), "Jump_Land", "Move", SubResource("AnimationNodeStateMachineTransition_svy56"), "Move", "Jump_Start", SubResource("AnimationNodeStateMachineTransition_rlwrx")]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_s4qty"]
+graph_offset = Vector2(186.24, 103.67)
 nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_wrwwu")
 nodes/StateMachine/position = Vector2(800, 200)
 nodes/output/position = Vector2(1000, 200)
 node_connections = [&"output", 0, &"StateMachine"]
 
 [node name="Dummy" instance=ExtResource("1_me1nf")]
+script = ExtResource("2_c610g")
 
 [node name="Skeleton3D" parent="Rig" index="0"]
 bones/4/rotation = Quaternion(-0.514121, -0.485468, -0.485468, 0.514122)
-bones/5/rotation = Quaternion(1.49426e-09, -6.22812e-08, -0.0552856, 0.998471)
+bones/5/rotation = Quaternion(1.49426e-09, -6.22812e-08, -0.0552855, 0.998471)
 bones/8/rotation = Quaternion(1.68061e-09, 1.68061e-09, -0.707107, 0.707107)
 bones/9/rotation = Quaternion(-0.514121, 0.485468, 0.485468, 0.514122)
-bones/10/rotation = Quaternion(1.49426e-09, 6.22812e-08, 0.0552856, 0.998471)
+bones/10/rotation = Quaternion(1.49426e-09, 6.22812e-08, 0.0552855, 0.998471)
 bones/13/rotation = Quaternion(1.68059e-09, -1.68059e-09, 0.707107, 0.707107)
 bones/17/rotation = Quaternion(0.999849, -7.13276e-08, -1.20427e-08, 0.0173732)
 bones/18/rotation = Quaternion(0.106225, 6.86522e-08, -7.37699e-08, 0.994342)
@@ -95,13 +98,12 @@ bones/35/rotation = Quaternion(-1.04035e-07, 0.391084, 0.920355, -2.95261e-08)
 bones/42/rotation = Quaternion(0.5, -0.5, -0.5, -0.5)
 
 [node name="Dummy_Helmet" parent="Rig/Skeleton3D" index="0"]
-transform = Transform3D(0.999997, -5.23869e-09, 0.00241691, 5.20436e-09, 1, -7.45058e-09, -0.00241691, 1.49012e-08, 0.999997, -4.49283e-09, 1.28839, -0.456153)
+transform = Transform3D(1, 0, -8.47033e-22, 0, 1, 0, 8.47033e-22, 0, 1, 1.00974e-28, 1.21587, -1.19209e-07)
 
 [node name="Dummy_TargetOnHisBack" parent="Rig/Skeleton3D" index="1"]
-transform = Transform3D(0.999997, 0.000419687, 0.00238019, 5.20436e-09, 0.984808, -0.173648, -0.00241691, 0.173648, 0.984805, -0.000664832, 0.962748, -0.731226)
+transform = Transform3D(1, -2.11758e-22, -1.69407e-21, 0, 0.984808, -0.173648, 1.69407e-21, 0.173648, 0.984808, 8.47033e-22, 0.890235, -0.275074)
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
-active = false
 tree_root = SubResource("AnimationNodeBlendTree_s4qty")
 anim_player = NodePath("../AnimationPlayer")
 parameters/StateMachine/Move/blend_position = 0

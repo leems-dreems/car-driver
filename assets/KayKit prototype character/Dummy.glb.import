@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://ddfgi7pf4dynb"
+uid="uid://ckf8ost3xt5mg"
 path="res://.godot/imported/Dummy.glb-fc666df34cb9c1007aa98ba3da5cb022.scn"
 
 [deps]
@@ -29,8 +29,8 @@ animation/import=true
 animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
-animation/import_rest_as_RESET=true
+animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
-gltf/naming_version=1
+gltf/naming_version=0
 gltf/embedded_image_handling=1

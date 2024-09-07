@@ -1,6 +1,7 @@
 extends Skeleton3D
 
-@export var target_skeleton: Skeleton3D
+@export var target_skeleton: Skeleton3D = null
+@export var target_dummy_rig: DummyCharacterSkin
 @export var player: Player
 
 @export var linear_spring_stiffness: float = 2000.0
@@ -16,6 +17,8 @@ var current_delta := 0.0
 
 
 func _ready() -> void:
+  if target_skeleton == null:
+    target_skeleton = target_dummy_rig.skeleton
   for _bone: PhysicalBone3D in find_children("*", "PhysicalBone3D"):
     physics_bones.push_back(_bone)
   #physical_bone_simulator = find_child("PhysicalBoneSimulator3D")
@@ -24,10 +27,12 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
   current_delta = delta
+  if target_skeleton == null:
+    target_skeleton = target_dummy_rig.skeleton
 
 
 func _on_skeleton_updated() -> void:
-  if player.is_ragdolling:
+  if player.is_ragdolling or target_skeleton == null:
     return
 
   for b in physics_bones:
