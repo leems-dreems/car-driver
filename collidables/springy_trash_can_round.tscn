@@ -67,8 +67,8 @@ axis_lock_angular_y = true
 axis_lock_angular_z = true
 mass = 60.0
 physics_material_override = SubResource("PhysicsMaterial_43kg8")
-max_contacts_reported = 10
 contact_monitor = true
+max_contacts_reported = 10
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.84827, 0)
