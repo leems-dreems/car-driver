@@ -232,6 +232,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
 physics_material_override = ExtResource("3_csym3")
 
 [node name="BoxMesh" type="MeshInstance3D" parent="Terrain/CityFoundation"]
+layers = 1025
 mesh = SubResource("BoxMesh_vpdbc")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("2_upi0u")
@@ -240,7 +241,7 @@ surface_material_override/0 = ExtResource("2_upi0u")
 shape = SubResource("ConvexPolygonShape3D_4pvb3")
 
 [node name="CompactCar" parent="." instance=ExtResource("8_dvnrp")]
-transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 12, 1.5, -50)
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 12, 1.2, -50)
 
 [node name="SedanCar" parent="." instance=ExtResource("9_bvo1c")]
 transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0, 1.5, -40)

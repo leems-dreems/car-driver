@@ -166,6 +166,7 @@ Ragdoll={
 
 [layer_names]
 
+3d_render/layer_11="ReceiveSkidmarks"
 3d_physics/layer_1="Terrain"
 3d_physics/layer_2="Car"
 3d_physics/layer_3="Bounds"

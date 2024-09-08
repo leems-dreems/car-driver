@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://17m7csggwa70"]
+
+[sub_resource type="Gradient" id="Gradient_tb1df"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0.827451)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3sjyv"]
+noise_type = 5
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_iux01"]
+color_ramp = SubResource("Gradient_tb1df")
+noise = SubResource("FastNoiseLite_3sjyv")
+
+[node name="Decal" type="Decal"]
+size = Vector3(0.2, 0.1, 1)
+texture_albedo = SubResource("NoiseTexture2D_iux01")
+distance_fade_enabled = true
+cull_mask = 1024

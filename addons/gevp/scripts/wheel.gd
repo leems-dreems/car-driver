@@ -10,6 +10,12 @@ extends RayCast3D
 @export var wheel_node : Node3D
 @export var squeal_audio : AudioStreamPlayer3D
 @export var skid_audio : AudioStreamPlayer3D
+## Array of skidmark decals, so we can queue_free the oldest when adding a new one
+var skidmark_decals: Array[Decal] = []
+## Global transform representing where the last skidmark decal started at
+var skid_start_transform: Transform3D
+## Old skidmark decals will be freed up when this many decals have been added
+var max_skidmark_decals: int = 50
 
 var wheel_mass := 15.0
 var tire_radius := 0.3

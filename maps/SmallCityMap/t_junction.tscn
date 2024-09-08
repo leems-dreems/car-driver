@@ -117,6 +117,7 @@ collision_mask = 82
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RoadTSplit"]
 transform = Transform3D(12, 0, 0, 0, 12, 0, 0, 0, 12, 0, -0.84, 0)
+layers = 1025
 mesh = ExtResource("4_h8fxy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RoadTSplit"]

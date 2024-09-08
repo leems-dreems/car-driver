@@ -247,6 +247,7 @@ front_tire_radius = 0.4
 rear_tire_radius = 0.4
 
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("3_3utam")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 vehicle = NodePath("..")
 longitudinal_slip_threshold = 0.6
 lateral_slip_threshold = 0.6
