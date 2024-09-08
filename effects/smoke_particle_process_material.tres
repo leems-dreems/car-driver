@@ -1,0 +1,37 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=8 format=3 uid="uid://bdg4152rp8j33"]
+
+[ext_resource type="Texture2D" uid="uid://bfxdgo18k3tnm" path="res://effects/smoke_gradient_texture_1d.tres" id="1_6ovc6"]
+
+[sub_resource type="Curve" id="Curve_e6f84"]
+_data = [Vector2(0.827451, 0.978723), 0.0, -21.7021, 0, 0, Vector2(1, 0.010989), -27.0981, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6rjua"]
+curve = SubResource("Curve_e6f84")
+
+[sub_resource type="Curve" id="Curve_ffvqo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_4jwxn"]
+curve = SubResource("Curve_ffvqo")
+
+[sub_resource type="Curve" id="Curve_31jsy"]
+_data = [Vector2(0, 0.472527), 0.0, 0.0, 0, 0, Vector2(0.615942, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -6.8931, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_v3jlb"]
+curve = SubResource("Curve_31jsy")
+
+[resource]
+emission_shape = 1
+emission_sphere_radius = 0.5
+angle_max = 360.0
+spread = 40.663
+initial_velocity_min = 0.5
+initial_velocity_max = 2.0
+gravity = Vector3(0, 5, 0)
+scale_curve = SubResource("CurveTexture_v3jlb")
+color_ramp = ExtResource("1_6ovc6")
+alpha_curve = SubResource("CurveTexture_6rjua")
+emission_curve = SubResource("CurveTexture_4jwxn")

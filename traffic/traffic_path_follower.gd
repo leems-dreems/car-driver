@@ -80,12 +80,12 @@ func set_inputs() -> void:
 
     # Check if this Follower is colliding with another vehicle ahead
     var _vehicle_in_front := collision_area.get_overlapping_bodies().any(func(_body: Node3D):
-      return _body is DriveableVehicle and _body != vehicle
+      return (_body is DriveableVehicle and _body != vehicle) or _body is Player or _body is PlayerPhysicalBone
     )
 
     # Adjust our target_speed based on direction of interest and turning angle
     # Note: vehicles face towards -Z, so a positive Z value means the interest vector is to the rear
-    if _is_path_ahead_blocked or _vehicle_in_front:
+    if _is_path_ahead_blocked or _vehicle_in_front or vehicle.request_stop_timer != null:
       target_speed = 0.0
     elif _interest_vector.z > vehicle.steering_ray_length * 0.75: # Interest vector is strongly to the rear
       if not _is_on_path and vehicle.linear_velocity.z < min_speed and not _vehicle_in_front:
@@ -121,7 +121,7 @@ func set_inputs() -> void:
           vehicle.brake_input = 0.0
           vehicle.handbrake_input = 0.0
         else:
-          vehicle.throttle_input = clampf(vehicle.speed / target_speed, 0.5, 1.0)
+          vehicle.throttle_input = 1.0 - clampf(vehicle.speed / target_speed, 0.5, 1.0)
           vehicle.brake_input = 0.0
           vehicle.handbrake_input = 0.0
       elif vehicle.speed > target_speed * 1.2: # Our speed is higher than the target speed
@@ -137,7 +137,7 @@ func set_inputs() -> void:
       vehicle.ignition_on = true
 
     # Steer to match the rotation of the nearest path position
-    vehicle.steering_input = clampf(_turning_angle, -1.0, 1.0)
+    vehicle.steering_input = clampf(_turning_angle * 2, -1.0, 1.0)
     if vehicle.current_gear == -1: # Flip steering input if we're reversing
       # TODO: subtract turning angle from either PI or -PI to allow reversing in a straight line
       # The vehicle will currently always steer while reversing, which is fine for getting un-stuck from props
@@ -146,3 +146,6 @@ func set_inputs() -> void:
   else: # Take our hands off the steering wheel until 3 tires are touching the ground
     vehicle.steering_input = 0.0
     vehicle.throttle_input = 0.0
+
+  # Engage clutch if we're not throttling, to reduce oversteer
+  vehicle.clutch_input = 1.0 - vehicle.throttle_input

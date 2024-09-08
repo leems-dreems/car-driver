@@ -55,8 +55,9 @@ mass = 100.0
 physics_material_override = SubResource("PhysicsMaterial_jcshc")
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, 3, 0)
-max_contacts_reported = 10
 contact_monitor = true
+max_contacts_reported = 10
+angular_damp = 0.2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0)
@@ -105,13 +106,17 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 mesh = SubResource("CylinderMesh_q7r7w")
 surface_material_override/0 = SubResource("StandardMaterial3D_bn6mr")
 
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="."]
+linear_limit_x/upper = 0.2
+linear_limit_x/lower = -0.2
+linear_limit_z/upper = 0.2
+linear_limit_z/lower = -0.2
+linear_spring_x/enabled = true
+linear_spring_x/frequency = 5.0
+linear_spring_z/enabled = true
+linear_spring_z/frequency = 5.0
 node_a = NodePath("../StaticBody3D")
 node_b = NodePath("../RigidBody3D")
-angular_limit_x/enabled = false
-angular_limit_y/enabled = false
-angular_limit_z/enabled = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 0
@@ -124,4 +129,4 @@ mesh = SubResource("SphereMesh_a40gc")
 shape = SubResource("ConvexPolygonShape3D_8sg8w")
 
 [node name="CenterOfMassMarker" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 2.5, 0.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 3.5, 0.3)

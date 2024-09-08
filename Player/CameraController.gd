@@ -59,12 +59,8 @@ func _physics_process(delta: float) -> void:
     _aim_target = _camera_raycast.global_transform * _camera_raycast.target_position
     _aim_collider = null
 
-  # Set camera controller to current ground level for the character
-  var target_position := _anchor.global_position + _offset
-  target_position.y = lerp(global_position.y, _anchor._ground_height, 0.1)
-  global_position = target_position
-
   if _anchor.current_vehicle != null:
+    global_position = _anchor.global_position + _offset
     _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, vehicle_camera_distance, delta * camera_distance_change_speed)
     if _rotation_input != 0 or _tilt_input != 0:
       if input_timer == null:
@@ -91,6 +87,15 @@ func _physics_process(delta: float) -> void:
           camera_euler = Basis.looking_at(vehicle_velocity).get_euler()
           _euler_rotation.y = lerp_angle(_euler_rotation.y, camera_euler.y + PI, delta / 2)
   else:
+    # Set camera controller to current ground level for the character
+    var target_position: Vector3
+    if _anchor.is_ragdolling:
+      target_position = _anchor.get_skeleton_position() + _offset
+    else:
+      target_position = _anchor.global_position + _offset
+    target_position.y = lerp(global_position.y, _anchor._ground_height, 0.1)
+    global_position = target_position
+    # Lerp camera distance
     _camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, player_camera_distance, delta * camera_distance_change_speed)
 
   if _rotation_input != 0.0 or _tilt_input != 0.0:

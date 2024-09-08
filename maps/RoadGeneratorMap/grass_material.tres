@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ch2c6lk1pa5iw"]
+
+[ext_resource type="Texture2D" uid="uid://bsb20gee5dops" path="res://maps/RoadGeneratorMap/grass_noise_texture_2d.tres" id="1_a3jtw"]
+
+[resource]
+albedo_color = Color(0.156863, 0.658824, 0.45098, 1)
+albedo_texture = ExtResource("1_a3jtw")

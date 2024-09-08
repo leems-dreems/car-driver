@@ -1,6 +1,9 @@
 class_name TrafficManager extends Node3D
 
-var compact_car_scene := preload("res://cars/compact.tscn")
+var vehicle_scenes: Array[PackedScene] = [
+  preload("res://cars/compact/compact.tscn"),
+  preload("res://cars/sedan/sedan.tscn")
+]
 
 @export var vehicle_count: int = 10             ## How many vehicles to spawn
 var followers: Array[TrafficPathFollower] = []
@@ -13,6 +16,7 @@ func _ready() -> void:
   for _traffic_path: TrafficPath in get_tree().current_scene.find_children("*", "TrafficPath"):
     if _traffic_path.spawn_vehicles:
       traffic_paths.push_back(_traffic_path)
+  traffic_paths.shuffle()
   return
 
 
@@ -46,7 +50,8 @@ func _physics_process(_delta: float) -> void:
 
 
 func _add_vehicle(_follower: TrafficPathFollower) -> void:
-  _follower.vehicle = compact_car_scene.instantiate()
+  var _vehicle_scene: DriveableVehicle = vehicle_scenes.pick_random().instantiate()
+  _follower.vehicle = _vehicle_scene
   _follower.vehicle.position = to_local(_follower.global_position)
   _follower.vehicle.rotation = _follower.rotation
   add_child(_follower.vehicle)

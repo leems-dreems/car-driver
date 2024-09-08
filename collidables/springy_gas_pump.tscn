@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bol1qtccjchrx"]
+[gd_scene load_steps=20 format=3 uid="uid://bol1qtccjchrx"]
 
 [ext_resource type="Script" path="res://collidables/springy_gas_pump.gd" id="1_vl6gh"]
 [ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="2_5obv0"]
@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://bvjtmoh4u8ueq" path="res://assets/audio/Hanna-Barbera SFX/crash_11.wav" id="4_h23ki"]
 [ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="4_mb611"]
 [ext_resource type="AudioStream" uid="uid://ok43u0a4qgke" path="res://assets/audio/Hanna-Barbera SFX/crash_13.wav" id="5_kxdrc"]
-[ext_resource type="AudioStream" uid="uid://4icv5wfjnole" path="res://assets/audio/Hanna-Barbera SFX/bomb_1.wav" id="6_yxx17"]
+[ext_resource type="PackedScene" uid="uid://qj5wm2wpuawj" path="res://effects/explosion.tscn" id="8_fu05v"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3og3g"]
 friction = 0.4
@@ -22,14 +22,14 @@ vertex_color_use_as_albedo = true
 offsets = PackedFloat32Array(0, 0.484582, 0.819383, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0.932249, 0.891119, 2.31028e-06, 1, 0.920752, 0.355072, 0, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_8vd53"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mpcpi"]
 gradient = SubResource("Gradient_psfuf")
 
 [sub_resource type="Curve" id="Curve_mau4t"]
 _data = [Vector2(0.0392157, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.84081, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_keco3"]
+[sub_resource type="CurveTexture" id="CurveTexture_wj330"]
 curve = SubResource("Curve_mau4t")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aomou"]
@@ -39,8 +39,8 @@ initial_velocity_min = 8.0
 initial_velocity_max = 12.0
 damping_min = 5.0
 damping_max = 10.0
-color_ramp = SubResource("GradientTexture1D_8vd53")
-emission_curve = SubResource("CurveTexture_keco3")
+color_ramp = SubResource("GradientTexture1D_mpcpi")
+emission_curve = SubResource("CurveTexture_wj330")
 
 [sub_resource type="BoxMesh" id="BoxMesh_uk76s"]
 size = Vector3(0.1, 0.1, 0.1)
@@ -57,25 +57,11 @@ points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.02732
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_efm52"]
 streams_count = 2
 stream_0/stream = ExtResource("4_h23ki")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("5_kxdrc")
-stream_1/weight = 1.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_83axv"]
-radius = 1.0
-height = 2.0
-radial_segments = 16
-rings = 8
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_280ep"]
-transparency = 1
-albedo_color = Color(1, 1, 1, 0.164706)
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_q5njm"]
-radius = 1.0
-
-[node name="SpringyGasPump" type="Node3D"]
+[node name="SpringyGasPump" type="Node3D" node_paths=PackedStringArray("explosion")]
 script = ExtResource("1_vl6gh")
+explosion = NodePath("Explosion")
 linear_breaking_point = 0.02
 
 [node name="CenterOfMassMarker" type="Marker3D" parent="."]
@@ -89,8 +75,8 @@ axis_lock_angular_y = true
 axis_lock_angular_z = true
 mass = 400.0
 physics_material_override = SubResource("PhysicsMaterial_3og3g")
-max_contacts_reported = 10
 contact_monitor = true
+max_contacts_reported = 10
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 mesh = ExtResource("2_5obv0")
@@ -154,18 +140,6 @@ shape = SubResource("ConvexPolygonShape3D_2a3j4")
 stream = SubResource("AudioStreamRandomizer_efm52")
 doppler_tracking = 2
 
-[node name="ExplosionArea" type="Area3D" parent="."]
-collision_layer = 1048576
-collision_mask = 2490450
-monitoring = false
-monitorable = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ExplosionArea"]
-mesh = SubResource("SphereMesh_83axv")
-surface_material_override/0 = SubResource("StandardMaterial3D_280ep")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ExplosionArea"]
-shape = SubResource("SphereShape3D_q5njm")
-
-[node name="ExplosionAudio" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("6_yxx17")
+[node name="Explosion" parent="." instance=ExtResource("8_fu05v")]
+explosion_force_multiplier = 300000.0
+explosion_duration = 0.3

@@ -1,12 +1,21 @@
 class_name DriveableVehicle extends Vehicle
 
 @export var lights_on := false
+@export var downforce_multiplier := 4.0
 var headlight_energy := 10.0
 var brake_light_energy := 5.0
-var reverse_light_energy := 5.0
+var reverse_light_energy := 1.0
 var is_being_driven := false
 var is_ai_on := false
 var waiting_to_respawn := false
+## Damage this vehicle can take before setting on fire and exploding
+var max_hit_points := 5.0
+var current_hit_points: float
+var has_caught_fire := false
+## Timer that runs after this vehicle is requested to stop by something else
+var request_stop_timer: SceneTreeTimer = null
+## Velocity as of the last physics tick
+var _previous_velocity: Vector3 = Vector3.ZERO
 ## The number of RayCast3Ds that this vehicle uses for close avoidance
 var steering_ray_count: int = 16
 ## The index of the steering ray which points left. Set to 3/4 of `steering_ray_count`
@@ -34,12 +43,13 @@ var summed_interest_vector := Vector3.ZERO
 ## The group that steering & avoidance raycasts belong to, used for cleanup when stopping AI
 var steering_ray_group := "SteeringRayCast"
 ## The collision layers this vehicle's steering rays collide with
-var steering_ray_collision_masks: Array[int] = [1, 2, 5, 7, 8, 11]
+var steering_ray_collision_masks: Array[int] = [2, 5, 7, 8, 11]
 ## Show the debug label for this vehicle
 var show_debug_label := false
 @onready var debug_label: Label3D = $DebugLabel3D
 @onready var door_left: RigidBody3D = $ColliderBits/OpenDoorLeft
 @onready var door_right: RigidBody3D = $ColliderBits/OpenDoorRight
+# Lights
 @onready var headlight_left: SpotLight3D = $HeadlightLeft
 @onready var headlight_right: SpotLight3D = $HeadlightRight
 @onready var brake_light_left: OmniLight3D = $BrakeLightLeft
@@ -50,6 +60,15 @@ var show_debug_label := false
 @onready var brake_light_right_mesh: MeshInstance3D = $BrakeLightRight/MeshInstance3D
 @onready var reverse_light_left_mesh: MeshInstance3D = $ReverseLightLeft/MeshInstance3D
 @onready var reverse_light_right_mesh: MeshInstance3D = $ReverseLightRight/MeshInstance3D
+# Audio streams
+@onready var collision_audio_1: AudioStreamPlayer3D = $AudioStreams/CollisionAudio1
+# Particle emitters
+@onready var engine_black_smoke_emitter: GPUParticles3D = $EngineSmokeBlack
+@onready var engine_white_smoke_emitter: GPUParticles3D = $EngineSmokeWhite
+@onready var engine_sparks_emitter: GPUParticles3D = $Sparks
+@onready var engine_fire_emitter: GPUParticles3D = $Fire
+# Explosion
+@onready var explosion: Explosion = $Explosion
 
 
 func _ready () -> void:
@@ -60,6 +79,7 @@ func _ready () -> void:
   if lights_on:
     headlight_left.light_energy = headlight_energy
     headlight_right.light_energy = headlight_energy
+  current_hit_points = max_hit_points
   await get_tree().create_timer(0.2).timeout
   unfreeze_bodies()
   return
@@ -68,32 +88,43 @@ func _ready () -> void:
 func _process(_delta: float) -> void:
   # Update the debug label, if it's set to visible
   if debug_label.visible:
-    if is_ai_on:
-      debug_label.text = "Speed: " + "%.2f" % speed + "\n"
-      debug_label.text += "Accel: " + "%.2f" % throttle_input + "\n"
-      debug_label.text += "Brake: " + "%.2f" % brake_input + "\n"
-      debug_label.text += "Steer: " + "%.2f" % steering_input
-    else:
-      debug_label.text = ""
+    debug_label.text = "Speed: " + "%.2f" % speed + "\n"
+    debug_label.text += "Accel: " + "%.2f" % throttle_amount + "\n"
+    debug_label.text += "Cltch: " + "%.2f" % clutch_amount + "\n"
+    debug_label.text += "Brake: " + "%.2f" % brake_amount + "\n"
+    debug_label.text += "RPM: " + "%.2f" % motor_rpm + "\n"
+    debug_label.text += "Steer: " + "%.2f" % steering_amount
 
 
 func _physics_process(delta: float) -> void:
   super(delta)
-  var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
-  brake_light_left.light_energy = _current_brake_light_energy
+  # Record current velocity, to refer to when processing collision signals
+  _previous_velocity = Vector3(linear_velocity)
+  # Apply downforce if any wheels are touching the ground
+  #if get_wheel_contact_count() > 1:
+    # Get Z rotation, then get the square-root of its square to ensure that it's positive
+    #var _angle_from_upright := (PI / 2) - sqrt(pow(rotation.z, 2))
+    #if _angle_from_upright > 0:
+      #apply_central_force(-basis.y * _angle_from_upright * downforce_multiplier * pow(speed, 2))
+  # Update energy of various lights
+  if is_being_driven:
+    var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
+    brake_light_left.light_energy = _current_brake_light_energy
+    brake_light_right.light_energy = _current_brake_light_energy
   brake_light_left_mesh.transparency = 1.0 - brake_amount
-  brake_light_right.light_energy = _current_brake_light_energy
   brake_light_right_mesh.transparency = 1.0 - brake_amount
   if current_gear == -1:
-    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, reverse_light_energy, delta * 10)
-    reverse_light_left.light_energy = _current_reverse_light_energy
-    reverse_light_right.light_energy = _current_reverse_light_energy
+    if is_being_driven:
+      var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, reverse_light_energy, delta * 10)
+      reverse_light_left.light_energy = _current_reverse_light_energy
+      reverse_light_right.light_energy = _current_reverse_light_energy
     reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 0.0, delta * 10)
     reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 0.0, delta * 10)
   else:
-    var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 10)
-    reverse_light_left.light_energy = _current_reverse_light_energy
-    reverse_light_right.light_energy = _current_reverse_light_energy
+    if is_being_driven:
+      var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 10)
+      reverse_light_left.light_energy = _current_reverse_light_energy
+      reverse_light_right.light_energy = _current_reverse_light_energy
     reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 1.0, delta * 10)
     reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 1.0, delta * 10)
   var _target_headlight_energy := 0.0
@@ -102,11 +133,51 @@ func _physics_process(delta: float) -> void:
   var _current_headlight_energy := lerpf(headlight_left.light_energy, _target_headlight_energy, delta * 10)
   headlight_left.light_energy = _current_headlight_energy
   headlight_right.light_energy = _current_headlight_energy
+  # Adjust engine smoke level to reflect damage
+  var damage_ratio := 1.0 - (current_hit_points / max_hit_points)
+  if damage_ratio > 0.1:
+    engine_white_smoke_emitter.amount_ratio = damage_ratio
+  if damage_ratio > 0.5:
+    engine_black_smoke_emitter.amount_ratio = damage_ratio
+  if damage_ratio > 0.75:
+    engine_white_smoke_emitter.amount_ratio = 0
+  # Turn engine off & catch fire if hit points are low
+  if current_hit_points <= 0:
+    ignition_on = false
+    if not engine_fire_emitter.emitting and not has_caught_fire:
+      has_caught_fire = true
+      engine_sparks_emitter.emitting = true
+      engine_fire_emitter.emitting = true
+      await get_tree().create_timer(5.0).timeout
+      engine_sparks_emitter.emitting = false
+      engine_fire_emitter.emitting = false
+      explode()
+  return
+
+## Connect the vehicle's `body_entered` signal to this method
+func _on_body_entered(_body: Node) -> void:
+  if _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D:
+    if collision_audio_1.playing == false:
+      var _impact_force := (_previous_velocity - linear_velocity).length() * 0.1
+      if _impact_force > 0.5:
+        collision_audio_1.volume_db = linear_to_db(clampf(_impact_force, 0.0, 1.0))
+        collision_audio_1.play()
+        current_hit_points -= _impact_force
   return
 
 
-func respawn () -> void:
+func respawn() -> void:
   waiting_to_respawn = true
+  return
+
+
+func explode() -> void:
+  explosion.top_level = true
+  explosion.start_explosion()
+  apply_burnt_material()
+  await get_tree().create_timer(7.0).timeout
+  queue_free()
+  return
 
 ## Freeze the car, as well as the various bodies attached to it
 func freeze_bodies() -> void:
@@ -143,6 +214,7 @@ func start_ai() -> void:
       var _new_raycast := RayCast3D.new()
       _new_raycast.add_to_group(steering_ray_group)
       _new_raycast.position = Vector3(0, 0, 0)
+      _new_raycast.collision_mask = 0
       for _mask_value in steering_ray_collision_masks: # 1235
         _new_raycast.set_collision_mask_value(_mask_value, true)
       var _angle := (i * (2 * PI)) / steering_ray_count
@@ -154,6 +226,7 @@ func start_ai() -> void:
       var _new_raycast := RayCast3D.new()
       _new_raycast.add_to_group(steering_ray_group)
       _new_raycast.position = Vector3.ZERO
+      _new_raycast.collision_mask = 0
       for _mask_value in steering_ray_collision_masks:
         _new_raycast.set_collision_mask_value(_mask_value, true)
       var _angle := i * antenna_angle
@@ -245,3 +318,17 @@ func set_summed_interest_vector() -> void:
 ## Get the angle difference on the Y axis between the car's rotation and the interest vector
 func get_interest_angle() -> float:
   return Vector3.FORWARD.signed_angle_to(summed_interest_vector, Vector3.UP)
+
+## Override to apply a different material when the vehicle has exploded
+func apply_burnt_material() -> void:
+  pass
+
+## Ask this vehicle to stop
+func request_stop(_duration: float = 5.0) -> void:
+  if request_stop_timer == null:
+    request_stop_timer = get_tree().create_timer(_duration)
+    request_stop_timer.timeout.connect(func():
+      request_stop_timer = null
+    )
+  else:
+    request_stop_timer.time_left = _duration

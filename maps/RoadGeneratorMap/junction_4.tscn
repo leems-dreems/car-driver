@@ -1,0 +1,280 @@
+[gd_scene load_steps=20 format=3 uid="uid://dq053ly0qsdmb"]
+
+[ext_resource type="Script" path="res://maps/RoadGeneratorMap/junction_4.gd" id="1_smpqq"]
+[ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="3_1e182"]
+[ext_resource type="ArrayMesh" uid="uid://bag1g7e1ueops" path="res://assets/KayKit_City_Builder_Bits_1.0_SOURCE/Assets/obj/road_junction.obj" id="4_ue4cq"]
+[ext_resource type="Script" path="res://traffic/traffic_path.gd" id="5_jcqq0"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ltrob"]
+data = PackedVector3Array(1, 0.1, -1, 1, 0.07, -1, 1, 0.1, -0.93, 1, 0.1, -0.93, 1, 0.07, -1, 1, 0.07, -0.9, 0.9, 0.07, -1, 1, 0.07, -1, 0.93, 0.1, -1, 0.93, 0.1, -1, 1, 0.07, -1, 1, 0.1, -1, -1, 0.07, 0.9, -1, 0.07, 1, -1, 0, 0.9, -1, 0, 0.9, -1, 0.07, 1, -1, 0, 1, -0.9, 0.07, -1, -1, 0.07, -1, -0.9, 0, -1, -0.9, 0, -1, -1, 0.07, -1, -1, 0, -1, 0.9, 0.07, 1, 1, 0.07, 1, 0.9, 0, 1, 0.9, 0, 1, 1, 0.07, 1, 1, 0, 1, -1, 0.07, -1, -0.9, 0.07, -1, -1, 0.1, -1, -1, 0.1, -1, -0.9, 0.07, -1, -0.93, 0.1, -1, 1, 0.07, -0.9, 0.9, 0.07, -0.9, 1, 0.1, -0.93, 1, 0.1, -0.93, 0.9, 0.07, -0.9, 0.93, 0.1, -0.93, -1, 0.1, 1, -1, 0.07, 1, -1, 0.1, 0.93, -1, 0.1, 0.93, -1, 0.07, 1, -1, 0.07, 0.9, -0.9, 0.07, 1, -0.9, 0.07, 0.9, 0.9, 0.07, 1, 0.9, 0.07, 1, -0.9, 0.07, 0.9, 0.9, 0.07, 0.9, -0.9, 0.07, 1, -1, 0.07, 1, -0.93, 0.1, 1, -0.93, 0.1, 1, -1, 0.07, 1, -1, 0.1, 1, 0.9, 0, 1, 0.9, 0, 0.9, -0.9, 0, 1, -0.9, 0, 1, 0.9, 0, 0.9, -0.9, 0, 0.9, -0.9, 0, -0.9, -0.9, 0, -1, -1, 0, -0.9, -1, 0, -0.9, -0.9, 0, -1, -1, 0, -1, -0.9, 0.07, 1, -0.9, 0, 1, -1, 0.07, 1, -1, 0.07, 1, -0.9, 0, 1, -1, 0, 1, -0.9, 0.07, -0.9, -0.9, 0.07, -1, 0.9, 0.07, -0.9, 0.9, 0.07, -0.9, -0.9, 0.07, -1, 0.9, 0.07, -1, 0.9, 0.07, -1, 0.9, 0, -1, 1, 0.07, -1, 1, 0.07, -1, 0.9, 0, -1, 1, 0, -1, 0.9, 0.07, 0.9, 0.9, 0.07, -0.9, 1, 0.07, 0.9, 1, 0.07, 0.9, 0.9, 0.07, -0.9, 1, 0.07, -0.9, -1, 0.07, -0.9, -1, 0.07, 0.9, -1, 0, -0.9, -1, 0, -0.9, -1, 0.07, 0.9, -1, 0, 0.9, 1, 0, -0.9, 1, 0, -1, 0.9, 0, -0.9, 0.9, 0, -0.9, 1, 0, -1, 0.9, 0, -1, 0.9, 0.07, 0.9, -0.9, 0.07, 0.9, 0.9, 0.07, -0.9, 0.9, 0.07, -0.9, -0.9, 0.07, 0.9, -0.9, 0.07, -0.9, -0.9, 0, 0.9, 0.9, 0, 0.9, -0.9, 0, -0.9, -0.9, 0, -0.9, 0.9, 0, 0.9, 0.9, 0, -0.9, 1, 0, 0.9, 0.9, 0, 0.9, 1, 0, 1, 1, 0, 1, 0.9, 0, 0.9, 0.9, 0, 1, 1, 0.07, 0.9, 1, 0.07, -0.9, 1, 0, 0.9, 1, 0, 0.9, 1, 0.07, -0.9, 1, 0, -0.9, 1, 0.07, -0.9, 1, 0.07, -1, 1, 0, -0.9, 1, 0, -0.9, 1, 0.07, -1, 1, 0, -1, -1, 0.07, -0.9, -1, 0.07, -1, -1, 0.1, -0.93, -1, 0.1, -0.93, -1, 0.07, -1, -1, 0.1, -1, -0.9, 0, 0.9, -0.9, 0, -0.9, -1, 0, 0.9, -1, 0, 0.9, -0.9, 0, -0.9, -1, 0, -0.9, -0.9, 0.07, 0.9, -1, 0.07, 0.9, -0.9, 0.07, -0.9, -0.9, 0.07, -0.9, -1, 0.07, 0.9, -1, 0.07, -0.9, -0.9, 0, -0.9, 0.9, 0, -0.9, -0.9, 0, -1, -0.9, 0, -1, 0.9, 0, -0.9, 0.9, 0, -1, 0.9, 0, 0.9, 1, 0, 0.9, 0.9, 0, -0.9, 0.9, 0, -0.9, 1, 0, 0.9, 1, 0, -0.9, -0.9, 0.07, 0.9, -0.9, 0.07, 1, -0.93, 0.1, 0.93, -0.93, 0.1, 0.93, -0.9, 0.07, 1, -0.93, 0.1, 1, -0.93, 0.1, -0.93, -0.9, 0.07, -0.9, -1, 0.1, -0.93, -1, 0.1, -0.93, -0.9, 0.07, -0.9, -1, 0.07, -0.9, -0.9, 0, 0.9, -1, 0, 0.9, -0.9, 0, 1, -0.9, 0, 1, -1, 0, 0.9, -1, 0, 1, 1, 0.1, 1, 1, 0.07, 1, 0.93, 0.1, 1, 0.93, 0.1, 1, 1, 0.07, 1, 0.9, 0.07, 1, 0.9, 0.07, 0.9, 1, 0.07, 0.9, 0.93, 0.1, 0.93, 0.93, 0.1, 0.93, 1, 0.07, 0.9, 1, 0.1, 0.93, 1, 0.07, 0.9, 1, 0, 0.9, 1, 0.07, 1, 1, 0.07, 1, 1, 0, 0.9, 1, 0, 1, -1, 0.07, -0.9, -1, 0, -0.9, -1, 0.07, -1, -1, 0.07, -1, -1, 0, -0.9, -1, 0, -1, -0.9, 0.07, 1, 0.9, 0.07, 1, -0.9, 0, 1, -0.9, 0, 1, 0.9, 0.07, 1, 0.9, 0, 1, 0.93, 0.1, 1, 0.9, 0.07, 1, 0.93, 0.1, 0.93, 0.93, 0.1, 0.93, 0.9, 0.07, 1, 0.9, 0.07, 0.9, 0.93, 0.1, 0.93, 1, 0.1, 0.93, 0.93, 0.1, 1, 0.93, 0.1, 1, 1, 0.1, 0.93, 1, 0.1, 1, 0.93, 0.1, -0.93, 0.93, 0.1, -1, 1, 0.1, -0.93, 1, 0.1, -0.93, 0.93, 0.1, -1, 1, 0.1, -1, -1, 0.1, -0.93, -1, 0.1, -1, -0.93, 0.1, -0.93, -0.93, 0.1, -0.93, -1, 0.1, -1, -0.93, 0.1, -1, -1, 0.1, 0.93, -0.93, 0.1, 0.93, -1, 0.1, 1, -1, 0.1, 1, -0.93, 0.1, 0.93, -0.93, 0.1, 1, 1, 0.07, 0.9, 1, 0.07, 1, 1, 0.1, 0.93, 1, 0.1, 0.93, 1, 0.07, 1, 1, 0.1, 1, -1, 0.07, 0.9, -0.9, 0.07, 0.9, -1, 0.1, 0.93, -1, 0.1, 0.93, -0.9, 0.07, 0.9, -0.93, 0.1, 0.93, 0.9, 0.07, -0.9, 0.9, 0.07, -1, 0.93, 0.1, -0.93, 0.93, 0.1, -0.93, 0.9, 0.07, -1, 0.93, 0.1, -1, -0.9, 0.07, -1, -0.9, 0.07, -0.9, -0.93, 0.1, -1, -0.93, 0.1, -1, -0.9, 0.07, -0.9, -0.93, 0.1, -0.93, 0.9, 0.07, -1, -0.9, 0.07, -1, 0.9, 0, -1, 0.9, 0, -1, -0.9, 0.07, -1, -0.9, 0, -1, 0.62, 0.073, 0.9, 0.62, 0.073, 1, 0.58, 0.073, 0.8724, 0.58, 0.073, 0.8724, 0.62, 0.073, 1, 0.58, 0.073, 1, 1, 0.073, 0.62, 0.9, 0.073, 0.62, 1, 0.073, 0.58, 1, 0.073, 0.58, 0.9, 0.073, 0.62, 0.8724, 0.073, 0.58, 0.62, 0.073, 0.9, 0.58, 0.073, 0.8724, 0.6352, 0.073, 0.7867, 0.6352, 0.073, 0.7867, 0.58, 0.073, 0.8724, 0.6022, 0.073, 0.7605, 0.6352, 0.073, 0.7867, 0.6022, 0.073, 0.7605, 0.6937, 0.073, 0.6937, 0.6937, 0.073, 0.6937, 0.6022, 0.073, 0.7605, 0.6656, 0.073, 0.6656, 0.6937, 0.073, 0.6937, 0.6656, 0.073, 0.6656, 0.7867, 0.073, 0.6352, 0.7867, 0.073, 0.6352, 0.6656, 0.073, 0.6656, 0.7605, 0.073, 0.6023, 0.7867, 0.073, 0.6352, 0.7605, 0.073, 0.6023, 0.9, 0.073, 0.62, 0.9, 0.073, 0.62, 0.7605, 0.073, 0.6023, 0.8724, 0.073, 0.58, -0.62, 0.073, -0.9, -0.62, 0.073, -1, -0.58, 0.073, -0.8724, -0.58, 0.073, -0.8724, -0.62, 0.073, -1, -0.58, 0.073, -1, -1, 0.073, -0.62, -0.9, 0.073, -0.62, -1, 0.073, -0.58, -1, 0.073, -0.58, -0.9, 0.073, -0.62, -0.8724, 0.073, -0.58, -0.62, 0.073, -0.9, -0.58, 0.073, -0.8724, -0.6352, 0.073, -0.7867, -0.6352, 0.073, -0.7867, -0.58, 0.073, -0.8724, -0.6023, 0.073, -0.7605, -0.6352, 0.073, -0.7867, -0.6023, 0.073, -0.7605, -0.6937, 0.073, -0.6938, -0.6937, 0.073, -0.6938, -0.6023, 0.073, -0.7605, -0.6657, 0.073, -0.6657, -0.6937, 0.073, -0.6938, -0.6657, 0.073, -0.6657, -0.7867, 0.073, -0.6352, -0.7867, 0.073, -0.6352, -0.6657, 0.073, -0.6657, -0.7605, 0.073, -0.6023, -0.7867, 0.073, -0.6352, -0.7605, 0.073, -0.6023, -0.9, 0.073, -0.62, -0.9, 0.073, -0.62, -0.7605, 0.073, -0.6023, -0.8724, 0.073, -0.58, 0.9, 0.073, -0.62, 1, 0.073, -0.62, 0.8724, 0.073, -0.58, 0.8724, 0.073, -0.58, 1, 0.073, -0.62, 1, 0.073, -0.58, 0.62, 0.073, -1, 0.62, 0.073, -0.9, 0.58, 0.073, -1, 0.58, 0.073, -1, 0.62, 0.073, -0.9, 0.58, 0.073, -0.8724, 0.9, 0.073, -0.62, 0.8724, 0.073, -0.58, 0.7867, 0.073, -0.6352, 0.7867, 0.073, -0.6352, 0.8724, 0.073, -0.58, 0.7605, 0.073, -0.6023, 0.7867, 0.073, -0.6352, 0.7605, 0.073, -0.6023, 0.6937, 0.073, -0.6938, 0.6937, 0.073, -0.6938, 0.7605, 0.073, -0.6023, 0.6656, 0.073, -0.6657, 0.6937, 0.073, -0.6938, 0.6656, 0.073, -0.6657, 0.6352, 0.073, -0.7867, 0.6352, 0.073, -0.7867, 0.6656, 0.073, -0.6657, 0.6022, 0.073, -0.7605, 0.6352, 0.073, -0.7867, 0.6022, 0.073, -0.7605, 0.62, 0.073, -0.9, 0.62, 0.073, -0.9, 0.6022, 0.073, -0.7605, 0.58, 0.073, -0.8724, -0.9, 0.073, 0.62, -1, 0.073, 0.62, -0.8724, 0.073, 0.58, -0.8724, 0.073, 0.58, -1, 0.073, 0.62, -1, 0.073, 0.58, -0.62, 0.073, 1, -0.62, 0.073, 0.9, -0.58, 0.073, 1, -0.58, 0.073, 1, -0.62, 0.073, 0.9, -0.58, 0.073, 0.8724, -0.9, 0.073, 0.62, -0.8724, 0.073, 0.58, -0.7867, 0.073, 0.6352, -0.7867, 0.073, 0.6352, -0.8724, 0.073, 0.58, -0.7605, 0.073, 0.6023, -0.7867, 0.073, 0.6352, -0.7605, 0.073, 0.6023, -0.6937, 0.073, 0.6937, -0.6937, 0.073, 0.6937, -0.7605, 0.073, 0.6023, -0.6657, 0.073, 0.6656, -0.6937, 0.073, 0.6937, -0.6657, 0.073, 0.6656, -0.6352, 0.073, 0.7867, -0.6352, 0.073, 0.7867, -0.6657, 0.073, 0.6656, -0.6023, 0.073, 0.7605, -0.6352, 0.073, 0.7867, -0.6023, 0.073, 0.7605, -0.62, 0.073, 0.9, -0.62, 0.073, 0.9, -0.6023, 0.073, 0.7605, -0.58, 0.073, 0.8724, 0.58, 0.073, 0.02, 0.58, 0.073, -0.6, 0.62, 0.073, -0.02, 0.62, 0.073, -0.02, 0.58, 0.073, -0.6, 0.62, 0.073, -0.6, 0.9, 0.073, 0.02, 0.58, 0.073, 0.02, 0.9, 0.073, -0.02, 0.9, 0.073, -0.02, 0.58, 0.073, 0.02, 0.62, 0.073, -0.02, -0.58, 0.073, -0.02, -0.58, 0.073, 0.6, -0.62, 0.073, 0.02, -0.62, 0.073, 0.02, -0.58, 0.073, 0.6, -0.62, 0.073, 0.6, -0.9, 0.073, -0.02, -0.58, 0.073, -0.02, -0.9, 0.073, 0.02, -0.9, 0.073, 0.02, -0.58, 0.073, -0.02, -0.62, 0.073, 0.02, 0.62, 0.073, 0.1, 0.62, 0.073, 0.2, 0.58, 0.073, 0.1, 0.58, 0.073, 0.1, 0.62, 0.073, 0.2, 0.58, 0.073, 0.2, 0.62, 0.073, 0.3, 0.62, 0.073, 0.4, 0.58, 0.073, 0.3, 0.58, 0.073, 0.3, 0.62, 0.073, 0.4, 0.58, 0.073, 0.4, 0.62, 0.073, 0.5, 0.62, 0.073, 0.6, 0.58, 0.073, 0.5, 0.58, 0.073, 0.5, 0.62, 0.073, 0.6, 0.58, 0.073, 0.6, -0.62, 0.073, -0.1, -0.62, 0.073, -0.2, -0.58, 0.073, -0.1, -0.58, 0.073, -0.1, -0.62, 0.073, -0.2, -0.58, 0.073, -0.2, -0.62, 0.073, -0.3, -0.62, 0.073, -0.4, -0.58, 0.073, -0.3, -0.58, 0.073, -0.3, -0.62, 0.073, -0.4, -0.58, 0.073, -0.4, -0.62, 0.073, -0.5, -0.62, 0.073, -0.6, -0.58, 0.073, -0.5, -0.58, 0.073, -0.5, -0.62, 0.073, -0.6, -0.58, 0.073, -0.6, 0.02, 0.073, -0.9, 0.02, 0.073, -0.7, -0.02, 0.073, -0.9, -0.02, 0.073, -0.9, 0.02, 0.073, -0.7, -0.02, 0.073, -0.7, 0.02, 0.073, -0.5, 0.02, 0.073, -0.3, -0.02, 0.073, -0.5, -0.02, 0.073, -0.5, 0.02, 0.073, -0.3, -0.02, 0.073, -0.3, 0.02, 0.073, -0.1, 0.02, 0.073, 0.1, -0.02, 0.073, -0.1, -0.02, 0.073, -0.1, 0.02, 0.073, 0.1, -0.02, 0.073, 0.1, 0.02, 0.073, 0.3, 0.02, 0.073, 0.5, -0.02, 0.073, 0.3, -0.02, 0.073, 0.3, 0.02, 0.073, 0.5, -0.02, 0.073, 0.5, 0.02, 0.073, 0.7, 0.02, 0.073, 0.9, -0.02, 0.073, 0.7, -0.02, 0.073, 0.7, 0.02, 0.073, 0.9, -0.02, 0.073, 0.9)
+
+[sub_resource type="Curve3D" id="Curve3D_8xu7g"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 2.5, 0, -8, 0, 0, 0, 0, 0, 0, 2.5, 0, 8),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_tm2eu"]
+_data = {
+"points": PackedVector3Array(0, 0, 11, 0, 0, 4, 2.5, 0, -8, -4, 0, 0, 0, 0, 0, 8, 0, -2.5),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_8w8wn"]
+_data = {
+"points": PackedVector3Array(0, 0, 11, 0, 0, 8, 2.5, 0, -8, 8, 0, 0, 0, 0, 0, -8, 0, 2.5),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_lsg5h"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -2.5, 0, 8, 0, 0, 0, 0, 0, 0, -2.5, 0, -8),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_6gayf"]
+_data = {
+"points": PackedVector3Array(0, 0, 11, 0, 0, -8, -2.5, 0, 8, -8, 0, 0, 0, 0, 0, 8, 0, -2.5),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_gcm03"]
+_data = {
+"points": PackedVector3Array(0, 0, 11, 0, 0, -4, -2.5, 0, 8, 4, 0, 0, 0, 0, 0, -8, 0, 2.5),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_u44kg"]
+_data = {
+"points": PackedVector3Array(-8, 0, 0, -8, 0, 0, 8, 0, 2.5, 0, 0, 8, 0, 0, -8, -2.5, 0, -8),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_u8hed"]
+_data = {
+"points": PackedVector3Array(-8, 0, 0, -4, 0, 0, 8, 0, 2.5, 0, 0, -4, 0, 0, -8, 2.5, 0, 8),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_kne1k"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 8, 0, 2.5, 0, 0, 0, 0, 0, 0, -8, 0, 2.5),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_dkmys"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 4, 0, 0, -8, 0, -2.5, 0, 0, 4, 0, 0, 0, -2.5, 0, -8),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_j53v8"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 8, 0, 0, -8, 0, -2.5, 0, 0, -8, 0, 0, 0, 2.5, 0, 8),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_38cot"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -8, 0, -2.5, 0, 0, 0, 0, 0, 0, 8, 0, -2.5),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_tm8dt"]
+resource_name = "green_light_1"
+length = 40.0
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10, 20, 30),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"green_light_rp_1"
+}, {
+"args": [],
+"method": &"green_light_rp_2"
+}, {
+"args": [],
+"method": &"green_light_rp_3"
+}, {
+"args": [],
+"method": &"green_light_rp_4"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_okrbj"]
+_data = {
+"green_light_1": SubResource("Animation_tm8dt")
+}
+
+[node name="Junction4" type="Node3D"]
+script = ExtResource("1_smpqq")
+create_geo = false
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1, -1, -1, -1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_001"), NodePath("RP_002"), NodePath("RP_002"), NodePath("RP_003"), NodePath("RP_004")])
+edge_rp_local_dirs = Array[int]([0, 1, 0, 1, 0, 1])
+
+[node name="RP_001" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -8)
+script = ExtResource("3_1e182")
+traffic_dir = [1, 1]
+lanes = [0, 2]
+
+[node name="RP_002" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 8)
+script = ExtResource("3_1e182")
+traffic_dir = [1, 1]
+lanes = [0, 2]
+prior_mag = 16.0
+next_mag = 16.0
+
+[node name="RP_003" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8, 0.5, 0)
+script = ExtResource("3_1e182")
+traffic_dir = [1, 1]
+lanes = [0, 2]
+prior_pt_init = NodePath("../RP_004")
+prior_mag = 16.0
+next_mag = 16.0
+
+[node name="RP_004" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0.5, 0)
+script = ExtResource("3_1e182")
+traffic_dir = [1, 1]
+lanes = [0, 2]
+next_pt_init = NodePath("../RP_003")
+prior_mag = 8.0
+next_mag = 8.0
+
+[node name="RoadJunction4" type="StaticBody3D" parent="." groups=["Road"]]
+collision_mask = 82
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoadJunction4"]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+mesh = ExtResource("4_ue4cq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoadJunction4"]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ltrob")
+
+[node name="TrafficPaths" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="TP_4_junction_1-2" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_8xu7g")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="TP_4_junction_1-3" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_tm2eu")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="TP_4_junction_1-4" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_8w8wn")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="TP_4_junction_2-1" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_lsg5h")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="TP_4_junction_2-3" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_6gayf")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="TP_4_junction_2-4" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_gcm03")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="TP_4_junction_3-1" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_u44kg")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="TP_4_junction_3-2" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_u8hed")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="TP_4_junction_3-4" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_kne1k")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="TP_4_junction_4-1" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_dkmys")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="TP_4_junction_4-2" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_j53v8")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="TP_4_junction_4-3" type="Path3D" parent="TrafficPaths"]
+curve = SubResource("Curve3D_38cot")
+script = ExtResource("5_jcqq0")
+number_of_vehicles = 0
+path_max_speed = 10.0
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 0, 0.6, -8)
+text = "1"
+font_size = 128
+
+[node name="Label3D2" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.6, 8)
+text = "2"
+font_size = 128
+
+[node name="Label3D3" type="Label3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 8, 0.6, 0)
+text = "3"
+font_size = 128
+
+[node name="Label3D4" type="Label3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, -8, 0.6, 0)
+text = "4"
+font_size = 128
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_okrbj")
+}
+autoplay = "green_light_1"

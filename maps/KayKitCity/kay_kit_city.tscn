@@ -1,7 +1,8 @@
-[gd_scene load_steps=34 format=3 uid="uid://defp4i4n5dard"]
+[gd_scene load_steps=35 format=3 uid="uid://defp4i4n5dard"]
 
-[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="1_djukj"]
+[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact/compact.tscn" id="1_djukj"]
 [ext_resource type="PackedScene" uid="uid://wrut3fs81xjv" path="res://maps/KayKitCity/terrain_pieces/road_junction.tscn" id="3_6tcif"]
+[ext_resource type="PhysicsMaterial" uid="uid://xvg1njhe0wed" path="res://assets/materials/road_physics_material.tres" id="3_daxai"]
 [ext_resource type="PackedScene" uid="uid://djoco1viojc80" path="res://maps/KayKitCity/terrain_pieces/road_straight.tscn" id="4_1u4ly"]
 [ext_resource type="PackedScene" uid="uid://maofgh0s33e8" path="res://maps/KayKitCity/terrain_pieces/road_corner_curved.tscn" id="5_cfag0"]
 [ext_resource type="PackedScene" uid="uid://ct3mywpm1352t" path="res://maps/KayKitCity/terrain_pieces/base.tscn" id="6_44t2m"]
@@ -78,33 +79,43 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -17, 2
 
 [node name="RoadJunction" parent="Terrain" instance=ExtResource("3_6tcif")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+physics_material_override = ExtResource("3_daxai")
 
 [node name="RoadStraight" parent="Terrain" instance=ExtResource("4_1u4ly")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -14)
+physics_material_override = ExtResource("3_daxai")
 
 [node name="RoadStraight2" parent="Terrain" instance=ExtResource("4_1u4ly")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -28)
+physics_material_override = ExtResource("3_daxai")
 
 [node name="RoadStraight3" parent="Terrain" instance=ExtResource("4_1u4ly")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 28)
+physics_material_override = ExtResource("3_daxai")
 
 [node name="RoadStraight4" parent="Terrain" instance=ExtResource("4_1u4ly")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 14)
+physics_material_override = ExtResource("3_daxai")
 
 [node name="RoadCornerCurved" parent="Terrain" instance=ExtResource("5_cfag0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -42)
+physics_material_override = ExtResource("3_daxai")
 
 [node name="RoadCornerCurved5" parent="Terrain" instance=ExtResource("5_cfag0")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 26, 0, -42)
+physics_material_override = ExtResource("3_daxai")
 
 [node name="RoadCornerCurved2" parent="Terrain" instance=ExtResource("5_cfag0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 0)
+physics_material_override = ExtResource("3_daxai")
 
 [node name="RoadCornerCurved3" parent="Terrain" instance=ExtResource("5_cfag0")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -44, 0, 70)
+physics_material_override = ExtResource("3_daxai")
 
 [node name="RoadCornerCurved4" parent="Terrain" instance=ExtResource("5_cfag0")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 26, 0, 70)
+physics_material_override = ExtResource("3_daxai")
 
 [node name="Base" parent="Terrain" instance=ExtResource("6_44t2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -28)

@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://ky6syqq4i4ae" path="res://assets/materials/road.tres" id="2_4u2h6"]
 [ext_resource type="Script" path="res://scripts/city_limits.gd" id="2_q66gr"]
 [ext_resource type="PackedScene" uid="uid://c4xp8dt0iw21" path="res://collidables/springy_prop.tscn" id="3_4brc2"]
-[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact.tscn" id="4_th2pk"]
+[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact/compact.tscn" id="4_th2pk"]
 [ext_resource type="Script" path="res://addons/gevp/scripts/camera.gd" id="5_283m0"]
 [ext_resource type="PackedScene" uid="uid://c3ixqkc6k13yi" path="res://addons/gevp/scenes/vehicle_controller.tscn" id="6_62x7v"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="6_yij02"]

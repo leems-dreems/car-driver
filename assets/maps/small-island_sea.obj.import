@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bs51wvgrjtlc3"
+path="res://.godot/imported/small-island_sea.obj-b97980c320b9400816c42177f74892ef.mesh"
+
+[deps]
+
+files=["res://.godot/imported/small-island_sea.obj-b97980c320b9400816c42177f74892ef.mesh"]
+
+source_file="res://assets/maps/small-island_sea.obj"
+dest_files=["res://.godot/imported/small-island_sea.obj-b97980c320b9400816c42177f74892ef.mesh", "res://.godot/imported/small-island_sea.obj-b97980c320b9400816c42177f74892ef.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

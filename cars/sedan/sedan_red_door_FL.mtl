@@ -1,0 +1,12 @@
+# Blender 4.2.0 MTL File: 'Car5.blend'
+# www.blender.org
+
+newmtl car5_mat
+Ns 11.111113
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd D:/Godot/car-driver/assets/PSX_Style_Cars_by_GGBot_(August2023)/Car 05/car5.png
