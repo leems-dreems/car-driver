@@ -1665,6 +1665,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 physics_material_override = ExtResource("23_s8icf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop"]
+layers = 1025
 mesh = SubResource("BoxMesh_0qb1o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop"]
@@ -1694,6 +1695,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -17)
 physics_material_override = ExtResource("23_s8icf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop2"]
+layers = 1025
 mesh = SubResource("BoxMesh_0qb1o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop2"]
@@ -1724,6 +1726,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -34)
 physics_material_override = ExtResource("23_s8icf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop3"]
+layers = 1025
 mesh = SubResource("BoxMesh_0qb1o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop3"]
@@ -1753,6 +1756,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -51)
 physics_material_override = ExtResource("23_s8icf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop4"]
+layers = 1025
 mesh = SubResource("BoxMesh_0qb1o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop4"]
@@ -1780,6 +1784,7 @@ outline_size = 40
 
 [node name="Ramp" type="CSGBox3D" parent="LongBuildingRow" groups=["Road"]]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, -73)
+layers = 1025
 use_collision = true
 size = Vector3(20, 1, 16)
 
@@ -1790,6 +1795,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0.41, 100)
 physics_material_override = ExtResource("26_wfw6r")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Park/StaticBody3D"]
+layers = 1025
 mesh = ExtResource("27_i3c67")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Park/StaticBody3D"]
