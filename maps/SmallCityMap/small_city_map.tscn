@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="12_n3gia"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="13_fg0qv"]
 [ext_resource type="PackedScene" uid="uid://2g4icv655eh3" path="res://maps/SmallCityMap/4_way_junction.tscn" id="14_4imh1"]
-[ext_resource type="Material" path="res://addons/road-generator/resources/road_texture.material" id="14_vie48"]
+[ext_resource type="Material" uid="uid://cb2lsxj40gkv5" path="res://addons/road-generator/resources/road_texture.material" id="14_vie48"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="15_0gxjo"]
 [ext_resource type="PackedScene" uid="uid://4whew70l87gh" path="res://maps/SmallCityMap/t_junction.tscn" id="15_fat5n"]
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="16_k8s8v"]
