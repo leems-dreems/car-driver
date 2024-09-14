@@ -3,13 +3,16 @@ class_name StandaloneSpringyProp extends Node3D
 @export var reset_time := 5.0
 @export var linear_breaking_point := 0.1
 @onready var _bodies: StandalonePropBodies = $StandalonePropBodies
+var _bodies_scene := preload("res://collidables/standalone_prop_bodies.tscn")
 var reset_timer : SceneTreeTimer = null
 var is_detached := false
-var _bodies_scene := preload("res://collidables/standalone_prop_bodies.tscn")
+## Increased by the prop respawn manager when this prop fails a hearing & line-of-sight check
+var respawn_weight := 0.0
 
 
 func _ready() -> void:
   return
+
 
 func _physics_process(_delta: float) -> void:
   if is_detached:
@@ -36,12 +39,13 @@ func detach() -> void:
   _bodies.joint.set_flag_y(JoltGeneric6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
   _bodies.joint.set_flag_z(JoltGeneric6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
   play_effect()
-  if reset_timer == null:
-    reset_timer = get_tree().create_timer(reset_time)
-    await reset_timer.timeout
-    _bodies.queue_free()
-    reset_timer = null
-    _bodies = null
+  PropRespawnManager.waiting_to_respawn.push_back(self)
+  return
+
+
+func despawn() -> void:
+  _bodies.queue_free()
+  _bodies = null
   return
 
 
@@ -51,10 +55,16 @@ func respawn() -> void:
   _bodies.rotation = Vector3.ZERO
   add_child(_bodies)
   is_detached = false
+  return
+
+
+func add_respawn_weight(_weight_to_add: float) -> void:
+  respawn_weight += _weight_to_add
 
 ## Can be overridden to play effects etc when something collides with [physics_body]
 func play_effect() -> void:
   pass
+
 
 func stop_effect() -> void:
   pass
