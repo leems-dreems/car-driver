@@ -5,6 +5,7 @@ class_name StandalonePropBodies extends Node3D
 @onready var rigid_body := $RigidBody3D
 @onready var joint: JoltGeneric6DOFJoint3D = $JoltGeneric6DOFJoint3D
 @onready var static_body := $StaticBody3D
+@onready var respawn_area := $Area3D
 
 
 func _ready() -> void:
