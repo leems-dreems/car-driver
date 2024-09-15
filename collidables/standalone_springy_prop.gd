@@ -46,6 +46,7 @@ func detach() -> void:
 func despawn() -> void:
   _bodies.queue_free()
   _bodies = null
+  respawn_weight = 0.0
   return
 
 
@@ -56,10 +57,6 @@ func respawn() -> void:
   add_child(_bodies)
   is_detached = false
   return
-
-
-func add_respawn_weight(_weight_to_add: float) -> void:
-  respawn_weight += _weight_to_add
 
 ## Can be overridden to play effects etc when something collides with [physics_body]
 func play_effect() -> void:

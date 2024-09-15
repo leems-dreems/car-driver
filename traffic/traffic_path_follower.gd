@@ -22,6 +22,8 @@ var parent_curve_length: float
 var _is_on_path := false
 ## This vehicle will not calculate avoidance & inputs for the next X ticks
 var ticks_to_skip: int = 0
+## Increased by the TrafficManager when this prop fails a hearing & line-of-sight check
+var respawn_weight := 0.0
 
 ## Copy settings from [traffic_path]. 
 func copy_path_settings(traffic_path: Path3D) -> void:

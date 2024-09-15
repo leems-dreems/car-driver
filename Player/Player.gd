@@ -58,6 +58,7 @@ func _ready() -> void:
   camera_controller.setup(self)
   start_ragdoll()
   PropRespawnManager.camera = camera_controller.camera
+  TrafficManager.camera = camera_controller.camera
 
 
 func _on_body_entered(_body: Node) -> void:

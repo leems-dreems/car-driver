@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://cr77wenw0lh5c"]
+[gd_scene load_steps=73 format=3 uid="uid://cr77wenw0lh5c"]
 
 [ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
@@ -17,7 +17,6 @@
 [ext_resource type="Script" path="res://collidables/springy_props_manager.gd" id="19_7htru"]
 [ext_resource type="PackedScene" uid="uid://bol1qtccjchrx" path="res://collidables/springy_gas_pump.tscn" id="20_v1fy2"]
 [ext_resource type="PackedScene" uid="uid://dnhe41455c4fi" path="res://collidables/springy_trash_bin_square.tscn" id="22_q1qst"]
-[ext_resource type="Script" path="res://traffic/traffic_manager.gd" id="23_0pkuc"]
 [ext_resource type="PhysicsMaterial" uid="uid://cc6punypby5f5" path="res://assets/materials/building_physics_material.tres" id="23_s8icf"]
 [ext_resource type="PackedScene" uid="uid://ba0xtl41qmm3s" path="res://maps/KayKitCity/props/traffic_light_a.tscn" id="24_geihi"]
 [ext_resource type="Material" uid="uid://vgwqikmc8vwq" path="res://assets/materials/concrete.tres" id="24_xdwmv"]
@@ -1429,9 +1428,6 @@ reset_time = 10.0
 [node name="SpringyTrashBinSquare62" parent="SpringyPropsManager" instance=ExtResource("22_q1qst")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0.1, -50)
 reset_time = 10.0
-
-[node name="TrafficManager" type="Node3D" parent="."]
-script = ExtResource("23_0pkuc")
 
 [node name="TrafficLights" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)

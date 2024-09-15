@@ -18,7 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Game="*res://scripts/Game.gd"
-PropRespawnManager="*res://scripts/respawn_manager.gd"
+PropRespawnManager="*res://scripts/prop_respawn_manager.gd"
+TrafficManager="*res://traffic/traffic_manager.gd"
 
 [display]
 

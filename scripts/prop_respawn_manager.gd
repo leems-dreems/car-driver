@@ -1,5 +1,5 @@
 extends Node3D
-## Respawns tracked Props if they are off-camera and out of hearing range
+## PropRespawnManager is a singleton that respawns detached props
 
 ## The Camera3D to use for line-of-sight and hearing range checks
 var camera: Camera3D

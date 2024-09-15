@@ -1,23 +1,24 @@
-class_name TrafficManager extends Node3D
+extends Node3D
+## TrafficManager is a singleton that spawns and control AI traffic vehicles
 
-var vehicle_scenes: Array[PackedScene] = [
+const vehicle_scenes: Array[PackedScene] = [
   preload("res://cars/compact/compact.tscn"),
   preload("res://cars/sedan/sedan.tscn")
 ]
-
-@export var vehicle_count: int = 10             ## How many vehicles to spawn
+## How many vehicles to spawn
+@export var vehicle_count: int = 10
+## The Camera3D to use for line-of-sight and hearing range checks
+var camera: Camera3D
+## Vehicles won't be respawned until their `respawn_weight` is greater than this
+var respawn_delay: int = 12
+## Vehicles within this distance will not be despawned
+var hearing_range := 60.0
 var followers: Array[TrafficPathFollower] = []
 var traffic_paths: Array[TrafficPath] = []
-var last_follower_updated: int = 0              ## Index of the most recent follower to be updated
-
-
-func _ready() -> void:
-  await get_tree().create_timer(1.0).timeout
-  for _traffic_path: TrafficPath in get_tree().current_scene.find_children("*", "TrafficPath"):
-    if _traffic_path.spawn_vehicles:
-      traffic_paths.push_back(_traffic_path)
-  traffic_paths.shuffle()
-  return
+## Index of the most recent follower to be updated
+var last_follower_updated: int = 0
+## Parameters for line-of-sight checks on physics props
+@onready var vehicle_ray_query_params := PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, 2)
 
 
 func _physics_process(_delta: float) -> void:
@@ -56,3 +57,25 @@ func _add_vehicle(_follower: TrafficPathFollower) -> void:
   _follower.vehicle.rotation = _follower.rotation
   add_child(_follower.vehicle)
   _follower.vehicle.start_ai()
+
+
+func adjust_respawn_weight(_follower: TrafficPathFollower) -> void:
+  var _can_see_or_hear_prop := false
+  if _follower.vehicle.global_position.distance_to(camera.global_position) < hearing_range:
+    _can_see_or_hear_prop = true
+  elif camera.is_position_in_frustum(_follower.vehicle.global_position):
+    vehicle_ray_query_params.from = camera.global_position
+    vehicle_ray_query_params.to = _follower.vehicle.global_position
+    var _space_state := get_world_3d().direct_space_state
+    var _raycast_result := _space_state.intersect_ray(vehicle_ray_query_params)
+    if not _raycast_result.is_empty():
+      var _collider: RigidBody3D = _raycast_result.collider
+      if _collider.get_parent() == _follower:
+        _can_see_or_hear_prop = true
+      
+  if _can_see_or_hear_prop:
+    _follower.respawn_weight = 0
+  else:
+    _follower.respawn_weight += 1
+    if _follower.respawn_weight > respawn_delay:
+      _follower.despawn()
