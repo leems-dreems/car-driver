@@ -1,4 +1,4 @@
-class_name TrafficPathFollower extends PathFollow3D
+class_name TrafficAgent extends PathFollow3D
 ## This class is instantiated by [TrafficPath] nodes, and acts as a guide for AI traffic vehicles.
 
 @export var vehicle: DriveableVehicle = null
@@ -61,13 +61,13 @@ func set_inputs() -> void:
     var target_speed := path_max_speed
 
     if not _is_path_ahead_blocked:
-      # Move this TrafficPathFollower forward along the path
+      # Move this TrafficAgent forward along the path
       if _distance_to_path < path_distance_limit:
         progress = _closest_offset + 3 + (vehicle.speed * 0.5)
       else:
         progress = _closest_offset + 3
 
-    # Get the difference in rotation on the Y axis between this TrafficPathFollower and its vehicle
+    # Get the difference in rotation on the Y axis between this TrafficAgent and its vehicle
     var _angle_to_vehicle := vehicle.global_transform.basis.z.signed_angle_to(global_transform.basis.z, Vector3.UP)
     if _distance_to_path < path_distance_limit and _angle_to_vehicle > -0.1 and _angle_to_vehicle < 0.1:
       _is_on_path = true
