@@ -34,6 +34,13 @@ func copy_path_settings(traffic_path: Path3D) -> void:
   parent_curve_length = traffic_path.path_length
   return
 
+
+func add_to_path(_traffic_path: TrafficPath) -> void:
+  if is_inside_tree():
+    get_parent_node_3d().remove_child(self)
+  copy_path_settings(_traffic_path)
+  _traffic_path.add_child(self)
+
 ## Update interest vectors & avoidance info for the vehicle, then adjust its inputs accordingly
 func set_inputs() -> void:
   if ticks_to_skip > 0:
@@ -49,9 +56,7 @@ func set_inputs() -> void:
         if _chosen_path.is_blocked:
           _is_path_ahead_blocked = true
         else:
-          get_parent_node_3d().remove_child(self)
-          copy_path_settings(_chosen_path)
-          _chosen_path.add_child(self)
+          add_to_path(_chosen_path)
           progress = 0
 
     var _local_vehicle_pos := get_parent_node_3d().to_local(vehicle.global_position)

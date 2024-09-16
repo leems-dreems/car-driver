@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://lfmcun5yh37r"]
 
-[ext_resource type="Script" path="res://traffic/traffic_path_follower.gd" id="1_ub7a2"]
+[ext_resource type="Script" path="res://traffic/traffic_agent.gd" id="1_ub7a2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1d423"]
 size = Vector3(3, 3, 6)
