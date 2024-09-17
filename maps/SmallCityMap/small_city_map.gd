@@ -8,7 +8,7 @@ func _ready() -> void:
   for _traffic_path: TrafficPath in get_tree().current_scene.find_children("*", "TrafficPath"):
     if _traffic_path.spawn_vehicles:
       TrafficManager.traffic_paths.push_back(_traffic_path)
-  TrafficManager.traffic_paths.shuffle()
+  TrafficManager.add_traffic_spawn_points()
   await get_tree().create_timer(1.0).timeout
   for _road_static_body: StaticBody3D in find_children("road_mesh_col", "StaticBody3D", true, false):
     _road_static_body.add_to_group("Road")

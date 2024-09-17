@@ -2,7 +2,7 @@
 class_name TrafficPath extends Path3D
 ## Supports [TrafficAgent] nodes, which spawn & control AI-driven vehicles
 
-var traffic_follower_scene := preload("res://traffic/traffic_path_follower.tscn")
+const traffic_agent_scene := preload("res://traffic/traffic_agent.tscn")
 
 @export_group("Path Settings")
 ## If true, TrafficManager will spawn vehicles on this path
@@ -50,7 +50,7 @@ func _ready() -> void:
 
 
 func spawn_follower(vehicle_container: Node3D = null) -> TrafficAgent:
-  var _follower: TrafficAgent = traffic_follower_scene.instantiate()
+  var _follower: TrafficAgent = traffic_agent_scene.instantiate()
   _follower.copy_path_settings(self)
   _agents.push_back(_follower)
   add_child(_follower)

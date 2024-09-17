@@ -41,7 +41,7 @@ var useable_target : Node3D = null
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
 var _ground_height: float = 0.0
-var _start_position := global_transform.origin
+@onready var _start_position := global_transform.origin
 var _default_collision_layer := collision_layer
 var _is_on_floor_buffer := false
 
@@ -59,6 +59,8 @@ func _ready() -> void:
   start_ragdoll()
   PropRespawnManager.camera = camera_controller.camera
   TrafficManager.camera = camera_controller.camera
+  TrafficManager.spawn_include_area = $CameraController/PlayerCamera/TrafficSpawnIncludeArea
+  TrafficManager.spawn_exclude_area = $CameraController/PlayerCamera/TrafficSpawnExcludeArea
 
 
 func _on_body_entered(_body: Node) -> void:

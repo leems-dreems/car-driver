@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://lfmcun5yh37r"]
 
-[ext_resource type="Script" path="res://traffic/traffic_agent.gd" id="1_ub7a2"]
+[ext_resource type="Script" path="res://traffic/traffic_agent.gd" id="1_lhjlf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1d423"]
 size = Vector3(3, 3, 6)
@@ -14,7 +14,7 @@ albedo_color = Color(0, 0, 1, 0.235294)
 
 [node name="TrafficPathFollower" type="PathFollow3D"]
 loop = false
-script = ExtResource("1_ub7a2")
+script = ExtResource("1_lhjlf")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 1024
