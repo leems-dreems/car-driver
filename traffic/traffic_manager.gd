@@ -7,15 +7,17 @@ const vehicle_scenes: Array[PackedScene] = [
 ]
 const traffic_spawn_point_scene := preload("res://traffic/traffic_spawn_point.tscn")
 ## How many vehicles to spawn
-@export var vehicle_count: int = 10
+var vehicle_count: int = 10
 ## The Camera3D to use for line-of-sight and hearing range checks
 var camera: Camera3D
 ## Area3D node used to look for TrafficSpawnPoints around the camera/player
 var spawn_include_area: Area3D
 ## Smaller Area3D node used to exclude closer spawn points from the include list
 var spawn_exclude_area: Area3D
-## Vehicles won't be respawned until their `respawn_weight` is greater than this
-var respawn_delay: int = 12
+## Node that spawned vehicles will be added to as children
+var vehicle_container_node: Node3D
+## Vehicles won't be despawned until their `despawn_weight` is greater than this
+var despawn_delay: int = 60
 ## Vehicles within this distance will not be despawned
 var hearing_range := 160.0
 ## Minimum distance from the camera vehicles will be spawned
@@ -71,8 +73,13 @@ func _physics_process(_delta: float) -> void:
       var _spawn_point := _nearby_spawn_points[_last_spawn_point_checked]
       if not (is_spawn_point_colliding(_spawn_point) or is_spawn_point_visible(_spawn_point)):
         _traffic_agent.add_to_path(_spawn_point.get_parent_node_3d())
-        _traffic_agent.progress = _spawn_point.progress
-        _add_vehicle(_traffic_agent)
+        _traffic_agent.progress_ratio = _spawn_point.progress_ratio
+        _add_vehicle(_spawn_point, _traffic_agent)
+        _spawn_point.highlight()
+      if _last_spawn_point_checked >= len(_nearby_spawn_points) - 1:
+        _last_spawn_point_checked = 0
+      else:
+        _last_spawn_point_checked += 1
       # =========================
       # If this follower's collision Area3D isn't overlapping anything else, spawn a vehicle
       #if _traffic_agent.collision_area.has_overlapping_areas() or _traffic_agent.collision_area.has_overlapping_bodies():
@@ -81,22 +88,22 @@ func _physics_process(_delta: float) -> void:
         #_add_vehicle(_traffic_agent)
     elif not _traffic_agent.vehicle.is_being_driven:
       _traffic_agent.set_inputs()
-
+      _adjust_despawn_weight(_traffic_agent)
     last_agent_updated += 1
   return
 
 
-func _add_vehicle(_agent: TrafficAgent) -> void:
+func _add_vehicle(_spawn_point: TrafficSpawnPoint, _agent: TrafficAgent) -> void:
   var _new_vehicle: DriveableVehicle = vehicle_scenes.pick_random().instantiate()
+  _new_vehicle.position = _spawn_point.global_position
+  _new_vehicle.rotation = _spawn_point.global_rotation
   _agent.vehicle = _new_vehicle
-  _agent.vehicle.position = _agent.global_position
-  _agent.vehicle.rotation = _agent.global_rotation
-  add_child(_agent.vehicle)
+  vehicle_container_node.add_child(_agent.vehicle)
   _agent.vehicle.start_ai()
   return
 
 
-func adjust_respawn_weight(_agent: TrafficAgent) -> void:
+func _adjust_despawn_weight(_agent: TrafficAgent) -> void:
   var _can_see_or_hear_vehicle := false
   if _agent.vehicle.global_position.distance_to(camera.global_position) < hearing_range:
     _can_see_or_hear_vehicle = true
@@ -106,15 +113,15 @@ func adjust_respawn_weight(_agent: TrafficAgent) -> void:
     var _space_state := get_world_3d().direct_space_state
     var _raycast_result := _space_state.intersect_ray(vehicle_ray_query_params)
     if not _raycast_result.is_empty():
-      var _collider: RigidBody3D = _raycast_result.collider
+      var _collider: Node3D = _raycast_result.collider
       if _collider.get_parent() == _agent:
         _can_see_or_hear_vehicle = true
   if _can_see_or_hear_vehicle:
-    _agent.respawn_weight = 0
+    _agent.despawn_weight = 0
   else:
-    _agent.respawn_weight += 1
-    if _agent.respawn_weight > respawn_delay:
-      _agent.despawn()
+    _agent.despawn_weight += 1
+    if _agent.despawn_weight > despawn_delay:
+      _agent.vehicle.despawn()
   return
 
 ## Update our array of nearby spawn points, excluding ones that are too close

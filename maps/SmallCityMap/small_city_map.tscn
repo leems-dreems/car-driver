@@ -1397,6 +1397,8 @@ traffic_lights_RP_002 = [NodePath("../../TrafficLights/4WayJunction_D2")]
 traffic_lights_RP_003 = [NodePath("../../TrafficLights/4WayJunction_D3")]
 traffic_lights_RP_004 = [NodePath("../../TrafficLights/4WayJunction_D4")]
 
+[node name="VehicleContainer" type="Node3D" parent="."]
+
 [node name="SpringyPropsManager" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 script = ExtResource("19_7htru")

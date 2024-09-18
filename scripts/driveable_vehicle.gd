@@ -176,7 +176,7 @@ func explode() -> void:
   explosion.start_explosion()
   apply_burnt_material()
   await get_tree().create_timer(7.0).timeout
-  queue_free()
+  despawn()
   return
 
 ## Freeze the car, as well as the various bodies attached to it
@@ -247,6 +247,11 @@ func stop_ai() -> void:
   for _node: Node in get_children():
     if _node is RayCast3D and _node.is_in_group(steering_ray_group):
       _node.enabled = false
+  return
+
+
+func despawn() -> void:
+  queue_free()
   return
 
 ## Calculate the amount of interest in each direction by comparing it to the target vector

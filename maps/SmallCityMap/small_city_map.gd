@@ -5,6 +5,7 @@ var road_physics_material := preload("res://assets/materials/road_physics_materi
 
 
 func _ready() -> void:
+  TrafficManager.vehicle_container_node = $VehicleContainer
   for _traffic_path: TrafficPath in get_tree().current_scene.find_children("*", "TrafficPath"):
     if _traffic_path.spawn_vehicles:
       TrafficManager.traffic_paths.push_back(_traffic_path)
