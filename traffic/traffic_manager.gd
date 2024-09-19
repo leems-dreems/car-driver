@@ -37,11 +37,15 @@ var _nearby_paths_update_distance := 10.0
 ## An array of TrafficSpawnPoints within a certain range of distance
 var _nearby_spawn_points: Array[TrafficSpawnPoint] = []
 ## Index of the last path checked from the _nearby_traffic_paths array
-var _last_spawn_point_checked: int = 0
+var _last_spawn_point_checked: int = -1
+## How long to keep skipping a spawn point for after it has been on-camera
+var _spawn_point_sighted_delay := 10.0
 ## Index of the most recent TrafficAgent to be updated
 var last_agent_updated: int = 0
 ## Global position of the camera the last time we updated the list of nearby TrafficSpawnPoints
 var _camera_position_at_last_update: Vector3
+## Time elapsed since TrafficManager started. Incremented by the delta of _physics_process each step
+var _time_elapsed := 10.0
 ## Parameters for line-of-sight checks on physics props
 @onready var vehicle_ray_query_params := PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, 3)
 ## Parameters for line-of-sight checks on paths
@@ -50,9 +54,21 @@ var _camera_position_at_last_update: Vector3
 @onready var path_follower := PathFollow3D.new()
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+  _time_elapsed += delta
   if len(traffic_paths) == 0:
     return
+  # Update our list of nearby paths if we've moved since checking last
+  if _camera_position_at_last_update.distance_to(camera.global_position) > _nearby_paths_update_distance:
+    update_nearby_spawn_points()
+    return
+  if _last_spawn_point_checked >= len(_nearby_spawn_points) - 1:
+    _last_spawn_point_checked = 0
+  else:
+    _last_spawn_point_checked += 1
+  var _spawn_point := _nearby_spawn_points[_last_spawn_point_checked]
+  if is_spawn_point_visible(_spawn_point):
+    _spawn_point.time_last_seen = _time_elapsed
   if vehicle_count > 0 and len(_agents) < vehicle_count:
     # Sort traffic paths by number of children, descending
     traffic_paths.sort_custom(func(a: TrafficPath, b: TrafficPath):
@@ -66,20 +82,14 @@ func _physics_process(_delta: float) -> void:
       last_agent_updated = 0
     var _traffic_agent = _agents[last_agent_updated]
     if _traffic_agent.vehicle == null:
-      # Update our list of nearby paths if we've moved since checking last
-      if _camera_position_at_last_update.distance_to(camera.global_position) > _nearby_paths_update_distance:
-        update_nearby_spawn_points()
-        return
-      var _spawn_point := _nearby_spawn_points[_last_spawn_point_checked]
-      if not (is_spawn_point_colliding(_spawn_point) or is_spawn_point_visible(_spawn_point)):
+      #var _spawn_point := _nearby_spawn_points[_last_spawn_point_checked]
+      #if is_spawn_point_visible(_spawn_point):
+        #_spawn_point.time_last_seen = _time_elapsed
+      if _time_elapsed - _spawn_point.time_last_seen > _spawn_point_sighted_delay and not (is_spawn_point_colliding(_spawn_point)):
         _traffic_agent.add_to_path(_spawn_point.get_parent_node_3d())
         _traffic_agent.progress_ratio = _spawn_point.progress_ratio
         _add_vehicle(_spawn_point, _traffic_agent)
         _spawn_point.highlight()
-      if _last_spawn_point_checked >= len(_nearby_spawn_points) - 1:
-        _last_spawn_point_checked = 0
-      else:
-        _last_spawn_point_checked += 1
       # =========================
       # If this follower's collision Area3D isn't overlapping anything else, spawn a vehicle
       #if _traffic_agent.collision_area.has_overlapping_areas() or _traffic_agent.collision_area.has_overlapping_bodies():
