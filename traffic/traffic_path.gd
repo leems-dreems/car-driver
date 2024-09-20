@@ -47,11 +47,3 @@ func _ready() -> void:
     if _child is TrafficAgent:
       _agents.push_back(_child)
   return
-
-
-func spawn_follower(vehicle_container: Node3D = null) -> TrafficAgent:
-  var _follower: TrafficAgent = traffic_agent_scene.instantiate()
-  _follower.copy_path_settings(self)
-  _agents.push_back(_follower)
-  add_child(_follower)
-  return _follower

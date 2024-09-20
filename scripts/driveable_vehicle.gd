@@ -14,6 +14,8 @@ var current_hit_points: float
 var has_caught_fire := false
 ## Timer that runs after this vehicle is requested to stop by something else
 var request_stop_timer: SceneTreeTimer = null
+## Velocity to apply to the car after spawning in
+var _starting_velocity: Vector3 = Vector3.ZERO
 ## Velocity as of the last physics tick
 var _previous_velocity: Vector3 = Vector3.ZERO
 ## The number of RayCast3Ds that this vehicle uses for close avoidance
@@ -82,6 +84,7 @@ func _ready () -> void:
   current_hit_points = max_hit_points
   await get_tree().create_timer(0.2).timeout
   unfreeze_bodies()
+  linear_velocity = _starting_velocity
   return
 
 
