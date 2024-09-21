@@ -61,6 +61,8 @@ func _ready() -> void:
   TrafficManager.camera = camera_controller.camera
   TrafficManager.spawn_include_area = $CameraController/PlayerCamera/TrafficSpawnIncludeArea
   TrafficManager.spawn_exclude_area = $CameraController/PlayerCamera/TrafficSpawnExcludeArea
+  camera_controller.top_level = true
+  $CameraController/PlayerCamera.top_level = true
 
 
 func _on_body_entered(_body: Node) -> void:
