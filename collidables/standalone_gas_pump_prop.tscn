@@ -1,0 +1,25 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpbfn306rpmyr"]
+
+[ext_resource type="Script" path="res://collidables/standalone_gas_pump_prop.gd" id="1_vmbgx"]
+[ext_resource type="PackedScene" uid="uid://jpe0svqk76rk" path="res://collidables/standalone_gas_pump_bodies.tscn" id="2_cbp8a"]
+[ext_resource type="PackedScene" uid="uid://qj5wm2wpuawj" path="res://effects/explosion.tscn" id="3_qrvbh"]
+[ext_resource type="AudioStream" uid="uid://bvjtmoh4u8ueq" path="res://assets/audio/Hanna-Barbera SFX/crash_11.wav" id="4_wntih"]
+[ext_resource type="AudioStream" uid="uid://ok43u0a4qgke" path="res://assets/audio/Hanna-Barbera SFX/crash_13.wav" id="5_qofms"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fv1yf"]
+streams_count = 2
+stream_0/stream = ExtResource("4_wntih")
+stream_1/stream = ExtResource("5_qofms")
+
+[node name="StandaloneGasPumpProp" type="Node3D"]
+script = ExtResource("1_vmbgx")
+
+[node name="StandalonePropBodies" parent="." instance=ExtResource("2_cbp8a")]
+
+[node name="Explosion" parent="." instance=ExtResource("3_qrvbh")]
+explosion_force_multiplier = 300000.0
+explosion_duration = 0.3
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_fv1yf")
+doppler_tracking = 2

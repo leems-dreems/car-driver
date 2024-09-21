@@ -15,3 +15,11 @@ func _ready() -> void:
     rigid_body.center_of_mass = com_marker.position
   rigid_body.gravity_scale = 0
   return
+
+
+func play_effect() -> void:
+  pass
+
+
+func stop_effect() -> void:
+  pass

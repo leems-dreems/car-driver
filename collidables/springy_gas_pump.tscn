@@ -22,14 +22,14 @@ vertex_color_use_as_albedo = true
 offsets = PackedFloat32Array(0, 0.484582, 0.819383, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0.932249, 0.891119, 2.31028e-06, 1, 0.920752, 0.355072, 0, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_mpcpi"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5roug"]
 gradient = SubResource("Gradient_psfuf")
 
 [sub_resource type="Curve" id="Curve_mau4t"]
 _data = [Vector2(0.0392157, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.84081, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_wj330"]
+[sub_resource type="CurveTexture" id="CurveTexture_re1o2"]
 curve = SubResource("Curve_mau4t")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aomou"]
@@ -39,8 +39,8 @@ initial_velocity_min = 8.0
 initial_velocity_max = 12.0
 damping_min = 5.0
 damping_max = 10.0
-color_ramp = SubResource("GradientTexture1D_mpcpi")
-emission_curve = SubResource("CurveTexture_wj330")
+color_ramp = SubResource("GradientTexture1D_5roug")
+emission_curve = SubResource("CurveTexture_re1o2")
 
 [sub_resource type="BoxMesh" id="BoxMesh_uk76s"]
 size = Vector3(0.1, 0.1, 0.1)

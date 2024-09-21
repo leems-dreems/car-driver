@@ -1,0 +1,137 @@
+[gd_scene load_steps=16 format=3 uid="uid://jpe0svqk76rk"]
+
+[ext_resource type="Script" path="res://collidables/standalone_gas_pump_bodies.gd" id="1_lxtwe"]
+[ext_resource type="PackedScene" uid="uid://drtqj75y7cwtf" path="res://fire.tscn" id="2_67v7a"]
+[ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="2_t1f7j"]
+[ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="3_h5uk1"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j5txw"]
+friction = 0.5
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_edtus"]
+points = PackedVector3Array(-1.25, 0, -0.384485, -1.25, 0, 0.384223, -1.25, 0.999689, -0.50004, 1.25, 0, -0.384485, 1.25, 0, 0.384223, -1.25, 0.999689, 0.499909, 1.25, 0.999689, -0.50004, -1.25, 1.83271, -0.210433, -1.11761, 3.56967, -0.668465, -1.11761, 3.23353, -0.668465, 1.25, 0.999689, 0.499909, -1.25, 1.83271, 0.210171, -1.11761, 3.23353, 0.668465, -1.11761, 3.56967, 0.668465, 1.25, 1.83271, -0.210433, 1.11736, 3.23353, -0.668465, 1.11736, 3.56967, -0.668465, -1.25, 2.16675, -0.000130892, 1.25, 1.83271, 0.210171, 1.11736, 3.56967, 0.668465, 1.11736, 3.23353, 0.668465, 1.25, 2.16675, -0.000130892)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dgbr0"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="Gradient" id="Gradient_jj2wk"]
+offsets = PackedFloat32Array(0, 0.484582, 0.819383, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.932249, 0.891119, 2.31028e-06, 1, 0.920752, 0.355072, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mpcpi"]
+gradient = SubResource("Gradient_jj2wk")
+
+[sub_resource type="Curve" id="Curve_pku0d"]
+_data = [Vector2(0.0392157, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.84081, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wj330"]
+curve = SubResource("Curve_pku0d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pkv5m"]
+direction = Vector3(0, 1, 0)
+spread = 75.0
+initial_velocity_min = 8.0
+initial_velocity_max = 12.0
+damping_min = 5.0
+damping_max = 10.0
+color_ramp = SubResource("GradientTexture1D_mpcpi")
+emission_curve = SubResource("CurveTexture_wj330")
+
+[sub_resource type="BoxMesh" id="BoxMesh_nyl66"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hryqd"]
+radius = 0.1
+height = 0.2
+radial_segments = 12
+rings = 6
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1xuap"]
+points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.0273234, -0.000674605, -0.091251, -0.033203, -0.00368038, -0.000674605, 0.0273401, -0.094887, -0.0399752, 0.087652, 0.0235076, 0.0236569, -0.0882122, 0.0388687, -0.00672694, 0.027269, 0.0932929, 0.0355924, -0.0634742, -0.0671733, 0.0447611, 0.0878618, 0.00537491, -0.0401042, -0.0636745, -0.0643473, -0.0825919, 0.0242577, -0.0492209, -0.0490121, -0.0271631, 0.0808904, 0.0844492, -0.0243056, 0.0449228, 0.0841661, 0.0242248, -0.0461204, -0.00677629, 0.0886195, -0.0434421, -0.0822497, 0.0271665, 0.0476506, -0.0342178, -0.091493, 0.0115061, 0.0386685, 0.0635835, 0.0659385, 0.0449186, -0.0243224, 0.0844413, 0.0780522, -0.0605514, -0.00368842, 0.0176745, -0.091791, -0.0312626, 0.0414341, 0.0631837, -0.063856, 0.0476588, -0.0271797, -0.0822327, -0.0492209, -0.0242577, -0.0825919, -0.067573, 0.0608245, -0.0401971, -0.0397945, -0.0631744, 0.0655115, -0.0370558, 0.0606348, 0.0690515, 0.0810561, 0.0242025, 0.050793, -0.000674605, -0.02734, -0.0948867, 0.0841654, -0.0242246, -0.04612, -0.0948948, 0.0273233, -0.000674605, -0.000674605, -0.0364572, 0.090488)
+
+[node name="StandaloneGasPumpBodies" type="Node3D"]
+script = ExtResource("1_lxtwe")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+collision_layer = 64
+collision_mask = 83
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 400.0
+physics_material_override = SubResource("PhysicsMaterial_j5txw")
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 10
+angular_damp = 1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = ExtResource("2_t1f7j")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("ConvexPolygonShape3D_edtus")
+
+[node name="Emitters" type="Node3D" parent="RigidBody3D"]
+
+[node name="Fire" parent="RigidBody3D/Emitters" instance=ExtResource("2_67v7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.90354, 0.648228, -8.17776e-05)
+emitting = false
+
+[node name="Fire2" parent="RigidBody3D/Emitters" instance=ExtResource("2_67v7a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.762578, 2.40752, -8.17776e-05)
+emitting = false
+
+[node name="Sparks" type="GPUParticles3D" parent="RigidBody3D/Emitters"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.443619)
+material_override = SubResource("StandardMaterial3D_dgbr0")
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.78
+randomness = 0.35
+visibility_aabb = AABB(-4.84702, -4, -4, 9.7204, 8, 8)
+process_material = SubResource("ParticleProcessMaterial_pkv5m")
+draw_pass_1 = SubResource("BoxMesh_nyl66")
+
+[node name="Fire3" parent="RigidBody3D/Emitters" instance=ExtResource("3_h5uk1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65663, 1.92129, -0.00401568)
+emitting = false
+
+[node name="Fire4" parent="RigidBody3D/Emitters" instance=ExtResource("3_h5uk1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.833531, 0.843393, -0.06897)
+emitting = false
+
+[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="."]
+linear_limit_x/upper = 1.0
+linear_limit_x/lower = -1.0
+linear_limit_z/upper = 1.0
+linear_limit_z/lower = -1.0
+linear_spring_x/enabled = true
+linear_spring_x/frequency = 10.0
+linear_spring_z/enabled = true
+linear_spring_z/frequency = 10.0
+node_a = NodePath("../StaticBody3D")
+node_b = NodePath("../RigidBody3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("SphereMesh_hryqd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_1xuap")
+
+[node name="CenterOfMassMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 256
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("ConvexPolygonShape3D_edtus")

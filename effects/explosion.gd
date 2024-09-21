@@ -28,8 +28,10 @@ func _ready() -> void:
   explosion_area.connect("body_entered", func (_body: Node3D):
     if _body is RigidBody3D:
       var _parent := _body.get_parent_node_3d()
-      if _parent is SpringyProp and not _parent.is_detached:
-        _body.get_parent_node_3d().detach()
+      if _parent is StandalonePropBodies:
+        var _standalone_prop: StandaloneSpringyProp = _parent.get_parent_node_3d()
+        if not _standalone_prop.is_detached:
+          _standalone_prop.detach()
   )
   return
 

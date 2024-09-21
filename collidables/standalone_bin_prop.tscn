@@ -1,9 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://df8mbdhlomb01"]
+[gd_scene load_steps=13 format=3 uid="uid://df8mbdhlomb01"]
 
 [ext_resource type="Script" path="res://collidables/standalone_bin_prop.gd" id="1_l6t2o"]
 [ext_resource type="PackedScene" uid="uid://dc8sax4rbvaj4" path="res://collidables/standalone_bin_bodies.tscn" id="2_5f4lt"]
+[ext_resource type="AudioStream" uid="uid://clui70lbe0333" path="res://assets/audio/Hanna-Barbera SFX/hit_1.wav" id="3_8pcki"]
+[ext_resource type="AudioStream" uid="uid://mqbnccxbgjdr" path="res://assets/audio/Hanna-Barbera SFX/hit_2.wav" id="4_r73pa"]
+[ext_resource type="AudioStream" uid="uid://cs0smpmvmbrm2" path="res://assets/audio/Hanna-Barbera SFX/hit_3.wav" id="5_omde4"]
+[ext_resource type="AudioStream" uid="uid://bwn5sr0828syv" path="res://assets/audio/Hanna-Barbera SFX/hit_4.wav" id="6_brtfq"]
+[ext_resource type="AudioStream" uid="uid://bdkk3mqeoa16u" path="res://assets/audio/Hanna-Barbera SFX/hit_5.wav" id="7_kvh12"]
+[ext_resource type="AudioStream" uid="uid://bd0nkixrwchtj" path="res://assets/audio/Hanna-Barbera SFX/hit_6.wav" id="8_qsi72"]
+[ext_resource type="AudioStream" uid="uid://b45dgh56n56fo" path="res://assets/audio/Hanna-Barbera SFX/hit_7.wav" id="9_tss21"]
+[ext_resource type="AudioStream" uid="uid://ct1pgm7jhp1ts" path="res://assets/audio/Hanna-Barbera SFX/hit_8.wav" id="10_nsfjt"]
+[ext_resource type="AudioStream" uid="uid://csyfjrbnl7xu5" path="res://assets/audio/Hanna-Barbera SFX/hit_9.wav" id="11_bckdp"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7nua6"]
+streams_count = 9
+stream_0/stream = ExtResource("3_8pcki")
+stream_0/weight = 3.40936e+14
+stream_1/stream = ExtResource("4_r73pa")
+stream_1/weight = 3.40902e+14
+stream_2/stream = ExtResource("5_omde4")
+stream_2/weight = 3.40885e+14
+stream_3/stream = ExtResource("6_brtfq")
+stream_3/weight = 3.40919e+14
+stream_4/stream = ExtResource("7_kvh12")
+stream_4/weight = 3.4097e+14
+stream_5/stream = ExtResource("8_qsi72")
+stream_5/weight = 3.40876e+14
+stream_6/stream = ExtResource("9_tss21")
+stream_6/weight = 3.40915e+14
+stream_7/stream = ExtResource("10_nsfjt")
+stream_7/weight = 3.4085e+14
+stream_8/stream = ExtResource("11_bckdp")
+stream_8/weight = 3.40889e+14
 
 [node name="StandaloneBinProp" type="Node3D"]
 script = ExtResource("1_l6t2o")
 
 [node name="StandalonePropBodies" parent="." instance=ExtResource("2_5f4lt")]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_7nua6")
+doppler_tracking = 2
