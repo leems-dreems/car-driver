@@ -28,7 +28,7 @@ var useable_target : Node3D = null
 
 @onready var _rotation_root: Node3D = $CharacterRotationRoot
 @onready var _vehicle_controller: VehicleController = $VehicleController
-@onready var _camera_controller: CameraController = $CameraController
+@onready var camera_controller: CameraController = $CameraController
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
 @onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummyRigAnimated
 @onready var ragdoll_skeleton: Skeleton3D = $DummyRigPhysical/Rig/Skeleton3D
@@ -36,14 +36,14 @@ var useable_target : Node3D = null
 #@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
-
-@onready var _move_direction := Vector3.ZERO
-@onready var _last_strong_direction := Vector3.FORWARD
-@onready var _ground_height: float = 0.0
-@onready var _start_position := global_transform.origin
-@onready var _default_collision_layer := collision_layer
-@onready var _is_on_floor_buffer := false
 @onready var ground_collider := $GroundCollider
+
+var _move_direction := Vector3.ZERO
+var _last_strong_direction := Vector3.FORWARD
+var _ground_height: float = 0.0
+@onready var _start_position := global_transform.origin
+var _default_collision_layer := collision_layer
+var _is_on_floor_buffer := false
 
 var is_ragdolling := false
 var is_waiting_to_reset := false
@@ -55,8 +55,12 @@ var _ragdoll_reset_timer: SceneTreeTimer = null
 
 func _ready() -> void:
   Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-  _camera_controller.setup(self)
+  camera_controller.setup(self)
   start_ragdoll()
+  PropRespawnManager.camera = camera_controller.camera
+  TrafficManager.camera = camera_controller.camera
+  TrafficManager.spawn_include_area = $CameraController/PlayerCamera/TrafficSpawnIncludeArea
+  TrafficManager.spawn_exclude_area = $CameraController/PlayerCamera/TrafficSpawnExcludeArea
 
 
 func _on_body_entered(_body: Node) -> void:
@@ -152,7 +156,7 @@ func _physics_process(delta: float) -> void:
       apply_central_force(_move_direction * acceleration * mass)
 
     # Try to get a useable target from the camera raycast
-    var aim_collider := _camera_controller.get_aim_collider()
+    var aim_collider := camera_controller.get_aim_collider()
     useable_target = aim_collider
 
     # Try to use whatever we're aiming at
@@ -201,7 +205,7 @@ func _get_camera_oriented_input() -> Vector3:
   input.x = -raw_input.x * sqrt(1.0 - raw_input.y * raw_input.y / 2.0)
   input.z = -raw_input.y * sqrt(1.0 - raw_input.x * raw_input.x / 2.0)
 
-  input = _camera_controller.global_transform.basis * input
+  input = camera_controller.global_transform.basis * input
   input.y = 0.0
   return input
 

@@ -1,15 +1,15 @@
 @tool
 class_name TrafficPath extends Path3D
-## Supports [TrafficPathFollower] nodes, which spawn & control AI-driven vehicles
+## Supports [TrafficAgent] nodes, which spawn & control AI-driven vehicles
 
-var traffic_follower_scene := preload("res://traffic/traffic_path_follower.tscn")
+const traffic_agent_scene := preload("res://traffic/traffic_agent.tscn")
 
 @export_group("Path Settings")
 ## If true, TrafficManager will spawn vehicles on this path
 @export var spawn_vehicles := false
 ## The maximum number of vehicles that this path can support at a time
 @export var number_of_vehicles := 1
-## Array of paths that this path connects to. If more than 1 path is connected, TrafficPathFollower 
+## Array of paths that this path connects to. If more than 1 path is connected, TrafficAgent 
 ## will pick one at random when reaching the end of this path
 @export var next_traffic_paths: Array[TrafficPath] = []
 
@@ -24,7 +24,7 @@ var traffic_follower_scene := preload("res://traffic/traffic_path_follower.tscn"
 @export var show_vehicle_inputs := false
 
 ## Follower nodes currently assigned to this TrafficPath
-var followers: Array[TrafficPathFollower] = []
+var _agents: Array[TrafficAgent] = []
 ## Index of the last vehicle that this TrafficPath processed avoidance & inputs for
 var last_follower_updated_index := -1
 ## Length of this path
@@ -44,14 +44,6 @@ func _ready() -> void:
     add_child(entrance_label)
   path_length = curve.get_baked_length()
   for _child in get_children():
-    if _child is TrafficPathFollower:
-      followers.push_back(_child)
+    if _child is TrafficAgent:
+      _agents.push_back(_child)
   return
-
-
-func spawn_follower(vehicle_container: Node3D = null) -> TrafficPathFollower:
-  var _follower: TrafficPathFollower = traffic_follower_scene.instantiate()
-  _follower.copy_path_settings(self)
-  followers.push_back(_follower)
-  add_child(_follower)
-  return _follower

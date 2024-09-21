@@ -37,44 +37,44 @@ var _skip_warn_found_rc_child := false
 # ------------------------------------------------------------------------------
 
 func _ready():
-	# Without this line, child RoadContainers initialize after
-	# the manager initializes (different from _ready), meaning
-	# it would default to true even if auto refresh is false here.
-	_ui_refresh_set(auto_refresh)
+  # Without this line, child RoadContainers initialize after
+  # the manager initializes (different from _ready), meaning
+  # it would default to true even if auto refresh is false here.
+  _ui_refresh_set(auto_refresh)
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if _skip_warn_found_rc_child:
-		return []
-	var any_containers := false
-	for ch in get_children():
-		if ch.has_method("is_road_container"):
-			any_containers = true
-			break
+  if _skip_warn_found_rc_child:
+    return []
+  var any_containers := false
+  for ch in get_children():
+    if ch.has_method("is_road_container"):
+      any_containers = true
+      break
 
-	if any_containers:
-		return []
-	else:
-		return ["No RoadContainer children. Start creating a road by activating the + mode and clicking in the 3D view"]
+  if any_containers:
+    return []
+  else:
+    return ["No RoadContainer children. Start creating a road by activating the + mode and clicking in the 3D view"]
 
 
 # Workaround for cyclic typing
 func is_road_manager() -> bool:
-	return true
+  return true
 
 
 func _set_density(value: float) -> void:
-	density = value
-	rebuild_all_containers()
+  density = value
+  rebuild_all_containers()
 
 
 func _ui_refresh_set(value: bool) -> void:
-	if value:
-		call_deferred("rebuild_all_containers")
-	auto_refresh = value
-	for ch in get_containers():
-		# Not an exposed setting on child.
-		ch._auto_refresh = value
+  if value:
+    call_deferred("rebuild_all_containers")
+  auto_refresh = value
+  for ch in get_containers():
+    # Not an exposed setting on child.
+    ch._auto_refresh = value
 
 
 # ------------------------------------------------------------------------------
@@ -83,14 +83,14 @@ func _ui_refresh_set(value: bool) -> void:
 
 
 func get_containers() -> Array:
-	var res := []
-	for ch in get_children():
-		if ch.has_method("is_road_container"):
-			res.append(ch)
-	return res
+  var res := []
+  for ch in get_children():
+    if ch.has_method("is_road_container"):
+      res.append(ch)
+  return res
 
 
 func rebuild_all_containers() -> void:
-	for ch in get_containers():
-		ch._dirty = true
-		ch._dirty_rebuild_deferred()
+  for ch in get_containers():
+    ch._dirty = true
+    ch._dirty_rebuild_deferred()

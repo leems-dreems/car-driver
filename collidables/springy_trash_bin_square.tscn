@@ -52,7 +52,6 @@ stream_8/weight = 3.40889e+14
 
 [node name="SpringyTrashBinSquare" type="Node3D"]
 script = ExtResource("1_qq57t")
-linear_breaking_point = 0.05
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 collision_layer = 64

@@ -17,6 +17,7 @@ func _ready() -> void:
   register_scene_with_manager()
   return
 
+
 func _physics_process(_delta: float) -> void:
   if is_detached: return
   if physics_body.global_position.distance_to(global_position) > linear_breaking_point:

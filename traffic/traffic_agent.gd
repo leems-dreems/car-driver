@@ -1,4 +1,4 @@
-class_name TrafficPathFollower extends PathFollow3D
+class_name TrafficAgent extends PathFollow3D
 ## This class is instantiated by [TrafficPath] nodes, and acts as a guide for AI traffic vehicles.
 
 @export var vehicle: DriveableVehicle = null
@@ -22,6 +22,8 @@ var parent_curve_length: float
 var _is_on_path := false
 ## This vehicle will not calculate avoidance & inputs for the next X ticks
 var ticks_to_skip: int = 0
+## Increased by the TrafficManager when this prop fails a hearing & line-of-sight check
+var despawn_weight := 0.0
 
 ## Copy settings from [traffic_path]. 
 func copy_path_settings(traffic_path: Path3D) -> void:
@@ -31,6 +33,13 @@ func copy_path_settings(traffic_path: Path3D) -> void:
   parent_curve = traffic_path.curve
   parent_curve_length = traffic_path.path_length
   return
+
+
+func add_to_path(_traffic_path: TrafficPath) -> void:
+  if is_inside_tree():
+    get_parent_node_3d().remove_child(self)
+  copy_path_settings(_traffic_path)
+  _traffic_path.add_child(self)
 
 ## Update interest vectors & avoidance info for the vehicle, then adjust its inputs accordingly
 func set_inputs() -> void:
@@ -47,9 +56,7 @@ func set_inputs() -> void:
         if _chosen_path.is_blocked:
           _is_path_ahead_blocked = true
         else:
-          get_parent_node_3d().remove_child(self)
-          copy_path_settings(_chosen_path)
-          _chosen_path.add_child(self)
+          add_to_path(_chosen_path)
           progress = 0
 
     var _local_vehicle_pos := get_parent_node_3d().to_local(vehicle.global_position)
@@ -59,13 +66,13 @@ func set_inputs() -> void:
     var target_speed := path_max_speed
 
     if not _is_path_ahead_blocked:
-      # Move this TrafficPathFollower forward along the path
+      # Move this TrafficAgent forward along the path
       if _distance_to_path < path_distance_limit:
         progress = _closest_offset + 3 + (vehicle.speed * 0.5)
       else:
         progress = _closest_offset + 3
 
-    # Get the difference in rotation on the Y axis between this TrafficPathFollower and its vehicle
+    # Get the difference in rotation on the Y axis between this TrafficAgent and its vehicle
     var _angle_to_vehicle := vehicle.global_transform.basis.z.signed_angle_to(global_transform.basis.z, Vector3.UP)
     if _distance_to_path < path_distance_limit and _angle_to_vehicle > -0.1 and _angle_to_vehicle < 0.1:
       _is_on_path = true

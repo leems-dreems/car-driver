@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Game="*res://scripts/Game.gd"
+PropRespawnManager="*res://scripts/prop_respawn_manager.gd"
+TrafficManager="*res://traffic/traffic_manager.gd"
 
 [display]
 
@@ -175,9 +177,10 @@ Ragdoll={
 3d_physics/layer_6="Latch"
 3d_physics/layer_7="PhysicsProp"
 3d_physics/layer_8="StaticScenery"
-3d_physics/layer_9="PropUnfreezeRadius"
+3d_physics/layer_9="PropRespawnArea"
 3d_physics/layer_10="ObjectiveArea"
-3d_physics/layer_11="TrafficPathFollower"
+3d_physics/layer_11="TrafficAgent"
+3d_physics/layer_12="TrafficSpawnPoint"
 3d_physics/layer_18="CarBumper"
 3d_physics/layer_19="CarDoor"
 3d_physics/layer_21="Explosion"

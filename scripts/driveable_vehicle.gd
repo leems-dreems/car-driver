@@ -14,6 +14,8 @@ var current_hit_points: float
 var has_caught_fire := false
 ## Timer that runs after this vehicle is requested to stop by something else
 var request_stop_timer: SceneTreeTimer = null
+## Velocity to apply to the car after spawning in
+var _starting_velocity: Vector3 = Vector3.ZERO
 ## Velocity as of the last physics tick
 var _previous_velocity: Vector3 = Vector3.ZERO
 ## The number of RayCast3Ds that this vehicle uses for close avoidance
@@ -82,6 +84,7 @@ func _ready () -> void:
   current_hit_points = max_hit_points
   await get_tree().create_timer(0.2).timeout
   unfreeze_bodies()
+  linear_velocity = _starting_velocity
   return
 
 
@@ -176,7 +179,7 @@ func explode() -> void:
   explosion.start_explosion()
   apply_burnt_material()
   await get_tree().create_timer(7.0).timeout
-  queue_free()
+  despawn()
   return
 
 ## Freeze the car, as well as the various bodies attached to it
@@ -247,6 +250,11 @@ func stop_ai() -> void:
   for _node: Node in get_children():
     if _node is RayCast3D and _node.is_in_group(steering_ray_group):
       _node.enabled = false
+  return
+
+
+func despawn() -> void:
+  queue_free()
   return
 
 ## Calculate the amount of interest in each direction by comparing it to the target vector
