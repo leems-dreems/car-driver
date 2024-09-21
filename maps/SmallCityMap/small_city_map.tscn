@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://cr77wenw0lh5c"]
+[gd_scene load_steps=78 format=3 uid="uid://cr77wenw0lh5c"]
 
 [ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
@@ -234,6 +234,16 @@ data = PackedVector3Array(-4, 0.1, 0.5, 4, 0.1, 0.5, -4, -0.1, 0.5, 4, 0.1, 0.5,
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_sfkgf"]
 data = PackedVector3Array(-4, 0.1, 0.5, 4, 0.1, 0.5, -4, -0.1, 0.5, 4, 0.1, 0.5, 4, -0.1, 0.5, -4, -0.1, 0.5, 4, 0.1, -0.5, -4, 0.1, -0.5, 4, -0.1, -0.5, -4, 0.1, -0.5, -4, -0.1, -0.5, 4, -0.1, -0.5, 4, 0.1, 0.5, 4, 0.1, -0.5, 4, -0.1, 0.5, 4, 0.1, -0.5, 4, -0.1, -0.5, 4, -0.1, 0.5, -4, 0.1, -0.5, -4, 0.1, 0.5, -4, -0.1, -0.5, -4, 0.1, 0.5, -4, -0.1, 0.5, -4, -0.1, -0.5, 4, 0.1, 0.5, -4, 0.1, 0.5, 4, 0.1, -0.5, -4, 0.1, 0.5, -4, 0.1, -0.5, 4, 0.1, -0.5, -4, -0.1, 0.5, 4, -0.1, 0.5, -4, -0.1, -0.5, 4, -0.1, 0.5, 4, -0.1, -0.5, -4, -0.1, -0.5)
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_mcg5c"]
+vertices = PackedVector3Array(-19.5, 0.5, -76.25, -10.5, 0.5, -76.25, -10.5, 0.5, -78.75, -10, 0.75, -78.75, -10, 0.5, -89.5, -19.5, 0.5, -89.5, 9.5, 0.75, -78.75, 10, 0.75, -79, 10, 0.5, -89.5, -9.5, 0.75, -78.75, -9.5, 2, -76.75, 9.5, 2, -76.75, 10.75, 0.5, -78.75, 10.75, 0.5, -75.25, 19.5, 0.5, -75, 19.5, 0.5, -89.5, -9.5, 7.75, -66.75, 9.5, 7.75, -66.75, -19.5, 0.5, -59, -10.5, 0.5, -59, -10.25, 0.5, -59.5, -10.5, 0.5, -73.75, -8.25, 0.5, -59.5, -8.25, 0.5, -73.5, 10.5, 0.5, -73.5, 10.5, 0.5, -59.5, 10.75, 0.5, -57.75, 19.5, 0.5, -58, 8.5, 0.5, -73.5, 8.5, 0.5, -59.5, -19.5, 0.5, 25.25, -10.5, 0.5, 25.25, -9.5, 8.5, -58.5, -9.5, 8.5, -43.5, 9.5, 8.5, -43.5, 9.5, 8.5, -58.5, -9.25, 0.5, -58.25, -9.25, 0.5, -43.5, 9.5, 0.5, -43.5, 9.5, 0.5, -58.25, 10.75, 0.5, 23.75, 19.5, 0.5, 24, -9.5, 8.5, -41.5, -9.5, 8.5, -26.5, 9.5, 8.5, -26.5, 9.5, 8.5, -41.5, -9.25, 0.5, -41.25, -9.25, 0.5, -26.5, 9.5, 0.5, -26.5, 9.5, 0.5, -41.25, -9.5, 8.5, -24.5, -9.5, 8.5, -9.5, 9.5, 8.5, -9.5, 9.5, 8.5, -24.5, -9.25, 0.5, -24.25, -9.25, 0.5, -9.5, 9.5, 0.5, -9.5, 9.5, 0.5, -24.25, -9.5, 8.5, -7.5, -9.5, 8.5, 7.5, 9.5, 8.5, 7.5, 9.5, 8.5, -7.5, -9.25, 0.5, -7.25, -9.25, 0.5, 7.5, 9.5, 0.5, 7.5, 9.5, 0.5, -7.25, -9.5, 8.5, 9.5, -9.5, 8.5, 24.5, 9.5, 8.5, 24.5, 9.5, 8.5, 9.5, -9.25, 0.5, 9.75, -9.25, 0.5, 24.5, 9.5, 0.5, 24.5, 9.5, 0.5, 9.75, 10.75, 0.5, 25.25, 10.5, 0.5, 35.5, 10.75, 0.5, 37.25, 19.5, 0.5, 37, 10.25, 0.5, 25.75, 8.5, 0.5, 25.75, 8.75, 0.5, 35.5, -10.25, 0.5, 25.75, -19.5, 0.5, 38.25, -10.5, 0.5, 35.75, -10.5, 0.5, 38.25, -8.5, 0.5, 35.5, -8.5, 0.5, 25.75, 10.25, 0.5, 49.5, 10.25, 0.75, 40.75, 9.75, 0.75, 40.75, -9.5, 0.75, 40.75, -10, 0.75, 40.75, -10, 0.5, 49.5, 9.75, 7.75, 28.75, -9.5, 7.75, 28.75, -8.025, 6.75, 29.975, 8.51013, 6.75, 29.9959, 10.75, 0.5, 40.75, 19.5, 0.5, 49.5, -10.5, 0.5, 40.75, -19.5, 0.5, 49.5)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 2), PackedInt32Array(4, 2, 5), PackedInt32Array(5, 2, 0), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(8, 9, 4), PackedInt32Array(9, 3, 4), PackedInt32Array(6, 11, 9), PackedInt32Array(9, 11, 10), PackedInt32Array(14, 13, 12), PackedInt32Array(12, 7, 8), PackedInt32Array(8, 15, 12), PackedInt32Array(12, 15, 14), PackedInt32Array(17, 16, 11), PackedInt32Array(11, 16, 10), PackedInt32Array(19, 18, 20), PackedInt32Array(20, 18, 21), PackedInt32Array(21, 18, 0), PackedInt32Array(0, 1, 21), PackedInt32Array(22, 20, 23), PackedInt32Array(23, 20, 21), PackedInt32Array(13, 14, 24), PackedInt32Array(24, 14, 25), PackedInt32Array(25, 14, 26), PackedInt32Array(26, 14, 27), PackedInt32Array(24, 25, 28), PackedInt32Array(28, 25, 29), PackedInt32Array(23, 28, 22), PackedInt32Array(22, 28, 29), PackedInt32Array(18, 19, 30), PackedInt32Array(30, 19, 31), PackedInt32Array(35, 34, 32), PackedInt32Array(32, 34, 33), PackedInt32Array(39, 38, 36), PackedInt32Array(36, 38, 37), PackedInt32Array(26, 27, 40), PackedInt32Array(40, 27, 41), PackedInt32Array(45, 44, 42), PackedInt32Array(42, 44, 43), PackedInt32Array(49, 48, 46), PackedInt32Array(46, 48, 47), PackedInt32Array(53, 52, 50), PackedInt32Array(50, 52, 51), PackedInt32Array(57, 56, 54), PackedInt32Array(54, 56, 55), PackedInt32Array(61, 60, 58), PackedInt32Array(58, 60, 59), PackedInt32Array(65, 64, 62), PackedInt32Array(62, 64, 63), PackedInt32Array(69, 68, 66), PackedInt32Array(66, 68, 67), PackedInt32Array(73, 72, 70), PackedInt32Array(70, 72, 71), PackedInt32Array(74, 40, 41), PackedInt32Array(74, 41, 78), PackedInt32Array(78, 41, 75), PackedInt32Array(75, 41, 76), PackedInt32Array(76, 41, 77), PackedInt32Array(75, 80, 78), PackedInt32Array(78, 80, 79), PackedInt32Array(31, 81, 30), PackedInt32Array(30, 81, 83), PackedInt32Array(30, 83, 82), PackedInt32Array(83, 84, 82), PackedInt32Array(86, 85, 81), PackedInt32Array(81, 85, 83), PackedInt32Array(86, 79, 85), PackedInt32Array(85, 79, 80), PackedInt32Array(89, 88, 87), PackedInt32Array(92, 91, 90), PackedInt32Array(90, 89, 92), PackedInt32Array(92, 89, 87), PackedInt32Array(94, 95, 90), PackedInt32Array(90, 95, 89), PackedInt32Array(89, 96, 93), PackedInt32Array(93, 95, 94), PackedInt32Array(95, 96, 89), PackedInt32Array(96, 95, 93), PackedInt32Array(87, 88, 97), PackedInt32Array(97, 76, 77), PackedInt32Array(87, 97, 98), PackedInt32Array(98, 97, 77), PackedInt32Array(99, 91, 92), PackedInt32Array(82, 84, 99), PackedInt32Array(92, 100, 99), PackedInt32Array(99, 100, 82)]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 16777217
+filter_baking_aabb = AABB(-20, -5, -90, 40, 20, 180)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7rccm"]
+points = PackedVector3Array(20, 0, 70, -20, 0, 70, 20, 0, -70, -20, 0, -70)
+
 [node name="SmallCityMap" type="Node3D"]
 script = ExtResource("1_a23al")
 
@@ -242,7 +252,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -50)
 
 [node name="Terrain" type="Node3D" parent="."]
 
-[node name="CityFoundation" type="StaticBody3D" parent="Terrain" groups=["Road"]]
+[node name="CityFoundation" type="StaticBody3D" parent="Terrain" groups=["Foundation", "Road"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
 physics_material_override = ExtResource("3_csym3")
 
@@ -1654,172 +1664,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0, 0)
 [node name="StandaloneGasPumpProp6" parent="GasStation" instance=ExtResource("27_0lddw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, 0)
 
-[node name="LongBuildingRow" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 0.4, 100)
-
-[node name="MediumShop" type="StaticBody3D" parent="LongBuildingRow" groups=["Road"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
-physics_material_override = ExtResource("23_s8icf")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop"]
-layers = 1025
-mesh = SubResource("BoxMesh_0qb1o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop"]
-shape = SubResource("ConvexPolygonShape3D_nplmi")
-
-[node name="Sign" type="StaticBody3D" parent="LongBuildingRow/MediumShop"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2, 4, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop/Sign"]
-mesh = SubResource("BoxMesh_pi7s1")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_06b3t")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop/Sign"]
-shape = SubResource("ConvexPolygonShape3D_rf8s0")
-
-[node name="Label3D" type="Label3D" parent="LongBuildingRow/MediumShop/Sign"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.21, 0, 0)
-modulate = Color(0.941176, 0.94902, 0.0470588, 1)
-text = "Normal Shop"
-font = SubResource("SystemFont_1fns8")
-font_size = 360
-outline_size = 40
-
-[node name="MediumShop2" type="StaticBody3D" parent="LongBuildingRow" groups=["Road"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -17)
-physics_material_override = ExtResource("23_s8icf")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop2"]
-layers = 1025
-mesh = SubResource("BoxMesh_0qb1o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop2"]
-shape = SubResource("ConvexPolygonShape3D_nplmi")
-
-[node name="Sign" type="StaticBody3D" parent="LongBuildingRow/MediumShop2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2, 4, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop2/Sign"]
-mesh = SubResource("BoxMesh_pi7s1")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_vdqfw")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop2/Sign"]
-shape = SubResource("ConvexPolygonShape3D_rf8s0")
-
-[node name="Label3D" type="Label3D" parent="LongBuildingRow/MediumShop2/Sign"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.21, 0, 0)
-modulate = Color(0.756863, 0.352941, 0.294118, 1)
-outline_modulate = Color(1, 1, 1, 1)
-text = "Coffee Shop"
-font = SubResource("SystemFont_1fns8")
-font_size = 300
-outline_size = 40
-
-[node name="MediumShop3" type="StaticBody3D" parent="LongBuildingRow" groups=["Road"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -34)
-physics_material_override = ExtResource("23_s8icf")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop3"]
-layers = 1025
-mesh = SubResource("BoxMesh_0qb1o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop3"]
-shape = SubResource("ConvexPolygonShape3D_nplmi")
-
-[node name="Sign" type="StaticBody3D" parent="LongBuildingRow/MediumShop3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2, 4, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop3/Sign"]
-mesh = SubResource("BoxMesh_pi7s1")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_ip5rr")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop3/Sign"]
-shape = SubResource("ConvexPolygonShape3D_rf8s0")
-
-[node name="Label3D" type="Label3D" parent="LongBuildingRow/MediumShop3/Sign"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.21, 0, 0)
-modulate = Color(0.941176, 0.94902, 0.0470588, 1)
-text = "Vape Shop"
-font = SubResource("SystemFont_1fns8")
-font_size = 300
-outline_size = 40
-
-[node name="MediumShop4" type="StaticBody3D" parent="LongBuildingRow" groups=["Road"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -51)
-physics_material_override = ExtResource("23_s8icf")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop4"]
-layers = 1025
-mesh = SubResource("BoxMesh_0qb1o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop4"]
-shape = SubResource("ConvexPolygonShape3D_nplmi")
-
-[node name="Sign" type="StaticBody3D" parent="LongBuildingRow/MediumShop4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2, 4, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop4/Sign"]
-mesh = SubResource("BoxMesh_pi7s1")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_p72by")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop4/Sign"]
-shape = SubResource("ConvexPolygonShape3D_rf8s0")
-
-[node name="Label3D" type="Label3D" parent="LongBuildingRow/MediumShop4/Sign"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.21, 0, 0)
-modulate = Color(0.447059, 0.611765, 0.760784, 1)
-text = "Chicken Shop"
-font = SubResource("SystemFont_keiit")
-font_size = 300
-outline_size = 40
-
-[node name="MediumShop5" type="StaticBody3D" parent="LongBuildingRow" groups=["Road"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 17)
-physics_material_override = ExtResource("23_s8icf")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop5"]
-layers = 1025
-mesh = SubResource("BoxMesh_0qb1o")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop5"]
-shape = SubResource("ConvexPolygonShape3D_nplmi")
-
-[node name="Sign" type="StaticBody3D" parent="LongBuildingRow/MediumShop5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2, 4, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LongBuildingRow/MediumShop5/Sign"]
-mesh = SubResource("BoxMesh_pi7s1")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_p72by")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LongBuildingRow/MediumShop5/Sign"]
-shape = SubResource("ConvexPolygonShape3D_rf8s0")
-
-[node name="Label3D" type="Label3D" parent="LongBuildingRow/MediumShop5/Sign"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.21, 0, 0)
-modulate = Color(0.447059, 0.611765, 0.760784, 1)
-text = "Slop Shop"
-font = SubResource("SystemFont_keiit")
-font_size = 300
-outline_size = 40
-
-[node name="Ramp" type="CSGBox3D" parent="LongBuildingRow" groups=["Road"]]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, -73)
-layers = 1025
-use_collision = true
-size = Vector3(20, 1, 16)
-
-[node name="Ramp2" type="CSGBox3D" parent="LongBuildingRow" groups=["Road"]]
-transform = Transform3D(-1, -4.37114e-08, 7.57103e-08, 0, 0.866025, 0.5, -8.74228e-08, 0.5, -0.866025, 0, 3, 35)
-layers = 1025
-use_collision = true
-size = Vector3(20, 1, 16)
-
 [node name="LongBuildingRow2" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -115, 0.4, 63)
 
@@ -2135,3 +1979,183 @@ shape = SubResource("ConcavePolygonShape3D_sfkgf")
 
 [node name="StandaloneBinProp" parent="." instance=ExtResource("26_f4t6i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.4, -51)
+
+[node name="PedestrianAreas" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+
+[node name="LongBuildingRowPedestrianArea" type="NavigationRegion3D" parent="PedestrianAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 0, 100)
+navigation_mesh = SubResource("NavigationMesh_mcg5c")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea"]
+collision_layer = 16777216
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+shape = SubResource("ConvexPolygonShape3D_7rccm")
+
+[node name="LongBuildingRow" type="Node3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea"]
+
+[node name="MediumShop" type="StaticBody3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+physics_material_override = ExtResource("23_s8icf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop"]
+layers = 1025
+mesh = SubResource("BoxMesh_0qb1o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop"]
+shape = SubResource("ConvexPolygonShape3D_nplmi")
+
+[node name="Sign" type="StaticBody3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2, 4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop/Sign"]
+mesh = SubResource("BoxMesh_pi7s1")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_06b3t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop/Sign"]
+shape = SubResource("ConvexPolygonShape3D_rf8s0")
+
+[node name="Label3D" type="Label3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop/Sign"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.21, 0, 0)
+modulate = Color(0.941176, 0.94902, 0.0470588, 1)
+text = "Normal Shop"
+font = SubResource("SystemFont_1fns8")
+font_size = 360
+outline_size = 40
+
+[node name="MediumShop2" type="StaticBody3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -17)
+physics_material_override = ExtResource("23_s8icf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop2"]
+layers = 1025
+mesh = SubResource("BoxMesh_0qb1o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop2"]
+shape = SubResource("ConvexPolygonShape3D_nplmi")
+
+[node name="Sign" type="StaticBody3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2, 4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop2/Sign"]
+mesh = SubResource("BoxMesh_pi7s1")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_vdqfw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop2/Sign"]
+shape = SubResource("ConvexPolygonShape3D_rf8s0")
+
+[node name="Label3D" type="Label3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop2/Sign"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.21, 0, 0)
+modulate = Color(0.756863, 0.352941, 0.294118, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "Coffee Shop"
+font = SubResource("SystemFont_1fns8")
+font_size = 300
+outline_size = 40
+
+[node name="MediumShop3" type="StaticBody3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -34)
+physics_material_override = ExtResource("23_s8icf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop3"]
+layers = 1025
+mesh = SubResource("BoxMesh_0qb1o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop3"]
+shape = SubResource("ConvexPolygonShape3D_nplmi")
+
+[node name="Sign" type="StaticBody3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2, 4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop3/Sign"]
+mesh = SubResource("BoxMesh_pi7s1")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ip5rr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop3/Sign"]
+shape = SubResource("ConvexPolygonShape3D_rf8s0")
+
+[node name="Label3D" type="Label3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop3/Sign"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.21, 0, 0)
+modulate = Color(0.941176, 0.94902, 0.0470588, 1)
+text = "Vape Shop"
+font = SubResource("SystemFont_1fns8")
+font_size = 300
+outline_size = 40
+
+[node name="MediumShop4" type="StaticBody3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -51)
+physics_material_override = ExtResource("23_s8icf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop4"]
+layers = 1025
+mesh = SubResource("BoxMesh_0qb1o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop4"]
+shape = SubResource("ConvexPolygonShape3D_nplmi")
+
+[node name="Sign" type="StaticBody3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2, 4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop4/Sign"]
+mesh = SubResource("BoxMesh_pi7s1")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_p72by")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop4/Sign"]
+shape = SubResource("ConvexPolygonShape3D_rf8s0")
+
+[node name="Label3D" type="Label3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop4/Sign"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.21, 0, 0)
+modulate = Color(0.447059, 0.611765, 0.760784, 1)
+text = "Chicken Shop"
+font = SubResource("SystemFont_keiit")
+font_size = 300
+outline_size = 40
+
+[node name="MediumShop5" type="StaticBody3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 17)
+physics_material_override = ExtResource("23_s8icf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop5"]
+layers = 1025
+mesh = SubResource("BoxMesh_0qb1o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop5"]
+shape = SubResource("ConvexPolygonShape3D_nplmi")
+
+[node name="Sign" type="StaticBody3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2, 4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop5/Sign"]
+mesh = SubResource("BoxMesh_pi7s1")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_p72by")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop5/Sign"]
+shape = SubResource("ConvexPolygonShape3D_rf8s0")
+
+[node name="Label3D" type="Label3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow/MediumShop5/Sign"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.21, 0, 0)
+modulate = Color(0.447059, 0.611765, 0.760784, 1)
+text = "Slop Shop"
+font = SubResource("SystemFont_keiit")
+font_size = 300
+outline_size = 40
+
+[node name="Ramp" type="CSGBox3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, -73)
+layers = 1025
+use_collision = true
+size = Vector3(20, 1, 16)
+
+[node name="Ramp2" type="CSGBox3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea/LongBuildingRow" groups=["Road"]]
+transform = Transform3D(-1, -4.37114e-08, 7.57103e-08, 0, 0.866025, 0.5, -8.74228e-08, 0.5, -0.866025, 0, 3, 35)
+layers = 1025
+use_collision = true
+size = Vector3(20, 1, 16)
