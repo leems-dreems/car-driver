@@ -110,14 +110,14 @@ mesh = SubResource("CylinderMesh_q7r7w")
 surface_material_override/0 = SubResource("StandardMaterial3D_bn6mr")
 
 [node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="."]
-linear_limit_x/upper = 0.2
-linear_limit_x/lower = -0.2
-linear_limit_z/upper = 0.2
-linear_limit_z/lower = -0.2
+linear_limit_x/upper = 1.0
+linear_limit_x/lower = -1.0
+linear_limit_z/upper = 1.0
+linear_limit_z/lower = -1.0
 linear_spring_x/enabled = true
-linear_spring_x/frequency = 5.0
+linear_spring_x/frequency = 10.0
 linear_spring_z/enabled = true
-linear_spring_z/frequency = 5.0
+linear_spring_z/frequency = 10.0
 node_a = NodePath("../StaticBody3D")
 node_b = NodePath("../RigidBody3D")
 

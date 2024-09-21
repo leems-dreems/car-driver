@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://cr77wenw0lh5c"]
+[gd_scene load_steps=78 format=3 uid="uid://cr77wenw0lh5c"]
 
 [ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
@@ -23,6 +23,7 @@
 [ext_resource type="Material" uid="uid://da51ijocwvipw" path="res://assets/materials/shop_sign.tres" id="25_458no"]
 [ext_resource type="Script" path="res://maps/SmallIslandMap/vehicle_dispenser.gd" id="25_yx1ur"]
 [ext_resource type="Script" path="res://maps/SmallIslandMap/dispenser_button.gd" id="26_0bws6"]
+[ext_resource type="PackedScene" uid="uid://df8mbdhlomb01" path="res://collidables/standalone_bin_prop.tscn" id="26_f4t6i"]
 [ext_resource type="PhysicsMaterial" uid="uid://glnpx028ehvi" path="res://assets/materials/grass_physics_material.tres" id="26_wfw6r"]
 [ext_resource type="ArrayMesh" uid="uid://bum7mi5ddgdhk" path="res://maps/SmallCityMap/park.obj" id="27_i3c67"]
 
@@ -2147,3 +2148,6 @@ mesh = SubResource("BoxMesh_3b0it")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Playground/Stairs/MeshInstance3D10/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_sfkgf")
+
+[node name="StandaloneBinProp" parent="." instance=ExtResource("26_f4t6i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.4, -51)

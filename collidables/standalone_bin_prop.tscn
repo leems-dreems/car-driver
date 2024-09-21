@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://df8mbdhlomb01"]
+
+[ext_resource type="Script" path="res://collidables/standalone_bin_prop.gd" id="1_l6t2o"]
+[ext_resource type="PackedScene" uid="uid://dc8sax4rbvaj4" path="res://collidables/standalone_bin_bodies.tscn" id="2_5f4lt"]
+
+[node name="StandaloneBinProp" type="Node3D"]
+script = ExtResource("1_l6t2o")
+
+[node name="StandalonePropBodies" parent="." instance=ExtResource("2_5f4lt")]

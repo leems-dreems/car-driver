@@ -46,7 +46,7 @@ stream_3/stream = ExtResource("6_kbk60")
 
 [node name="TrafficLightA" type="Node3D"]
 script = ExtResource("1_seoio")
-linear_breaking_point = 0.25
+linear_breaking_point = 0.2
 
 [node name="CenterOfMassMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 2.5, 0.3)
