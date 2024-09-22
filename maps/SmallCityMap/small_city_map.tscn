@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="12_n3gia"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="13_fg0qv"]
 [ext_resource type="PackedScene" uid="uid://2g4icv655eh3" path="res://maps/SmallCityMap/4_way_junction.tscn" id="14_4imh1"]
-[ext_resource type="Material" uid="uid://cb2lsxj40gkv5" path="res://addons/road-generator/resources/road_texture.material" id="14_vie48"]
+[ext_resource type="Material" uid="uid://by1oxybspaxft" path="res://addons/road-generator/resources/road_texture.material" id="14_vie48"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="15_0gxjo"]
 [ext_resource type="PackedScene" uid="uid://4whew70l87gh" path="res://maps/SmallCityMap/t_junction.tscn" id="15_fat5n"]
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="16_k8s8v"]
@@ -292,8 +292,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Road"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -303,8 +303,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Road"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.90735e-06, 0, -40)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -339,8 +339,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Road2"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -350,8 +350,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Road2"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.90735e-06, 0, -40)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -386,8 +386,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Road3"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -397,8 +397,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Road3"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.90735e-06, 0, -40)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -433,8 +433,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Road4"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -444,8 +444,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Road4"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.90735e-06, 0, -40)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -480,8 +480,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Road5"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -491,8 +491,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Road5"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.90735e-06, 0, -40)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -527,8 +527,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Road6"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -538,8 +538,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Road6"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.90735e-06, 0, -40)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -574,8 +574,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Road7"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -585,8 +585,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Road7"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.90735e-06, 0, -40)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -621,8 +621,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Road8"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -632,8 +632,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Road8"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.90735e-06, 0, -40)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -668,8 +668,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Road9"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -679,8 +679,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Road9"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.90735e-06, 0, -40)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -715,8 +715,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Road10"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -726,8 +726,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Road10"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.90735e-06, 0, -40)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -762,8 +762,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Curved_Road"]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -774,8 +774,8 @@ next_mag = 32.0
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Curved_Road"]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -52, 0, 52)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -810,8 +810,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Short_Curved_Road2"]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -822,8 +822,8 @@ next_mag = 32.0
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Curved_Road2"]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -52, 0, 52)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -858,8 +858,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -869,8 +869,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -905,8 +905,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road2"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -916,8 +916,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road2"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -952,8 +952,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road3"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -963,8 +963,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road3"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -999,8 +999,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Medium_Road4"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -1010,8 +1010,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Medium_Road4"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -1046,8 +1046,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Long_Road"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -1057,8 +1057,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Long_Road"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -180)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -1095,8 +1095,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 [node name="RP_001" type="Node3D" parent="RoadManager/Long_Road2"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -1106,8 +1106,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Long_Road2"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -180)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -1143,8 +1143,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 
 [node name="RP_001" type="Node3D" parent="RoadManager/Long_Curved_Road"]
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -1154,8 +1154,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Long_Curved_Road"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 140)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -1168,8 +1168,8 @@ next_mag = 32.0
 [node name="RP_003" type="Node3D" parent="RoadManager/Long_Curved_Road"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 52, 0, 192)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -1205,8 +1205,8 @@ edge_rp_local_dirs = Array[int]([1, 0])
 
 [node name="RP_001" type="Node3D" parent="RoadManager/Long_Curved_Road2"]
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -1216,8 +1216,8 @@ next_pt_init = NodePath("../RP_002")
 [node name="RP_002" type="Node3D" parent="RoadManager/Long_Curved_Road2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 140)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
@@ -1230,8 +1230,8 @@ next_mag = 32.0
 [node name="RP_003" type="Node3D" parent="RoadManager/Long_Curved_Road2"]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -52, 0, 192)
 script = ExtResource("15_0gxjo")
-traffic_dir = [2, 1]
-lanes = [5, 5]
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0

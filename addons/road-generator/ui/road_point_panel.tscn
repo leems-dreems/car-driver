@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cr24o353ia8r2"]
+[gd_scene load_steps=4 format=3 uid="uid://dw1vy3b6qmt5r"]
 
 [ext_resource type="Script" path="res://addons/road-generator/ui/road_point_panel.gd" id="1"]
 
@@ -36,10 +36,12 @@ layout_mode = 2
 text = "Lanes:"
 
 [node name="add_rp_front" type="Button" parent="HBoxAddNextRP"]
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Add RoadPoint to end of road"
 text = "+ Next RoadPoint"
+clip_text = true
 
 [node name="HBoxSelNextRP" type="HBoxContainer" parent="."]
 visible = false
@@ -52,9 +54,11 @@ layout_mode = 2
 text = "Lanes:"
 
 [node name="sel_rp_front" type="Button" parent="HBoxSelNextRP"]
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Select Next RoadPoint"
+clip_text = true
 
 [node name="HBoxLanes" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -108,9 +112,11 @@ layout_mode = 2
 text = "Lanes:"
 
 [node name="sel_rp_back" type="Button" parent="HBoxSelPriorRP"]
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Select Prior RoadPoint"
+clip_text = true
 
 [node name="HBoxAddPriorRP" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -122,7 +128,50 @@ layout_mode = 2
 text = "Lanes:"
 
 [node name="add_rp_back" type="Button" parent="HBoxAddPriorRP"]
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Add RoadPoint to beginning of road"
 text = "+ Prior RoadPoint"
+clip_text = true
+
+[node name="spacer" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="spacer" type="Label" parent="HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "Lanes:"
+
+[node name="cp_settings" type="Button" parent="HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Copy Settings"
+clip_text = true
+
+[node name="apply_setting" type="Button" parent="HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Apply"
+clip_text = true
+
+[node name="cp_to_all" type="Button" parent="HBoxContainer"]
+visible = false
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Apply All"
+clip_text = true
+
+[connection signal="pressed" from="HBoxContainer/cp_settings" to="." method="_on_cp_settings_pressed"]
+[connection signal="pressed" from="HBoxContainer/apply_setting" to="." method="_on_apply_setting_pressed"]
+[connection signal="pressed" from="HBoxContainer/cp_to_all" to="." method="_on_cp_to_all_pressed"]
