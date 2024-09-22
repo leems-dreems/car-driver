@@ -252,7 +252,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -50)
 
 [node name="Terrain" type="Node3D" parent="."]
 
-[node name="CityFoundation" type="StaticBody3D" parent="Terrain" groups=["Foundation", "Road"]]
+[node name="CityFoundation" type="StaticBody3D" parent="Terrain" groups=["Road"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
 physics_material_override = ExtResource("3_csym3")
 

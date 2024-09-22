@@ -2,31 +2,21 @@
 class_name TrafficPath extends Path3D
 ## Supports [TrafficAgent] nodes, which spawn & control AI-driven vehicles
 
-const traffic_agent_scene := preload("res://traffic/traffic_agent.tscn")
-
-@export_group("Path Settings")
+@export_group("TrafficPath Settings")
 ## If true, TrafficManager will spawn vehicles on this path
 @export var spawn_vehicles := false
-## The maximum number of vehicles that this path can support at a time
-@export var number_of_vehicles := 1
-## Array of paths that this path connects to. If more than 1 path is connected, TrafficAgent 
+## Array of paths that this path connects to. If more than 1 path is connected, TrafficAgent
 ## will pick one at random when reaching the end of this path
 @export var next_traffic_paths: Array[TrafficPath] = []
 
-@export_group("Follower Settings")
+@export_group("TrafficAgent Settings")
 ## The speed limit on this path
 @export var path_max_speed := 15.0
 ## The speed to aim for when reversing on this path
 @export var path_reversing_speed := -5.0
 ## Vehicles will aim to stay this close to this path
 @export var path_distance_limit := 2.0
-## Vehicles on this path will display their inputs above themselves
-@export var show_vehicle_inputs := false
 
-## Follower nodes currently assigned to this TrafficPath
-var _agents: Array[TrafficAgent] = []
-## Index of the last vehicle that this TrafficPath processed avoidance & inputs for
-var last_follower_updated_index := -1
 ## Length of this path
 var path_length: float
 ## When set to true, vehicles will not move onto this path
@@ -42,8 +32,8 @@ func _ready() -> void:
     entrance_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
     entrance_label.font_size = 180
     add_child(entrance_label)
-  path_length = curve.get_baked_length()
-  for _child in get_children():
-    if _child is TrafficAgent:
-      _agents.push_back(_child)
+  else:
+    if spawn_vehicles:
+      TrafficManager.traffic_paths.push_back(self)
+    path_length = curve.get_baked_length()
   return
