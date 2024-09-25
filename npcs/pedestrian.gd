@@ -1,4 +1,4 @@
-class_name Player extends RigidBody3D
+class_name Pedestrian extends RigidBody3D
 
 ## Character maximum run speed on the ground.
 @export var move_speed := 8.0
@@ -8,26 +8,19 @@ class_name Player extends RigidBody3D
 @export var jump_initial_impulse := 8.0
 ## Jump impulse when player keeps pressing jump
 @export var jump_additional_force := 24.0
-## Player model rotation speed
+## Character model rotation speed
 @export var rotation_speed := 12.0
 ## Minimum horizontal speed on the ground. This controls when the character's animation tree changes
 ## between the idle and running states.
 @export var stopping_speed := 1.0
 ## Speed to switch from walking to running
 @export var running_speed := 4.0
-## Minimum impact force that will cause player to start ragdolling
+## Minimum impact force that will cause character to start ragdolling
 @export var impact_resistance := 10.0
-## Minimum time the player will ragdoll for after getting hit
+## Minimum time the character will ragdoll for after getting hit
 @export var min_ragdoll_time := 4.0
-## Vehicle the player is currently in
-@export var current_vehicle : DriveableVehicle = null
-@export var current_mission : Mission = null
-## The useable target the player is looking at
-var useable_target : Node3D = null
 
 @onready var _rotation_root: Node3D = $CharacterRotationRoot
-@onready var _vehicle_controller: VehicleController = $VehicleController
-@onready var camera_controller: CameraController = $CameraController
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
 @onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummyRigAnimated
 @onready var ragdoll_skeleton: Skeleton3D = $DummyRigPhysical/Rig/Skeleton3D
@@ -52,15 +45,7 @@ var _ragdoll_reset_timer: SceneTreeTimer = null
 
 
 func _ready() -> void:
-  Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-  camera_controller.setup(self)
   start_ragdoll()
-  PropRespawnManager.camera = camera_controller.camera
-  TrafficManager.camera = camera_controller.camera
-  TrafficManager.spawn_include_area = $CameraController/PlayerCamera/TrafficSpawnIncludeArea
-  TrafficManager.spawn_exclude_area = $CameraController/PlayerCamera/TrafficSpawnExcludeArea
-  camera_controller.top_level = true
-  $CameraController/PlayerCamera.top_level = true
 
 
 func _on_body_entered(_body: Node) -> void:
@@ -121,11 +106,10 @@ func _physics_process(delta: float) -> void:
     else:
       Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
-  var is_in_vehicle := current_vehicle != null
   var is_using := Input.is_action_just_pressed("use")
 
   _is_on_floor_buffer = _is_on_ground
-  _move_direction = _get_camera_oriented_input()
+  _move_direction = Vector3.ZERO # TODO
 
   # To not orient quickly to the last input, we save a last strong direction,
   # this also ensures a good normalized value for the rotation basis.
@@ -134,78 +118,25 @@ func _physics_process(delta: float) -> void:
 
   _orient_character_to_direction(_last_strong_direction, delta)
 
-  if is_in_vehicle:
-    useable_target = null
-    global_position = current_vehicle.global_position
-    current_vehicle.brake_input = Input.get_action_strength("Brake or Reverse")
-    current_vehicle.steering_input = Input.get_action_strength("Steer Left") - Input.get_action_strength("Steer Right")
-    current_vehicle.throttle_input = pow(Input.get_action_strength("Accelerate"), 2.0)
-    current_vehicle.handbrake_input = Input.get_action_strength("Handbrake")
-
-    # Shift to neutral if we are stationary and braking
-    if current_vehicle.current_gear > 0 and current_vehicle.speed < 1:
-      if current_vehicle.handbrake_input >= 1 or current_vehicle.brake_input > 0.5:
-        current_vehicle.shift(-current_vehicle.current_gear)
-
-    if current_vehicle.current_gear == -1:
-      current_vehicle.brake_input = Input.get_action_strength("Accelerate")
-      current_vehicle.throttle_input = Input.get_action_strength("Brake or Reverse")
-
-    if is_using:
-      exitVehicle()
-  else:
-    if linear_velocity.length() < move_speed:
-      apply_central_force(_move_direction * acceleration * mass)
-
-    # Try to get a useable target from the camera raycast
-    var aim_collider := camera_controller.get_aim_collider()
-    useable_target = aim_collider
-
-    # Try to use whatever we're aiming at
-    if is_using and useable_target != null:
-      if useable_target.has_method("open_or_shut"):
-        useable_target.open_or_shut()
-      elif useable_target is EnterVehicleCollider:
-        enterVehicle(useable_target.vehicle)
-      elif useable_target is ObjectiveArea:
-        if useable_target.start_mission:
-          current_mission = useable_target.get_parent()
-        useable_target.trigger(self)
-      elif useable_target is VehicleDispenserButton:
-        var dispenser: VehicleDispenser = useable_target.get_parent()
-        dispenser.spawn_vehicle(useable_target.vehicle_type)
-
-    if is_just_jumping:
-      apply_central_impulse(Vector3.UP * jump_initial_impulse * mass)
-
-    # Set character animation
-    if is_just_jumping:
-      _dummy_skin.jump()
-    elif not _is_on_ground and linear_velocity.y < 0:
-      _dummy_skin.fall()
-    elif _is_on_ground:
-      var xz_velocity := Vector3(linear_velocity.x, 0, linear_velocity.z)
-      if xz_velocity.length() > stopping_speed:
-        _dummy_skin.set_moving(true)
-        _dummy_skin.set_moving_speed(inverse_lerp(0.0, move_speed, xz_velocity.length()))
-      else:
-        _dummy_skin.set_moving(false)
-
-    if is_just_on_floor:
-      _landing_sound.play()
-
-
-func _get_camera_oriented_input() -> Vector3:
-  var raw_input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
-
-  var input := Vector3.ZERO
-  # This is to ensure that diagonal input isn't stronger than axis aligned input
-  input.x = -raw_input.x * sqrt(1.0 - raw_input.y * raw_input.y / 2.0)
-  input.z = -raw_input.y * sqrt(1.0 - raw_input.x * raw_input.x / 2.0)
-
-  input = camera_controller.global_transform.basis * input
-  input.y = 0.0
-  return input
+  if linear_velocity.length() < move_speed:
+    apply_central_force(_move_direction * acceleration * mass)
+  if is_just_jumping:
+    apply_central_impulse(Vector3.UP * jump_initial_impulse * mass)
+  # Set character animation
+  if is_just_jumping:
+    _dummy_skin.jump()
+  elif not _is_on_ground and linear_velocity.y < 0:
+    _dummy_skin.fall()
+  elif _is_on_ground:
+    var xz_velocity := Vector3(linear_velocity.x, 0, linear_velocity.z)
+    if xz_velocity.length() > stopping_speed:
+      _dummy_skin.set_moving(true)
+      _dummy_skin.set_moving_speed(inverse_lerp(0.0, move_speed, xz_velocity.length()))
+    else:
+      _dummy_skin.set_moving(false)
+  if is_just_on_floor:
+    _landing_sound.play()
+  return
 
 
 func play_foot_step_sound() -> void:
@@ -254,25 +185,8 @@ func get_skeleton_position() -> Vector3:
 
 
 func enterVehicle (vehicle: DriveableVehicle) -> void:
-  current_vehicle = vehicle
-  _vehicle_controller.vehicle_node = vehicle
-  vehicle.is_being_driven = true
-  $CharacterCollisionShape.disabled = true
-  visible = false
-  Game.player_changed_vehicle.emit()
+  pass
 
 
 func exitVehicle () -> void:
-  current_vehicle.is_being_driven = false
-  current_vehicle.steering_input = 0
-  current_vehicle.throttle_input = 0
-  current_vehicle.clutch_input = 0
-  current_vehicle.brake_input = 0
-  _vehicle_controller.vehicle_node = null
-  global_position = current_vehicle.global_position
-  global_position.y += 5
-  current_vehicle = null
-  Game.player_changed_vehicle.emit()
-  await get_tree().create_timer(0.1).timeout
-  $CharacterCollisionShape.disabled = false
-  visible = true
+  pass

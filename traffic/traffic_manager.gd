@@ -29,8 +29,10 @@ var max_spawn_radius := 160.0
 var _agents: Array[TrafficAgent] = []
 ## All the TrafficPaths that this manager will consider spawning traffic on
 var traffic_paths: Array[TrafficPath] = []
-## Distance to move before updating our list of nearby paths
+## Distance to move before updating our list of nearby TrafficSpawnPoints
 var _spawn_points_update_distance := 80.0
+## Global position of the camera the last time we updated the list of nearby TrafficSpawnPoints
+var _camera_position_at_last_update := Vector3.INF
 ## An array of TrafficSpawnPoints within a certain range of distance
 var _nearby_spawn_points: Array[TrafficSpawnPoint] = []
 ## Index of the last path checked from the _nearby_traffic_paths array
@@ -41,16 +43,12 @@ var _spawn_point_sighted_delay := 8.0
 var _spawn_point_interval := 20
 ## Index of the most recent TrafficAgent to be updated
 var last_agent_updated: int = 0
-## Global position of the camera the last time we updated the list of nearby TrafficSpawnPoints
-var _camera_position_at_last_update := Vector3.INF
 ## Time elapsed since TrafficManager started. Incremented by the delta of _physics_process each step
 var _time_elapsed := 10.0
 ## Parameters for line-of-sight checks on physics props
 @onready var vehicle_ray_query_params := PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, 3)
 ## Parameters for line-of-sight checks on paths
 @onready var terrain_ray_query_params := PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO, 1)
-## Used to check possible spawn positions on TrafficPaths
-@onready var path_follower := PathFollow3D.new()
 
 
 func _physics_process(delta: float) -> void:

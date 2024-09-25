@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://cr77wenw0lh5c"]
+[gd_scene load_steps=79 format=3 uid="uid://cr77wenw0lh5c"]
 
 [ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="16_k8s8v"]
 [ext_resource type="PhysicsMaterial" uid="uid://cc6punypby5f5" path="res://assets/materials/building_physics_material.tres" id="23_s8icf"]
 [ext_resource type="PackedScene" uid="uid://ba0xtl41qmm3s" path="res://maps/KayKitCity/props/traffic_light_a.tscn" id="24_geihi"]
+[ext_resource type="PackedScene" uid="uid://ck6644jswd7c" path="res://maps/SmallCityMap/spinning_whacker.tscn" id="24_k782j"]
 [ext_resource type="Material" uid="uid://vgwqikmc8vwq" path="res://assets/materials/concrete.tres" id="24_xdwmv"]
 [ext_resource type="Material" uid="uid://da51ijocwvipw" path="res://assets/materials/shop_sign.tres" id="25_458no"]
 [ext_resource type="Script" path="res://maps/SmallIslandMap/vehicle_dispenser.gd" id="25_yx1ur"]
@@ -248,7 +249,7 @@ points = PackedVector3Array(20, 0, 70, -20, 0, 70, 20, 0, -70, -20, 0, -70)
 script = ExtResource("1_a23al")
 
 [node name="Player" parent="." instance=ExtResource("10_b2bvt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -50)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -112)
 
 [node name="Terrain" type="Node3D" parent="."]
 
@@ -1872,20 +1873,20 @@ surface_material_override/0 = ExtResource("24_xdwmv")
 shape = SubResource("ConvexPolygonShape3D_mdk3c")
 
 [node name="Playground" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 4.4, 100)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0.4, -98)
 
-[node name="MediumShop" type="StaticBody3D" parent="Playground" groups=["Road"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68, -3, -195)
+[node name="Platform" type="StaticBody3D" parent="Playground" groups=["Road"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 1, 0)
 physics_material_override = ExtResource("23_s8icf")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Playground/MediumShop"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Playground/Platform"]
 mesh = SubResource("BoxMesh_bmhrv")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Playground/MediumShop"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Playground/Platform"]
 shape = SubResource("ConvexPolygonShape3D_6rwui")
 
 [node name="Stairs" type="Node3D" parent="Playground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68, -3, -185)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 1, 10)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Playground/Stairs"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, -1.5)
@@ -1976,6 +1977,8 @@ mesh = SubResource("BoxMesh_3b0it")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Playground/Stairs/MeshInstance3D10/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_sfkgf")
+
+[node name="Spinning Whacker" parent="Playground" instance=ExtResource("24_k782j")]
 
 [node name="StandaloneBinProp" parent="." instance=ExtResource("26_f4t6i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.4, -51)

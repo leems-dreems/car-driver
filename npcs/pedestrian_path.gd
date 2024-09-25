@@ -1,5 +1,5 @@
 class_name PedestrianPath extends Path3D
-## Supports [PedestrianAgent] nodes, which spawn & control pedestrian NPCs
+## Supports [Pedestrian] nodes, which spawn & control pedestrian NPCs
 
 #
 #func _ready() -> void:
