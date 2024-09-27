@@ -12,6 +12,13 @@ var parent_curve_length: float
 var despawn_weight := 0.0
 
 
+func set_nav_target() -> void:
+  var _pedestrian_path: PedestrianPath = get_parent()
+  var _local_pedestrian_pos := get_parent_node_3d().to_local(pedestrian.global_position)
+  progress = _pedestrian_path.curve.get_closest_offset(_local_pedestrian_pos) + 4
+  pedestrian._nav_agent.target_position = global_position
+
+
 func copy_path_settings(_pedestrian_path: PedestrianPath) -> void:
   parent_curve = _pedestrian_path.curve
   parent_curve_length = _pedestrian_path.path_length

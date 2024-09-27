@@ -40,6 +40,8 @@ var _is_on_floor_buffer := false
 var is_ragdolling := false
 var is_waiting_to_reset := false
 var _starting_velocity := Vector3.ZERO
+## Target position to move towards, in global coordinates
+var _target_position: Vector3
 ## Velocity as of the last physics tick
 var _previous_velocity: Vector3 = Vector3.ZERO
 ## Timer used to space out how often we check if we can exit ragdoll
@@ -59,6 +61,12 @@ func _on_body_entered(_body: Node) -> void:
         _body.request_stop()
       elif _body.get_parent() is SpinningWhacker:
         _body.get_parent().request_stop()
+  return
+
+
+func _on_velocity_computed(_safe_velocity: Vector3) -> void:
+  linear_velocity = _safe_velocity
+  #apply_central_force(_safe_velocity * acceleration * mass)
   return
 
 
@@ -99,7 +107,10 @@ func _physics_process(delta: float) -> void:
   var is_just_on_floor := _is_on_ground and not _is_on_floor_buffer
 
   _is_on_floor_buffer = _is_on_ground
-  _move_direction = Vector3.ZERO # TODO
+
+  _target_position = _nav_agent.get_next_path_position()
+  var _position_difference := _target_position - global_position
+  _move_direction = _position_difference.normalized() * clampf(_position_difference.length(), 0, 1)
 
   # To not orient quickly to the last input, we save a last strong direction,
   # this also ensures a good normalized value for the rotation basis.
@@ -109,7 +120,8 @@ func _physics_process(delta: float) -> void:
   _orient_character_to_direction(_last_strong_direction, delta)
 
   if linear_velocity.length() < move_speed:
-    apply_central_force(_move_direction * acceleration * mass)
+    _nav_agent.set_velocity(_move_direction)
+    # apply_central_force(_move_direction * acceleration * mass)
   elif not _is_on_ground and linear_velocity.y < 0:
     _dummy_skin.fall()
   elif _is_on_ground:
@@ -130,12 +142,14 @@ func play_foot_step_sound() -> void:
 
 
 func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
-  var left_axis := Vector3.UP.cross(direction)
-  var rotation_basis := Basis(left_axis, Vector3.UP, direction).get_rotation_quaternion()
-  var model_scale := _rotation_root.transform.basis.get_scale()
-  _rotation_root.transform.basis = Basis(_rotation_root.transform.basis.get_rotation_quaternion().slerp(rotation_basis, delta * rotation_speed)).scaled(
-    model_scale
-  )
+  var _target_basis := global_transform.looking_at(_target_position, Vector3.UP, true).basis
+  global_transform.basis = global_transform.basis.slerp(_target_basis, delta * rotation_speed)
+  #var left_axis := Vector3.UP.cross(direction)
+  #var rotation_basis := Basis(left_axis, Vector3.UP, direction).get_rotation_quaternion()
+  #var model_scale := _rotation_root.transform.basis.get_scale()
+  #_rotation_root.transform.basis = Basis(_rotation_root.transform.basis.get_rotation_quaternion().slerp(rotation_basis, delta * rotation_speed)).scaled(
+    #model_scale
+  #)
 
 
 func start_ragdoll() -> void:

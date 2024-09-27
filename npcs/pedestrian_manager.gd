@@ -5,7 +5,7 @@ const pedestrian_spawn_point_scene := preload("res://npcs/pedestrian_spawn_point
 const pedestrian_scene := preload("res://npcs/pedestrian.tscn")
 const pedestrian_agent_scene := preload("res://npcs/pedestrian_agent.tscn")
 ## How many pedestrians to spawn
-var pedestrian_count: int = 7
+var pedestrian_count: int = 4
 ## The Camera3D to use for line-of-sight and hearing range checks
 var camera: Camera3D
 ## Area3D node used to look for PedestrianSpawnPoints around the camera/player
@@ -85,7 +85,7 @@ func _physics_process(delta: float) -> void:
           _add_pedestrian(_spawn_point, _pedestrian_agent)
         _spawn_point.highlight()
     else:
-      #_pedestrian_agent.set_inputs()
+      _pedestrian_agent.set_nav_target()
       _adjust_despawn_weight(_pedestrian_agent)
     last_agent_updated += 1
   return
@@ -108,6 +108,7 @@ func _adjust_despawn_weight(_agent: PedestrianAgent) -> void:
   elif camera.is_position_in_frustum(_agent.pedestrian.global_position):
     pedestrian_ray_query_params.from = camera.global_position
     pedestrian_ray_query_params.to = _agent.pedestrian.global_position
+    pedestrian_ray_query_params.to.y += 1.5
     var _space_state := get_world_3d().direct_space_state
     var _raycast_result := _space_state.intersect_ray(pedestrian_ray_query_params)
     if not _raycast_result.is_empty():
