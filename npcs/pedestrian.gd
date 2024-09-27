@@ -29,6 +29,7 @@ class_name Pedestrian extends RigidBody3D
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 @onready var ground_collider := $GroundCollider
+@onready var _nav_agent: NavigationAgent3D = $NavigationAgent3D
 
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
@@ -38,6 +39,7 @@ var _is_on_floor_buffer := false
 
 var is_ragdolling := false
 var is_waiting_to_reset := false
+var _starting_velocity := Vector3.ZERO
 ## Velocity as of the last physics tick
 var _previous_velocity: Vector3 = Vector3.ZERO
 ## Timer used to space out how often we check if we can exit ragdoll
@@ -94,19 +96,7 @@ func _physics_process(delta: float) -> void:
   else:
     linear_damp = 0
 
-  # Get input and movement state
-  var is_just_jumping := Input.is_action_just_pressed("jump") and _is_on_ground
   var is_just_on_floor := _is_on_ground and not _is_on_floor_buffer
-
-  # Respond to pause button
-  var is_pausing := Input.is_action_just_pressed("Pause")
-  if is_pausing:
-    if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-      Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-    else:
-      Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-  var is_using := Input.is_action_just_pressed("use")
 
   _is_on_floor_buffer = _is_on_ground
   _move_direction = Vector3.ZERO # TODO
@@ -120,11 +110,6 @@ func _physics_process(delta: float) -> void:
 
   if linear_velocity.length() < move_speed:
     apply_central_force(_move_direction * acceleration * mass)
-  if is_just_jumping:
-    apply_central_impulse(Vector3.UP * jump_initial_impulse * mass)
-  # Set character animation
-  if is_just_jumping:
-    _dummy_skin.jump()
   elif not _is_on_ground and linear_velocity.y < 0:
     _dummy_skin.fall()
   elif _is_on_ground:
@@ -184,9 +169,6 @@ func get_skeleton_position() -> Vector3:
   return _ragdoll_tracker_bone.global_position
 
 
-func enterVehicle (vehicle: DriveableVehicle) -> void:
-  pass
-
-
-func exitVehicle () -> void:
-  pass
+func despawn() -> void:
+  queue_free()
+  return

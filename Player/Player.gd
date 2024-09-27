@@ -57,8 +57,10 @@ func _ready() -> void:
   start_ragdoll()
   PropRespawnManager.camera = camera_controller.camera
   TrafficManager.camera = camera_controller.camera
+  PedestrianManager.camera = camera_controller.camera
   TrafficManager.spawn_include_area = $CameraController/PlayerCamera/TrafficSpawnIncludeArea
   TrafficManager.spawn_exclude_area = $CameraController/PlayerCamera/TrafficSpawnExcludeArea
+  PedestrianManager.spawn_include_area = $CameraController/PlayerCamera/PedestrianSpawnIncludeArea
   camera_controller.top_level = true
   $CameraController/PlayerCamera.top_level = true
 

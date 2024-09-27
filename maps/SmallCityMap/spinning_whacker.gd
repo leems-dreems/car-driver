@@ -1,7 +1,6 @@
 class_name SpinningWhacker extends Node3D
 
 var request_stop_timer: SceneTreeTimer = null
-@onready var _starting_target_velocity: float = $JoltGeneric6DOFJoint3D.get_param_y(JoltGeneric6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY)
 
 ## Ask this whacker to stop spinning
 func request_stop(_duration: float = 5.0) -> void:

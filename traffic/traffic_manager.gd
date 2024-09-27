@@ -146,7 +146,7 @@ func update_nearby_spawn_points() -> void:
   return
 
 ## Add TrafficSpawnPoints to managed TrafficPaths
-func add_traffic_spawn_points() -> void:
+func add_spawn_points() -> void:
   for _traffic_path: TrafficPath in traffic_paths:
     if _traffic_path.get_children().any(func(_child: Node): return _child is TrafficSpawnPoint):
       continue # Skip this path if it already has one or more spawn points

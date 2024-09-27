@@ -1,4 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://d3hjfli0tnow2"]
+[gd_scene load_steps=8 format=3 uid="uid://d3hjfli0tnow2"]
+
+[ext_resource type="Script" path="res://npcs/pedestrian_spawn_point.gd" id="1_7n5o8"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_2a73p"]
 size = Vector3(2, 3, 2)
@@ -47,6 +49,7 @@ _data = {
 }
 
 [node name="PedestrianSpawnPoint" type="PathFollow3D"]
+script = ExtResource("1_7n5o8")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 33554432

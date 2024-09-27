@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Game="*res://scripts/Game.gd"
 PropRespawnManager="*res://scripts/prop_respawn_manager.gd"
 TrafficManager="*res://traffic/traffic_manager.gd"
+PedestrianManager="*res://npcs/pedestrian_manager.gd"
 
 [display]
 
@@ -188,6 +189,7 @@ Ragdoll={
 3d_physics/layer_22="ExplosionCatcher"
 3d_physics/layer_25="PedestrianArea"
 3d_physics/layer_26="PedestrianSpawnPoint"
+3d_physics/layer_27="PedestrianAgent"
 3d_physics/layer_29="Bone"
 
 [physics]

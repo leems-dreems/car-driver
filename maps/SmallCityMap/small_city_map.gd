@@ -6,7 +6,9 @@ var road_physics_material := preload("res://assets/materials/road_physics_materi
 
 func _ready() -> void:
   TrafficManager.vehicle_container_node = $VehicleContainer
-  TrafficManager.add_traffic_spawn_points()
+  TrafficManager.add_spawn_points()
+  PedestrianManager.pedestrian_container_node = $PedestrianContainer
+  PedestrianManager.add_spawn_points()
   await get_tree().create_timer(1.0).timeout
   for _road_static_body: StaticBody3D in find_children("road_mesh_col", "StaticBody3D", true, false):
     _road_static_body.add_to_group("Road")

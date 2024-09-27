@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://cr77wenw0lh5c"]
+[gd_scene load_steps=81 format=3 uid="uid://cr77wenw0lh5c"]
 
 [ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
@@ -21,6 +21,7 @@
 [ext_resource type="Material" uid="uid://da51ijocwvipw" path="res://assets/materials/shop_sign.tres" id="25_458no"]
 [ext_resource type="Script" path="res://maps/SmallIslandMap/vehicle_dispenser.gd" id="25_yx1ur"]
 [ext_resource type="Script" path="res://maps/SmallIslandMap/dispenser_button.gd" id="26_0bws6"]
+[ext_resource type="Script" path="res://npcs/pedestrian_path.gd" id="26_30uhx"]
 [ext_resource type="PackedScene" uid="uid://df8mbdhlomb01" path="res://collidables/standalone_bin_prop.tscn" id="26_f4t6i"]
 [ext_resource type="PhysicsMaterial" uid="uid://glnpx028ehvi" path="res://assets/materials/grass_physics_material.tres" id="26_wfw6r"]
 [ext_resource type="PackedScene" uid="uid://dpbfn306rpmyr" path="res://collidables/standalone_gas_pump_prop.tscn" id="27_0lddw"]
@@ -245,11 +246,18 @@ filter_baking_aabb = AABB(-20, -5, -90, 40, 20, 180)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7rccm"]
 points = PackedVector3Array(20, 0, 70, -20, 0, 70, 20, 0, -70, -20, 0, -70)
 
+[sub_resource type="Curve3D" id="Curve3D_ii3i8"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -15, 1, -85, 0, 0, 0, 0, 0, 0, -15, 1, 45, 0, 0, 0, 0, 0, 0, 15, 1, 45, 0, 0, 0, 0, 0, 0, 15, 1, -85, 0, 0, 0, 0, 0, 0, -15, 1, -85),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
 [node name="SmallCityMap" type="Node3D"]
 script = ExtResource("1_a23al")
 
 [node name="Player" parent="." instance=ExtResource("10_b2bvt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -112)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 0, 13)
 
 [node name="Terrain" type="Node3D" parent="."]
 
@@ -1423,6 +1431,8 @@ traffic_lights_RP_004 = [NodePath("../../TrafficLights/4WayJunction_D4")]
 
 [node name="VehicleContainer" type="Node3D" parent="."]
 
+[node name="PedestrianContainer" type="Node3D" parent="."]
+
 [node name="TrafficLights" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 
@@ -2162,3 +2172,7 @@ transform = Transform3D(-1, -4.37114e-08, 7.57103e-08, 0, 0.866025, 0.5, -8.7422
 layers = 1025
 use_collision = true
 size = Vector3(20, 1, 16)
+
+[node name="PedestrianPath" type="Path3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea"]
+curve = SubResource("Curve3D_ii3i8")
+script = ExtResource("26_30uhx")
