@@ -111,6 +111,7 @@ func _physics_process(delta: float) -> void:
   _target_position = _nav_agent.get_next_path_position()
   var _position_difference := _target_position - global_position
   _move_direction = _position_difference.normalized() * clampf(_position_difference.length(), 0, 1)
+  _move_direction.y = 0
 
   if _position_difference.length_squared() > 0:
     _orient_character_to_direction(_move_direction, delta)
