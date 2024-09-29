@@ -5,7 +5,7 @@ const pedestrian_spawn_point_scene := preload("res://npcs/pedestrian_spawn_point
 const pedestrian_scene := preload("res://npcs/pedestrian.tscn")
 const pedestrian_agent_scene := preload("res://npcs/pedestrian_agent.tscn")
 ## How many pedestrians to spawn
-var pedestrian_count: int = 4
+var pedestrian_count: int = 2
 ## The Camera3D to use for line-of-sight and hearing range checks
 var camera: Camera3D
 ## Area3D node used to look for PedestrianSpawnPoints around the camera/player
@@ -13,11 +13,11 @@ var spawn_include_area: Area3D
 ## Node that spawned pedestrians will be added to as children
 var pedestrian_container_node: Node3D
 ## Pedestrians won't be despawned until their `despawn_weight` is greater than this
-var despawn_delay: int = 60
+var despawn_delay: int = 600
 ## Pedestrians within this distance will not be despawned
-var hearing_range := 60.0
+var hearing_range := 20.0
 ## Minimum distance from the camera pedestrians will be spawned
-var min_spawn_radius := 80.0
+var min_spawn_radius := 20.0
 ## Maximum distance from the camera pedestrians will be spawned
 var max_spawn_radius := 160.0
 ## PedestrianAgents being managed
@@ -94,7 +94,7 @@ func _physics_process(delta: float) -> void:
 func _add_pedestrian(_spawn_point: PedestrianSpawnPoint, _agent: PedestrianAgent) -> void:
   var _new_pedestrian: Pedestrian = pedestrian_scene.instantiate()
   _new_pedestrian.position = _spawn_point.global_position
-  _new_pedestrian.rotation = _spawn_point.global_rotation
+  #_new_pedestrian.rotation = _spawn_point.global_rotation
   _agent.pedestrian = _new_pedestrian
   pedestrian_container_node.add_child(_agent.pedestrian)
   _agent.pedestrian._starting_velocity = Vector3.FORWARD.rotated(Vector3.UP, _new_pedestrian.rotation.y) * _spawn_point.starting_speed

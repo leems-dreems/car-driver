@@ -1,9 +1,9 @@
 class_name Pedestrian extends RigidBody3D
 
 ## Character maximum run speed on the ground.
-@export var move_speed := 8.0
+@export var move_speed := 4.0
 ## Movement acceleration (how fast character achieve maximum speed)
-@export var acceleration := 40.0
+@export var acceleration := 30.0
 ## Jump impulse
 @export var jump_initial_impulse := 8.0
 ## Jump impulse when player keeps pressing jump
@@ -65,8 +65,8 @@ func _on_body_entered(_body: Node) -> void:
 
 
 func _on_velocity_computed(_safe_velocity: Vector3) -> void:
-  linear_velocity = _safe_velocity
-  #apply_central_force(_safe_velocity * acceleration * mass)
+  #linear_velocity = _safe_velocity
+  apply_central_force(_safe_velocity * acceleration * mass)
   return
 
 
@@ -112,17 +112,11 @@ func _physics_process(delta: float) -> void:
   var _position_difference := _target_position - global_position
   _move_direction = _position_difference.normalized() * clampf(_position_difference.length(), 0, 1)
 
-  # To not orient quickly to the last input, we save a last strong direction,
-  # this also ensures a good normalized value for the rotation basis.
-  if _move_direction.length() > 0.2:
-    _last_strong_direction = _move_direction.normalized()
-
-  _orient_character_to_direction(_last_strong_direction, delta)
-
-  if linear_velocity.length() < move_speed:
-    _nav_agent.set_velocity(_move_direction)
-    # apply_central_force(_move_direction * acceleration * mass)
-  elif not _is_on_ground and linear_velocity.y < 0:
+  if _position_difference.length_squared() > 0:
+    _orient_character_to_direction(_move_direction, delta)
+  _nav_agent.set_velocity(_move_direction.clampf(-move_speed, move_speed))
+  #apply_central_force(_move_direction * acceleration * mass)
+  if not _is_on_ground and linear_velocity.y < 0:
     _dummy_skin.fall()
   elif _is_on_ground:
     var xz_velocity := Vector3(linear_velocity.x, 0, linear_velocity.z)
@@ -142,14 +136,15 @@ func play_foot_step_sound() -> void:
 
 
 func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
-  var _target_basis := global_transform.looking_at(_target_position, Vector3.UP, true).basis
-  global_transform.basis = global_transform.basis.slerp(_target_basis, delta * rotation_speed)
-  #var left_axis := Vector3.UP.cross(direction)
-  #var rotation_basis := Basis(left_axis, Vector3.UP, direction).get_rotation_quaternion()
-  #var model_scale := _rotation_root.transform.basis.get_scale()
-  #_rotation_root.transform.basis = Basis(_rotation_root.transform.basis.get_rotation_quaternion().slerp(rotation_basis, delta * rotation_speed)).scaled(
-    #model_scale
-  #)
+  #var _target_basis := _rotation_root.global_transform.looking_at(_target_position, Vector3.UP, true).basis
+  #_rotation_root.global_transform.basis = _rotation_root.global_transform.basis.slerp(_target_basis, delta * rotation_speed)
+  var _look_direction := (_target_position - _rotation_root.global_position).normalized()
+  var left_axis := Vector3.UP.cross(_look_direction)
+  var rotation_basis := Basis(left_axis, Vector3.UP, _look_direction).get_rotation_quaternion()
+  var model_scale := _rotation_root.transform.basis.get_scale()
+  _rotation_root.transform.basis = Basis(_rotation_root.transform.basis.get_rotation_quaternion().slerp(rotation_basis, delta * rotation_speed)).scaled(
+    model_scale
+  )
 
 
 func start_ragdoll() -> void:

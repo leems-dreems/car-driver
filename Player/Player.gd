@@ -36,6 +36,7 @@ var useable_target : Node3D = null
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 @onready var ground_collider := $GroundCollider
+@onready var _nav_agent: NavigationAgent3D = $NavigationAgent3D
 
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
@@ -94,6 +95,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 
 func _physics_process(delta: float) -> void:
+  _nav_agent.get_next_path_position()
   var _is_on_ground := is_on_ground()
   # Record current velocity, to refer to when processing collision signals
   _previous_velocity = Vector3(linear_velocity)

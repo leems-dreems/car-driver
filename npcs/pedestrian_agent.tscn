@@ -13,7 +13,6 @@ albedo_color = Color(0, 0, 1, 0.235294)
 points = PackedVector3Array(-0.75, -1, -0.75, -0.75, -1, 0.75, -0.75, 1, -0.75, 0.75, -1, -0.75, 0.75, -1, 0.75, -0.75, 1, 0.75, 0.75, 1, -0.75, 0.75, 1, 0.75)
 
 [node name="PedestrianAgent" type="PathFollow3D"]
-loop = false
 script = ExtResource("1_qbcba")
 
 [node name="Area3D" type="Area3D" parent="."]
@@ -21,7 +20,7 @@ collision_layer = 67108864
 collision_mask = 268437466
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
-visible = false
+transparency = 0.5
 mesh = SubResource("BoxMesh_55gh1")
 surface_material_override/0 = SubResource("StandardMaterial3D_lfioe")
 
