@@ -1,9 +1,9 @@
 class_name Pedestrian extends RigidBody3D
 
 ## Character maximum run speed on the ground.
-@export var move_speed := 4.0
+@export var move_speed := 8.0
 ## Movement acceleration (how fast character achieve maximum speed)
-@export var acceleration := 30.0
+@export var acceleration := 20.0
 ## Jump impulse
 @export var jump_initial_impulse := 8.0
 ## Jump impulse when player keeps pressing jump
@@ -115,7 +115,7 @@ func _physics_process(delta: float) -> void:
 
   if _position_difference.length_squared() > 0:
     _orient_character_to_direction(_move_direction, delta)
-  _nav_agent.set_velocity(_move_direction.clampf(-move_speed, move_speed))
+  _nav_agent.set_velocity(_move_direction)
   #apply_central_force(_move_direction * acceleration * mass)
   if not _is_on_ground and linear_velocity.y < 0:
     _dummy_skin.fall()

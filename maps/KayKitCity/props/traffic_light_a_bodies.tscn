@@ -109,6 +109,18 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 mesh = SubResource("CylinderMesh_q7r7w")
 surface_material_override/0 = SubResource("StandardMaterial3D_bn6mr")
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+radius = 1.0
+
+[node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+radius = 1.0
+
+[node name="NavigationObstacle3D3" type="NavigationObstacle3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3, 0)
+radius = 1.0
+
 [node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="."]
 linear_limit_x/upper = 1.0
 linear_limit_x/lower = -1.0

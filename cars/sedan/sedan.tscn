@@ -720,4 +720,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 explosion_scale = 15.0
 explosion_delay = 0.0
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+radius = 4.0
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
