@@ -139,7 +139,8 @@ func play_foot_step_sound() -> void:
 func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
   #var _target_basis := _rotation_root.global_transform.looking_at(_target_position, Vector3.UP, true).basis
   #_rotation_root.global_transform.basis = _rotation_root.global_transform.basis.slerp(_target_basis, delta * rotation_speed)
-  var _look_direction := (_target_position - _rotation_root.global_position).normalized()
+  var _look_direction := linear_velocity.normalized()
+  _look_direction.y = 0
   var left_axis := Vector3.UP.cross(_look_direction)
   var rotation_basis := Basis(left_axis, Vector3.UP, _look_direction).get_rotation_quaternion()
   var model_scale := _rotation_root.transform.basis.get_scale()

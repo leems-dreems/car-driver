@@ -269,6 +269,21 @@ skeleton = NodePath("")
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
 shape = SubResource("ConvexPolygonShape3D_4w5uj")
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -1.8)
+radius = 1.6
+affect_navigation_mesh = true
+
+[node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 1.7)
+radius = 1.6
+affect_navigation_mesh = true
+
+[node name="NavigationObstacle3D3" type="NavigationObstacle3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0.1)
+radius = 1.6
+affect_navigation_mesh = true
+
 [node name="ColliderBits" type="Node3D" parent="."]
 
 [node name="HingeJointLeft" type="HingeJoint3D" parent="ColliderBits"]
@@ -715,8 +730,5 @@ process_material = ExtResource("22_blqn8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 explosion_scale = 15.0
 explosion_delay = 0.0
-
-[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
-radius = 3.1
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

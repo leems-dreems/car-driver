@@ -15,7 +15,7 @@ var despawn_weight := 0.0
 func set_nav_target() -> void:
   var _pedestrian_path: PedestrianPath = get_parent()
   var _local_pedestrian_pos := get_parent_node_3d().to_local(pedestrian.global_position)
-  progress = _pedestrian_path.curve.get_closest_offset(_local_pedestrian_pos) + 4
+  progress = _pedestrian_path.curve.get_closest_offset(_local_pedestrian_pos) + 8
   pedestrian._nav_agent.target_position = global_position
 
 

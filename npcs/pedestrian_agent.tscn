@@ -20,6 +20,7 @@ collision_layer = 67108864
 collision_mask = 268437466
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+visible = false
 transparency = 0.5
 mesh = SubResource("BoxMesh_55gh1")
 surface_material_override/0 = SubResource("StandardMaterial3D_lfioe")
