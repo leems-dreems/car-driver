@@ -79,3 +79,5 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("ConvexPolygonShape3D_gd1ja")
+
+[connection signal="body_entered" from="RigidBody3D" to="." method="on_body_entered"]
