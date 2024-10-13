@@ -5,7 +5,7 @@ const pedestrian_spawn_point_scene := preload("res://npcs/pedestrian_spawn_point
 const pedestrian_scene := preload("res://npcs/pedestrian.tscn")
 const pedestrian_agent_scene := preload("res://npcs/pedestrian_agent.tscn")
 ## How many pedestrians to spawn
-var pedestrian_count: int = 2
+var pedestrian_count: int = 10
 ## The Camera3D to use for line-of-sight and hearing range checks
 var camera: Camera3D
 ## Area3D node used to look for PedestrianSpawnPoints around the camera/player
@@ -58,16 +58,16 @@ func _physics_process(delta: float) -> void:
   if len(pedestrian_paths) == 0:
     return
   # If enough time has passed, sort pedestrians by distance and turn active ragdolls on/off
-  if _time_since_active_ragdoll_check > _active_ragdoll_check_interval:
-    # TODO: Attach distance to each pedestrian in this map loop
-    var _pedestrians := _agents.map(func(_agent: PedestrianAgent) -> Pedestrian:
-      return _agent.pedestrian
-    )
-    _pedestrians.sort_custom(func(a: Pedestrian, b: Pedestrian):
-      if a == null: return true
-      if b == null: return false
-      return a.global_position.distance_squared_to(camera.global_position) < b.global_position.distance_squared_to(camera.global_position)
-    )
+  #if _time_since_active_ragdoll_check > _active_ragdoll_check_interval:
+    ## TODO: Attach distance to each pedestrian in this map loop
+    #var _pedestrians := _agents.map(func(_agent: PedestrianAgent) -> Pedestrian:
+      #return _agent.pedestrian
+    #)
+    #_pedestrians.sort_custom(func(a: Pedestrian, b: Pedestrian):
+      #if a == null: return true
+      #if b == null: return false
+      #return a.global_position.distance_squared_to(camera.global_position) < b.global_position.distance_squared_to(camera.global_position)
+    #)
     
   # Update our list of nearby paths if we've moved since checking last
   if _camera_position_at_last_update.distance_to(camera.global_position) > _spawn_points_update_distance:

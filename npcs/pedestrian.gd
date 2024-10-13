@@ -23,8 +23,8 @@ class_name Pedestrian extends RigidBody3D
 @onready var _rotation_root: Node3D = $CharacterRotationRoot
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
 @onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummyRigAnimated
-@onready var ragdoll_skeleton: Skeleton3D = $DummyRigPhysical/Rig/Skeleton3D
-@onready var _ragdoll_tracker_bone: PhysicalBone3D = $"DummyRigPhysical/Rig/Skeleton3D/Physical Bone spine"
+#@onready var ragdoll_skeleton: Skeleton3D = $DummyRigPhysical/Rig/Skeleton3D
+#@onready var _ragdoll_tracker_bone: PhysicalBone3D = $"DummyRigPhysical/Rig/Skeleton3D/Physical Bone spine"
 #@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
@@ -49,14 +49,15 @@ var _ragdoll_reset_timer: SceneTreeTimer = null
 
 
 func _ready() -> void:
-  start_ragdoll()
+  #start_ragdoll()
+  return
 
 
 func _on_body_entered(_body: Node) -> void:
   if not is_ragdolling and _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D:
     var _impact_force := (_previous_velocity - linear_velocity).length()
     if _impact_force > impact_resistance:
-      go_limp()
+      #go_limp()
       if _body is DriveableVehicle:
         _body.request_stop()
       elif _body.get_parent() is SpinningWhacker:
@@ -70,20 +71,20 @@ func _on_velocity_computed(_safe_velocity: Vector3) -> void:
   return
 
 
-func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-  if is_waiting_to_reset and _ragdoll_reset_timer == null:
-    if can_stand_up():
-      is_ragdolling = false
-      collision_layer = _default_collision_layer
-      global_position = get_skeleton_position()
-      state.linear_velocity = Vector3.ZERO
-      state.angular_velocity = Vector3.ZERO
-      is_waiting_to_reset = false
-    else:
-      _ragdoll_reset_timer = get_tree().create_timer(1.0)
-      _ragdoll_reset_timer.timeout.connect(func():
-        _ragdoll_reset_timer = null
-      )
+#func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+  #if is_waiting_to_reset and _ragdoll_reset_timer == null:
+    #if can_stand_up():
+      #is_ragdolling = false
+      #collision_layer = _default_collision_layer
+      #global_position = get_skeleton_position()
+      #state.linear_velocity = Vector3.ZERO
+      #state.angular_velocity = Vector3.ZERO
+      #is_waiting_to_reset = false
+    #else:
+      #_ragdoll_reset_timer = get_tree().create_timer(1.0)
+      #_ragdoll_reset_timer.timeout.connect(func():
+        #_ragdoll_reset_timer = null
+      #)
 
 
 func _physics_process(delta: float) -> void:
@@ -149,12 +150,12 @@ func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
   )
 
 
-func start_ragdoll() -> void:
-  var _bone_names: Array[StringName] = []
-  for _bone: Node in ragdoll_skeleton.get_children(): 
-    if _bone is PhysicalBone3D:
-      _bone_names.push_back(_bone.name)
-  ragdoll_skeleton.physical_bones_start_simulation(_bone_names)
+#func start_ragdoll() -> void:
+  #var _bone_names: Array[StringName] = []
+  #for _bone: Node in ragdoll_skeleton.get_children(): 
+    #if _bone is PhysicalBone3D:
+      #_bone_names.push_back(_bone.name)
+  #ragdoll_skeleton.physical_bones_start_simulation(_bone_names)
 
 
 func go_limp() -> void:
@@ -172,12 +173,12 @@ func is_on_ground() -> bool:
   return len(ground_collider.get_overlapping_bodies()) > 0
 
 
-func can_stand_up() -> bool:
-  return _ragdoll_tracker_bone.linear_velocity.length() < stopping_speed
-
-
-func get_skeleton_position() -> Vector3:
-  return _ragdoll_tracker_bone.global_position
+#func can_stand_up() -> bool:
+  #return _ragdoll_tracker_bone.linear_velocity.length() < stopping_speed
+#
+#
+#func get_skeleton_position() -> Vector3:
+  #return _ragdoll_tracker_bone.global_position
 
 
 func despawn() -> void:
