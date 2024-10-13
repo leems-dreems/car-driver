@@ -2,6 +2,7 @@ class_name StandalonePropBodies extends Node3D
 ## A collection of physics bodies representing a breakable prop. Used by [StandaloneSpringyProp]
 ## nodes to make respawning easier to manage
 
+var is_detached_from_parent := false
 @onready var rigid_body := $RigidBody3D
 @onready var joint: JoltGeneric6DOFJoint3D = $JoltGeneric6DOFJoint3D
 @onready var static_body := $StaticBody3D
