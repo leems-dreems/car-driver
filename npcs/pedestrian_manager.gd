@@ -5,7 +5,7 @@ const pedestrian_spawn_point_scene := preload("res://npcs/pedestrian_spawn_point
 const pedestrian_scene := preload("res://npcs/pedestrian.tscn")
 const pedestrian_agent_scene := preload("res://npcs/pedestrian_agent.tscn")
 ## How many pedestrians to spawn
-var pedestrian_count: int = 10
+var pedestrian_count: int = 7
 ## The Camera3D to use for line-of-sight and hearing range checks
 var camera: Camera3D
 ## Area3D node used to look for PedestrianSpawnPoints around the camera/player
