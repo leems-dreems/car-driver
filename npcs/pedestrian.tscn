@@ -59,7 +59,6 @@ neighbor_distance = 10.0
 time_horizon_agents = 3.0
 time_horizon_obstacles = 1.0
 max_speed = 1.5
-debug_enabled = true
 debug_use_custom = true
 
 [node name="CharacterCollisionShape" type="CollisionShape3D" parent="."]

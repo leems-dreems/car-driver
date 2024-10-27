@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://cr77wenw0lh5c"]
+[gd_scene load_steps=89 format=3 uid="uid://cr77wenw0lh5c"]
 
 [ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
@@ -243,6 +243,13 @@ _data = {
 }
 point_count = 5
 
+[sub_resource type="Curve3D" id="Curve3D_soemb"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -15, 1, -85, 0, 0, 0, 0, 0, 0, 15, 1, -85, 0, 0, 0, 0, 0, 0, 15, 1, 45, 0, 0, 0, 0, 0, 0, -15, 1, 45, 0, 0, 0, 0, 0, 0, -15, 1, -85),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
 [sub_resource type="NavigationMesh" id="NavigationMesh_qsk1v"]
 geometry_parsed_geometry_type = 1
 geometry_collision_mask = 16777411
@@ -254,6 +261,13 @@ filter_baking_aabb = AABB(-20, -5, -90, 40, 20, 180)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7rccm"]
 points = PackedVector3Array(20, 0, 70, -20, 0, 70, 20, 0, -70, -20, 0, -70)
+
+[sub_resource type="Curve3D" id="Curve3D_21nji"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -15, 1, -85, 0, 0, 0, 0, 0, 0, 15, 1, -85, 0, 0, 0, 0, 0, 0, 15, 1, 45, 0, 0, 0, 0, 0, 0, -15, 1, 45, 0, 0, 0, 0, 0, 0, -15, 1, -85),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_wun34"]
 geometry_parsed_geometry_type = 1
@@ -1967,6 +1981,10 @@ size = Vector3(20, 1, 16)
 curve = SubResource("Curve3D_ii3i8")
 script = ExtResource("26_30uhx")
 
+[node name="PedestrianPath2" type="Path3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea"]
+curve = SubResource("Curve3D_soemb")
+script = ExtResource("26_30uhx")
+
 [node name="StandaloneBinProp" parent="PedestrianAreas/LongBuildingRowPedestrianArea" instance=ExtResource("26_f4t6i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.2, 0, -48)
 
@@ -2159,6 +2177,10 @@ size = Vector3(20, 1, 16)
 
 [node name="PedestrianPath" type="Path3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea2"]
 curve = SubResource("Curve3D_ii3i8")
+script = ExtResource("26_30uhx")
+
+[node name="PedestrianPath2" type="Path3D" parent="PedestrianAreas/LongBuildingRowPedestrianArea2"]
+curve = SubResource("Curve3D_21nji")
 script = ExtResource("26_30uhx")
 
 [node name="StandaloneBinProp" parent="PedestrianAreas/LongBuildingRowPedestrianArea2" instance=ExtResource("26_f4t6i")]

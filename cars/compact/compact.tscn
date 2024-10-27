@@ -1,17 +1,17 @@
-[gd_scene load_steps=50 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=54 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
 [ext_resource type="PackedScene" uid="uid://h6vdpba71kpr" path="res://addons/gevp/scenes/smoke_effect.tscn" id="3_3utam"]
 [ext_resource type="PackedScene" uid="uid://b2hlchrj4h2b7" path="res://addons/gevp/scenes/engine_sound.tscn" id="4_i42xy"]
 [ext_resource type="AudioStream" uid="uid://cfqlem3v5t0y6" path="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Sound effects/Car_Engine_Loop.ogg" id="5_vu53n"]
-[ext_resource type="ArrayMesh" uid="uid://2le86icjy0e2" path="res://assets/models/car_cricket_body.obj" id="6_dgavk"]
-[ext_resource type="ArrayMesh" uid="uid://c2lo5sd57qci7" path="res://assets/models/car_cricket_door_FL.obj" id="7_5d7qu"]
+[ext_resource type="ArrayMesh" uid="uid://bm6tjdix4yscu" path="res://assets/models/vehicles/cricket_body.obj" id="6_fibcd"]
+[ext_resource type="ArrayMesh" uid="uid://xk5hk1bssrdt" path="res://assets/models/vehicles/cricket_door_FL.obj" id="7_t5urj"]
 [ext_resource type="PhysicsMaterial" uid="uid://bgc5lkrsa84nb" path="res://cars/car_door_physics_material.tres" id="8_rpaed"]
 [ext_resource type="Script" path="res://scripts/car_door.gd" id="9_653cp"]
 [ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="10_vgexy"]
 [ext_resource type="AudioStream" uid="uid://d02vhghagqdjw" path="res://assets/sfx/car-door-shut.wav" id="11_0cx5o"]
-[ext_resource type="ArrayMesh" uid="uid://bhui0qh4i80lg" path="res://assets/models/car_cricket_door_FR.obj" id="12_mvqap"]
+[ext_resource type="ArrayMesh" uid="uid://b6mrcbowsnkuh" path="res://assets/models/vehicles/cricket_door_FR.obj" id="12_1gu4b"]
 [ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="13_3hex1"]
 [ext_resource type="Script" path="res://addons/gevp/scripts/wheel.gd" id="14_e025k"]
 [ext_resource type="AudioStream" uid="uid://d2gr5emhyehgo" path="res://assets/sfx/tires_squal_loop.wav" id="15_68n7x"]
@@ -19,27 +19,33 @@
 [ext_resource type="AudioStream" uid="uid://bw7d3mhbykib" path="res://assets/audio/Hanna-Barbera SFX/clash.wav" id="17_7w5y2"]
 [ext_resource type="AudioStream" uid="uid://b6wjsd5udyqvt" path="res://assets/audio/Hanna-Barbera SFX/rumble_loop.wav" id="17_rtnly"]
 [ext_resource type="Material" uid="uid://bdg4152rp8j33" path="res://effects/smoke_particle_process_material.tres" id="18_6yteg"]
+[ext_resource type="ArrayMesh" uid="uid://b1sqc1ic4xp46" path="res://assets/models/vehicles/cricket_headlight_R.obj" id="18_26f06"]
+[ext_resource type="ArrayMesh" uid="uid://b44aqsaqhcf0m" path="res://assets/models/vehicles/cricket_headlight_L.obj" id="19_j0ugs"]
 [ext_resource type="QuadMesh" uid="uid://pxlxqqrg7rmf" path="res://effects/fire_quad_mesh.tres" id="19_ku3tg"]
+[ext_resource type="ArrayMesh" uid="uid://o8y61at0xra7" path="res://assets/models/vehicles/cricket_brakelight_L.obj" id="20_e4a6x"]
 [ext_resource type="Material" uid="uid://ci1rfkavqidwc" path="res://effects/smoke_white_particle_process_material.tres" id="20_ov1ny"]
 [ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="21_6fmka"]
+[ext_resource type="ArrayMesh" uid="uid://cpqrod3n8i4eu" path="res://assets/models/vehicles/cricket_brakelight_R.obj" id="21_t8q6m"]
 [ext_resource type="Material" uid="uid://8342nbrtebf1" path="res://effects/fire_particle_process_material.tres" id="22_blqn8"]
+[ext_resource type="ArrayMesh" uid="uid://dr0e841bi34bv" path="res://assets/models/vehicles/cricket_reverselight_L.obj" id="22_psb7o"]
 [ext_resource type="PackedScene" uid="uid://qj5wm2wpuawj" path="res://effects/explosion.tscn" id="23_0aeo7"]
+[ext_resource type="ArrayMesh" uid="uid://ngn3d0lex2ge" path="res://assets/models/vehicles/cricket_reverselight_R.obj" id="23_6oxxb"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
-friction = 0.2
+friction = 0.8
 rough = true
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4w5uj"]
-points = PackedVector3Array(1.13174, 0.94205, 1.58588, 1.09806, 1.43604, 0.600483, 1.09806, 1.42815, 1.09648, 1.12775, 0.953097, 1.8012, 1.12421, 0.926969, 1.93742, 1.10715, 0.755993, 2.15383, 1.08809, 0.592734, 2.31202, 1.06261, 0.31251, 0.586751, 1.10094, 0.713206, -1.40602, 1.11468, 0.909783, -1.63891, 1.0491, 1.42639, -1.29122, 0.732929, 2.08785, -1.12149, 0.769044, 2.08241, 0.441742, 1.03049, 1.19878, 2.74321, 1.07879, 0.792117, 2.66466, 1.1056, 0.797203, 2.27852, 1.06129, 0.588525, 2.63555, 1.04954, 0.315316, 1.24149, -1.06284, 0.31251, 0.586751, 1.05331, 0.330397, -0.946825, 1.05242, 0.334956, -1.33406, 1.04157, 0.314965, 1.16569, 1.06527, 0.724429, -2.26564, 1.01542, 0.34688, -2.34143, 1.0974, 0.913817, -2.01846, 1.00501, 1.33591, -2.24916, 0.714761, 2.03033, -1.88444, -0.00022161, 2.04646, -1.88444, -0.00022161, 2.10398, -1.12149, -0.00022161, 2.09854, 0.482938, -0.00022161, 1.19895, 2.75804, -0.00022161, 0.790013, 2.83274, 0.964462, 0.790364, 2.80692, 1.05264, 0.79089, 2.76518, 0.948066, 0.386161, 2.5191, 0.993265, 0.385635, 2.26479, 1.03514, 0.587298, 2.73606, -0.00022161, 0.387388, 2.56634, -1.04976, 0.315316, 1.24149, -1.10117, 0.713206, -1.40602, -1.05287, 0.334956, -1.33406, -1.05375, 0.330397, -0.946825, -1.04179, 0.314965, 1.16569, -1.08832, 0.592734, 2.31202, -1.13174, 0.94205, 1.58588, 1.00811, 0.347056, -2.3656, 1.01564, 0.550472, -2.46557, 1.00656, 0.756344, -2.61113, 0.96269, 0.553278, -2.68638, 0.989056, 0.552051, -2.58586, 0.921257, 1.27085, -2.68528, -0.00022161, 1.27067, -2.7122, -0.714983, 2.03033, -1.88444, -0.733151, 2.08785, -1.12149, -0.769266, 2.08241, 0.441742, -1.03071, 1.19878, 2.74321, -0.964684, 0.790364, 2.80692, -0.00022161, 0.586421, 2.80308, 0.964462, 0.586772, 2.77726, -0.948288, 0.386161, 2.5191, -0.964684, 0.586772, 2.77726, -0.993487, 0.385635, 2.26479, -1.06151, 0.588525, 2.63555, -1.1149, 0.909783, -1.63891, -1.06549, 0.724429, -2.26564, -1.01564, 0.34688, -2.34143, -1.00855, 0.347056, -2.3656, -1.07901, 0.792117, 2.66466, -1.10582, 0.797203, 2.27852, -1.10737, 0.755993, 2.15383, -1.12443, 0.926969, 1.93742, -1.12798, 0.953097, 1.8012, -1.09829, 1.42815, 1.09648, -1.09829, 1.43604, 0.600483, 0.896886, 0.348459, -2.47766, 0.933222, 0.348459, -2.47656, 0.980193, 0.757572, -2.71165, 0.892011, 0.553804, -2.72812, 0.892011, 0.758098, -2.75339, -0.00022161, 0.758448, -2.77866, -0.892233, 0.758098, -2.75339, -0.921479, 1.27085, -2.68528, -1.00523, 1.33591, -2.24916, -1.04954, 1.42639, -1.29122, -1.05287, 0.79089, 2.76518, -1.03536, 0.587298, 2.73606, -1.09762, 0.913817, -2.01846, -1.00678, 0.756344, -2.61113, -1.01609, 0.550472, -2.46557, -0.989277, 0.552051, -2.58586, -0.962911, 0.553278, -2.68638, -0.933443, 0.348459, -2.47656, -0.897107, 0.348459, -2.47766, -0.00022161, 0.554155, -2.75339, -0.980415, 0.757572, -2.71165, -0.892233, 0.553804, -2.72812)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7junj"]
+points = PackedVector3Array(0.778918, 0.565745, 0.985076, 0.761229, 0.766594, 0.772034, 0.771598, 0.636212, 1.10454, 0.766719, 0.662425, 1.23463, 0.773581, 0.263562, 0.874479, 0.767939, 0.495958, -0.387469, 0.761382, 0.767729, -0.385342, 0.703741, 0.937373, 0.750411, 0.708163, 0.9376, -0.362301, 0.684069, 0.775218, 1.87978, 0.698861, 0.727899, 1.87695, 0.734086, 0.554057, 1.4856, 0.709078, 0.271846, 1.56323, 0.51938, 0.267421, 1.46859, 0.542101, 0.263222, 1.01343, 0.734543, 0.262201, 0.758209, 0.734543, 0.262201, 0.406211, 0.747658, 0.274796, -0.76889, 0.734239, 0.626567, -1.00533, 0.726462, 0.655276, -1.11982, 0.758942, 0.767729, -0.427526, 0.665618, 0.925345, -1.26162, 0.664246, 0.934082, -1.23964, 0.669735, 0.935558, -1.12514, 0.703436, 0.945316, -0.4176, 0.532799, 1.33306, -0.410156, 0.520448, 1.36086, -0.413346, 0.520448, 1.35916, -0.370454, 0.665313, 1.01976, 0.663563, 0.671565, 0.815502, 1.80853, 0.677207, 0.836721, 1.62385, 0.520448, 1.35791, -0.903946, 0.520448, 1.35893, -0.743013, 0.67187, 0.813913, 1.81314, 0.564975, 0.814027, 1.8259, 0.575039, 0.775105, 1.8929, 0.552471, 0.479731, 1.88014, 0.657079, 0.478937, 1.86738, 0.609959, 0.330058, 1.77167, 0.592118, 0.273889, 1.73551, 0.498337, 0.273094, 1.74827, 0.218365, 0.270711, 1.76422, -0.000152469, 0.268896, 1.77131, -0.000152469, 0.262541, 0.956363, -0.000152469, 0.261066, 0.758209, 0.613009, 0.261974, 0.758209, -0.000152469, 0.266059, 1.41471, 0.613009, 0.261974, 0.406211, 0.527615, 0.27525, -0.979805, 0.735611, 0.269804, -0.337133, 0.679495, 0.281945, -1.47962, 0.693066, 0.416412, -1.46438, 0.707095, 0.579135, -1.35484, 0.684984, 0.767729, -1.67352, 0.709078, 0.767729, -1.2758, 0.646099, 0.891643, -1.65261, 0.534629, 1.28086, -1.22971, 0.520448, 1.32999, -1.17619, 0.520448, 1.33987, -1.08048, 0.520448, 1.36063, -0.455175, 0.439933, 1.37765, -0.413701, 0.442678, 1.34702, 0.360483, 0.519533, 1.33192, 0.33496, 0.439933, 1.37153, -0.904301, 0.439933, 1.37232, -0.841558, 0.192747, 1.37391, 0.407274, -0.000152469, 1.38412, 0.404438, 0.247491, 0.814594, 1.84185, 0.251913, 0.774764, 1.90885, 0.242001, 0.482114, 1.89609, 0.224923, 0.328583, 1.80038, 0.513128, 0.329718, 1.78443, -0.000152469, 0.327789, 1.80747, -0.242306, 0.482114, 1.89609, -0.225075, 0.328583, 1.80038, -0.218518, 0.270711, 1.76422, -0.519533, 0.267421, 1.46859, -0.542254, 0.263222, 1.01343, -0.613162, 0.261974, 0.758209, -0.000152469, 0.261066, 0.406211, -0.527767, 0.27525, -0.979805, 0.511451, 0.279903, -1.41971, 0.517855, 0.281718, -1.49451, -0.000152469, 0.490398, -1.66395, 0.237884, 0.489944, -1.64091, 0.543016, 0.489376, -1.61113, 0.650674, 0.489263, -1.6005, 0.571532, 0.767502, -1.67884, -0.000152469, 0.896409, -1.68487, 0.192747, 1.35802, -1.17619, 0.439933, 1.34214, -1.17619, 0.192747, 1.40648, -0.414764, 0.192747, 1.40466, -0.367264, 0.192747, 1.3915, -0.904301, 0.192747, 1.40523, -0.456238, -0.000152469, 1.42032, -0.415473, -0.1929, 1.37391, 0.407274, -0.672175, 0.813913, 1.81314, -0.565127, 0.814027, 1.8259, -0.247643, 0.814594, 1.84185, -0.000152469, 0.816636, 1.84469, -0.000152469, 0.814934, 1.84894, -0.000152469, 0.774424, 1.91594, -0.000152469, 0.48393, 1.90318, -0.252066, 0.774764, 1.90885, -0.575192, 0.775105, 1.8929, -0.552623, 0.479731, 1.88014, -0.513281, 0.329718, 1.78443, -0.498489, 0.273094, 1.74827, -0.59227, 0.273889, 1.73551, -0.70923, 0.271846, 1.56323, -0.773733, 0.263562, 0.874479, -0.734696, 0.262201, 0.758209, -0.613162, 0.261974, 0.406211, -0.735763, 0.269804, -0.337133, -0.511603, 0.279903, -1.41971, -0.734696, 0.262201, 0.406211, -0.000152469, 0.280924, -1.50904, 0.228277, 0.281264, -1.50337, -0.238037, 0.489944, -1.64091, -0.685137, 0.767729, -1.67352, -0.571684, 0.767502, -1.67884, -0.000152469, 0.766594, -1.70543, -0.000152469, 0.338342, -1.55158, -0.22843, 0.281264, -1.50337, -0.518008, 0.281718, -1.49451, -0.679647, 0.281945, -1.47962, -0.646252, 0.891643, -1.65261, -0.1929, 1.35802, -1.17619, -0.000152469, 1.30957, -1.23326, 0.192747, 1.36982, -1.08048, -0.000152469, 1.36177, -1.17619, -0.000152469, 1.39831, -0.904655, -0.000152469, 1.40114, -0.842267, -0.000152469, 1.40557, -0.744076, -0.1929, 1.3915, -0.904301, -0.1929, 1.40523, -0.456238, -0.1929, 1.40648, -0.414764, -0.1929, 1.40466, -0.367264, -0.44283, 1.34702, 0.360483, -0.671718, 0.815502, 1.80853, -0.703893, 0.937373, 0.750411, -0.684222, 0.775218, 1.87978, -0.519685, 1.33192, 0.33496, -0.699013, 0.727899, 1.87695, -0.657231, 0.478937, 1.86738, -0.610112, 0.330058, 1.77167, -0.734239, 0.554057, 1.4856, -0.766871, 0.662425, 1.23463, -0.778918, 0.565745, 0.985076, -0.768091, 0.495958, -0.387469, -0.74781, 0.274796, -0.76889, -0.735153, 0.264697, 0.162329, -0.543169, 0.489376, -1.61113, -0.650827, 0.489263, -1.6005, -0.693219, 0.416412, -1.46438, -0.707248, 0.579135, -1.35484, -0.726767, 0.655276, -1.11982, -0.70923, 0.767729, -1.2758, -0.665771, 0.925345, -1.26162, -0.664398, 0.934082, -1.23964, -0.520753, 1.32999, -1.17619, -0.534782, 1.28086, -1.22971, -0.440086, 1.34214, -1.17619, -0.1929, 1.36982, -1.08048, -0.440086, 1.37153, -0.904301, -0.440086, 1.37765, -0.413701, -0.440086, 1.37232, -0.841558, -0.520753, 1.36086, -0.413346, -0.665466, 1.01976, 0.663563, -0.708315, 0.9376, -0.362301, -0.761382, 0.766594, 0.772034, -0.771751, 0.636212, 1.10454, -0.761534, 0.767729, -0.385342, -0.734391, 0.626567, -1.00533, -0.716245, 0.767729, -1.15775, -0.759094, 0.767729, -0.427526, -0.67858, 0.938054, -0.944712, -0.703588, 0.945316, -0.4176, -0.520753, 1.33987, -1.08048, -0.520753, 1.35791, -0.903946, -0.520753, 1.35893, -0.743013, -0.520753, 1.36063, -0.455175)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_jv0dm"]
 radius = 0.1
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_g0cid"]
-points = PackedVector3Array(1.03924, 0.297661, -0.705347, 0.708985, 2.03898, -1.15564, 1.33962, 1.55859, 0.315243, 1.03924, 0.297661, 0.615627, 1.0693, 1.46848, -1.30593, 0.739047, 2.09929, 0.465341, 1.0693, 0.327818, -0.975636, 0.769048, 2.09929, -1.12573, 1.0993, 1.49846, 0.615627, 1.33962, 1.40834, 0.405339, 0.799172, 2.09929, 0.465341, 1.0693, 0.297661, 0.615627, 0.708985, 2.06896, -0.465153, 1.00936, 1.40834, -1.30593, 1.03924, 0.327818, -0.975636, 1.33962, 1.40834, 0.315243, 0.739047, 2.03898, 0.465341, 1.0693, 1.34838, -1.30593, 1.0693, 0.297661, -0.705347, 1.03924, 1.49846, 0.615627, 0.829111, 1.97884, -1.18574, 1.29933, 1.54568, 0.407441, 1.0993, 0.507875, 0.615627, 0.799172, 2.09929, 0.105144, 0.708985, 2.09929, -1.12573, 0.708985, 2.03898, -0.735442, 1.0693, 0.778226, -1.12573, 0.889175, 1.64871, -1.24574, 0.829111, 1.85875, -1.21583, 1.30956, 1.37836, 0.435434, 1.03924, 1.34838, -1.30593, 0.708985, 2.09929, -0.465153)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_batkb"]
+points = PackedVector3Array(0.743183, 0.324082, 0.675825, 0.743062, 0.324082, 0.763252, 0.7435, 0.324183, 0.406443, 0.766994, 0.488401, 0.406443, 0.76585, 0.487995, 0.685488, 0.765461, 0.487894, 0.776058, 0.716625, 0.896915, 0.757315, 0.703759, 0.937411, 0.750447, 0.665308, 1.01972, 0.663718, 0.519626, 1.33192, 0.334965, 0.74384, 0.326721, 0.158016, 0.74457, 0.331796, -0.350714, 0.744521, 0.33139, -0.307175, 0.768088, 0.496013, -0.387151, 0.767358, 0.490938, 0.146025, 0.761327, 0.766596, 0.771984, 0.709086, 0.937919, 0.416921, 0.520575, 1.36095, -0.413228, 0.520502, 1.35922, -0.370155, 0.519918, 1.34136, 0.0894479, 0.761497, 0.767713, -0.385289, 0.761497, 0.767713, 0.406443, 0.708234, 0.937513, -0.362239, 0.532905, 1.33304, -0.409968)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gm704"]
-points = PackedVector3Array(-1.0687, 0.297661, -0.705347, -1.0687, 0.327818, -0.975636, -1.33902, 1.55859, 0.315243, -0.708382, 2.06896, -1.15564, -1.03864, 0.297661, 0.615627, -1.0687, 1.46848, -1.30593, -0.738444, 2.09929, 0.465341, -1.0987, 1.49846, 0.615627, -0.768445, 2.09929, -1.12573, -1.33902, 1.40834, 0.405339, -1.03864, 0.327818, -0.975636, -0.798508, 2.09929, 0.465341, -1.0687, 0.297661, 0.615627, -0.708382, 2.03898, -0.765349, -1.00876, 1.40834, -1.30593, -0.738444, 2.03898, 0.465341, -1.33902, 1.40834, 0.315243, -1.03864, 0.297661, -0.705347, -1.0687, 1.34838, -1.30593, -1.03864, 1.49846, 0.615627, -0.708382, 2.03898, -1.15564, -0.828508, 1.97884, -1.18574, -1.29872, 1.54575, 0.407587, -1.0987, 0.477895, 0.615627, -0.798508, 2.09929, 0.0750488, -0.708382, 2.06896, -0.495248, -0.708382, 2.09929, -1.12573, -1.0687, 0.778226, -1.12573, -0.888572, 1.64871, -1.24574, -1.30889, 1.37836, 0.435434, -0.828508, 1.85875, -1.21583, -1.03864, 1.34838, -1.30593)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bbm10"]
+points = PackedVector3Array(-0.743208, 0.324082, 0.675825, -0.74311, 0.324082, 0.763252, -0.743524, 0.324183, 0.406443, -0.519626, 1.33192, 0.334965, -0.665332, 1.01972, 0.663718, -0.703784, 0.937411, 0.750447, -0.716649, 0.896915, 0.757315, -0.765486, 0.487894, 0.776058, -0.765875, 0.487995, 0.685488, -0.767018, 0.488401, 0.406443, -0.743889, 0.326721, 0.158016, -0.744618, 0.331796, -0.350714, -0.744545, 0.33139, -0.307175, -0.519942, 1.34136, 0.0894479, -0.520599, 1.36095, -0.413228, -0.761351, 0.766596, 0.771984, -0.70911, 0.937919, 0.416921, -0.767383, 0.490938, 0.146025, -0.768039, 0.495607, -0.341517, -0.768088, 0.496013, -0.387151, -0.52055, 1.35922, -0.370155, -0.761521, 0.767713, -0.385289, -0.53293, 1.33304, -0.409968, -0.708283, 0.937513, -0.362239, -0.7614, 0.766901, 0.682461, -0.761521, 0.767713, 0.406443)
 
 [sub_resource type="BoxMesh" id="BoxMesh_uu7oe"]
 
@@ -143,12 +149,6 @@ radius = 0.25
 font_names = PackedStringArray("Courier New")
 subpixel_positioning = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fdmnl"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_6up4h"]
-material = SubResource("StandardMaterial3D_fdmnl")
-size = Vector3(0.18, 0.1, 0.1)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i127x"]
 albedo_color = Color(1, 0.196078, 0.196078, 1)
 emission_enabled = true
@@ -158,7 +158,7 @@ emission_energy_multiplier = 2.0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ltwxu"]
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 2.0
+emission_energy_multiplier = 3.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc8nd"]
 vertex_color_use_as_albedo = true
@@ -196,7 +196,7 @@ collision_mask = 83
 mass = 1500.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, 0.5, -0.1)
+center_of_mass = Vector3(0, 0.4, -0.1)
 freeze = true
 freeze_mode = 1
 continuous_cd = true
@@ -224,9 +224,7 @@ front_torque_split = 1.0
 front_variable_split = 0.5
 front_weight_distribution = 0.51
 center_of_gravity_height_offset = 0.0
-front_damping_ratio = 0.8
 front_bump_stop_multiplier = 0.5
-rear_damping_ratio = 0.8
 rear_bump_stop_multiplier = 0.5
 braking_grip_multiplier = 3.0
 coefficient_of_friction = {
@@ -261,33 +259,36 @@ vehicle = NodePath("..")
 sample_rpm = 3000.0
 
 [node name="body" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
-mesh = ExtResource("6_dgavk")
+transform = Transform3D(-1.5, 0, 2.26494e-07, 0, 1.5, 0, -2.26494e-07, 0, -1.5, 0, -0.5, 0)
+mesh = ExtResource("6_fibcd")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
-shape = SubResource("ConvexPolygonShape3D_4w5uj")
+transform = Transform3D(-1.5, 0, 2.26494e-07, 0, 1.5, 0, -2.26494e-07, 0, -1.5, 0, -0.5, 0)
+shape = SubResource("ConvexPolygonShape3D_7junj")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -1.8)
+visible = false
 radius = 1.6
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 1.7)
+visible = false
 radius = 1.6
 affect_navigation_mesh = true
 
 [node name="NavigationObstacle3D3" type="NavigationObstacle3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0.1)
+visible = false
 radius = 1.6
 affect_navigation_mesh = true
 
 [node name="ColliderBits" type="Node3D" parent="."]
 
 [node name="HingeJointLeft" type="HingeJoint3D" parent="ColliderBits"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.11778, 0.835562, -0.593462)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.143, 0.645, -1.155)
 node_a = NodePath("../..")
 node_b = NodePath("../OpenDoorLeft")
 angular_limit/enable = true
@@ -296,12 +297,12 @@ angular_limit/lower = -1.0472
 motor/target_velocity = -3.14159
 
 [node name="ShutDoorLeft" type="MeshInstance3D" parent="ColliderBits"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
-mesh = ExtResource("7_5d7qu")
+transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 0, -0.5, 0)
+mesh = ExtResource("7_t5urj")
 skeleton = NodePath("../..")
 
 [node name="LeftDoorBodyLatch" type="Area3D" parent="ColliderBits"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.061, 0.877, 1.304)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12655, 0.671052, 0.592543)
 collision_layer = 32
 collision_mask = 32
 
@@ -328,10 +329,12 @@ door_latch = NodePath("LeftDoorLatch")
 body_latch = NodePath("../LeftDoorBodyLatch")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/OpenDoorLeft"]
-mesh = ExtResource("7_5d7qu")
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+mesh = ExtResource("7_t5urj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/OpenDoorLeft"]
-shape = SubResource("ConvexPolygonShape3D_g0cid")
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_batkb")
 
 [node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="ColliderBits/OpenDoorLeft"]
 stream = ExtResource("10_vgexy")
@@ -342,7 +345,7 @@ stream = ExtResource("11_0cx5o")
 unit_size = 2.0
 
 [node name="LeftDoorLatch" type="Area3D" parent="ColliderBits/OpenDoorLeft"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.061, 1.377, -1.304)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12655, 1.17105, -0.592543)
 collision_layer = 32
 collision_mask = 32
 
@@ -350,7 +353,7 @@ collision_mask = 32
 shape = SubResource("SphereShape3D_jv0dm")
 
 [node name="HingeJointRight" type="HingeJoint3D" parent="ColliderBits"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.118, 0.836, -0.593)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.14268, 0.645169, -1.15496)
 node_a = NodePath("../..")
 node_b = NodePath("../OpenDoorRight")
 angular_limit/enable = true
@@ -359,12 +362,12 @@ angular_limit/lower = 0.0
 motor/target_velocity = 3.14159
 
 [node name="ShutDoorRight" type="MeshInstance3D" parent="ColliderBits"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
-mesh = ExtResource("12_mvqap")
+transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 0, -0.5, 0)
+mesh = ExtResource("12_1gu4b")
 skeleton = NodePath("../..")
 
 [node name="RightDoorBodyLatch" type="Area3D" parent="ColliderBits"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.061, 0.877, 1.304)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.127, 0.671, 0.593)
 collision_layer = 32
 collision_mask = 32
 
@@ -391,10 +394,12 @@ door_latch = NodePath("RightDoorLatch")
 body_latch = NodePath("../RightDoorBodyLatch")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/OpenDoorRight"]
-mesh = ExtResource("12_mvqap")
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+mesh = ExtResource("12_1gu4b")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/OpenDoorRight"]
-shape = SubResource("ConvexPolygonShape3D_gm704")
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_bbm10")
 
 [node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="ColliderBits/OpenDoorRight"]
 stream = ExtResource("10_vgexy")
@@ -405,7 +410,7 @@ stream = ExtResource("11_0cx5o")
 unit_size = 2.0
 
 [node name="RightDoorLatch" type="Area3D" parent="ColliderBits/OpenDoorRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06075, 1.37719, -1.30438)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.127, 1.171, -0.593)
 collision_layer = 32
 collision_mask = 32
 
@@ -429,7 +434,7 @@ shape = SubResource("ConcavePolygonShape3D_100sx")
 disabled = true
 
 [node name="WheelFrontLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.1, -1.77)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.823409, -0.1, -1.85387)
 script = ExtResource("14_e025k")
 wheel_node = NodePath("FrontLeftWheel")
 
@@ -458,7 +463,7 @@ pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.1, -1.77)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.823, -0.1, -1.85387)
 script = ExtResource("14_e025k")
 wheel_node = NodePath("FrontRightWheel")
 
@@ -487,7 +492,7 @@ pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.1, 1.837)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.823409, -0.1, 1.70898)
 script = ExtResource("14_e025k")
 wheel_node = NodePath("RearLeftWheel")
 
@@ -516,7 +521,7 @@ pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.1, 1.837)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.823, -0.1, 1.70898)
 script = ExtResource("14_e025k")
 wheel_node = NodePath("RearRightWheel")
 
@@ -600,88 +605,68 @@ text = "Test"
 font = SubResource("SystemFont_ylexk")
 font_size = 128
 
-[node name="HeadlightRight" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.77, 0.45, -2.75)
+[node name="HeadlightRight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="HeadlightRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.782408, 0.95, -2.908)
 light_color = Color(1, 1, 0.823529, 1)
 light_energy = 0.0
 shadow_enabled = true
 spot_range = 20.0
 spot_angle = 30.0
 
-[node name="HeadlightLeft" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.77, 0.45, -2.75)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HeadlightRight"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+mesh = ExtResource("18_26f06")
+
+[node name="HeadlightLeft" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="HeadlightLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.782, 0.95, -2.908)
 light_color = Color(1, 1, 0.823529, 1)
 light_energy = 0.0
 shadow_enabled = true
 spot_range = 20.0
 spot_angle = 30.0
 
-[node name="BrakeLightLeft" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.838408, 0.576664, 2.77796)
-light_color = Color(1, 0.215686, 0.215686, 1)
-light_energy = 0.0
-shadow_enabled = true
-distance_fade_enabled = true
-distance_fade_begin = 20.0
-distance_fade_shadow = 10.0
-distance_fade_length = 5.0
-omni_range = 2.0
-omni_shadow_mode = 0
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HeadlightLeft"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+mesh = ExtResource("19_j0ugs")
+
+[node name="BrakeLightLeft" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="BrakeLightLeft"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0316726, 0, -0.12777)
-mesh = SubResource("BoxMesh_6up4h")
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+mesh = ExtResource("20_e4a6x")
 surface_material_override/0 = SubResource("StandardMaterial3D_i127x")
 
-[node name="BrakeLightRight" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.838, 0.577, 2.77761)
-light_color = Color(1, 0.215686, 0.215686, 1)
-light_energy = 0.0
-shadow_enabled = true
-distance_fade_enabled = true
-distance_fade_begin = 20.0
-distance_fade_shadow = 10.0
-distance_fade_length = 5.0
-omni_range = 2.0
-omni_shadow_mode = 0
+[node name="BrakeLightRight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="BrakeLightRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.032, 0, -0.128)
-mesh = SubResource("BoxMesh_6up4h")
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+mesh = ExtResource("21_t8q6m")
 surface_material_override/0 = SubResource("StandardMaterial3D_i127x")
 
-[node name="ReverseLightLeft" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.675, 0.577, 2.77761)
-light_energy = 0.0
-shadow_enabled = true
-distance_fade_enabled = true
-distance_fade_begin = 20.0
-distance_fade_shadow = 10.0
-distance_fade_length = 5.0
-omni_range = 2.0
-omni_shadow_mode = 0
+[node name="ReverseLightLeft" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ReverseLightLeft"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0108556, 0, -0.12777)
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 gi_mode = 2
-mesh = SubResource("BoxMesh_6up4h")
+mesh = ExtResource("22_psb7o")
 surface_material_override/0 = SubResource("StandardMaterial3D_ltwxu")
 
-[node name="ReverseLightRight" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.67537, 0.577, 2.77761)
-light_energy = 0.0
-shadow_enabled = true
-distance_fade_enabled = true
-distance_fade_begin = 20.0
-distance_fade_shadow = 10.0
-distance_fade_length = 5.0
-omni_range = 2.0
-omni_shadow_mode = 0
+[node name="ReverseLightRight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ReverseLightRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.011, 0, -0.128)
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 gi_mode = 2
-mesh = SubResource("BoxMesh_6up4h")
+mesh = ExtResource("23_6oxxb")
 surface_material_override/0 = SubResource("StandardMaterial3D_ltwxu")
 
 [node name="AudioStreams" type="Node3D" parent="."]
