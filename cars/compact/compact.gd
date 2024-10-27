@@ -1,34 +1,40 @@
 extends DriveableVehicle
 
-var skins := [
+var paintjobs := [
+  {
+    "skin_name": "blue",
+    "material": preload("res://assets/materials/paint/blue.tres")
+  },
   {
     "skin_name": "green",
-    "material": preload("res://cars/compact/compact_green_material_3d.tres"),
-    "burnt_material": preload("res://cars/compact/compact_green_burnt_material_3d.tres")
+    "material": preload("res://assets/materials/paint/green.tres")
+  },
+  {
+    "skin_name": "purple",
+    "material": preload("res://assets/materials/paint/purple.tres")
   },
   {
     "skin_name": "red",
-    "material": preload("res://cars/compact/compact_red_material_3d.tres"),
-    "burnt_material": preload("res://cars/compact/compact_red_burnt_material_3d.tres")
+    "material": preload("res://assets/materials/paint/red.tres")
   },
   {
-    "skin_name": "grey",
-    "material": preload("res://cars/compact/compact_yellow_material_3d.tres"),
-    "burnt_material": preload("res://cars/compact/compact_yellow_burnt_material_3d.tres")
+    "skin_name": "yellow",
+    "material": preload("res://assets/materials/paint/yellow.tres")
   }
 ]
 
 var burnt_material: StandardMaterial3D
+@onready var _body_mesh_instance: MeshInstance3D = $body
 
 
 func _ready() -> void:
-  #var _skin : Dictionary = skins.pick_random()
+  var _paintjob: Dictionary = paintjobs.pick_random()
   #burnt_material = _skin.burnt_material
-  #$body.set_surface_override_material(0, _skin.material)
-  #$ColliderBits/ShutDoorLeft.set_surface_override_material(0, _skin.material)
-  #$ColliderBits/OpenDoorLeft/MeshInstance3D.set_surface_override_material(0, _skin.material)
-  #$ColliderBits/ShutDoorRight.set_surface_override_material(0, _skin.material)
-  #$ColliderBits/OpenDoorRight/MeshInstance3D.set_surface_override_material(0, _skin.material)
+  $body.set_surface_override_material(0, _paintjob.material)
+  $ColliderBits/ShutDoorLeft.set_surface_override_material(0, _paintjob.material)
+  $ColliderBits/OpenDoorLeft/MeshInstance3D.set_surface_override_material(0, _paintjob.material)
+  $ColliderBits/ShutDoorRight.set_surface_override_material(0, _paintjob.material)
+  $ColliderBits/OpenDoorRight/MeshInstance3D.set_surface_override_material(0, _paintjob.material)
   super()
 
 

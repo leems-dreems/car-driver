@@ -21,7 +21,6 @@ class_name Pedestrian extends RigidBody3D
 @export var min_ragdoll_time := 4.0
 
 @onready var _rotation_root: Node3D = $CharacterRotationRoot
-@onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
 @onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummyRigAnimated
 #@onready var ragdoll_skeleton: Skeleton3D = $DummyRigPhysical/Rig/Skeleton3D
 #@onready var _ragdoll_tracker_bone: PhysicalBone3D = $"DummyRigPhysical/Rig/Skeleton3D/Physical Bone spine"
@@ -33,7 +32,6 @@ class_name Pedestrian extends RigidBody3D
 
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
-var _ground_height: float = 0.0
 var _default_collision_layer := collision_layer
 var _is_on_floor_buffer := false
 
@@ -92,13 +90,6 @@ func _physics_process(delta: float) -> void:
   # Record current velocity, to refer to when processing collision signals
   _previous_velocity = Vector3(linear_velocity)
   # Calculate ground height for camera controller
-  if _ground_shapecast.get_collision_count() > 0:
-    for collision_result in _ground_shapecast.collision_result:
-      _ground_height = max(_ground_height, collision_result.point.y)
-  else:
-    _ground_height = global_position.y + _ground_shapecast.target_position.y
-  if global_position.y < _ground_height:
-    _ground_height = global_position.y
 
   if _is_on_ground:
     linear_damp = 5
@@ -137,9 +128,11 @@ func play_foot_step_sound() -> void:
   _step_sound.play()
 
 
-func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
+func _orient_character_to_direction(_direction: Vector3, delta: float) -> void:
   #var _target_basis := _rotation_root.global_transform.looking_at(_target_position, Vector3.UP, true).basis
   #_rotation_root.global_transform.basis = _rotation_root.global_transform.basis.slerp(_target_basis, delta * rotation_speed)
+  if linear_velocity == Vector3.ZERO:
+    return
   var _look_direction := linear_velocity.normalized()
   _look_direction.y = 0
   var left_axis := Vector3.UP.cross(_look_direction)

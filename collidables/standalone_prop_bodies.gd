@@ -10,7 +10,7 @@ var is_detached_from_parent := false
 
 
 func _ready() -> void:
-  var com_marker: Marker3D = $CenterOfMassMarker
+  var com_marker: Marker3D = find_child("CenterOfMassMarker")
   if com_marker:
     rigid_body.center_of_mass_mode = RigidBody3D.CENTER_OF_MASS_MODE_CUSTOM
     rigid_body.center_of_mass = com_marker.position

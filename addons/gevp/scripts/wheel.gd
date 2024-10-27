@@ -144,7 +144,7 @@ func process_torque(drive : float, drive_inertia : float, brake_torque : float, 
   else:
     return (spin - previous_spin) * (wheel_moment + drive_inertia) / (drive * delta)
 
-func process_forces(opposite_compression : float, braking : bool, delta : float):
+func process_forces(opposite_compression : float, braking : bool, delta : float) -> float:
   force_raycast_update()
   previous_velocity = local_velocity
   local_velocity = (global_position - previous_global_position) / delta * global_transform.basis
