@@ -1,8 +1,7 @@
 extends Skeleton3D
 
-@export var target_skeleton: Skeleton3D = null
 @export var target_dummy_rig: DummyCharacterSkin
-@export var player: Player
+@export var _character: RigidBody3D
 @export var linear_spring_stiffness: float = 2000.0
 @export var linear_spring_damping: float = 100.0
 @export var max_linear_force: float = 5000.0
@@ -10,6 +9,7 @@ extends Skeleton3D
 @export var angular_spring_damping: float = 80.0
 @export var max_angular_force: float = 1000.0
 
+var target_skeleton: Skeleton3D = null
 var physics_bones: Array[PhysicalBone3D]
 var current_delta := 0.0
 
@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_skeleton_updated() -> void:
-  if player.is_ragdolling or target_skeleton == null:
+  if _character.is_ragdolling or target_skeleton == null:
     return
   for b in physics_bones:
     var _target_bone_transform := target_skeleton.get_bone_global_pose(b.get_bone_id())

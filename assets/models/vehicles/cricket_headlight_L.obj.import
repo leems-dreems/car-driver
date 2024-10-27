@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b44aqsaqhcf0m"
+path="res://.godot/imported/cricket_headlight_L.obj-f034c59c89aa67bb6f9723bf47febecc.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cricket_headlight_L.obj-f034c59c89aa67bb6f9723bf47febecc.mesh"]
+
+source_file="res://assets/models/vehicles/cricket_headlight_L.obj"
+dest_files=["res://.godot/imported/cricket_headlight_L.obj-f034c59c89aa67bb6f9723bf47febecc.mesh", "res://.godot/imported/cricket_headlight_L.obj-f034c59c89aa67bb6f9723bf47febecc.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -22,13 +22,13 @@ var burnt_material: StandardMaterial3D
 
 
 func _ready() -> void:
-  var _skin : Dictionary = skins.pick_random()
-  burnt_material = _skin.burnt_material
-  $body.set_surface_override_material(0, _skin.material)
-  $ColliderBits/ShutDoorLeft.set_surface_override_material(0, _skin.material)
-  $ColliderBits/OpenDoorLeft/MeshInstance3D.set_surface_override_material(0, _skin.material)
-  $ColliderBits/ShutDoorRight.set_surface_override_material(0, _skin.material)
-  $ColliderBits/OpenDoorRight/MeshInstance3D.set_surface_override_material(0, _skin.material)
+  #var _skin : Dictionary = skins.pick_random()
+  #burnt_material = _skin.burnt_material
+  #$body.set_surface_override_material(0, _skin.material)
+  #$ColliderBits/ShutDoorLeft.set_surface_override_material(0, _skin.material)
+  #$ColliderBits/OpenDoorLeft/MeshInstance3D.set_surface_override_material(0, _skin.material)
+  #$ColliderBits/ShutDoorRight.set_surface_override_material(0, _skin.material)
+  #$ColliderBits/OpenDoorRight/MeshInstance3D.set_surface_override_material(0, _skin.material)
   super()
 
 

@@ -25,6 +25,7 @@ func _physics_process(_delta: float) -> void:
 ## Detaches this prop from its anchor
 func detach() -> void:
   is_detached = true
+  _bodies.is_detached_from_parent = true
   _bodies.rigid_body.gravity_scale = 1
   _bodies.rigid_body.axis_lock_angular_x = false
   _bodies.rigid_body.axis_lock_angular_y = false

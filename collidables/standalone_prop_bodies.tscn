@@ -45,6 +45,9 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("ConvexPolygonShape3D_gd1ja")
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="RigidBody3D"]
+radius = 1.0
+
 [node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="."]
 linear_limit_x/upper = 1.0
 linear_limit_x/lower = -1.0
@@ -76,3 +79,5 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("ConvexPolygonShape3D_gd1ja")
+
+[connection signal="body_entered" from="RigidBody3D" to="." method="on_body_entered"]

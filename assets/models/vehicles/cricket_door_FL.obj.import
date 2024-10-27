@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://xk5hk1bssrdt"
+path="res://.godot/imported/cricket_door_FL.obj-cf614dc444cda58561b9dfc7225f5999.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cricket_door_FL.obj-cf614dc444cda58561b9dfc7225f5999.mesh"]
+
+source_file="res://assets/models/vehicles/cricket_door_FL.obj"
+dest_files=["res://.godot/imported/cricket_door_FL.obj-cf614dc444cda58561b9dfc7225f5999.mesh", "res://.godot/imported/cricket_door_FL.obj-cf614dc444cda58561b9dfc7225f5999.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

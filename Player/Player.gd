@@ -1,5 +1,4 @@
-class_name Player
-extends RigidBody3D
+class_name Player extends RigidBody3D
 
 ## Character maximum run speed on the ground.
 @export var move_speed := 8.0
@@ -37,11 +36,11 @@ var useable_target : Node3D = null
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 @onready var ground_collider := $GroundCollider
+@onready var _nav_agent: NavigationAgent3D = $NavigationAgent3D
 
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
 var _ground_height: float = 0.0
-@onready var _start_position := global_transform.origin
 var _default_collision_layer := collision_layer
 var _is_on_floor_buffer := false
 
@@ -59,8 +58,10 @@ func _ready() -> void:
   start_ragdoll()
   PropRespawnManager.camera = camera_controller.camera
   TrafficManager.camera = camera_controller.camera
+  PedestrianManager.camera = camera_controller.camera
   TrafficManager.spawn_include_area = $CameraController/PlayerCamera/TrafficSpawnIncludeArea
   TrafficManager.spawn_exclude_area = $CameraController/PlayerCamera/TrafficSpawnExcludeArea
+  PedestrianManager.spawn_include_area = $CameraController/PlayerCamera/PedestrianSpawnIncludeArea
   camera_controller.top_level = true
   $CameraController/PlayerCamera.top_level = true
 
@@ -72,6 +73,8 @@ func _on_body_entered(_body: Node) -> void:
       go_limp()
       if _body is DriveableVehicle:
         _body.request_stop()
+      elif _body.get_parent() is SpinningWhacker:
+        _body.get_parent().request_stop()
   return
 
 
@@ -92,6 +95,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 
 func _physics_process(delta: float) -> void:
+  _nav_agent.get_next_path_position()
   var _is_on_ground := is_on_ground()
   # Record current velocity, to refer to when processing collision signals
   _previous_velocity = Vector3(linear_velocity)
@@ -193,10 +197,6 @@ func _physics_process(delta: float) -> void:
 
     if is_just_on_floor:
       _landing_sound.play()
-
-
-func reset_position() -> void:
-  transform.origin = _start_position
 
 
 func _get_camera_oriented_input() -> Vector3:

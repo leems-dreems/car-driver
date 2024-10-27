@@ -59,7 +59,7 @@ collision_mask = 83
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-mass = 400.0
+mass = 200.0
 physics_material_override = SubResource("PhysicsMaterial_j5txw")
 gravity_scale = 0.0
 contact_monitor = true
@@ -72,6 +72,14 @@ skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 shape = SubResource("ConvexPolygonShape3D_edtus")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3, 0)
+radius = 1.2
+
+[node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+radius = 1.5
 
 [node name="Emitters" type="Node3D" parent="RigidBody3D"]
 

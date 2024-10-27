@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpi5uftpx8itj"]
+
+[ext_resource type="Script" path="res://npcs/pedestrian_agent.gd" id="1_qbcba"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_55gh1"]
+size = Vector3(1.5, 2, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lfioe"]
+transparency = 1
+albedo_color = Color(0, 0, 1, 0.235294)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_x8tsn"]
+points = PackedVector3Array(-0.75, -1, -0.75, -0.75, -1, 0.75, -0.75, 1, -0.75, 0.75, -1, -0.75, 0.75, -1, 0.75, -0.75, 1, 0.75, 0.75, 1, -0.75, 0.75, 1, 0.75)
+
+[node name="PedestrianAgent" type="PathFollow3D"]
+script = ExtResource("1_qbcba")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 67108864
+collision_mask = 268437466
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+visible = false
+transparency = 0.5
+mesh = SubResource("BoxMesh_55gh1")
+surface_material_override/0 = SubResource("StandardMaterial3D_lfioe")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("ConvexPolygonShape3D_x8tsn")

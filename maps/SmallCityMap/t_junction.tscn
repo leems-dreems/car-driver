@@ -130,37 +130,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="TP_t_junction_1-2" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_8xu7g")
 script = ExtResource("5_rxlun")
-number_of_vehicles = 0
 path_max_speed = 10.0
 
 [node name="TP_t_junction_2-1" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_lsg5h")
 script = ExtResource("5_rxlun")
-number_of_vehicles = 0
 path_max_speed = 10.0
 
 [node name="TP_t_junction_1-3" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_tm2eu")
 script = ExtResource("5_rxlun")
-number_of_vehicles = 0
 path_max_speed = 10.0
 
 [node name="TP_t_junction_2-3" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_6gayf")
 script = ExtResource("5_rxlun")
-number_of_vehicles = 0
 path_max_speed = 10.0
 
 [node name="TP_t_junction_3-1" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_u44kg")
 script = ExtResource("5_rxlun")
-number_of_vehicles = 0
 path_max_speed = 10.0
 
 [node name="TP_t_junction_3-2" type="Path3D" parent="TrafficPaths"]
 curve = SubResource("Curve3D_u8hed")
 script = ExtResource("5_rxlun")
-number_of_vehicles = 0
 path_max_speed = 10.0
 
 [node name="Label3D" type="Label3D" parent="."]

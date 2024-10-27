@@ -268,6 +268,21 @@ surface_material_override/0 = ExtResource("7_s2r1k")
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.5, 0)
 shape = SubResource("ConvexPolygonShape3D_nkjoq")
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -2.4)
+radius = 1.8
+affect_navigation_mesh = true
+
+[node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -8.9407e-08)
+radius = 1.8
+affect_navigation_mesh = true
+
+[node name="NavigationObstacle3D3" type="NavigationObstacle3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 2.4)
+radius = 1.8
+affect_navigation_mesh = true
+
 [node name="ColliderBits" type="Node3D" parent="."]
 
 [node name="HingeJointLeft" type="HingeJoint3D" parent="ColliderBits"]
@@ -588,7 +603,9 @@ text = "Test"
 font = SubResource("SystemFont_ylexk")
 font_size = 72
 
-[node name="HeadlightRight" type="SpotLight3D" parent="."]
+[node name="HeadlightRight" type="Node3D" parent="."]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="HeadlightRight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.77, 0.45, -3.65404)
 light_color = Color(1, 1, 0.823529, 1)
 light_energy = 0.0
@@ -596,7 +613,9 @@ shadow_enabled = true
 spot_range = 20.0
 spot_angle = 30.0
 
-[node name="HeadlightLeft" type="SpotLight3D" parent="."]
+[node name="HeadlightLeft" type="Node3D" parent="."]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="HeadlightLeft"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.77, 0.45, -3.65404)
 light_color = Color(1, 1, 0.823529, 1)
 light_energy = 0.0
