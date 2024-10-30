@@ -1,84 +1,155 @@
-extends RigidBody3D
+class_name CarDoor extends RigidBody3D
 
-@export var parent_car : DriveableVehicle
-@export var shutDoorMesh : MeshInstance3D
-@export var hingeJoint : HingeJoint3D
-@export var doorOpenSFX : AudioStreamPlayer3D
-@export var doorShutSFX : AudioStreamPlayer3D
-@export var enter_car_collision_shape : CollisionShape3D
-@export var door_latch : Area3D
-@export var body_latch : Area3D
-var shutBasis : Basis
-var hinge_limit_upper : float
-var hinge_limit_lower : float
-var motor_target_velocity : float
-var is_shut : bool
-var open_timer : SceneTreeTimer
-var shut_timer : SceneTreeTimer
+@export var parent_car: DriveableVehicle
+@export var shut_door_mesh: MeshInstance3D
+@export var hinge_joint: JoltHingeJoint3D
+@export var door_open_SFX: AudioStreamPlayer3D
+@export var door_shut_SFX: AudioStreamPlayer3D
+@export var enter_car_collision_shape: CollisionShape3D
+## If the "latch" areas overlap, the door will shut (if moving fast enough)
+@export var door_latch: Area3D
+@export var body_latch: Area3D
+## Door will only shut if the `length_squared()` of the velocity difference between car and door is above this
+@export var latch_velocity_threshold: float = 1.5
+@export var is_openable: bool = true
+@export var hide_rigidbody_when_shut: bool = true
+## If the hinge separation colliders move apart, the door will detach
+@export var hinge_separation_collider_A: Area3D
+@export var hinge_separation_collider_B: Area3D
+var shut_basis: Basis
+var hinge_limit_upper: float
+var hinge_limit_lower: float
+var motor_target_velocity: float
+var is_shut: bool
+var open_timer: SceneTreeTimer
+var shut_timer: SceneTreeTimer
 
-func _ready ():
-  shutBasis = Basis(transform.basis)
-  hinge_limit_upper = hingeJoint.get_param(HingeJoint3D.PARAM_LIMIT_UPPER)
-  hinge_limit_lower = hingeJoint.get_param(HingeJoint3D.PARAM_LIMIT_LOWER)
-  motor_target_velocity = hingeJoint.get_param(HingeJoint3D.PARAM_MOTOR_TARGET_VELOCITY)
-  hingeJoint.set_param(HingeJoint3D.PARAM_LIMIT_UPPER, 0)
-  hingeJoint.set_param(HingeJoint3D.PARAM_LIMIT_LOWER, 0)
+
+func _ready():
+  if not is_openable:
+    set_collision_layer_value(4, false)
+  shut_basis = Basis(transform.basis)
+  hinge_limit_upper = hinge_joint.limit_upper
+  hinge_limit_lower = hinge_joint.limit_lower
+  motor_target_velocity = hinge_joint.motor_target_velocity
+  hinge_joint.limit_upper = 0
+  hinge_joint.limit_lower = 0
   is_shut = true
-  visible = false
-  shutDoorMesh.visible = true
+  visible = !hide_rigidbody_when_shut
+  shut_door_mesh.visible = hide_rigidbody_when_shut
   set_collision_layer_value(19, false)
+  set_latches_active(false)
+  if hinge_separation_collider_A:
+    hinge_separation_collider_A.area_exited.connect(func(_area: Area3D):
+      if not is_shut and _area == hinge_separation_collider_B:
+        detach()
+    )
+  if door_latch:
+    door_latch.area_entered.connect(func(_area: Area3D):
+      if is_shut or open_timer != null or _area != body_latch:
+        return
+      prints((linear_velocity - parent_car.linear_velocity).length_squared())
+      if (linear_velocity - parent_car.linear_velocity).length_squared() > latch_velocity_threshold:
+        shut()
+    )
+  return
 
 
 func _physics_process (_delta: float) -> void:
-  if is_shut or open_timer != null: return
-  if door_latch.overlaps_area(body_latch): shut()
+  #if is_shut or open_timer != null:
+    #return
+  #if door_latch.overlaps_area(body_latch):
+    #shut()
+  return
   
 
-func open () -> void:
-  hingeJoint.set_param(HingeJoint3D.PARAM_LIMIT_UPPER, hinge_limit_upper)
-  hingeJoint.set_param(HingeJoint3D.PARAM_LIMIT_LOWER, hinge_limit_lower)
+func pull_open() -> void:
+  hinge_joint.limit_upper = hinge_limit_upper
+  hinge_joint.limit_lower = hinge_limit_lower
   is_shut = false
   visible = true
-  hingeJoint.set_param(HingeJoint3D.PARAM_MOTOR_TARGET_VELOCITY, motor_target_velocity)
-  hingeJoint.set_flag(HingeJoint3D.FLAG_ENABLE_MOTOR, true)
-  shutDoorMesh.visible = false
-  doorOpenSFX.play()
+  hinge_joint.motor_target_velocity = motor_target_velocity
+  hinge_joint.motor_enabled = true
+  shut_door_mesh.visible = false
+  door_open_SFX.play()
   enter_car_collision_shape.disabled = false
   set_collision_layer_value(19, true)
-
-  open_timer = get_tree().create_timer(0.5)
-  open_timer.timeout.connect(func ():
-    hingeJoint.set_flag(HingeJoint3D.FLAG_ENABLE_MOTOR, false)
+  set_latches_active(true)
+  open_timer = get_tree().create_timer(0.05)
+  open_timer.timeout.connect(func():
+    hinge_joint.motor_enabled = false
     open_timer = null
   )
 
 
-func shut () -> void:
-  hingeJoint.set_param(HingeJoint3D.PARAM_LIMIT_UPPER, 0)
-  hingeJoint.set_param(HingeJoint3D.PARAM_LIMIT_LOWER, 0)
-  hingeJoint.set_flag(HingeJoint3D.FLAG_ENABLE_MOTOR, false)
+func fall_open() -> void:
+  hinge_joint.limit_upper = hinge_limit_upper
+  hinge_joint.limit_lower = hinge_limit_lower
+  is_shut = false
+  visible = true
+  hinge_joint.motor_target_velocity = motor_target_velocity
+  hinge_joint.motor_enabled = true
+  shut_door_mesh.visible = false
+  door_open_SFX.play()
+  enter_car_collision_shape.disabled = false
+  set_collision_layer_value(19, true)
+  set_latches_active(true)
+  open_timer = get_tree().create_timer(0.05)
+  open_timer.timeout.connect(func():
+    hinge_joint.motor_enabled = false
+    open_timer = null
+  )
+
+
+func shut() -> void:
+  hinge_joint.limit_upper = 0
+  hinge_joint.limit_lower = 0
+  hinge_joint.motor_enabled = false
   is_shut = true
-  visible = false
-  shutDoorMesh.visible = true
-  doorShutSFX.play()
+  visible = !hide_rigidbody_when_shut
+  shut_door_mesh.visible = hide_rigidbody_when_shut
+  door_shut_SFX.play()
   enter_car_collision_shape.disabled = true
   set_collision_layer_value(19, false)
+  set_latches_active(false)
 
 
-func open_or_shut () -> void:
+func open_or_shut() -> void:
   if open_timer != null: return
   if is_shut:
-    open()
+    pull_open()
   else:
-    hingeJoint.set_param(HingeJoint3D.PARAM_MOTOR_TARGET_VELOCITY, -motor_target_velocity)
-    hingeJoint.set_flag(HingeJoint3D.FLAG_ENABLE_MOTOR, true)
+    hinge_joint.motor_target_velocity = -motor_target_velocity
+    hinge_joint.motor_enabled = true
     shut_timer = get_tree().create_timer(0.2)
-    shut_timer.timeout.connect(func ():
-      hingeJoint.set_flag(HingeJoint3D.FLAG_ENABLE_MOTOR, false)
+    shut_timer.timeout.connect(func():
+      hinge_joint.motor_enabled = false
       shut_timer = null
     )
 
-func get_use_label () -> String:
+
+func set_latches_active(_active: bool) -> void:
+  body_latch.set_deferred("monitoring", _active)
+  body_latch.set_deferred("monitorable", _active)
+  door_latch.set_deferred("monitoring", _active)
+  door_latch.set_deferred("monitorable", _active)
+  if hinge_separation_collider_A:
+    hinge_separation_collider_A.set_deferred("monitoring", _active)
+    hinge_separation_collider_A.set_deferred("monitorable", _active)
+    hinge_separation_collider_B.set_deferred("monitoring", _active)
+    hinge_separation_collider_B.set_deferred("monitorable", _active)
+  return
+
+
+func detach() -> void:
+  print("door detaching")
+  hinge_joint.motor_enabled = false
+  hinge_joint.limit_enabled = false
+  hinge_joint.enabled = false
+  return
+
+
+func get_use_label() -> String:
   if is_shut:
     return 'Open Door'
   else:

@@ -2,8 +2,8 @@ extends Node3D
 ## TrafficManager is a singleton that spawns and control AI traffic vehicles
 
 const vehicle_scenes: Array[PackedScene] = [
-  preload("res://cars/compact/compact.tscn"),
-  preload("res://cars/sedan/sedan.tscn")
+  preload("res://cars/compact/compact.tscn")
+  #preload("res://cars/sedan/sedan.tscn")
 ]
 const traffic_spawn_point_scene := preload("res://traffic/traffic_spawn_point.tscn")
 const traffic_agent_scene := preload("res://traffic/traffic_agent.tscn")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=59 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
@@ -13,6 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://d02vhghagqdjw" path="res://assets/sfx/car-door-shut.wav" id="11_0cx5o"]
 [ext_resource type="ArrayMesh" uid="uid://b6mrcbowsnkuh" path="res://assets/models/vehicles/cricket_door_FR.obj" id="12_1gu4b"]
 [ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="13_3hex1"]
+[ext_resource type="ArrayMesh" uid="uid://hpnx78hn5py4" path="res://assets/models/vehicles/cricket_bonnet.obj" id="13_75fjj"]
+[ext_resource type="ArrayMesh" uid="uid://5nji2th5co5l" path="res://assets/models/vehicles/cricket_boot.obj" id="14_4t365"]
 [ext_resource type="Script" path="res://addons/gevp/scripts/wheel.gd" id="14_e025k"]
 [ext_resource type="AudioStream" uid="uid://d2gr5emhyehgo" path="res://assets/sfx/tires_squal_loop.wav" id="15_68n7x"]
 [ext_resource type="AudioStream" uid="uid://x2riq63vqy7j" path="res://assets/sfx/skid-loop.wav" id="16_wwqhn"]
@@ -38,6 +40,9 @@ rough = true
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7junj"]
 points = PackedVector3Array(0.778918, 0.565745, 0.985076, 0.761229, 0.766594, 0.772034, 0.771598, 0.636212, 1.10454, 0.766719, 0.662425, 1.23463, 0.773581, 0.263562, 0.874479, 0.767939, 0.495958, -0.387469, 0.761382, 0.767729, -0.385342, 0.703741, 0.937373, 0.750411, 0.708163, 0.9376, -0.362301, 0.684069, 0.775218, 1.87978, 0.698861, 0.727899, 1.87695, 0.734086, 0.554057, 1.4856, 0.709078, 0.271846, 1.56323, 0.51938, 0.267421, 1.46859, 0.542101, 0.263222, 1.01343, 0.734543, 0.262201, 0.758209, 0.734543, 0.262201, 0.406211, 0.747658, 0.274796, -0.76889, 0.734239, 0.626567, -1.00533, 0.726462, 0.655276, -1.11982, 0.758942, 0.767729, -0.427526, 0.665618, 0.925345, -1.26162, 0.664246, 0.934082, -1.23964, 0.669735, 0.935558, -1.12514, 0.703436, 0.945316, -0.4176, 0.532799, 1.33306, -0.410156, 0.520448, 1.36086, -0.413346, 0.520448, 1.35916, -0.370454, 0.665313, 1.01976, 0.663563, 0.671565, 0.815502, 1.80853, 0.677207, 0.836721, 1.62385, 0.520448, 1.35791, -0.903946, 0.520448, 1.35893, -0.743013, 0.67187, 0.813913, 1.81314, 0.564975, 0.814027, 1.8259, 0.575039, 0.775105, 1.8929, 0.552471, 0.479731, 1.88014, 0.657079, 0.478937, 1.86738, 0.609959, 0.330058, 1.77167, 0.592118, 0.273889, 1.73551, 0.498337, 0.273094, 1.74827, 0.218365, 0.270711, 1.76422, -0.000152469, 0.268896, 1.77131, -0.000152469, 0.262541, 0.956363, -0.000152469, 0.261066, 0.758209, 0.613009, 0.261974, 0.758209, -0.000152469, 0.266059, 1.41471, 0.613009, 0.261974, 0.406211, 0.527615, 0.27525, -0.979805, 0.735611, 0.269804, -0.337133, 0.679495, 0.281945, -1.47962, 0.693066, 0.416412, -1.46438, 0.707095, 0.579135, -1.35484, 0.684984, 0.767729, -1.67352, 0.709078, 0.767729, -1.2758, 0.646099, 0.891643, -1.65261, 0.534629, 1.28086, -1.22971, 0.520448, 1.32999, -1.17619, 0.520448, 1.33987, -1.08048, 0.520448, 1.36063, -0.455175, 0.439933, 1.37765, -0.413701, 0.442678, 1.34702, 0.360483, 0.519533, 1.33192, 0.33496, 0.439933, 1.37153, -0.904301, 0.439933, 1.37232, -0.841558, 0.192747, 1.37391, 0.407274, -0.000152469, 1.38412, 0.404438, 0.247491, 0.814594, 1.84185, 0.251913, 0.774764, 1.90885, 0.242001, 0.482114, 1.89609, 0.224923, 0.328583, 1.80038, 0.513128, 0.329718, 1.78443, -0.000152469, 0.327789, 1.80747, -0.242306, 0.482114, 1.89609, -0.225075, 0.328583, 1.80038, -0.218518, 0.270711, 1.76422, -0.519533, 0.267421, 1.46859, -0.542254, 0.263222, 1.01343, -0.613162, 0.261974, 0.758209, -0.000152469, 0.261066, 0.406211, -0.527767, 0.27525, -0.979805, 0.511451, 0.279903, -1.41971, 0.517855, 0.281718, -1.49451, -0.000152469, 0.490398, -1.66395, 0.237884, 0.489944, -1.64091, 0.543016, 0.489376, -1.61113, 0.650674, 0.489263, -1.6005, 0.571532, 0.767502, -1.67884, -0.000152469, 0.896409, -1.68487, 0.192747, 1.35802, -1.17619, 0.439933, 1.34214, -1.17619, 0.192747, 1.40648, -0.414764, 0.192747, 1.40466, -0.367264, 0.192747, 1.3915, -0.904301, 0.192747, 1.40523, -0.456238, -0.000152469, 1.42032, -0.415473, -0.1929, 1.37391, 0.407274, -0.672175, 0.813913, 1.81314, -0.565127, 0.814027, 1.8259, -0.247643, 0.814594, 1.84185, -0.000152469, 0.816636, 1.84469, -0.000152469, 0.814934, 1.84894, -0.000152469, 0.774424, 1.91594, -0.000152469, 0.48393, 1.90318, -0.252066, 0.774764, 1.90885, -0.575192, 0.775105, 1.8929, -0.552623, 0.479731, 1.88014, -0.513281, 0.329718, 1.78443, -0.498489, 0.273094, 1.74827, -0.59227, 0.273889, 1.73551, -0.70923, 0.271846, 1.56323, -0.773733, 0.263562, 0.874479, -0.734696, 0.262201, 0.758209, -0.613162, 0.261974, 0.406211, -0.735763, 0.269804, -0.337133, -0.511603, 0.279903, -1.41971, -0.734696, 0.262201, 0.406211, -0.000152469, 0.280924, -1.50904, 0.228277, 0.281264, -1.50337, -0.238037, 0.489944, -1.64091, -0.685137, 0.767729, -1.67352, -0.571684, 0.767502, -1.67884, -0.000152469, 0.766594, -1.70543, -0.000152469, 0.338342, -1.55158, -0.22843, 0.281264, -1.50337, -0.518008, 0.281718, -1.49451, -0.679647, 0.281945, -1.47962, -0.646252, 0.891643, -1.65261, -0.1929, 1.35802, -1.17619, -0.000152469, 1.30957, -1.23326, 0.192747, 1.36982, -1.08048, -0.000152469, 1.36177, -1.17619, -0.000152469, 1.39831, -0.904655, -0.000152469, 1.40114, -0.842267, -0.000152469, 1.40557, -0.744076, -0.1929, 1.3915, -0.904301, -0.1929, 1.40523, -0.456238, -0.1929, 1.40648, -0.414764, -0.1929, 1.40466, -0.367264, -0.44283, 1.34702, 0.360483, -0.671718, 0.815502, 1.80853, -0.703893, 0.937373, 0.750411, -0.684222, 0.775218, 1.87978, -0.519685, 1.33192, 0.33496, -0.699013, 0.727899, 1.87695, -0.657231, 0.478937, 1.86738, -0.610112, 0.330058, 1.77167, -0.734239, 0.554057, 1.4856, -0.766871, 0.662425, 1.23463, -0.778918, 0.565745, 0.985076, -0.768091, 0.495958, -0.387469, -0.74781, 0.274796, -0.76889, -0.735153, 0.264697, 0.162329, -0.543169, 0.489376, -1.61113, -0.650827, 0.489263, -1.6005, -0.693219, 0.416412, -1.46438, -0.707248, 0.579135, -1.35484, -0.726767, 0.655276, -1.11982, -0.70923, 0.767729, -1.2758, -0.665771, 0.925345, -1.26162, -0.664398, 0.934082, -1.23964, -0.520753, 1.32999, -1.17619, -0.534782, 1.28086, -1.22971, -0.440086, 1.34214, -1.17619, -0.1929, 1.36982, -1.08048, -0.440086, 1.37153, -0.904301, -0.440086, 1.37765, -0.413701, -0.440086, 1.37232, -0.841558, -0.520753, 1.36086, -0.413346, -0.665466, 1.01976, 0.663563, -0.708315, 0.9376, -0.362301, -0.761382, 0.766594, 0.772034, -0.771751, 0.636212, 1.10454, -0.761534, 0.767729, -0.385342, -0.734391, 0.626567, -1.00533, -0.716245, 0.767729, -1.15775, -0.759094, 0.767729, -0.427526, -0.67858, 0.938054, -0.944712, -0.703588, 0.945316, -0.4176, -0.520753, 1.33987, -1.08048, -0.520753, 1.35791, -0.903946, -0.520753, 1.35893, -0.743013, -0.520753, 1.36063, -0.455175)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_ue786"]
+radius = 0.05
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_jv0dm"]
 radius = 0.1
 
@@ -46,6 +51,23 @@ points = PackedVector3Array(0.743183, 0.324082, 0.675825, 0.743062, 0.324082, 0.
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bbm10"]
 points = PackedVector3Array(-0.743208, 0.324082, 0.675825, -0.74311, 0.324082, 0.763252, -0.743524, 0.324183, 0.406443, -0.519626, 1.33192, 0.334965, -0.665332, 1.01972, 0.663718, -0.703784, 0.937411, 0.750447, -0.716649, 0.896915, 0.757315, -0.765486, 0.487894, 0.776058, -0.765875, 0.487995, 0.685488, -0.767018, 0.488401, 0.406443, -0.743889, 0.326721, 0.158016, -0.744618, 0.331796, -0.350714, -0.744545, 0.33139, -0.307175, -0.519942, 1.34136, 0.0894479, -0.520599, 1.36095, -0.413228, -0.761351, 0.766596, 0.771984, -0.70911, 0.937919, 0.416921, -0.767383, 0.490938, 0.146025, -0.768039, 0.495607, -0.341517, -0.768088, 0.496013, -0.387151, -0.52055, 1.35922, -0.370155, -0.761521, 0.767713, -0.385289, -0.53293, 1.33304, -0.409968, -0.708283, 0.937513, -0.362239, -0.7614, 0.766901, 0.682461, -0.761521, 0.767713, 0.406443)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1d1u8"]
+points = PackedVector3Array(-0.700186, 0.934376, 0.742142, -0.668084, 0.812137, 1.80179, -0.700048, 0.92289, 0.876528, -0.703768, 0.937432, 0.750453, 0.700048, 0.934376, 0.742142, -0.564613, 0.81179, 1.81302, -0.56475, 0.815721, 1.82176, -0.671804, 0.815498, 1.8087, -0.690404, 0.886167, 1.19538, 0.667946, 0.812137, 1.80179, -0.587346, 0.952224, 0.796544, -0.586381, 0.948904, 0.785858, 0.703768, 0.937432, 0.750453, -0.247449, 0.812373, 1.82878, -0.247586, 0.816235, 1.83774, 0.564475, 0.81179, 1.81302, 0, 0.953682, 0.926936, -0.257506, 0.953043, 0.869835, 0.671666, 0.815498, 1.8087, 0.564613, 0.815721, 1.82176, 0.587208, 0.952224, 0.796544, 0.586244, 0.948904, 0.785858, 0.247311, 0.812373, 1.82878, 0, 0.812804, 1.83569, 0, 0.816651, 1.84486, 0, 0.937348, 1.03639, 0.247449, 0.816235, 1.83774, 0.257369, 0.953043, 0.869835)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mj4f1"]
+points = PackedVector3Array(0, 1.36178, -1.17595, 0, 1.35845, -1.165, 0.192709, 1.3581, -1.17595, 0, 0.908637, -1.67125, -0.00013411, 0.908637, -1.67125, -0.192843, 1.3581, -1.17595, 0.439194, 1.3388, -1.16542, 0.192441, 1.35477, -1.16515, -0.192575, 1.35477, -1.16515, -0.439328, 1.3388, -1.16542, 0.439865, 1.34222, -1.17595, 0.646119, 0.891642, -1.65237, 0.539237, 0.892496, -1.65771, 0, 0.896425, -1.68453, -0.539371, 0.892496, -1.65771, -0.646253, 0.891642, -1.65237, -0.439999, 1.34222, -1.17595, 0.516707, 1.32719, -1.16748, 0.520462, 1.33001, -1.17595, -0.520596, 1.33001, -1.17595, -0.516841, 1.32719, -1.16748, 0.534543, 1.2809, -1.22938, 0.685009, 0.767725, -1.67331, 0, 0.766615, -1.70543, -0.250643, 0.767042, -1.69368, -0.685009, 0.767725, -1.67331, 0.250508, 0.767042, -1.69368, -0.534677, 1.2809, -1.22938, 0.64746, 0.489829, -1.5873, -0.647594, 0.489829, -1.5873, 0.650678, 0.489317, -1.60042, 0.237902, 0.49, -1.64068, 0, 0.490427, -1.66385, -0.650812, 0.489317, -1.60042, -0.238037, 0.49, -1.64068, 0.542992, 0.489488, -1.61089, -0.543126, 0.489488, -1.61089)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i127x"]
+albedo_color = Color(1, 0.196078, 0.196078, 1)
+emission_enabled = true
+emission = Color(1, 0.215686, 0.215686, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ltwxu"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 3.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_uu7oe"]
 
@@ -149,17 +171,6 @@ radius = 0.25
 font_names = PackedStringArray("Courier New")
 subpixel_positioning = 0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i127x"]
-albedo_color = Color(1, 0.196078, 0.196078, 1)
-emission_enabled = true
-emission = Color(1, 0.215686, 0.215686, 1)
-emission_energy_multiplier = 2.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ltwxu"]
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 3.0
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc8nd"]
 vertex_color_use_as_albedo = true
 
@@ -190,7 +201,7 @@ emission_curve = SubResource("CurveTexture_ygr6i")
 [sub_resource type="BoxMesh" id="BoxMesh_gtwax"]
 size = Vector3(0.1, 0.1, 0.1)
 
-[node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
+[node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("brake_light_left_mesh", "brake_light_right_mesh", "reverse_light_left_mesh", "reverse_light_right_mesh", "front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
 collision_mask = 83
 mass = 1500.0
@@ -203,6 +214,11 @@ continuous_cd = true
 contact_monitor = true
 max_contacts_reported = 24
 script = ExtResource("1_vk21t")
+max_hit_points = 50.0
+brake_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightLeft/MeshInstance3D")
+brake_light_right_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightRight/MeshInstance3D")
+reverse_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/ReverseLightLeft/MeshInstance3D")
+reverse_light_right_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/ReverseLightRight/MeshInstance3D")
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
 rear_left_wheel = NodePath("WheelRearLeft")
@@ -287,29 +303,37 @@ affect_navigation_mesh = true
 
 [node name="ColliderBits" type="Node3D" parent="."]
 
-[node name="HingeJointLeft" type="HingeJoint3D" parent="ColliderBits"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.143, 0.645, -1.155)
-node_a = NodePath("../..")
-node_b = NodePath("../OpenDoorLeft")
-angular_limit/enable = true
-angular_limit/upper = 0.0
-angular_limit/lower = -1.0472
-motor/target_velocity = -3.14159
+[node name="DoorLeft" type="Node3D" parent="ColliderBits"]
 
-[node name="ShutDoorLeft" type="MeshInstance3D" parent="ColliderBits"]
+[node name="HingeJointLeft" type="JoltHingeJoint3D" parent="ColliderBits/DoorLeft"]
+limit_enabled = true
+limit_lower = -1.0472
+motor_target_velocity = -2.0944
+node_a = NodePath("../../..")
+node_b = NodePath("../OpenDoorLeft")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.143, 0.645, -1.155)
+
+[node name="LeftBodyHingeSeparationCollider" type="Area3D" parent="ColliderBits/DoorLeft/HingeJointLeft"]
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorLeft/HingeJointLeft/LeftBodyHingeSeparationCollider"]
+shape = SubResource("SphereShape3D_ue786")
+
+[node name="ShutDoorLeft" type="MeshInstance3D" parent="ColliderBits/DoorLeft"]
 transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 0, -0.5, 0)
 mesh = ExtResource("7_t5urj")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="LeftDoorBodyLatch" type="Area3D" parent="ColliderBits"]
+[node name="LeftDoorBodyLatch" type="Area3D" parent="ColliderBits/DoorLeft"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12655, 0.671052, 0.592543)
 collision_layer = 32
 collision_mask = 32
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/LeftDoorBodyLatch"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorLeft/LeftDoorBodyLatch"]
 shape = SubResource("SphereShape3D_jv0dm")
 
-[node name="OpenDoorLeft" type="RigidBody3D" parent="ColliderBits" node_paths=PackedStringArray("parent_car", "shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape", "door_latch", "body_latch") groups=["vehicle_door"]]
+[node name="OpenDoorLeft" type="RigidBody3D" parent="ColliderBits/DoorLeft" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "hinge_joint", "door_open_SFX", "door_shut_SFX", "enter_car_collision_shape", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
 visible = false
 collision_layer = 262152
@@ -319,62 +343,80 @@ physics_material_override = ExtResource("8_rpaed")
 freeze = true
 freeze_mode = 1
 script = ExtResource("9_653cp")
-parent_car = NodePath("../..")
-shutDoorMesh = NodePath("../ShutDoorLeft")
-hingeJoint = NodePath("../HingeJointLeft")
-doorOpenSFX = NodePath("DoorOpenSFX")
-doorShutSFX = NodePath("DoorShutSFX")
-enter_car_collision_shape = NodePath("../EnterCarCollider/CollisionShape3D")
+parent_car = NodePath("../../..")
+shut_door_mesh = NodePath("../ShutDoorLeft")
+hinge_joint = NodePath("../HingeJointLeft")
+door_open_SFX = NodePath("DoorOpenSFX")
+door_shut_SFX = NodePath("DoorShutSFX")
+enter_car_collision_shape = NodePath("../../EnterCarCollider/CollisionShape3D")
 door_latch = NodePath("LeftDoorLatch")
 body_latch = NodePath("../LeftDoorBodyLatch")
+hinge_separation_collider_A = NodePath("../HingeJointLeft/LeftBodyHingeSeparationCollider")
+hinge_separation_collider_B = NodePath("LeftDoorHingeSeparationCollider")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/OpenDoorLeft"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/DoorLeft/OpenDoorLeft"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 mesh = ExtResource("7_t5urj")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/OpenDoorLeft"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorLeft/OpenDoorLeft"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_batkb")
 
-[node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="ColliderBits/OpenDoorLeft"]
+[node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="ColliderBits/DoorLeft/OpenDoorLeft"]
 stream = ExtResource("10_vgexy")
 unit_size = 2.0
 
-[node name="DoorShutSFX" type="AudioStreamPlayer3D" parent="ColliderBits/OpenDoorLeft"]
+[node name="DoorShutSFX" type="AudioStreamPlayer3D" parent="ColliderBits/DoorLeft/OpenDoorLeft"]
 stream = ExtResource("11_0cx5o")
 unit_size = 2.0
 
-[node name="LeftDoorLatch" type="Area3D" parent="ColliderBits/OpenDoorLeft"]
+[node name="LeftDoorHingeSeparationCollider" type="Area3D" parent="ColliderBits/DoorLeft/OpenDoorLeft"]
+transform = Transform3D(-1, 8.74228e-08, -3.82137e-15, 0, -4.37114e-08, -1, -8.74228e-08, -1, 4.37114e-08, 1.143, 1.145, 1.155)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorLeft/OpenDoorLeft/LeftDoorHingeSeparationCollider"]
+shape = SubResource("SphereShape3D_ue786")
+
+[node name="LeftDoorLatch" type="Area3D" parent="ColliderBits/DoorLeft/OpenDoorLeft"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12655, 1.17105, -0.592543)
 collision_layer = 32
 collision_mask = 32
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/OpenDoorLeft/LeftDoorLatch"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorLeft/OpenDoorLeft/LeftDoorLatch"]
 shape = SubResource("SphereShape3D_jv0dm")
 
-[node name="HingeJointRight" type="HingeJoint3D" parent="ColliderBits"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.14268, 0.645169, -1.15496)
-node_a = NodePath("../..")
-node_b = NodePath("../OpenDoorRight")
-angular_limit/enable = true
-angular_limit/upper = 1.0472
-angular_limit/lower = 0.0
-motor/target_velocity = 3.14159
+[node name="DoorRight" type="Node3D" parent="ColliderBits"]
 
-[node name="ShutDoorRight" type="MeshInstance3D" parent="ColliderBits"]
+[node name="HingeJointRight" type="JoltHingeJoint3D" parent="ColliderBits/DoorRight"]
+limit_enabled = true
+limit_upper = 1.0472
+motor_target_velocity = 2.0944
+node_a = NodePath("../../..")
+node_b = NodePath("../OpenDoorRight")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.14268, 0.645169, -1.15496)
+
+[node name="RightBodyHingeSeparationCollider" type="Area3D" parent="ColliderBits/DoorRight/HingeJointRight"]
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorRight/HingeJointRight/RightBodyHingeSeparationCollider"]
+shape = SubResource("SphereShape3D_ue786")
+
+[node name="ShutDoorRight" type="MeshInstance3D" parent="ColliderBits/DoorRight"]
 transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 0, -0.5, 0)
 mesh = ExtResource("12_1gu4b")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="RightDoorBodyLatch" type="Area3D" parent="ColliderBits"]
+[node name="RightDoorBodyLatch" type="Area3D" parent="ColliderBits/DoorRight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.127, 0.671, 0.593)
 collision_layer = 32
 collision_mask = 32
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/RightDoorBodyLatch"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorRight/RightDoorBodyLatch"]
 shape = SubResource("SphereShape3D_jv0dm")
 
-[node name="OpenDoorRight" type="RigidBody3D" parent="ColliderBits" node_paths=PackedStringArray("parent_car", "shutDoorMesh", "hingeJoint", "doorOpenSFX", "doorShutSFX", "enter_car_collision_shape", "door_latch", "body_latch") groups=["vehicle_door"]]
+[node name="OpenDoorRight" type="RigidBody3D" parent="ColliderBits/DoorRight" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "hinge_joint", "door_open_SFX", "door_shut_SFX", "enter_car_collision_shape", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.5, 0)
 visible = false
 collision_layer = 262152
@@ -384,38 +426,254 @@ physics_material_override = ExtResource("8_rpaed")
 freeze = true
 freeze_mode = 1
 script = ExtResource("9_653cp")
-parent_car = NodePath("../..")
-shutDoorMesh = NodePath("../ShutDoorRight")
-hingeJoint = NodePath("../HingeJointRight")
-doorOpenSFX = NodePath("DoorOpenSFX")
-doorShutSFX = NodePath("DoorShutSFX")
-enter_car_collision_shape = NodePath("../EnterCarCollider/CollisionShape3D")
+parent_car = NodePath("../../..")
+shut_door_mesh = NodePath("../ShutDoorRight")
+hinge_joint = NodePath("../HingeJointRight")
+door_open_SFX = NodePath("DoorOpenSFX")
+door_shut_SFX = NodePath("DoorShutSFX")
+enter_car_collision_shape = NodePath("../../EnterCarCollider/CollisionShape3D")
 door_latch = NodePath("RightDoorLatch")
 body_latch = NodePath("../RightDoorBodyLatch")
+hinge_separation_collider_A = NodePath("../HingeJointRight/RightBodyHingeSeparationCollider")
+hinge_separation_collider_B = NodePath("RightDoorHingeSeparationCollider")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/OpenDoorRight"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/DoorRight/OpenDoorRight"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 mesh = ExtResource("12_1gu4b")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/OpenDoorRight"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorRight/OpenDoorRight"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_bbm10")
 
-[node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="ColliderBits/OpenDoorRight"]
+[node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="ColliderBits/DoorRight/OpenDoorRight"]
 stream = ExtResource("10_vgexy")
 unit_size = 2.0
 
-[node name="DoorShutSFX" type="AudioStreamPlayer3D" parent="ColliderBits/OpenDoorRight"]
+[node name="DoorShutSFX" type="AudioStreamPlayer3D" parent="ColliderBits/DoorRight/OpenDoorRight"]
 stream = ExtResource("11_0cx5o")
 unit_size = 2.0
 
-[node name="RightDoorLatch" type="Area3D" parent="ColliderBits/OpenDoorRight"]
+[node name="RightDoorHingeSeparationCollider" type="Area3D" parent="ColliderBits/DoorRight/OpenDoorRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.143, 1.145, 1.155)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorRight/OpenDoorRight/RightDoorHingeSeparationCollider"]
+shape = SubResource("SphereShape3D_ue786")
+
+[node name="RightDoorLatch" type="Area3D" parent="ColliderBits/DoorRight/OpenDoorRight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.127, 1.171, -0.593)
 collision_layer = 32
 collision_mask = 32
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/OpenDoorRight/RightDoorLatch"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorRight/OpenDoorRight/RightDoorLatch"]
 shape = SubResource("SphereShape3D_jv0dm")
+
+[node name="Bonnet" type="Node3D" parent="ColliderBits"]
+
+[node name="HingeJointBonnet" type="JoltHingeJoint3D" parent="ColliderBits/Bonnet"]
+limit_enabled = true
+limit_lower = -0.698132
+motor_target_velocity = -2.0944
+node_a = NodePath("../../..")
+node_b = NodePath("../OpenBonnet")
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.908419, -1.1352)
+
+[node name="BonnetBodyHingeSeparationCollider" type="Area3D" parent="ColliderBits/Bonnet/HingeJointBonnet"]
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/Bonnet/HingeJointBonnet/BonnetBodyHingeSeparationCollider"]
+shape = SubResource("SphereShape3D_ue786")
+
+[node name="ShutBonnet" type="MeshInstance3D" parent="ColliderBits/Bonnet"]
+transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 0, -0.5, 0)
+mesh = ExtResource("13_75fjj")
+skeleton = NodePath("../../..")
+
+[node name="BonnetBodyLatch" type="Area3D" parent="ColliderBits/Bonnet"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.727278, -2.69583)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/Bonnet/BonnetBodyLatch"]
+shape = SubResource("SphereShape3D_jv0dm")
+
+[node name="OpenBonnet" type="RigidBody3D" parent="ColliderBits/Bonnet" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "hinge_joint", "door_open_SFX", "door_shut_SFX", "enter_car_collision_shape", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
+collision_layer = 262152
+collision_mask = 83
+mass = 10.0
+physics_material_override = ExtResource("8_rpaed")
+freeze = true
+freeze_mode = 1
+script = ExtResource("9_653cp")
+parent_car = NodePath("../../..")
+shut_door_mesh = NodePath("../ShutBonnet")
+hinge_joint = NodePath("../HingeJointBonnet")
+door_open_SFX = NodePath("DoorOpenSFX")
+door_shut_SFX = NodePath("DoorShutSFX")
+enter_car_collision_shape = NodePath("../../EnterCarCollider/CollisionShape3D")
+door_latch = NodePath("BonnetLatch")
+body_latch = NodePath("../BonnetBodyLatch")
+is_openable = false
+hinge_separation_collider_A = NodePath("../HingeJointBonnet/BonnetBodyHingeSeparationCollider")
+hinge_separation_collider_B = NodePath("BonnetHingeSeparationCollider")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/Bonnet/OpenBonnet"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+mesh = ExtResource("13_75fjj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/Bonnet/OpenBonnet"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_1d1u8")
+
+[node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="ColliderBits/Bonnet/OpenBonnet"]
+stream = ExtResource("10_vgexy")
+unit_size = 2.0
+
+[node name="DoorShutSFX" type="AudioStreamPlayer3D" parent="ColliderBits/Bonnet/OpenBonnet"]
+stream = ExtResource("11_0cx5o")
+unit_size = 2.0
+
+[node name="BonnetHingeSeparationCollider" type="Area3D" parent="ColliderBits/Bonnet/OpenBonnet"]
+transform = Transform3D(-1, 8.74228e-08, -3.82137e-15, 0, -4.37114e-08, -1, -8.74228e-08, -1, 4.37114e-08, 0, 1.408, -1.135)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/Bonnet/OpenBonnet/BonnetHingeSeparationCollider"]
+shape = SubResource("SphereShape3D_ue786")
+
+[node name="BonnetLatch" type="Area3D" parent="ColliderBits/Bonnet/OpenBonnet"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.227, -2.696)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/Bonnet/OpenBonnet/BonnetLatch"]
+shape = SubResource("SphereShape3D_jv0dm")
+
+[node name="Boot" type="Node3D" parent="ColliderBits"]
+
+[node name="HingeJointBoot" type="JoltHingeJoint3D" parent="ColliderBits/Boot"]
+limit_enabled = true
+limit_upper = 1.309
+motor_target_velocity = -2.0944
+node_a = NodePath("../../..")
+node_b = NodePath("../OpenBoot")
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.54333, 1.76463)
+
+[node name="BootBodyHingeSeparationCollider" type="Area3D" parent="ColliderBits/Boot/HingeJointBoot"]
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/Boot/HingeJointBoot/BootBodyHingeSeparationCollider"]
+shape = SubResource("SphereShape3D_ue786")
+
+[node name="ShutBoot" type="MeshInstance3D" parent="ColliderBits/Boot"]
+transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 0, -0.5, 0)
+mesh = ExtResource("14_4t365")
+skeleton = NodePath("../../..")
+
+[node name="BootBodyLatch" type="Area3D" parent="ColliderBits/Boot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.233, 2.496)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/Boot/BootBodyLatch"]
+shape = SubResource("SphereShape3D_jv0dm")
+
+[node name="OpenBoot" type="RigidBody3D" parent="ColliderBits/Boot" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "hinge_joint", "door_open_SFX", "door_shut_SFX", "enter_car_collision_shape", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+collision_layer = 262152
+collision_mask = 83
+mass = 10.0
+physics_material_override = ExtResource("8_rpaed")
+freeze = true
+freeze_mode = 1
+script = ExtResource("9_653cp")
+parent_car = NodePath("../../..")
+shut_door_mesh = NodePath("../ShutBoot")
+hinge_joint = NodePath("../HingeJointBoot")
+door_open_SFX = NodePath("DoorOpenSFX")
+door_shut_SFX = NodePath("DoorShutSFX")
+enter_car_collision_shape = NodePath("../../EnterCarCollider/CollisionShape3D")
+door_latch = NodePath("BootLatch")
+body_latch = NodePath("../BootBodyLatch")
+latch_velocity_threshold = 2.0
+is_openable = false
+hide_rigidbody_when_shut = false
+hinge_separation_collider_A = NodePath("../HingeJointBoot/BootBodyHingeSeparationCollider")
+hinge_separation_collider_B = NodePath("BootHingeSeparationCollider")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+mesh = ExtResource("14_4t365")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/Boot/OpenBoot"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_mj4f1")
+
+[node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="ColliderBits/Boot/OpenBoot"]
+stream = ExtResource("10_vgexy")
+unit_size = 2.0
+
+[node name="DoorShutSFX" type="AudioStreamPlayer3D" parent="ColliderBits/Boot/OpenBoot"]
+stream = ExtResource("11_0cx5o")
+unit_size = 2.0
+
+[node name="BootHingeSeparationCollider" type="Area3D" parent="ColliderBits/Boot/OpenBoot"]
+transform = Transform3D(-1, 8.74228e-08, -3.82137e-15, 0, -4.37114e-08, -1, -8.74228e-08, -1, 4.37114e-08, 0, 2.043, 1.765)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/Boot/OpenBoot/BootHingeSeparationCollider"]
+shape = SubResource("SphereShape3D_ue786")
+
+[node name="BootLatch" type="Area3D" parent="ColliderBits/Boot/OpenBoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.732895, 2.49612)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/Boot/OpenBoot/BootLatch"]
+shape = SubResource("SphereShape3D_jv0dm")
+
+[node name="Lights" type="Node3D" parent="ColliderBits/Boot/OpenBoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="BrakeLightLeft" type="Node3D" parent="ColliderBits/Boot/OpenBoot/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/BrakeLightLeft"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+mesh = ExtResource("20_e4a6x")
+surface_material_override/0 = SubResource("StandardMaterial3D_i127x")
+
+[node name="BrakeLightRight" type="Node3D" parent="ColliderBits/Boot/OpenBoot/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/BrakeLightRight"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+mesh = ExtResource("21_t8q6m")
+surface_material_override/0 = SubResource("StandardMaterial3D_i127x")
+
+[node name="ReverseLightLeft" type="Node3D" parent="ColliderBits/Boot/OpenBoot/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/ReverseLightLeft"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+gi_mode = 2
+mesh = ExtResource("22_psb7o")
+surface_material_override/0 = SubResource("StandardMaterial3D_ltwxu")
+
+[node name="ReverseLightRight" type="Node3D" parent="ColliderBits/Boot/OpenBoot/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/ReverseLightRight"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+gi_mode = 2
+mesh = ExtResource("23_6oxxb")
+surface_material_override/0 = SubResource("StandardMaterial3D_ltwxu")
 
 [node name="EnterCarCollider" type="StaticBody3D" parent="ColliderBits"]
 visible = false
@@ -448,8 +706,7 @@ skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
 stream = ExtResource("15_68n7x")
-unit_size = 2.0
-max_db = -4.0
+unit_size = 1.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
@@ -477,8 +734,7 @@ skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
 stream = ExtResource("15_68n7x")
-unit_size = 2.0
-max_db = -4.0
+unit_size = 1.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
@@ -506,8 +762,7 @@ skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
 stream = ExtResource("15_68n7x")
-unit_size = 2.0
-max_db = -4.0
+unit_size = 1.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
@@ -535,8 +790,7 @@ skeleton = NodePath("")
 
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
 stream = ExtResource("15_68n7x")
-unit_size = 2.0
-max_db = -4.0
+unit_size = 1.0
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
@@ -634,40 +888,6 @@ spot_angle = 30.0
 [node name="MeshInstance3D" type="MeshInstance3D" parent="HeadlightLeft"]
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 mesh = ExtResource("19_j0ugs")
-
-[node name="BrakeLightLeft" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="BrakeLightLeft"]
-transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
-mesh = ExtResource("20_e4a6x")
-surface_material_override/0 = SubResource("StandardMaterial3D_i127x")
-
-[node name="BrakeLightRight" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="BrakeLightRight"]
-transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
-mesh = ExtResource("21_t8q6m")
-surface_material_override/0 = SubResource("StandardMaterial3D_i127x")
-
-[node name="ReverseLightLeft" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ReverseLightLeft"]
-transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
-gi_mode = 2
-mesh = ExtResource("22_psb7o")
-surface_material_override/0 = SubResource("StandardMaterial3D_ltwxu")
-
-[node name="ReverseLightRight" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ReverseLightRight"]
-transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
-gi_mode = 2
-mesh = ExtResource("23_6oxxb")
-surface_material_override/0 = SubResource("StandardMaterial3D_ltwxu")
 
 [node name="AudioStreams" type="Node3D" parent="."]
 

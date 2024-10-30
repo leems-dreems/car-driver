@@ -9,7 +9,8 @@ var is_being_driven := false
 var is_ai_on := false
 var waiting_to_respawn := false
 ## Damage this vehicle can take before setting on fire and exploding
-var max_hit_points := 5.0
+@export var max_hit_points := 5.0
+@export var impact_force_threshold := 0.3
 var current_hit_points: float
 var has_caught_fire := false
 ## Timer that runs after this vehicle is requested to stop by something else
@@ -49,8 +50,8 @@ var steering_ray_collision_masks: Array[int] = [2, 5, 7, 8, 11]
 ## Show the debug label for this vehicle
 var show_debug_label := false
 @onready var debug_label: Label3D = $DebugLabel3D
-@onready var door_left: RigidBody3D = $ColliderBits/OpenDoorLeft
-@onready var door_right: RigidBody3D = $ColliderBits/OpenDoorRight
+@onready var door_left: CarDoor = $ColliderBits/DoorLeft/OpenDoorLeft
+@onready var door_right: CarDoor = $ColliderBits/DoorRight/OpenDoorRight
 # Lights
 @onready var headlight_left: SpotLight3D = $HeadlightLeft/SpotLight3D
 @onready var headlight_right: SpotLight3D = $HeadlightRight/SpotLight3D
@@ -58,10 +59,10 @@ var show_debug_label := false
 #@onready var brake_light_right: OmniLight3D = $BrakeLightRight
 #@onready var reverse_light_left: OmniLight3D = $ReverseLightLeft
 #@onready var reverse_light_right: OmniLight3D = $ReverseLightRight
-@onready var brake_light_left_mesh: MeshInstance3D = $BrakeLightLeft/MeshInstance3D
-@onready var brake_light_right_mesh: MeshInstance3D = $BrakeLightRight/MeshInstance3D
-@onready var reverse_light_left_mesh: MeshInstance3D = $ReverseLightLeft/MeshInstance3D
-@onready var reverse_light_right_mesh: MeshInstance3D = $ReverseLightRight/MeshInstance3D
+@export var brake_light_left_mesh: MeshInstance3D
+@export var brake_light_right_mesh: MeshInstance3D
+@export var reverse_light_left_mesh: MeshInstance3D
+@export var reverse_light_right_mesh: MeshInstance3D
 # Audio streams
 @onready var collision_audio_1: AudioStreamPlayer3D = $AudioStreams/CollisionAudio1
 # Particle emitters
@@ -161,8 +162,10 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(_body: Node) -> void:
   if _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D:
     if collision_audio_1.playing == false:
-      var _impact_force := (_previous_velocity - linear_velocity).length() * 0.1
-      if _impact_force > 0.5:
+      var _velocity_change := _previous_velocity - linear_velocity
+      var _impact_force := _velocity_change.length() * 0.1
+      if _impact_force > impact_force_threshold:
+        react_to_collision(_velocity_change)
         collision_audio_1.volume_db = linear_to_db(clampf(_impact_force, 0.0, 1.0))
         collision_audio_1.play()
         current_hit_points -= _impact_force
@@ -340,3 +343,8 @@ func request_stop(_duration: float = 5.0) -> void:
     )
   else:
     request_stop_timer.time_left = _duration
+
+
+## Virtual method. Override to e.g. play FX, detach parts when colliding
+func react_to_collision(_velocity_change: Vector3) -> void:
+  pass

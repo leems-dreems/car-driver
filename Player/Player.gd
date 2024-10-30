@@ -3,7 +3,7 @@ class_name Player extends RigidBody3D
 ## Character maximum run speed on the ground.
 @export var move_speed := 8.0
 ## Movement acceleration (how fast character achieve maximum speed)
-@export var acceleration := 40.0
+@export var acceleration := 30.0
 ## Jump impulse
 @export var jump_initial_impulse := 8.0
 ## Jump impulse when player keeps pressing jump
