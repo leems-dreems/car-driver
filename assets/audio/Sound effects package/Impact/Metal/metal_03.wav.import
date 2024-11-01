@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cfiscjj4n2gky"
+path="res://.godot/imported/metal_03.wav-e4c7ed0bc668e9f6941ca1f8754e756c.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sound effects package/Impact/Metal/metal_03.wav"
+dest_files=["res://.godot/imported/metal_03.wav-e4c7ed0bc668e9f6941ca1f8754e756c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

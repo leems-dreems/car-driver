@@ -48,7 +48,6 @@ func _ready():
     door_latch.area_entered.connect(func(_area: Area3D):
       if is_shut or open_timer != null or _area != body_latch:
         return
-      prints((linear_velocity - parent_car.linear_velocity).length_squared())
       if (linear_velocity - parent_car.linear_velocity).length_squared() > latch_velocity_threshold:
         shut()
     )
@@ -142,7 +141,6 @@ func set_latches_active(_active: bool) -> void:
 
 
 func detach() -> void:
-  print("door detaching")
   hinge_joint.motor_enabled = false
   hinge_joint.limit_enabled = false
   hinge_joint.enabled = false

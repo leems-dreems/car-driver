@@ -27,6 +27,10 @@ var burnt_material: StandardMaterial3D
 @onready var _body_mesh_instance: MeshInstance3D = $body
 @onready var bonnet: CarDoor = $ColliderBits/Bonnet/OpenBonnet
 @onready var boot: CarDoor = $ColliderBits/Boot/OpenBoot
+@onready var bump_audio: AudioStreamPlayer3D = $AudioStreams/BumpAudio
+@onready var metal_impact_audio: AudioStreamPlayer3D = $AudioStreams/MetalImpactAudio
+@onready var crash_audio: AudioStreamPlayer3D = $AudioStreams/JunkCrashAudio
+@onready var glass_break_audio: AudioStreamPlayer3D = $AudioStreams/GlassBreakAudio
 
 
 func _ready() -> void:
@@ -55,6 +59,23 @@ func apply_burnt_material() -> void:
   $ColliderBits/Bonnet/OpenBonnet/MeshInstance3D.set_surface_override_material(0, burnt_material)
   $ColliderBits/Boot/ShutBoot.set_surface_override_material(0, burnt_material)
   $ColliderBits/Boot/OpenBoot/MeshInstance3D.set_surface_override_material(0, burnt_material)
+  return
+
+
+## Connect the vehicle's `body_entered` signal to this method
+func _on_body_entered(_body: Node) -> void:
+  if _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D:
+    var _velocity_change := _previous_velocity - linear_velocity
+    var _impact_force := _velocity_change.length() * 0.1
+    if _impact_force > impact_force_threshold_1:
+      react_to_collision(_velocity_change)
+      bump_audio.volume_db = linear_to_db(clampf(_impact_force, 0.0, 1.0))
+      bump_audio.play()
+      current_hit_points -= _impact_force
+    if _impact_force > impact_force_threshold_2:
+      glass_break_audio.play()
+    if _impact_force > impact_force_threshold_3:
+      crash_audio.play()
   return
 
 

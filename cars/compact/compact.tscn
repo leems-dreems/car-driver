@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=86 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
@@ -32,6 +32,28 @@
 [ext_resource type="ArrayMesh" uid="uid://dr0e841bi34bv" path="res://assets/models/vehicles/cricket_reverselight_L.obj" id="22_psb7o"]
 [ext_resource type="PackedScene" uid="uid://qj5wm2wpuawj" path="res://effects/explosion.tscn" id="23_0aeo7"]
 [ext_resource type="ArrayMesh" uid="uid://ngn3d0lex2ge" path="res://assets/models/vehicles/cricket_reverselight_R.obj" id="23_6oxxb"]
+[ext_resource type="AudioStream" uid="uid://ckde1fwfelw81" path="res://assets/audio/Sound effects package/Impact/Car door.mp3" id="27_7jbco"]
+[ext_resource type="AudioStream" uid="uid://ccc68vqt6ri72" path="res://assets/audio/Sound effects package/Impact/Car hit.mp3" id="28_e7vki"]
+[ext_resource type="AudioStream" uid="uid://dtbi4h33h4wf4" path="res://assets/audio/Sound effects package/Impact/Metal/metal_01.wav" id="29_so1rx"]
+[ext_resource type="AudioStream" uid="uid://cjbdt8kgwwq0r" path="res://assets/audio/Sound effects package/Impact/Metal/metal_02.wav" id="30_nfhr0"]
+[ext_resource type="AudioStream" uid="uid://cfiscjj4n2gky" path="res://assets/audio/Sound effects package/Impact/Metal/metal_03.wav" id="31_u11um"]
+[ext_resource type="AudioStream" uid="uid://dd53l2iwnd524" path="res://assets/audio/Sound effects package/Impact/Metal/metal_04.wav" id="32_ugrql"]
+[ext_resource type="AudioStream" uid="uid://dkp6iibmv8nbf" path="res://assets/audio/Sound effects package/Impact/Metal/metal_05.wav" id="33_n1x3o"]
+[ext_resource type="AudioStream" uid="uid://ytosn3nsomk1" path="res://assets/audio/Sound effects package/Impact/Metal/metal_06.wav" id="34_sua0t"]
+[ext_resource type="AudioStream" uid="uid://2lt56mlr54s1" path="res://assets/audio/Sound effects package/Impact/Metal/metal_07.wav" id="35_tq1vi"]
+[ext_resource type="AudioStream" uid="uid://q3xgwl3daeit" path="res://assets/audio/Sound effects package/Impact/Metal/metal_08.wav" id="36_snmga"]
+[ext_resource type="AudioStream" uid="uid://d2t5d068pogmr" path="res://assets/audio/Sound effects package/Impact/Metal/metal_09.wav" id="37_fvg7m"]
+[ext_resource type="AudioStream" uid="uid://d1elxopaq1xae" path="res://assets/audio/Sound effects package/Impact/Metal/metal_10.wav" id="38_di3wp"]
+[ext_resource type="AudioStream" uid="uid://cdskqfyn8d6oi" path="res://assets/audio/Sound effects package/Crashes/Junk Crash 01.wav" id="39_2lmve"]
+[ext_resource type="AudioStream" uid="uid://byqv4a3so2joy" path="res://assets/audio/Sound effects package/Crashes/Junk Crash 02.wav" id="40_bvace"]
+[ext_resource type="AudioStream" uid="uid://75gv0eswb0el" path="res://assets/audio/Sound effects package/Crashes/Junk Crash 03.wav" id="41_puieu"]
+[ext_resource type="AudioStream" uid="uid://d0rel3uydo5dp" path="res://assets/audio/Sound effects package/Crashes/Junk Crash 04.wav" id="42_tlnpc"]
+[ext_resource type="AudioStream" uid="uid://dbo4q0i05ugtq" path="res://assets/audio/Sound effects package/Crashes/Junk Crash 05.wav" id="43_gmgpu"]
+[ext_resource type="AudioStream" uid="uid://cq0srjehb1r3s" path="res://assets/audio/Sound effects package/Crashes/Metal Crash 01.wav" id="44_hey7r"]
+[ext_resource type="AudioStream" uid="uid://bc2j1xffxti1o" path="res://assets/audio/Sound effects package/Crashes/Metal Crash 02.wav" id="45_otofp"]
+[ext_resource type="AudioStream" uid="uid://c3r0shaam8fk0" path="res://assets/audio/Sound effects package/Crashes/Glass Break 01.wav" id="46_3lylc"]
+[ext_resource type="AudioStream" uid="uid://bsykmtu15bbyy" path="res://assets/audio/Sound effects package/Crashes/Glass Break 02.wav" id="47_ek2u8"]
+[ext_resource type="AudioStream" uid="uid://btwfyuao3yspq" path="res://assets/audio/Sound effects package/Crashes/Glass Break 03.wav" id="48_e2voh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.8
@@ -171,6 +193,43 @@ radius = 0.25
 font_names = PackedStringArray("Courier New")
 subpixel_positioning = 0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1bhxb"]
+streams_count = 2
+stream_0/stream = ExtResource("27_7jbco")
+stream_1/stream = ExtResource("28_e7vki")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kl85c"]
+streams_count = 10
+stream_0/stream = ExtResource("29_so1rx")
+stream_1/stream = ExtResource("30_nfhr0")
+stream_2/stream = ExtResource("31_u11um")
+stream_3/stream = ExtResource("32_ugrql")
+stream_4/stream = ExtResource("33_n1x3o")
+stream_5/stream = ExtResource("34_sua0t")
+stream_6/stream = ExtResource("35_tq1vi")
+stream_7/stream = ExtResource("36_snmga")
+stream_8/stream = ExtResource("37_fvg7m")
+stream_9/stream = ExtResource("38_di3wp")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fh3l5"]
+streams_count = 5
+stream_0/stream = ExtResource("39_2lmve")
+stream_1/stream = ExtResource("40_bvace")
+stream_2/stream = ExtResource("41_puieu")
+stream_3/stream = ExtResource("42_tlnpc")
+stream_4/stream = ExtResource("43_gmgpu")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3paql"]
+streams_count = 2
+stream_0/stream = ExtResource("44_hey7r")
+stream_1/stream = ExtResource("45_otofp")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wqjhd"]
+streams_count = 3
+stream_0/stream = ExtResource("46_3lylc")
+stream_1/stream = ExtResource("47_ek2u8")
+stream_2/stream = ExtResource("48_e2voh")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc8nd"]
 vertex_color_use_as_albedo = true
 
@@ -272,7 +331,6 @@ stream = ExtResource("5_vu53n")
 unit_size = 2.0
 max_db = -8.0
 vehicle = NodePath("..")
-sample_rpm = 3000.0
 
 [node name="body" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1.5, 0, 2.26494e-07, 0, 1.5, 0, -2.26494e-07, 0, -1.5, 0, -0.5, 0)
@@ -894,6 +952,23 @@ mesh = ExtResource("19_j0ugs")
 [node name="CollisionAudio1" type="AudioStreamPlayer3D" parent="AudioStreams"]
 stream = ExtResource("17_7w5y2")
 max_polyphony = 16
+
+[node name="BumpAudio" type="AudioStreamPlayer3D" parent="AudioStreams"]
+stream = SubResource("AudioStreamRandomizer_1bhxb")
+max_polyphony = 3
+
+[node name="MetalImpactAudio" type="AudioStreamPlayer3D" parent="AudioStreams"]
+stream = SubResource("AudioStreamRandomizer_kl85c")
+
+[node name="JunkCrashAudio" type="AudioStreamPlayer3D" parent="AudioStreams"]
+stream = SubResource("AudioStreamRandomizer_fh3l5")
+
+[node name="MetalCrashAudio" type="AudioStreamPlayer3D" parent="AudioStreams"]
+stream = SubResource("AudioStreamRandomizer_3paql")
+
+[node name="GlassBreakAudio" type="AudioStreamPlayer3D" parent="AudioStreams"]
+stream = SubResource("AudioStreamRandomizer_wqjhd")
+max_polyphony = 3
 
 [node name="EngineSmokeBlack" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)

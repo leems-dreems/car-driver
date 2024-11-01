@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c45ovqacp2j02"
+path="res://.godot/imported/Metal Strike 04.wav-7ce219edb3d828ee7a6fc8dc8ae8e18b.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sound effects package/Crashes/Metal Strike 04.wav"
+dest_files=["res://.godot/imported/Metal Strike 04.wav-7ce219edb3d828ee7a6fc8dc8ae8e18b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

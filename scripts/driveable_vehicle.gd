@@ -10,7 +10,9 @@ var is_ai_on := false
 var waiting_to_respawn := false
 ## Damage this vehicle can take before setting on fire and exploding
 @export var max_hit_points := 5.0
-@export var impact_force_threshold := 0.3
+@export var impact_force_threshold_1 := 0.3
+@export var impact_force_threshold_2 := 0.6
+@export var impact_force_threshold_3 := 1.5
 var current_hit_points: float
 var has_caught_fire := false
 ## Timer that runs after this vehicle is requested to stop by something else
@@ -164,7 +166,7 @@ func _on_body_entered(_body: Node) -> void:
     if collision_audio_1.playing == false:
       var _velocity_change := _previous_velocity - linear_velocity
       var _impact_force := _velocity_change.length() * 0.1
-      if _impact_force > impact_force_threshold:
+      if _impact_force > impact_force_threshold_1:
         react_to_collision(_velocity_change)
         collision_audio_1.volume_db = linear_to_db(clampf(_impact_force, 0.0, 1.0))
         collision_audio_1.play()

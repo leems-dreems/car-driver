@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://75gv0eswb0el"
+path="res://.godot/imported/Junk Crash 03.wav-9405f9541b1134313ad8483ee7dd2bc4.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sound effects package/Crashes/Junk Crash 03.wav"
+dest_files=["res://.godot/imported/Junk Crash 03.wav-9405f9541b1134313ad8483ee7dd2bc4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
