@@ -1,9 +1,11 @@
-[gd_scene load_steps=86 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=88 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
 [ext_resource type="PackedScene" uid="uid://h6vdpba71kpr" path="res://addons/gevp/scenes/smoke_effect.tscn" id="3_3utam"]
+[ext_resource type="Script" path="res://cars/contact_checker.gd" id="3_4r4v3"]
 [ext_resource type="PackedScene" uid="uid://b2hlchrj4h2b7" path="res://addons/gevp/scenes/engine_sound.tscn" id="4_i42xy"]
+[ext_resource type="PackedScene" uid="uid://msf4p72duq7l" path="res://effects/car_scrape_emitter.tscn" id="4_m6abc"]
 [ext_resource type="AudioStream" uid="uid://cfqlem3v5t0y6" path="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Sound effects/Car_Engine_Loop.ogg" id="5_vu53n"]
 [ext_resource type="ArrayMesh" uid="uid://bm6tjdix4yscu" path="res://assets/models/vehicles/cricket_body.obj" id="6_fibcd"]
 [ext_resource type="ArrayMesh" uid="uid://xk5hk1bssrdt" path="res://assets/models/vehicles/cricket_door_FL.obj" id="7_t5urj"]
@@ -319,6 +321,25 @@ longitudinal_grip_ratio = {
 }
 front_tire_radius = 0.4
 rear_tire_radius = 0.4
+
+[node name="ContactChecker" type="RigidBody3D" parent="."]
+collision_layer = 0
+collision_mask = 83
+mass = 0.001
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 8
+script = ExtResource("3_4r4v3")
+
+[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="ContactChecker"]
+node_a = NodePath("../..")
+node_b = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ContactChecker"]
+transform = Transform3D(-1.5, 0, 2.26494e-07, 0, 1.5, 0, -2.26494e-07, 0, -1.5, 0, -0.5, 0)
+shape = SubResource("ConvexPolygonShape3D_7junj")
+
+[node name="CarScrapeEmitter" parent="ContactChecker" instance=ExtResource("4_m6abc")]
 
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("3_3utam")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)

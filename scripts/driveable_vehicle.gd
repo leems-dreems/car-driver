@@ -52,6 +52,7 @@ var steering_ray_collision_masks: Array[int] = [2, 5, 7, 8, 11]
 ## Show the debug label for this vehicle
 var show_debug_label := false
 @onready var debug_label: Label3D = $DebugLabel3D
+@onready var body_mesh_instance: MeshInstance3D = $body
 @onready var door_left: CarDoor = $ColliderBits/DoorLeft/OpenDoorLeft
 @onready var door_right: CarDoor = $ColliderBits/DoorRight/OpenDoorRight
 # Lights

@@ -24,17 +24,18 @@ var paintjobs := [
 ]
 
 var burnt_material: StandardMaterial3D
-@onready var _body_mesh_instance: MeshInstance3D = $body
 @onready var bonnet: CarDoor = $ColliderBits/Bonnet/OpenBonnet
 @onready var boot: CarDoor = $ColliderBits/Boot/OpenBoot
 @onready var bump_audio: AudioStreamPlayer3D = $AudioStreams/BumpAudio
 @onready var metal_impact_audio: AudioStreamPlayer3D = $AudioStreams/MetalImpactAudio
 @onready var crash_audio: AudioStreamPlayer3D = $AudioStreams/JunkCrashAudio
 @onready var glass_break_audio: AudioStreamPlayer3D = $AudioStreams/GlassBreakAudio
+@onready var contact_checker: CarContactChecker = $ContactChecker
 
 
 func _ready() -> void:
   var _paintjob: Dictionary = paintjobs.pick_random()
+  contact_checker.vehicle = self
   #burnt_material = _skin.burnt_material
   $body.set_surface_override_material(0, _paintjob.material)
   $ColliderBits/DoorLeft/ShutDoorLeft.set_surface_override_material(0, _paintjob.material)
@@ -94,6 +95,15 @@ func react_to_collision(velocity_change: Vector3) -> void:
   if _dot_with_z > 0.5:
     boot.fall_open()
   return
+
+func explode() -> void:
+  door_left.fall_open()
+  door_right.fall_open()
+  bonnet.fall_open()
+  boot.fall_open()
+  super()
+  return
+
 
 ## Freeze the car, as well as the various bodies attached to it
 func freeze_bodies() -> void:
