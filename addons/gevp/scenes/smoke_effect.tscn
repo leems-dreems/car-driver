@@ -31,7 +31,7 @@ color_ramp = SubResource("GradientTexture1D_5rs2r")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dkuso"]
 transparency = 1
 vertex_color_use_as_albedo = true
-albedo_color = Color(1, 1, 1, 0.501961)
+albedo_color = Color(1, 1, 1, 0.25098)
 
 [sub_resource type="SphereMesh" id="SphereMesh_t2ioh"]
 material = SubResource("StandardMaterial3D_dkuso")

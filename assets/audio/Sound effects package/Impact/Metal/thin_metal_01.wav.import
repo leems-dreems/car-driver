@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://do4a1hcioxf6x"
+path="res://.godot/imported/thin_metal_01.wav-c888e33c17adc2b7826309be099fe7f9.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sound effects package/Impact/Metal/thin_metal_01.wav"
+dest_files=["res://.godot/imported/thin_metal_01.wav-c888e33c17adc2b7826309be099fe7f9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

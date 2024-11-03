@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cr7rqs6xe1w2d"
+path="res://.godot/imported/Metal Slide 02.wav-4eb06d14493802b577f6535563dbc723.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sound effects package/Metal/Metal Slide 02.wav"
+dest_files=["res://.godot/imported/Metal Slide 02.wav-4eb06d14493802b577f6535563dbc723.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

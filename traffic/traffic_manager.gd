@@ -2,8 +2,8 @@ extends Node3D
 ## TrafficManager is a singleton that spawns and control AI traffic vehicles
 
 const vehicle_scenes: Array[PackedScene] = [
-  preload("res://cars/compact/compact.tscn"),
-  preload("res://cars/sedan/sedan.tscn")
+  preload("res://cars/compact/compact.tscn")
+  #preload("res://cars/sedan/sedan.tscn")
 ]
 const traffic_spawn_point_scene := preload("res://traffic/traffic_spawn_point.tscn")
 const traffic_agent_scene := preload("res://traffic/traffic_agent.tscn")
@@ -109,8 +109,10 @@ func _add_vehicle(_spawn_point: TrafficSpawnPoint, _agent: TrafficAgent) -> void
 ## Adjust the despawn weight for this traffic agent, and despawn if it's above the threshold
 func _adjust_despawn_weight(_agent: TrafficAgent) -> void:
   var _can_see_or_hear_vehicle := false
+  _agent.vehicle.play_scrape_effects = false
   if _agent.vehicle.global_position.distance_to(camera.global_position) < hearing_range:
     _can_see_or_hear_vehicle = true
+    _agent.vehicle.play_scrape_effects = true
   elif camera.is_position_in_frustum(_agent.vehicle.global_position):
     vehicle_ray_query_params.from = camera.global_position
     vehicle_ray_query_params.to = _agent.vehicle.global_position
