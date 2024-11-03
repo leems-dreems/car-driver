@@ -22,7 +22,6 @@ func respawn() -> void:
 
 func play_effect() -> void:
   $Sparks.emitting = true
-  $AudioStreamPlayer3D.play()
   _bodies.no_lights()
   _bodies.prepare_to_break_apart()
   return
@@ -30,8 +29,6 @@ func play_effect() -> void:
 
 func stop_effect() -> void:
   $Sparks.emitting = false
-  $AudioStreamPlayer3D.stop()
-  $AudioStreamPlayer3D.seek(0)
   return
 
 
