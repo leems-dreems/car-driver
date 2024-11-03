@@ -36,7 +36,7 @@ emission_energy_multiplier = 2.0
 [sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_gkkpu"]
 material = SubResource("StandardMaterial3D_l8ttq")
 shape = 0
-size = 0.05
+size = 0.01
 section_length = 0.05
 
 [node name="CarScrapeEmitter" type="GPUParticles3D"]

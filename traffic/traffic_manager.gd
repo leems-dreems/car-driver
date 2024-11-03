@@ -109,8 +109,10 @@ func _add_vehicle(_spawn_point: TrafficSpawnPoint, _agent: TrafficAgent) -> void
 ## Adjust the despawn weight for this traffic agent, and despawn if it's above the threshold
 func _adjust_despawn_weight(_agent: TrafficAgent) -> void:
   var _can_see_or_hear_vehicle := false
+  _agent.vehicle.play_scrape_effects = false
   if _agent.vehicle.global_position.distance_to(camera.global_position) < hearing_range:
     _can_see_or_hear_vehicle = true
+    _agent.vehicle.play_scrape_effects = true
   elif camera.is_position_in_frustum(_agent.vehicle.global_position):
     vehicle_ray_query_params.from = camera.global_position
     vehicle_ray_query_params.to = _agent.vehicle.global_position

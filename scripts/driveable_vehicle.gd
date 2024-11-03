@@ -8,6 +8,8 @@ var reverse_light_energy := 1.0
 var is_being_driven := false
 var is_ai_on := false
 var waiting_to_respawn := false
+## Vehicle will calculate & play "scrape" effects if this is true
+var play_scrape_effects := false
 ## Damage this vehicle can take before setting on fire and exploding
 @export var max_hit_points := 5.0
 @export var impact_force_threshold_1 := 0.3

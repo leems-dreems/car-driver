@@ -50,7 +50,6 @@ func prepare_to_break_apart() -> void:
 func react_to_head_impact(_node: Node) -> void:
   var _impact_force: float = (_previous_velocity - _head_rigid_body.linear_velocity).length_squared()
   if _impact_force > make_noise_force:
-    print(_impact_force)
     head_impact_audio.unit_size = clampf(_impact_force * 0.5, 0.01, 2)
     head_impact_audio.play()
   if _impact_force > break_apart_force:
