@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://conwfwgwniuhd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_faokp"]
+bg_color = Color(0, 0, 0, 0.215686)
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[resource]
+Label/styles/normal = SubResource("StyleBoxFlat_faokp")

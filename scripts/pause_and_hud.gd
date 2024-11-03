@@ -3,9 +3,9 @@ extends CanvasLayer
 @export var vehicle : Vehicle
 @export var player : Player
 @export var stageMenu : PackedScene
-@onready var vehicle_hud_label := $HUD/VehicleHUD/Label
-@onready var use_label := $HUD/CenterContainer/VBoxContainer/UseLabel
-@onready var mission_label := $HUD/CenterContainer/VBoxContainer/MissionLabel
+@onready var vehicle_hud_label := $HUD/VehicleInfoLabel
+@onready var use_label := $HUD/UseLabelContainer/UseLabel
+@onready var mission_label := $HUD/MissionLabelContainer/MissionLabel
 
 
 func _process(_delta: float) -> void:
@@ -37,6 +37,7 @@ func _update_hud() -> void:
     vehicle_hud_label.text = ""
 
   if player.useable_target != null:
+    use_label.visible = true
     if player.useable_target.has_method("get_use_label"):
       use_label.text = player.useable_target.get_use_label()
     elif player.useable_target is ObjectiveArea:
@@ -44,6 +45,7 @@ func _update_hud() -> void:
     else:
       use_label.text = "Use"
   else:
+    use_label.visible = false
     use_label.text = ""
 
 

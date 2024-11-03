@@ -1,106 +1,108 @@
-[gd_scene load_steps=7 format=3 uid="uid://btmduyhkublv7"]
+[gd_scene load_steps=8 format=3 uid="uid://btmduyhkublv7"]
 
 [ext_resource type="Script" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="PackedScene" uid="uid://c43mf70gsgib2" path="res://menu/stage_select.tscn" id="2_ymesr"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_q7nlx"]
-font_size = 32
-
-[sub_resource type="Theme" id="Theme_id77h"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_juqyv"]
-font_size = 32
+[ext_resource type="Theme" uid="uid://conwfwgwniuhd" path="res://ui/use_label.tres" id="3_6v203"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ag0bj"]
 font_size = 64
 outline_size = 12
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="Theme" id="Theme_id77h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_juqyv"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_q7nlx"]
+font_size = 32
+
 [node name="PauseAndHUD" type="CanvasLayer"]
 script = ExtResource("1_jvxva")
 stageMenu = ExtResource("2_ymesr")
 
-[node name="HUD" type="MarginContainer" parent="."]
+[node name="PauseMenu" type="CenterContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VehicleHUD" type="MarginContainer" parent="HUD"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-
-[node name="Label" type="Label" parent="HUD/VehicleHUD"]
-layout_mode = 2
-text = "Speed:"
-label_settings = SubResource("LabelSettings_q7nlx")
-
-[node name="CenterContainer2" type="CenterContainer" parent="HUD"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="HUD/CenterContainer2"]
-custom_minimum_size = Vector2(2, 2)
-layout_mode = 2
-mouse_filter = 2
-theme = SubResource("Theme_id77h")
-
-[node name="CenterContainer" type="CenterContainer" parent="HUD"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/CenterContainer"]
-layout_mode = 2
-
-[node name="MissionLabel" type="Label" parent="HUD/CenterContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-label_settings = SubResource("LabelSettings_juqyv")
-horizontal_alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="HUD/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 800)
-layout_mode = 2
-
-[node name="UseLabel" type="Label" parent="HUD/CenterContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-label_settings = SubResource("LabelSettings_juqyv")
-horizontal_alignment = 1
-
-[node name="PauseMenu" type="MarginContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="CenterContainer" type="CenterContainer" parent="PauseMenu"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/CenterContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="PauseMenu/CenterContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="PauseMenu/VBoxContainer"]
 layout_mode = 2
 text = "Car Driver"
 label_settings = SubResource("LabelSettings_ag0bj")
 horizontal_alignment = 1
 
-[node name="ResumeGameButton" type="Button" parent="PauseMenu/CenterContainer/VBoxContainer"]
+[node name="ResumeGameButton" type="Button" parent="PauseMenu/VBoxContainer"]
 layout_mode = 2
 text = "Resume"
 
-[node name="StageSelectButton" type="Button" parent="PauseMenu/CenterContainer/VBoxContainer"]
+[node name="StageSelectButton" type="Button" parent="PauseMenu/VBoxContainer"]
 layout_mode = 2
 text = "Select Stage
 "
 
-[node name="QuitGameButton" type="Button" parent="PauseMenu/CenterContainer/VBoxContainer"]
+[node name="QuitGameButton" type="Button" parent="PauseMenu/VBoxContainer"]
 layout_mode = 2
 text = "Quit
 "
 
-[connection signal="pressed" from="PauseMenu/CenterContainer/VBoxContainer/ResumeGameButton" to="." method="handle_resume_button"]
-[connection signal="pressed" from="PauseMenu/CenterContainer/VBoxContainer/StageSelectButton" to="." method="_on_stage_select_button_pressed"]
-[connection signal="pressed" from="PauseMenu/CenterContainer/VBoxContainer/QuitGameButton" to="." method="handle_quit_button"]
+[node name="HUD" type="MarginContainer" parent="."]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="CrossHairContainer" type="CenterContainer" parent="HUD"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ColorRect" type="ColorRect" parent="HUD/CrossHairContainer"]
+custom_minimum_size = Vector2(2, 2)
+layout_mode = 2
+mouse_filter = 2
+theme = SubResource("Theme_id77h")
+
+[node name="MissionLabelContainer" type="VBoxContainer" parent="HUD"]
+layout_mode = 2
+
+[node name="MissionLabel" type="Label" parent="HUD/MissionLabelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Mission: Get a job"
+label_settings = SubResource("LabelSettings_juqyv")
+horizontal_alignment = 1
+
+[node name="UseLabelContainer" type="MarginContainer" parent="HUD"]
+layout_mode = 2
+theme_override_constants/margin_top = 400
+
+[node name="UseLabel" type="Label" parent="HUD/UseLabelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_6v203")
+text = "use something"
+label_settings = SubResource("LabelSettings_juqyv")
+horizontal_alignment = 1
+
+[node name="VehicleInfoLabel" type="Label" parent="HUD"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Speed:"
+label_settings = SubResource("LabelSettings_q7nlx")
+horizontal_alignment = 2
+
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ResumeGameButton" to="." method="handle_resume_button"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/StageSelectButton" to="." method="_on_stage_select_button_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/QuitGameButton" to="." method="handle_quit_button"]
