@@ -2,24 +2,42 @@ extends CanvasLayer
 
 @export var vehicle : Vehicle
 @export var player : Player
-@export var stageMenu : PackedScene
 @onready var vehicle_hud_label := $HUD/VehicleInfoLabel
 @onready var use_label := $HUD/UseLabelContainer/UseLabel
 @onready var mission_label := $HUD/MissionLabelContainer/MissionLabel
+@onready var paused_UI := $PausedUI
+@onready var pause_menu := $PausedUI/PauseMenu
+@onready var options_menu := $PausedUI/OptionsMenu
+var paused_timer: SceneTreeTimer = null
+
+
+
+func _ready() -> void:
+  paused_UI.visible = false
+  pause_menu.visible = true
+  options_menu.visible = false
+  return
 
 
 func _process(_delta: float) -> void:
-  if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+  # Respond to pause button
+  if get_tree().paused and Input.is_action_just_pressed("Pause"):
+    get_tree().paused = false
+  if get_tree().paused:
+    Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
     $HUD.visible = false
     $HUD.mouse_filter = Control.MOUSE_FILTER_IGNORE
-    $PauseMenu.visible = true
-    $PauseMenu.mouse_filter = Control.MOUSE_FILTER_STOP
+    $PausedUI.visible = true
+    $PausedUI.mouse_filter = Control.MOUSE_FILTER_STOP
   else:
+    options_menu.visible = false
+    Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
     $HUD.visible = true
     $HUD.mouse_filter = Control.MOUSE_FILTER_PASS
-    $PauseMenu.visible = false
-    $PauseMenu.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    $PausedUI.visible = false
+    $PausedUI.mouse_filter = Control.MOUSE_FILTER_IGNORE
     _update_hud()
+  return
 
 
 func _update_hud() -> void:
@@ -47,15 +65,32 @@ func _update_hud() -> void:
   else:
     use_label.visible = false
     use_label.text = ""
+  return
 
 
 func handle_resume_button() -> void:
-  Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+  get_tree().paused = false
+  return
+
+
+func handle_options_button() -> void:
+  if options_menu.visible:
+    options_menu.visible = false
+  else:
+    options_menu.visible = true
+  return
 
 
 func handle_quit_button() -> void:
   get_tree().quit()
+  return
 
-func _on_stage_select_button_pressed() -> void:
-    var menu = stageMenu.instantiate()
-    add_child(menu)
+
+func handle_fullscreen_toggle(toggle_on: bool) -> void:
+  Game.change_window_mode(toggle_on)
+  return
+
+#func _on_stage_select_button_pressed() -> void:
+  #var menu := stageMenu.instantiate()
+  #add_child(menu)
+  #return

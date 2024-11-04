@@ -1,0 +1,5 @@
+[gd_resource type="SystemFont" format=3 uid="uid://bfrqonkrt6mpy"]
+
+[resource]
+font_names = PackedStringArray("Gadugi")
+font_weight = 600
