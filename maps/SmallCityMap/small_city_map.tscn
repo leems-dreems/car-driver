@@ -1,11 +1,10 @@
-[gd_scene load_steps=88 format=3 uid="uid://cr77wenw0lh5c"]
+[gd_scene load_steps=87 format=3 uid="uid://cr77wenw0lh5c"]
 
 [ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
 [ext_resource type="PhysicsMaterial" uid="uid://xvg1njhe0wed" path="res://assets/materials/road_physics_material.tres" id="3_csym3"]
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact/compact.tscn" id="8_dvnrp"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="10_b2bvt"]
-[ext_resource type="PackedScene" uid="uid://btmduyhkublv7" path="res://menu/pause_and_hud.tscn" id="11_r5ic5"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="12_n3gia"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="13_fg0qv"]
 [ext_resource type="PackedScene" uid="uid://2g4icv655eh3" path="res://maps/SmallCityMap/4_way_junction.tscn" id="14_4imh1"]
@@ -326,9 +325,6 @@ light_energy = 2.0
 shadow_enabled = true
 directional_shadow_mode = 1
 directional_shadow_max_distance = 200.0
-
-[node name="PauseAndHUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("11_r5ic5")]
-player = NodePath("../Player")
 
 [node name="RoadManager" type="Node3D" parent="."]
 script = ExtResource("12_n3gia")

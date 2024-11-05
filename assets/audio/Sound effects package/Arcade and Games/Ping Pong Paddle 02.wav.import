@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bikj4t850e2h5"
+path="res://.godot/imported/Ping Pong Paddle 02.wav-25782c72032d6d760e7129c182f3f3d0.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sound effects package/Arcade and Games/Ping Pong Paddle 02.wav"
+dest_files=["res://.godot/imported/Ping Pong Paddle 02.wav-25782c72032d6d760e7129c182f3f3d0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

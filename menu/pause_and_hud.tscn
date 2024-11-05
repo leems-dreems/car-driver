@@ -1,10 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://btmduyhkublv7"]
+[gd_scene load_steps=13 format=3 uid="uid://btmduyhkublv7"]
 
 [ext_resource type="Script" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
 [ext_resource type="Theme" uid="uid://conwfwgwniuhd" path="res://ui/use_label.tres" id="3_6v203"]
 [ext_resource type="StyleBox" uid="uid://b4phqf84dag0" path="res://ui/options_panel.tres" id="4_phyb6"]
 [ext_resource type="SystemFont" uid="uid://bfrqonkrt6mpy" path="res://ui/ui_font.tres" id="4_rrxj5"]
+[ext_resource type="AudioStream" uid="uid://dkj1253vpd2oh" path="res://assets/audio/Sound effects package/Tools/Wood 2x4 01.wav" id="6_v27v4"]
+[ext_resource type="AudioStream" uid="uid://dyhnf0pmv6opf" path="res://assets/audio/Sound effects package/Arcade and Games/Ping Pong Paddle 01.wav" id="7_f12fv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ag0bj"]
 font = ExtResource("4_rrxj5")
@@ -14,6 +16,12 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 5
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4idhj"]
+content_margin_left = 0.0
+content_margin_top = 12.0
+content_margin_right = 0.0
+content_margin_bottom = 12.0
 
 [sub_resource type="Theme" id="Theme_id77h"]
 
@@ -36,40 +44,48 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 
 [node name="PauseMenu" type="PanelContainer" parent="PausedUI"]
+clip_contents = true
 layout_mode = 2
 theme = ExtResource("2_oe57f")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PausedUI/PauseMenu"]
+[node name="MarginContainer" type="MarginContainer" parent="PausedUI/PauseMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PausedUI/PauseMenu/MarginContainer"]
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="PausedUI/PauseMenu/VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="PausedUI/PauseMenu/VBoxContainer/CenterContainer"]
+[node name="Label" type="Label" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/CenterContainer"]
 layout_mode = 2
 text = "Commute Legend"
 label_settings = SubResource("LabelSettings_ag0bj")
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PausedUI/PauseMenu/VBoxContainer"]
+[node name="PauseMenuButtons" type="VBoxContainer" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ResumeGameButton" type="Button" parent="PausedUI/PauseMenu/VBoxContainer/VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons"]
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("2_oe57f")
+focus_neighbor_bottom = NodePath("../OptionsButton")
 text = "Resume"
 
-[node name="OptionsButton" type="Button" parent="PausedUI/PauseMenu/VBoxContainer/VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons"]
 layout_mode = 2
 size_flags_vertical = 3
+focus_neighbor_top = NodePath("../ResumeButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
 text = "Options"
 
-[node name="QuitGameButton" type="Button" parent="PausedUI/PauseMenu/VBoxContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons"]
 layout_mode = 2
 size_flags_vertical = 3
+focus_neighbor_top = NodePath("../OptionsButton")
 text = "Quit"
 
 [node name="OptionsMenu" type="PanelContainer" parent="PausedUI"]
@@ -80,8 +96,16 @@ theme_override_styles/panel = ExtResource("4_phyb6")
 [node name="VBoxContainer" type="VBoxContainer" parent="PausedUI/OptionsMenu"]
 layout_mode = 2
 
+[node name="BackButton" type="Button" parent="PausedUI/OptionsMenu/VBoxContainer"]
+layout_mode = 2
+text = "< Back"
+
+[node name="HSeparator" type="HSeparator" parent="PausedUI/OptionsMenu/VBoxContainer"]
+layout_mode = 2
+
 [node name="CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4idhj")
 text = "Fullscreen"
 alignment = 1
 
@@ -142,7 +166,29 @@ text = "Speed:"
 label_settings = SubResource("LabelSettings_q7nlx")
 horizontal_alignment = 2
 
-[connection signal="pressed" from="PausedUI/PauseMenu/VBoxContainer/VBoxContainer/ResumeGameButton" to="." method="handle_resume_button"]
-[connection signal="pressed" from="PausedUI/PauseMenu/VBoxContainer/VBoxContainer/OptionsButton" to="." method="handle_options_button"]
-[connection signal="pressed" from="PausedUI/PauseMenu/VBoxContainer/VBoxContainer/QuitGameButton" to="." method="handle_quit_button"]
+[node name="ClickAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_v27v4")
+volume_db = -24.0
+
+[node name="OpenAudio" type="AudioStreamPlayer" parent="."]
+
+[node name="FocusAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_f12fv")
+volume_db = -24.0
+
+[connection signal="mouse_entered" from="PausedUI/PauseMenu" to="." method="on_pause_menu_mouse_entered"]
+[connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="handle_resume_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
+[connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
+[connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="handle_quit_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
+[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="handle_options_back_button"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_pressed"]
+[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="on_button_pressed"]
 [connection signal="toggled" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="handle_fullscreen_toggle"]
