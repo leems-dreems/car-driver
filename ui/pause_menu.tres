@@ -46,6 +46,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_31guc")
 Button/styles/hover_pressed = SubResource("StyleBoxFlat_u7p3v")
 Button/styles/normal = SubResource("StyleBoxEmpty_halpd")
 Button/styles/pressed = SubResource("StyleBoxFlat_l31pm")
+CheckButton/constants/h_separation = 32
 CheckButton/font_sizes/font_size = 32
 CheckButton/styles/normal = null
 Panel/styles/panel = ExtResource("1_ns23y")

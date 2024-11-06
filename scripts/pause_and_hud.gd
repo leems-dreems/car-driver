@@ -60,6 +60,9 @@ func animate_open() -> void:
   _fade_tween.tween_property(paused_UI, "modulate", modulate_opaque, .1)
   _fade_tween.tween_callback(func():
     is_opening = false
+    for _pause_menu_button in pause_menu_buttons.get_children():
+      _pause_menu_button.mouse_filter = Control.MOUSE_FILTER_STOP
+      _pause_menu_button.focus_mode = Control.FOCUS_ALL
     $PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton.grab_focus.call_deferred()
   )
   return
@@ -77,7 +80,8 @@ func animate_closed() -> void:
     is_closing = false
     options_menu.visible = false
     for _pause_menu_button in pause_menu_buttons.get_children():
-      _pause_menu_button.mouse_filter = Control.MOUSE_FILTER_STOP
+      _pause_menu_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+      _pause_menu_button.focus_mode = Control.FOCUS_NONE
   )
   return
 
@@ -123,8 +127,10 @@ func handle_options_button() -> void:
   options_menu.visible = true
   for _pause_menu_button in pause_menu_buttons.get_children():
     _pause_menu_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    _pause_menu_button.focus_mode = Control.FOCUS_NONE
   _slider_tween.tween_callback(func():
     options_menu.mouse_filter = Control.MOUSE_FILTER_STOP
+    options_menu.focus_mode = Control.FOCUS_ALL
     $PausedUI/OptionsMenu/VBoxContainer/BackButton.grab_focus.call_deferred()
   )
   return
@@ -151,9 +157,11 @@ func handle_options_back_button() -> void:
   options_menu.mouse_filter = Control.MOUSE_FILTER_IGNORE
   _slider_tween.tween_callback(func():
     options_menu.visible = false
+    options_menu.focus_mode = Control.FOCUS_NONE
     $PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton.grab_focus.call_deferred()
     for _pause_menu_button in pause_menu_buttons.get_children():
       _pause_menu_button.mouse_filter = Control.MOUSE_FILTER_STOP
+      _pause_menu_button.focus_mode = Control.FOCUS_ALL
   )
   return
 

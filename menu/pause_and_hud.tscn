@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://btmduyhkublv7"]
+[gd_scene load_steps=12 format=3 uid="uid://btmduyhkublv7"]
 
 [ext_resource type="Script" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
@@ -16,12 +16,6 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 5
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(5, 5)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4idhj"]
-content_margin_left = 0.0
-content_margin_top = 12.0
-content_margin_right = 0.0
-content_margin_bottom = 12.0
 
 [sub_resource type="Theme" id="Theme_id77h"]
 
@@ -95,19 +89,19 @@ theme_override_styles/panel = ExtResource("4_phyb6")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PausedUI/OptionsMenu"]
 layout_mode = 2
+theme_override_constants/separation = 24
 
 [node name="BackButton" type="Button" parent="PausedUI/OptionsMenu/VBoxContainer"]
 layout_mode = 2
 text = "< Back"
+alignment = 0
 
 [node name="HSeparator" type="HSeparator" parent="PausedUI/OptionsMenu/VBoxContainer"]
 layout_mode = 2
 
 [node name="CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer"]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_4idhj")
 text = "Fullscreen"
-alignment = 1
 
 [node name="Container" type="CenterContainer" parent="PausedUI"]
 layout_mode = 2
