@@ -22,7 +22,7 @@ func _ready() -> void:
   paused_UI.modulate = modulate_transparent
   pause_menu.visible = true
   options_menu.visible = false
-  
+  vehicle_hud_label.text = ""
   return
 
 
@@ -94,11 +94,11 @@ func _update_hud() -> void:
     else:
       mission_label.text = current_objective.objective_text
   
-  if player.current_vehicle != null:
-    vehicle_hud_label.text = "Speed: " + str(int(player.current_vehicle.linear_velocity.length()))
-    vehicle_hud_label.text += "\nGear: " + str(player.current_vehicle.current_gear)
-  else:
-    vehicle_hud_label.text = ""
+  #if player.current_vehicle != null:
+    #vehicle_hud_label.text = "Speed: " + str(int(player.current_vehicle.linear_velocity.length()))
+    #vehicle_hud_label.text += "\nGear: " + str(player.current_vehicle.current_gear)
+  #else:
+    #vehicle_hud_label.text = ""
 
   if player.useable_target != null:
     use_label.visible = true

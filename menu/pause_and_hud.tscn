@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://btmduyhkublv7"]
+[gd_scene load_steps=15 format=3 uid="uid://btmduyhkublv7"]
 
 [ext_resource type="Script" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
 [ext_resource type="Theme" uid="uid://conwfwgwniuhd" path="res://ui/use_label.tres" id="3_6v203"]
 [ext_resource type="StyleBox" uid="uid://b4phqf84dag0" path="res://ui/options_panel.tres" id="4_phyb6"]
 [ext_resource type="SystemFont" uid="uid://bfrqonkrt6mpy" path="res://ui/ui_font.tres" id="4_rrxj5"]
+[ext_resource type="Theme" uid="uid://djel5wi5nvl5d" path="res://ui/hud_theme.tres" id="5_ekyou"]
 [ext_resource type="AudioStream" uid="uid://dkj1253vpd2oh" path="res://assets/audio/Sound effects package/Tools/Wood 2x4 01.wav" id="6_v27v4"]
+[ext_resource type="LabelSettings" uid="uid://c885emvux500g" path="res://ui/use_label_settings.tres" id="7_4w4uq"]
 [ext_resource type="AudioStream" uid="uid://dyhnf0pmv6opf" path="res://assets/audio/Sound effects package/Arcade and Games/Ping Pong Paddle 01.wav" id="7_f12fv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ag0bj"]
@@ -22,6 +24,13 @@ shadow_offset = Vector2(5, 5)
 [sub_resource type="LabelSettings" id="LabelSettings_juqyv"]
 font_size = 32
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xdi1o"]
+content_margin_left = 16.0
+content_margin_top = 0.0
+content_margin_right = 16.0
+content_margin_bottom = 5.0
+bg_color = Color(0.93845, 0.93845, 0.93845, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_q7nlx"]
 font_size = 32
 
@@ -30,6 +39,7 @@ process_mode = 3
 script = ExtResource("1_jvxva")
 
 [node name="PausedUI" type="HBoxContainer" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -108,12 +118,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="HUD" type="MarginContainer" parent="."]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("5_ekyou")
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
@@ -142,17 +152,19 @@ horizontal_alignment = 1
 
 [node name="UseLabelContainer" type="MarginContainer" parent="HUD"]
 layout_mode = 2
-theme_override_constants/margin_top = 400
+theme_override_constants/margin_top = 1000
 
 [node name="UseLabel" type="Label" parent="HUD/UseLabelContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("3_6v203")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xdi1o")
 text = "use something"
-label_settings = SubResource("LabelSettings_juqyv")
+label_settings = ExtResource("7_4w4uq")
 horizontal_alignment = 1
 
 [node name="VehicleInfoLabel" type="Label" parent="HUD"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
