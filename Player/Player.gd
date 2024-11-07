@@ -64,6 +64,7 @@ func _ready() -> void:
   PedestrianManager.spawn_include_area = $CameraController/PlayerCamera/PedestrianSpawnIncludeArea
   camera_controller.top_level = true
   $CameraController/PlayerCamera.top_level = true
+  PauseAndHud.player = self
 
 
 func _on_body_entered(_body: Node) -> void:
@@ -119,11 +120,10 @@ func _physics_process(delta: float) -> void:
 
   # Respond to pause button
   var is_pausing := Input.is_action_just_pressed("Pause")
-  if is_pausing:
-    if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-      Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-    else:
-      Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+  if not get_tree().paused and is_pausing:
+    get_tree().create_timer(.1).timeout.connect(func():
+      get_tree().paused = true
+    )
 
   var is_in_vehicle := current_vehicle != null
   var is_using := Input.is_action_just_pressed("use")

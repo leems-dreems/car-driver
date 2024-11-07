@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://djel5wi5nvl5d"]
+
+[sub_resource type="SystemFont" id="SystemFont_7dn08"]
+font_names = PackedStringArray("Gadugi")
+
+[resource]
+default_font = SubResource("SystemFont_7dn08")
