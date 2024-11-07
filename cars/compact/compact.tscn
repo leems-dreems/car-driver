@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=89 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
@@ -56,6 +56,7 @@
 [ext_resource type="AudioStream" uid="uid://c3r0shaam8fk0" path="res://assets/audio/Sound effects package/Crashes/Glass Break 01.wav" id="46_3lylc"]
 [ext_resource type="AudioStream" uid="uid://bsykmtu15bbyy" path="res://assets/audio/Sound effects package/Crashes/Glass Break 02.wav" id="47_ek2u8"]
 [ext_resource type="AudioStream" uid="uid://btwfyuao3yspq" path="res://assets/audio/Sound effects package/Crashes/Glass Break 03.wav" id="48_e2voh"]
+[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="53_aoxa3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.8
@@ -999,6 +1000,7 @@ amount_ratio = 0.0
 randomness = 0.5
 process_material = ExtResource("18_6yteg")
 draw_pass_1 = ExtResource("19_ku3tg")
+script = ExtResource("53_aoxa3")
 
 [node name="EngineSmokeWhite" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
@@ -1008,6 +1010,7 @@ amount_ratio = 0.0
 randomness = 0.5
 process_material = ExtResource("20_ov1ny")
 draw_pass_1 = ExtResource("19_ku3tg")
+script = ExtResource("53_aoxa3")
 
 [node name="Sparks" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
@@ -1021,6 +1024,7 @@ randomness = 0.35
 visibility_aabb = AABB(-4.84702, -4, -4, 9.7204, 8, 8)
 process_material = SubResource("ParticleProcessMaterial_phnmf")
 draw_pass_1 = SubResource("BoxMesh_gtwax")
+script = ExtResource("53_aoxa3")
 
 [node name="Fire" parent="." instance=ExtResource("21_6fmka")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)

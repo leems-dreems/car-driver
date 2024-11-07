@@ -1,4 +1,4 @@
-extends GPUParticles3D
+extends CarGameParticles
 
 @export var vehicle : Vehicle
 @export var longitudinal_slip_threshold := 0.5
@@ -12,6 +12,7 @@ var skidmark_decals: Array[Decal] = []
 
 
 func _ready() -> void:
+  super()
   for wheel: Wheel in vehicle.wheel_array:
     wheel.squeal_audio.volume_db = linear_to_db(0)
 

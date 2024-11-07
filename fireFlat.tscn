@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://c0sm3m6mudm7u"]
+[gd_scene load_steps=15 format=3 uid="uid://c0sm3m6mudm7u"]
 
 [ext_resource type="Texture2D" uid="uid://bcctf2eb0h5f2" path="res://assets/textures/stillFlame.png" id="1_qghlc"]
 [ext_resource type="Texture2D" uid="uid://d1jy3bqnsbkwu" path="res://assets/textures/FlameSheet.png" id="2_qg21p"]
+[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="3_0si1p"]
 
 [sub_resource type="Curve" id="Curve_dawdi"]
 _data = [Vector2(0.827451, 0.978723), 0.0, -21.7021, 0, 0, Vector2(1, 0.010989), -27.0981, 0.0, 0, 0]
@@ -66,3 +67,4 @@ explosiveness = 0.15
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_4bpr3")
 draw_pass_1 = SubResource("QuadMesh_nndmt")
+script = ExtResource("3_0si1p")

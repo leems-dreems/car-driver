@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://jpe0svqk76rk"]
+[gd_scene load_steps=17 format=3 uid="uid://jpe0svqk76rk"]
 
 [ext_resource type="Script" path="res://collidables/standalone_gas_pump_bodies.gd" id="1_lxtwe"]
 [ext_resource type="PackedScene" uid="uid://drtqj75y7cwtf" path="res://fire.tscn" id="2_67v7a"]
 [ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="2_t1f7j"]
 [ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="3_h5uk1"]
+[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="4_hy7kp"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j5txw"]
 friction = 0.5
@@ -103,6 +104,7 @@ randomness = 0.35
 visibility_aabb = AABB(-4.84702, -4, -4, 9.7204, 8, 8)
 process_material = SubResource("ParticleProcessMaterial_pkv5m")
 draw_pass_1 = SubResource("BoxMesh_nyl66")
+script = ExtResource("4_hy7kp")
 
 [node name="Fire3" parent="RigidBody3D/Emitters" instance=ExtResource("3_h5uk1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65663, 1.92129, -0.00401568)

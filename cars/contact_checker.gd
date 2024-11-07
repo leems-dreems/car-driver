@@ -46,6 +46,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
         )
       var _emitter: CarScrapeEmitter = _scrape_emitters[_collider_id]
       _emitter.global_position = _contacts_dict[_collider_id].mean_position
+      
       _emitter.top_level = false
       var _scrape_velocity: float = _contacts_dict[_collider_id].mean_velocity.length_squared()
       if _scrape_velocity > minimum_scrape_velocity:

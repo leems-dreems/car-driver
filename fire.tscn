@@ -1,4 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://drtqj75y7cwtf"]
+[gd_scene load_steps=13 format=3 uid="uid://drtqj75y7cwtf"]
+
+[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="1_vurgw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ltdd8"]
 transparency = 1
@@ -60,3 +62,4 @@ explosiveness = 0.15
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_4bpr3")
 draw_pass_1 = SubResource("SphereMesh_7adbk")
+script = ExtResource("1_vurgw")

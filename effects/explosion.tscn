@@ -1,8 +1,9 @@
-[gd_scene load_steps=26 format=3 uid="uid://qj5wm2wpuawj"]
+[gd_scene load_steps=27 format=3 uid="uid://qj5wm2wpuawj"]
 
 [ext_resource type="Script" path="res://effects/explosion.gd" id="1_dmlp3"]
 [ext_resource type="AudioStream" uid="uid://4icv5wfjnole" path="res://assets/audio/Hanna-Barbera SFX/bomb_1.wav" id="2_byo7q"]
 [ext_resource type="Material" uid="uid://boon6b1dc8ryq" path="res://effects/explosion_debris_material_3d.tres" id="3_1vq0b"]
+[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="4_51gev"]
 [ext_resource type="Material" uid="uid://dc3wmbntvjo4b" path="res://effects/explosion_fire_material_3d.tres" id="4_sthou"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_44s0b"]
@@ -143,6 +144,7 @@ explosiveness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_bby8d")
 draw_pass_1 = SubResource("CylinderMesh_ru2ja")
+script = ExtResource("4_51gev")
 
 [node name="FireEmitter" type="GPUParticles3D" parent="."]
 emitting = false
@@ -152,6 +154,7 @@ explosiveness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_i7awk")
 draw_pass_1 = SubResource("SphereMesh_noyy7")
+script = ExtResource("4_51gev")
 
 [node name="SmokeEmitter" type="GPUParticles3D" parent="."]
 emitting = false
@@ -162,6 +165,7 @@ explosiveness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_mn81p")
 draw_pass_1 = SubResource("SphereMesh_noyy7")
+script = ExtResource("4_51gev")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
