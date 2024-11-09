@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://d0cao7dofa5t"
+path="res://.godot/imported/van_reverselight_L.obj-03d90b44609e834a77f4347226c889cc.mesh"
+
+[deps]
+
+files=["res://.godot/imported/van_reverselight_L.obj-03d90b44609e834a77f4347226c889cc.mesh"]
+
+source_file="res://assets/models/vehicles/Van/van_reverselight_L.obj"
+dest_files=["res://.godot/imported/van_reverselight_L.obj-03d90b44609e834a77f4347226c889cc.mesh", "res://.godot/imported/van_reverselight_L.obj-03d90b44609e834a77f4347226c889cc.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cgr5vsxa245m0"
+path="res://.godot/imported/van_brakelight_L.obj-a7383820f801b81619df4a073aa164be.mesh"
+
+[deps]
+
+files=["res://.godot/imported/van_brakelight_L.obj-a7383820f801b81619df4a073aa164be.mesh"]
+
+source_file="res://assets/models/vehicles/Van/van_brakelight_L.obj"
+dest_files=["res://.godot/imported/van_brakelight_L.obj-a7383820f801b81619df4a073aa164be.mesh", "res://.godot/imported/van_brakelight_L.obj-a7383820f801b81619df4a073aa164be.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

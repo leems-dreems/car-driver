@@ -1,9 +1,9 @@
 class_name VehicleDispenser extends Node3D
 
-enum VehicleTypes { COMPACT, SEDAN }
+enum VehicleTypes { COMPACT, VAN }
 @export var show_debug_label := false
 var compact_scene := preload("res://cars/compact/compact.tscn")
-var sedan_scene := preload("res://cars/sedan/sedan.tscn")
+var van_scene := preload("res://cars/Van/van.tscn")
 @onready var vehicle_platform: CSGBox3D = $VehiclePlatform
 
 
@@ -12,8 +12,8 @@ func spawn_vehicle(vehicle_type: VehicleTypes) -> void:
   match vehicle_type:
     VehicleTypes.COMPACT:
       _vehicle = compact_scene.instantiate()
-    VehicleTypes.SEDAN:
-      _vehicle = sedan_scene.instantiate()
+    VehicleTypes.VAN:
+      _vehicle = van_scene.instantiate()
   _vehicle.position = vehicle_platform.position
   _vehicle.position.y += 2
   _vehicle.rotation = vehicle_platform.rotation

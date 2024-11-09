@@ -146,7 +146,7 @@ layout_mode = 2
 [node name="MissionLabel" type="Label" parent="HUD/MissionLabelContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Mission: Get a job"
+text = "Mission: None"
 label_settings = SubResource("LabelSettings_juqyv")
 horizontal_alignment = 1
 

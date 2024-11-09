@@ -23,6 +23,9 @@ func _ready() -> void:
   pause_menu.visible = true
   options_menu.visible = false
   vehicle_hud_label.text = ""
+  for _pause_menu_button in pause_menu_buttons.get_children():
+    _pause_menu_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    _pause_menu_button.focus_mode = Control.FOCUS_NONE
   return
 
 

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bm6tjdix4yscu"
+path="res://.godot/imported/cricket_body.obj-e7e2a1d218ee02eeb7dd6913acf25888.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cricket_body.obj-e7e2a1d218ee02eeb7dd6913acf25888.mesh"]
+
+source_file="res://assets/models/vehicles/Cricket/cricket_body.obj"
+dest_files=["res://.godot/imported/cricket_body.obj-e7e2a1d218ee02eeb7dd6913acf25888.mesh", "res://.godot/imported/cricket_body.obj-e7e2a1d218ee02eeb7dd6913acf25888.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

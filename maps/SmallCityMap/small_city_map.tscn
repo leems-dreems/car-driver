@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://cr77wenw0lh5c"]
+[gd_scene load_steps=88 format=3 uid="uid://cr77wenw0lh5c"]
 
 [ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="10_b2bvt"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="12_n3gia"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="13_fg0qv"]
+[ext_resource type="PackedScene" uid="uid://dfcsj3jjvi65m" path="res://cars/Van/van.tscn" id="13_pjkok"]
 [ext_resource type="PackedScene" uid="uid://2g4icv655eh3" path="res://maps/SmallCityMap/4_way_junction.tscn" id="14_4imh1"]
 [ext_resource type="Material" uid="uid://c7ote2txeba1m" path="res://addons/road-generator/resources/road_texture.material" id="14_vie48"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="15_0gxjo"]
@@ -1465,6 +1466,9 @@ traffic_lights_RP_004 = [NodePath("../../TrafficLights/4WayJunction_D4")]
 
 [node name="CompactCar" parent="VehicleContainer" instance=ExtResource("8_dvnrp")]
 transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 62, 1.2, 15.1772)
+
+[node name="Van" parent="VehicleContainer" instance=ExtResource("13_pjkok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1.3, 15)
 
 [node name="PedestrianContainer" type="Node3D" parent="."]
 

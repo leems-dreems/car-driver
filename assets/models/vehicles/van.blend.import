@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dulrw6wssyjb"
-path="res://.godot/imported/cricket.blend-a3eabb89ea7362f0c22331ae90528942.scn"
+uid="uid://b8lqqbpppqcm6"
+path="res://.godot/imported/van.blend-2ce9550bb635bcef3d5e622849fe5e0c.scn"
 
 [deps]
 
-source_file="res://assets/models/vehicles/cricket.blend"
-dest_files=["res://.godot/imported/cricket.blend-a3eabb89ea7362f0c22331ae90528942.scn"]
+source_file="res://assets/models/vehicles/van.blend"
+dest_files=["res://.godot/imported/van.blend-2ce9550bb635bcef3d5e622849fe5e0c.scn"]
 
 [params]
 

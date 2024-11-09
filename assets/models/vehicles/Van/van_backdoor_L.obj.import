@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bnifls4wfw4bl"
+path="res://.godot/imported/van_backdoor_L.obj-53584488ef6b6b1f8330ab995433a293.mesh"
+
+[deps]
+
+files=["res://.godot/imported/van_backdoor_L.obj-53584488ef6b6b1f8330ab995433a293.mesh"]
+
+source_file="res://assets/models/vehicles/Van/van_backdoor_L.obj"
+dest_files=["res://.godot/imported/van_backdoor_L.obj-53584488ef6b6b1f8330ab995433a293.mesh", "res://.godot/imported/van_backdoor_L.obj-53584488ef6b6b1f8330ab995433a293.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
