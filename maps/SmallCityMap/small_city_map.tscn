@@ -1604,7 +1604,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
 use_collision = true
 size = Vector3(5, 6, 4)
 
-[node name="DispenserButtonSedan" type="CSGBox3D" parent="VehicleDispenser"]
+[node name="DispenserButtonVan" type="CSGBox3D" parent="VehicleDispenser"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.5, -1.6)
 material_override = SubResource("StandardMaterial3D_spxxv")
 use_collision = true
@@ -1613,9 +1613,9 @@ size = Vector3(4, 1, 1)
 script = ExtResource("26_0bws6")
 vehicle_type = 1
 
-[node name="Label3D" type="Label3D" parent="VehicleDispenser/DispenserButtonSedan"]
+[node name="Label3D" type="Label3D" parent="VehicleDispenser/DispenserButtonVan"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.51)
-text = "Sedan"
+text = "Van"
 
 [node name="DispenserButtonCompact" type="CSGBox3D" parent="VehicleDispenser"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -2, -1.6)
@@ -1627,7 +1627,7 @@ script = ExtResource("26_0bws6")
 
 [node name="Label3D" type="Label3D" parent="VehicleDispenser/DispenserButtonCompact"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.51)
-text = "Compact"
+text = "Cricket"
 
 [node name="VehiclePlatform" type="CSGBox3D" parent="VehicleDispenser"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -2.95, 0)

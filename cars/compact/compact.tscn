@@ -745,7 +745,7 @@ visible = false
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("13_3hex1")
-vehicle_name = "Compact Car"
+vehicle_name = "Cricket"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/EnterCarCollider"]
 transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 0.693126, -0.00113106)

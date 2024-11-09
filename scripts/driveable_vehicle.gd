@@ -2,6 +2,7 @@ class_name DriveableVehicle extends Vehicle
 
 @export var lights_on := false
 @export var downforce_multiplier := 4.0
+var vehicle_name := "Vehicle"
 var headlight_energy := 10.0
 var brake_light_energy := 5.0
 var reverse_light_energy := 1.0
