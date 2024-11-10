@@ -1,46 +1,18 @@
-[gd_scene load_steps=17 format=3 uid="uid://jpe0svqk76rk"]
+[gd_scene load_steps=12 format=3 uid="uid://jpe0svqk76rk"]
 
 [ext_resource type="Script" path="res://collidables/standalone_gas_pump_bodies.gd" id="1_lxtwe"]
 [ext_resource type="PackedScene" uid="uid://drtqj75y7cwtf" path="res://fire.tscn" id="2_67v7a"]
 [ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="2_t1f7j"]
 [ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="3_h5uk1"]
 [ext_resource type="Script" path="res://effects/car_game_particles.gd" id="4_hy7kp"]
+[ext_resource type="Material" uid="uid://crersspndigy4" path="res://effects/spark_emitter_material.tres" id="5_qhsfs"]
+[ext_resource type="RibbonTrailMesh" uid="uid://cya57d6ip8mv7" path="res://effects/spark_ribbon_mesh.tres" id="6_hydgb"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j5txw"]
 friction = 0.5
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_edtus"]
 points = PackedVector3Array(-1.25, 0, -0.384485, -1.25, 0, 0.384223, -1.25, 0.999689, -0.50004, 1.25, 0, -0.384485, 1.25, 0, 0.384223, -1.25, 0.999689, 0.499909, 1.25, 0.999689, -0.50004, -1.25, 1.83271, -0.210433, -1.11761, 3.56967, -0.668465, -1.11761, 3.23353, -0.668465, 1.25, 0.999689, 0.499909, -1.25, 1.83271, 0.210171, -1.11761, 3.23353, 0.668465, -1.11761, 3.56967, 0.668465, 1.25, 1.83271, -0.210433, 1.11736, 3.23353, -0.668465, 1.11736, 3.56967, -0.668465, -1.25, 2.16675, -0.000130892, 1.25, 1.83271, 0.210171, 1.11736, 3.56967, 0.668465, 1.11736, 3.23353, 0.668465, 1.25, 2.16675, -0.000130892)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dgbr0"]
-vertex_color_use_as_albedo = true
-
-[sub_resource type="Gradient" id="Gradient_jj2wk"]
-offsets = PackedFloat32Array(0, 0.484582, 0.819383, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.932249, 0.891119, 2.31028e-06, 1, 0.920752, 0.355072, 0, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_mpcpi"]
-gradient = SubResource("Gradient_jj2wk")
-
-[sub_resource type="Curve" id="Curve_pku0d"]
-_data = [Vector2(0.0392157, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.84081, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_wj330"]
-curve = SubResource("Curve_pku0d")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pkv5m"]
-direction = Vector3(0, 1, 0)
-spread = 75.0
-initial_velocity_min = 8.0
-initial_velocity_max = 12.0
-damping_min = 5.0
-damping_max = 10.0
-color_ramp = SubResource("GradientTexture1D_mpcpi")
-emission_curve = SubResource("CurveTexture_wj330")
-
-[sub_resource type="BoxMesh" id="BoxMesh_nyl66"]
-size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_hryqd"]
 radius = 0.1
@@ -92,20 +64,6 @@ emitting = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.762578, 2.40752, -8.17776e-05)
 emitting = false
 
-[node name="Sparks" type="GPUParticles3D" parent="RigidBody3D/Emitters"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.443619)
-material_override = SubResource("StandardMaterial3D_dgbr0")
-emitting = false
-amount = 16
-lifetime = 0.5
-one_shot = true
-explosiveness = 0.78
-randomness = 0.35
-visibility_aabb = AABB(-4.84702, -4, -4, 9.7204, 8, 8)
-process_material = SubResource("ParticleProcessMaterial_pkv5m")
-draw_pass_1 = SubResource("BoxMesh_nyl66")
-script = ExtResource("4_hy7kp")
-
 [node name="Fire3" parent="RigidBody3D/Emitters" instance=ExtResource("3_h5uk1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65663, 1.92129, -0.00401568)
 emitting = false
@@ -113,6 +71,20 @@ emitting = false
 [node name="Fire4" parent="RigidBody3D/Emitters" instance=ExtResource("3_h5uk1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.833531, 0.843393, -0.06897)
 emitting = false
+
+[node name="Sparks" type="GPUParticles3D" parent="RigidBody3D/Emitters"]
+emitting = false
+amount = 16
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.78
+randomness = 0.35
+fixed_fps = 60
+interpolate = false
+transform_align = 3
+process_material = ExtResource("5_qhsfs")
+draw_pass_1 = ExtResource("6_hydgb")
+script = ExtResource("4_hy7kp")
 
 [node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="."]
 linear_limit_x/upper = 1.0

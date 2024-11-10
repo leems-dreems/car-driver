@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=4 uid="uid://dfcsj3jjvi65m"]
+[gd_scene load_steps=89 format=4 uid="uid://dfcsj3jjvi65m"]
 
 [ext_resource type="Script" path="res://cars/Van/van.gd" id="1_bpvqw"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_131uc"]
@@ -17,7 +17,9 @@
 [ext_resource type="ArrayMesh" uid="uid://bnifls4wfw4bl" path="res://assets/models/vehicles/Van/van_backdoor_L.obj" id="15_nnodf"]
 [ext_resource type="ArrayMesh" uid="uid://cgr5vsxa245m0" path="res://assets/models/vehicles/Van/van_brakelight_L.obj" id="16_kfje4"]
 [ext_resource type="ArrayMesh" uid="uid://d0cao7dofa5t" path="res://assets/models/vehicles/Van/van_reverselight_L.obj" id="17_e7jp8"]
+[ext_resource type="Material" uid="uid://duxm05v8wv3mp" path="res://assets/materials/brake_light_emissive_material_3d.tres" id="17_pdpus"]
 [ext_resource type="ArrayMesh" uid="uid://mk2on6la1wed" path="res://assets/models/vehicles/Van/van_backdoor_R.obj" id="18_500c0"]
+[ext_resource type="Material" uid="uid://dmtu75kn4a1ac" path="res://assets/materials/reverse_light_emissive_material_3d.tres" id="19_256ip"]
 [ext_resource type="ArrayMesh" uid="uid://b0qvn50fxmync" path="res://assets/models/vehicles/Van/van_brakelight_R.obj" id="19_l8fvl"]
 [ext_resource type="ArrayMesh" uid="uid://bd6q5r66dksys" path="res://assets/models/vehicles/Van/van_reverselight_R.obj" id="20_aa3gt"]
 [ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="21_alnvw"]
@@ -79,6 +81,9 @@ points = PackedVector3Array(-1.0077, 0.775201, 1.56235, -1.00744, 0.349773, 1.27
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_s0iyp"]
 points = PackedVector3Array(0, 0.349139, -2.37043, 0, 0.349139, -2.36042, 0, 0.650812, -2.37338, 0.900422, 0.349139, -2.37043, 0.900422, 0.349139, -2.36042, 0.748383, 1.99914, -2.29934, 0, 2.02691, -2.29934, 0.900422, 0.650812, -2.37338, 0, 0.815122, -2.37091, 0.900422, 1.02035, -2.35782, 0.8077, 1.6462, -2.32416, 0.748471, 1.99996, -2.30932, 0.426678, 2.01229, -2.29934, 0, 2.02773, -2.30932, 0.900422, 0.815122, -2.37091, 0, 1.02067, -2.36782, 0.900334, 1.02067, -2.36782, 0.874421, 1.21604, -2.35975, 0.874421, 1.21555, -2.34976, 0.8077, 1.64686, -2.33414, 0.426678, 2.01294, -2.30932, 0.0399267, 1.98632, -2.31205, 0, 1.6536, -2.33414, 0, 1.21111, -2.35975, 0.827796, 1.2558, -2.35741, 0.768214, 1.64045, -2.33459, 0.458055, 1.64998, -2.33414)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4rdar"]
+points = PackedVector3Array(-0.900422, 0.349139, -2.37043, -0.900422, 0.349139, -2.36042, -0.900422, 0.650812, -2.37338, 5.96046e-08, 0.349139, -2.37043, -0.900422, 1.02035, -2.35782, 5.96046e-08, 0.349139, -2.36042, -0.748471, 1.99914, -2.29934, 5.96046e-08, 0.650812, -2.37338, -0.900422, 0.815122, -2.37091, -0.900422, 1.02067, -2.36782, -0.874509, 1.21555, -2.34976, -0.874509, 1.21604, -2.35975, 5.96046e-08, 2.02691, -2.29934, -0.426766, 2.01229, -2.29934, -0.748559, 1.99996, -2.30932, -0.807788, 1.6462, -2.32416, 5.96046e-08, 0.815122, -2.37091, 5.96046e-08, 1.02067, -2.36782, -0.807788, 1.64686, -2.33414, -0.768303, 1.64045, -2.33459, -0.827884, 1.2558, -2.35741, 5.96046e-08, 1.6536, -2.33414, 5.96046e-08, 1.21111, -2.35975, 5.96046e-08, 2.02773, -2.30932, -0.426766, 2.01294, -2.30932, -0.040103, 1.98632, -2.31205, -0.458143, 1.64998, -2.33414)
 
 [sub_resource type="BoxMesh" id="BoxMesh_uu7oe"]
 
@@ -263,15 +268,14 @@ contact_monitor = true
 max_contacts_reported = 24
 script = ExtResource("1_bpvqw")
 max_hit_points = 50.0
-brake_light_left_mesh = NodePath("ColliderBits/BackDoorLeft/OpenBackDoorLeft/Lights/BrakeLightLeft/MeshInstance3D")
-brake_light_right_mesh = NodePath("ColliderBits/BackDoorRight/OpenBackDoorRight/Lights/BrakeLightRight/MeshInstance3D")
-reverse_light_left_mesh = NodePath("ColliderBits/BackDoorLeft/OpenBackDoorLeft/Lights/ReverseLightLeft/MeshInstance3D")
-reverse_light_right_mesh = NodePath("ColliderBits/BackDoorRight/OpenBackDoorRight/Lights/ReverseLightRight/MeshInstance3D")
+brake_light_left_mesh = NodePath("ColliderBits/BackDoorLeft/OpenBackDoorLeft/Lights/BrakeLightLeft/EmissiveMesh")
+brake_light_right_mesh = NodePath("ColliderBits/BackDoorRight/OpenBackDoorRight/Lights/BrakeLightRight/EmissiveMesh")
+reverse_light_left_mesh = NodePath("ColliderBits/BackDoorLeft/OpenBackDoorLeft/Lights/ReverseLightLeft/EmissiveMesh")
+reverse_light_right_mesh = NodePath("ColliderBits/BackDoorRight/OpenBackDoorRight/Lights/ReverseLightRight/EmissiveMesh")
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
 rear_left_wheel = NodePath("WheelRearLeft")
 rear_right_wheel = NodePath("WheelRearRight")
-countersteer_assist = 0.8
 traction_control_max_slip = 1.0
 enable_stability = false
 stability_yaw_strength = 1.0
@@ -295,13 +299,13 @@ coefficient_of_friction = {
 }
 lateral_grip_assist = {
 "Dirt": 0.0,
-"Grass": 0.0,
-"Road": 0.0
+"Grass": 0.2,
+"Road": 0.05
 }
 longitudinal_grip_ratio = {
-"Dirt": 1.5,
-"Grass": 1.5,
-"Road": 1.5
+"Dirt": 1.0,
+"Grass": 1.0,
+"Road": 1.0
 }
 front_tire_radius = 0.5
 front_tire_width = 280.0
@@ -374,7 +378,7 @@ affect_navigation_mesh = true
 
 [node name="HingeJointLeft" type="JoltHingeJoint3D" parent="ColliderBits/DoorLeft"]
 limit_enabled = true
-limit_lower = -1.0472
+limit_lower = -1.309
 motor_target_velocity = -2.0944
 node_a = NodePath("../../..")
 node_b = NodePath("../OpenDoorLeft")
@@ -457,7 +461,7 @@ shape = SubResource("SphereShape3D_jv0dm")
 
 [node name="HingeJointRight" type="JoltHingeJoint3D" parent="ColliderBits/DoorRight"]
 limit_enabled = true
-limit_upper = 1.0472
+limit_upper = 1.309
 motor_target_velocity = 2.0944
 node_a = NodePath("../../..")
 node_b = NodePath("../OpenDoorRight")
@@ -538,19 +542,19 @@ shape = SubResource("SphereShape3D_jv0dm")
 
 [node name="BackDoorLeft" type="Node3D" parent="ColliderBits"]
 
-[node name="HingeJointBoot" type="JoltHingeJoint3D" parent="ColliderBits/BackDoorLeft"]
+[node name="HingeJointBackDoorLeft" type="JoltHingeJoint3D" parent="ColliderBits/BackDoorLeft"]
 limit_enabled = true
-limit_lower = -1.309
+limit_lower = -1.74533
 motor_target_velocity = -2.0944
 node_a = NodePath("../../..")
 node_b = NodePath("../OpenBackDoorLeft")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.35153, 1.03073, 3.54954)
 
-[node name="BackDoorLeftBodyHingeSeparationCollider" type="Area3D" parent="ColliderBits/BackDoorLeft/HingeJointBoot"]
+[node name="BackDoorLeftBodyHingeSeparationCollider" type="Area3D" parent="ColliderBits/BackDoorLeft/HingeJointBackDoorLeft"]
 collision_layer = 32
 collision_mask = 32
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/BackDoorLeft/HingeJointBoot/BackDoorLeftBodyHingeSeparationCollider"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/BackDoorLeft/HingeJointBackDoorLeft/BackDoorLeftBodyHingeSeparationCollider"]
 shape = SubResource("SphereShape3D_ue786")
 
 [node name="ShutBackDoorLeft" type="MeshInstance3D" parent="ColliderBits/BackDoorLeft"]
@@ -577,16 +581,15 @@ freeze_mode = 1
 script = ExtResource("11_wu5de")
 parent_car = NodePath("../../..")
 shut_door_mesh = NodePath("../ShutBackDoorLeft")
-hinge_joint = NodePath("../HingeJointBoot")
+hinge_joint = NodePath("../HingeJointBackDoorLeft")
 door_open_SFX = NodePath("DoorOpenSFX")
 door_shut_SFX = NodePath("DoorShutSFX")
 enter_car_collision_shape = NodePath("../../EnterCarCollider/CollisionShape3D")
 door_latch = NodePath("BackDoorLeftLatch")
 body_latch = NodePath("../BackDoorLeftBodyLatch")
 latch_velocity_threshold = 2.0
-is_openable = false
 hide_rigidbody_when_shut = false
-hinge_separation_collider_A = NodePath("../HingeJointBoot/BackDoorLeftBodyHingeSeparationCollider")
+hinge_separation_collider_A = NodePath("../HingeJointBackDoorLeft/BackDoorLeftBodyHingeSeparationCollider")
 hinge_separation_collider_B = NodePath("BackDoorLeftHingeSeparationCollider")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/BackDoorLeft/OpenBackDoorLeft"]
@@ -631,6 +634,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 mesh = ExtResource("16_kfje4")
 
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/BackDoorLeft/OpenBackDoorLeft/Lights/BrakeLightLeft"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("16_kfje4")
+surface_material_override/0 = ExtResource("17_pdpus")
+
 [node name="ReverseLightLeft" type="Node3D" parent="ColliderBits/BackDoorLeft/OpenBackDoorLeft/Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
@@ -639,21 +648,27 @@ transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 
 gi_mode = 2
 mesh = ExtResource("17_e7jp8")
 
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/BackDoorLeft/OpenBackDoorLeft/Lights/ReverseLightLeft"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("17_e7jp8")
+surface_material_override/0 = ExtResource("19_256ip")
+
 [node name="BackDoorRight" type="Node3D" parent="ColliderBits"]
 
-[node name="HingeJointBoot" type="JoltHingeJoint3D" parent="ColliderBits/BackDoorRight"]
+[node name="HingeJointBackDoorRight" type="JoltHingeJoint3D" parent="ColliderBits/BackDoorRight"]
 limit_enabled = true
-limit_upper = 1.309
+limit_upper = 1.74533
 motor_target_velocity = 2.0944
 node_a = NodePath("../../..")
 node_b = NodePath("../OpenBackDoorRight")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.352, 1.031, 3.55)
 
-[node name="BackDoorRightBodyHingeSeparationCollider" type="Area3D" parent="ColliderBits/BackDoorRight/HingeJointBoot"]
+[node name="BackDoorRightBodyHingeSeparationCollider" type="Area3D" parent="ColliderBits/BackDoorRight/HingeJointBackDoorRight"]
 collision_layer = 32
 collision_mask = 32
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/BackDoorRight/HingeJointBoot/BackDoorRightBodyHingeSeparationCollider"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/BackDoorRight/HingeJointBackDoorRight/BackDoorRightBodyHingeSeparationCollider"]
 shape = SubResource("SphereShape3D_ue786")
 
 [node name="ShutBackDoorRight" type="MeshInstance3D" parent="ColliderBits/BackDoorRight"]
@@ -680,16 +695,15 @@ freeze_mode = 1
 script = ExtResource("11_wu5de")
 parent_car = NodePath("../../..")
 shut_door_mesh = NodePath("../ShutBackDoorRight")
-hinge_joint = NodePath("../HingeJointBoot")
+hinge_joint = NodePath("../HingeJointBackDoorRight")
 door_open_SFX = NodePath("DoorOpenSFX")
 door_shut_SFX = NodePath("DoorShutSFX")
 enter_car_collision_shape = NodePath("../../EnterCarCollider/CollisionShape3D")
 door_latch = NodePath("BackDoorRightLatch")
 body_latch = NodePath("../BackDoorRightBodyLatch")
 latch_velocity_threshold = 2.0
-is_openable = false
 hide_rigidbody_when_shut = false
-hinge_separation_collider_A = NodePath("../HingeJointBoot/BackDoorRightBodyHingeSeparationCollider")
+hinge_separation_collider_A = NodePath("../HingeJointBackDoorRight/BackDoorRightBodyHingeSeparationCollider")
 hinge_separation_collider_B = NodePath("BackDoorRightHingeSeparationCollider")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/BackDoorRight/OpenBackDoorRight"]
@@ -698,7 +712,7 @@ mesh = ExtResource("18_500c0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/BackDoorRight/OpenBackDoorRight"]
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_s0iyp")
+shape = SubResource("ConvexPolygonShape3D_4rdar")
 
 [node name="DoorOpenSFX" type="AudioStreamPlayer3D" parent="ColliderBits/BackDoorRight/OpenBackDoorRight"]
 stream = ExtResource("12_im2t8")
@@ -734,6 +748,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 mesh = ExtResource("19_l8fvl")
 
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/BackDoorRight/OpenBackDoorRight/Lights/BrakeLightRight"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("19_l8fvl")
+surface_material_override/0 = ExtResource("17_pdpus")
+
 [node name="ReverseLightRight" type="Node3D" parent="ColliderBits/BackDoorRight/OpenBackDoorRight/Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
@@ -741,6 +761,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 gi_mode = 2
 mesh = ExtResource("20_aa3gt")
+
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/BackDoorRight/OpenBackDoorRight/Lights/ReverseLightRight"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("20_aa3gt")
+surface_material_override/0 = ExtResource("19_256ip")
 
 [node name="EnterCarCollider" type="StaticBody3D" parent="ColliderBits"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1.4)
@@ -760,7 +786,7 @@ shape = SubResource("ConcavePolygonShape3D_100sx")
 disabled = true
 
 [node name="WheelFrontLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.24652, -0.1, -2.60287)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15655, -0.1, -2.60287)
 script = ExtResource("22_4fyyl")
 wheel_node = NodePath("FrontLeftWheel")
 
@@ -788,7 +814,7 @@ pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.247, -0.1, -2.60287)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.157, -0.1, -2.60287)
 script = ExtResource("22_4fyyl")
 wheel_node = NodePath("FrontRightWheel")
 
@@ -816,7 +842,7 @@ pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.24652, -0.1, 2.08371)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15655, -0.1, 2.08371)
 script = ExtResource("22_4fyyl")
 wheel_node = NodePath("RearLeftWheel")
 
@@ -844,7 +870,7 @@ pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.247, -0.1, 2.08371)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.157, -0.1, 2.08371)
 script = ExtResource("22_4fyyl")
 wheel_node = NodePath("RearRightWheel")
 

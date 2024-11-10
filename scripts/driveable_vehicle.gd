@@ -110,24 +110,15 @@ func _physics_process(delta: float) -> void:
   super(delta)
   # Record current velocity, to refer to when processing collision signals
   _previous_velocity = Vector3(linear_velocity)
-  # Apply downforce if any wheels are touching the ground
+  # Apply downforce if 2 or more wheels are touching the ground
   #if get_wheel_contact_count() > 1:
     # Get Z rotation, then get the square-root of its square to ensure that it's positive
     #var _angle_from_upright := (PI / 2) - sqrt(pow(rotation.z, 2))
     #if _angle_from_upright > 0:
       #apply_central_force(-basis.y * _angle_from_upright * downforce_multiplier * pow(speed, 2))
-  # Update energy of various lights
-  #if is_being_driven:
-    #var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
-    #brake_light_left.light_energy = _current_brake_light_energy
-    #brake_light_right.light_energy = _current_brake_light_energy
-  brake_light_left_mesh.transparency = 0.9 - brake_amount
-  brake_light_right_mesh.transparency = 0.9 - brake_amount
+  brake_light_left_mesh.transparency = 1.0 - brake_amount
+  brake_light_right_mesh.transparency = 1.0 - brake_amount
   if current_gear == -1:
-    #if is_being_driven:
-      #var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, reverse_light_energy, delta * 10)
-      #reverse_light_left.light_energy = _current_reverse_light_energy
-      #reverse_light_right.light_energy = _current_reverse_light_energy
     reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 0.0, delta * 10)
     reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 0.0, delta * 10)
   else:
@@ -135,8 +126,8 @@ func _physics_process(delta: float) -> void:
       #var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 10)
       #reverse_light_left.light_energy = _current_reverse_light_energy
       #reverse_light_right.light_energy = _current_reverse_light_energy
-    reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 0.9, delta * 10)
-    reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 0.9, delta * 10)
+    reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 1.0, delta * 10)
+    reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 1.0, delta * 10)
   var _target_headlight_energy := 0.0
   if lights_on:
     _target_headlight_energy = headlight_energy

@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=89 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
@@ -24,11 +24,13 @@
 [ext_resource type="AudioStream" uid="uid://b6wjsd5udyqvt" path="res://assets/audio/Hanna-Barbera SFX/rumble_loop.wav" id="17_rtnly"]
 [ext_resource type="Material" uid="uid://bdg4152rp8j33" path="res://effects/smoke_particle_process_material.tres" id="18_6yteg"]
 [ext_resource type="ArrayMesh" uid="uid://b1sqc1ic4xp46" path="res://assets/models/vehicles/Cricket/cricket_headlight_R.obj" id="18_26f06"]
+[ext_resource type="Material" uid="uid://duxm05v8wv3mp" path="res://assets/materials/brake_light_emissive_material_3d.tres" id="18_kg4th"]
 [ext_resource type="ArrayMesh" uid="uid://b44aqsaqhcf0m" path="res://assets/models/vehicles/Cricket/cricket_headlight_L.obj" id="19_j0ugs"]
 [ext_resource type="QuadMesh" uid="uid://pxlxqqrg7rmf" path="res://effects/fire_quad_mesh.tres" id="19_ku3tg"]
 [ext_resource type="ArrayMesh" uid="uid://o8y61at0xra7" path="res://assets/models/vehicles/Cricket/cricket_brakelight_L.obj" id="20_e4a6x"]
 [ext_resource type="Material" uid="uid://ci1rfkavqidwc" path="res://effects/smoke_white_particle_process_material.tres" id="20_ov1ny"]
 [ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="21_6fmka"]
+[ext_resource type="Material" uid="uid://dmtu75kn4a1ac" path="res://assets/materials/reverse_light_emissive_material_3d.tres" id="21_o1ci1"]
 [ext_resource type="ArrayMesh" uid="uid://cpqrod3n8i4eu" path="res://assets/models/vehicles/Cricket/cricket_brakelight_R.obj" id="21_t8q6m"]
 [ext_resource type="Material" uid="uid://8342nbrtebf1" path="res://effects/fire_particle_process_material.tres" id="22_blqn8"]
 [ext_resource type="ArrayMesh" uid="uid://dr0e841bi34bv" path="res://assets/models/vehicles/Cricket/cricket_reverselight_L.obj" id="22_psb7o"]
@@ -266,10 +268,10 @@ contact_monitor = true
 max_contacts_reported = 24
 script = ExtResource("1_vk21t")
 max_hit_points = 50.0
-brake_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightLeft/MeshInstance3D")
-brake_light_right_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightRight/MeshInstance3D")
-reverse_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/ReverseLightLeft/MeshInstance3D")
-reverse_light_right_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/ReverseLightRight/MeshInstance3D")
+brake_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightLeft/EmissiveMesh")
+brake_light_right_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightRight/EmissiveMesh")
+reverse_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/ReverseLightLeft/EmissiveMesh")
+reverse_light_right_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/ReverseLightRight/EmissiveMesh")
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
 rear_left_wheel = NodePath("WheelRearLeft")
@@ -717,12 +719,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 mesh = ExtResource("20_e4a6x")
 
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/BrakeLightLeft"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("20_e4a6x")
+surface_material_override/0 = ExtResource("18_kg4th")
+
 [node name="BrakeLightRight" type="Node3D" parent="ColliderBits/Boot/OpenBoot/Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/BrakeLightRight"]
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 mesh = ExtResource("21_t8q6m")
+
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/BrakeLightRight"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("21_t8q6m")
+skeleton = NodePath("../../BrakeLightLeft")
+surface_material_override/0 = ExtResource("18_kg4th")
 
 [node name="ReverseLightLeft" type="Node3D" parent="ColliderBits/Boot/OpenBoot/Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -732,6 +747,13 @@ transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 
 gi_mode = 2
 mesh = ExtResource("22_psb7o")
 
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/ReverseLightLeft"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("22_psb7o")
+skeleton = NodePath("../../BrakeLightLeft")
+surface_material_override/0 = ExtResource("21_o1ci1")
+
 [node name="ReverseLightRight" type="Node3D" parent="ColliderBits/Boot/OpenBoot/Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
@@ -739,6 +761,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 gi_mode = 2
 mesh = ExtResource("23_6oxxb")
+
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/ReverseLightRight"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("23_6oxxb")
+skeleton = NodePath("../../BrakeLightLeft")
+surface_material_override/0 = ExtResource("21_o1ci1")
 
 [node name="EnterCarCollider" type="StaticBody3D" parent="ColliderBits"]
 visible = false

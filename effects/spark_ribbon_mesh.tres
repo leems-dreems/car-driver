@@ -1,0 +1,12 @@
+[gd_resource type="RibbonTrailMesh" load_steps=2 format=3 uid="uid://cya57d6ip8mv7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8ttq"]
+emission_enabled = true
+emission = Color(1, 1, 0, 1)
+emission_energy_multiplier = 2.0
+
+[resource]
+material = SubResource("StandardMaterial3D_l8ttq")
+shape = 0
+size = 0.01
+section_length = 0.05
