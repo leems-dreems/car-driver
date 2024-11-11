@@ -16,3 +16,13 @@ func _ready() -> void:
   for _road_mesh: MeshInstance3D in find_children("road_mesh", "MeshInstance3D", true, false):
     _road_mesh.set_layer_mask_value(11, true)
     _road_mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+
+
+func _notification(what: int) -> void:
+  match what:
+    NOTIFICATION_PAUSED:
+      RenderingServer.global_shader_parameter_set("TIME_SCALE", 0)
+      RenderingServer.global_shader_parameter_set("TIME_SCALE2", 0)
+    NOTIFICATION_UNPAUSED:
+      RenderingServer.global_shader_parameter_set("TIME_SCALE", 1)
+      RenderingServer.global_shader_parameter_set("TIME_SCALE2", 1)
