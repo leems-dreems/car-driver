@@ -13,6 +13,7 @@ signal finished
 @onready var explosion_audio : AudioStreamPlayer3D = $ExplosionAudio
 @onready var debris_emitter := $DebrisEmitter
 @onready var explosion_emitter := $ExplosionEmitter
+@onready var blastwave_emitter := $BlastwaveEmitter
 @onready var explosion_light := $OmniLight3D
 @onready var animation_player := $AnimationPlayer
 ## RigidBodies get given an initial impulse when hit by an explosion, and then have a force applied

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://qj5wm2wpuawj"]
+[gd_scene load_steps=29 format=3 uid="uid://qj5wm2wpuawj"]
 
 [ext_resource type="Script" path="res://effects/explosion.gd" id="1_dmlp3"]
 [ext_resource type="AudioStream" uid="uid://4icv5wfjnole" path="res://assets/audio/Hanna-Barbera SFX/bomb_1.wav" id="2_byo7q"]
@@ -38,7 +38,7 @@ curve = SubResource("Curve_c7kii")
 particle_flag_align_y = true
 spread = 180.0
 radial_velocity_min = 30.0
-radial_velocity_max = 40.0
+radial_velocity_max = 80.0
 radial_velocity_curve = SubResource("CurveTexture_legbc")
 scale_min = 0.5
 scale_max = 1.5
@@ -50,6 +50,35 @@ top_radius = 0.1
 bottom_radius = 0.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_wrirc"]
+
+[sub_resource type="Curve" id="Curve_p7xv7"]
+_data = [Vector2(0.00581396, 0), 0.0, 0.0, 0, 0, Vector2(0.502907, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ehpt2"]
+curve = SubResource("Curve_p7xv7")
+
+[sub_resource type="Gradient" id="Gradient_p6ew1"]
+offsets = PackedFloat32Array(0.25, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_iie0n"]
+gradient = SubResource("Gradient_p6ew1")
+
+[sub_resource type="Curve" id="Curve_sbah3"]
+max_value = 20.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.497093, 20), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_nj67e"]
+curve = SubResource("Curve_sbah3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ls8r0"]
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_nj67e")
+color_ramp = SubResource("GradientTexture1D_iie0n")
+alpha_curve = SubResource("CurveTexture_ehpt2")
+
+[sub_resource type="SphereMesh" id="SphereMesh_svcfy"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_yfpra"]
 size = Vector2(50, 50)
@@ -128,9 +157,22 @@ tracks/5/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("BlastwaveEmitter:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_mns0o"]
 resource_name = "explode"
+length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -203,6 +245,18 @@ tracks/5/keys = {
 "update": 1,
 "values": [true, false]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("BlastwaveEmitter:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_372yq"]
 _data = {
@@ -234,7 +288,7 @@ stream = ExtResource("2_byo7q")
 cast_shadow = 0
 emitting = false
 amount = 24
-lifetime = 0.3
+lifetime = 0.6
 one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
@@ -245,14 +299,24 @@ script = ExtResource("4_51gev")
 [node name="ExplosionEmitter" type="GPUParticles3D" parent="."]
 material_override = ExtResource("6_6y1oc")
 emitting = false
-amount = 24
-lifetime = 1.2
+amount = 12
+lifetime = 4.0
 one_shot = true
 explosiveness = 0.9
 fixed_fps = 60
 process_material = ExtResource("6_6jk3p")
 draw_pass_1 = SubResource("SphereMesh_wrirc")
 script = ExtResource("4_51gev")
+
+[node name="BlastwaveEmitter" type="GPUParticles3D" parent="."]
+material_override = ExtResource("6_6y1oc")
+emitting = false
+amount = 1
+lifetime = 0.4
+one_shot = true
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_ls8r0")
+draw_pass_1 = SubResource("SphereMesh_svcfy")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_color = Color(0.983673, 0.470967, 1.34766e-06, 1)
