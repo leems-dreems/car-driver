@@ -22,7 +22,5 @@ func _notification(what: int) -> void:
   match what:
     NOTIFICATION_PAUSED:
       RenderingServer.global_shader_parameter_set("TIME_SCALE", 0)
-      RenderingServer.global_shader_parameter_set("TIME_SCALE2", 0)
     NOTIFICATION_UNPAUSED:
       RenderingServer.global_shader_parameter_set("TIME_SCALE", 1)
-      RenderingServer.global_shader_parameter_set("TIME_SCALE2", 1)
