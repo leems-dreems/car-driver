@@ -49,3 +49,6 @@ scale_max = 6.0
 scale_curve = SubResource("CurveTexture_wocuf")
 color_ramp = SubResource("GradientTexture1D_itav8")
 alpha_curve = SubResource("CurveTexture_xw6c4")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0

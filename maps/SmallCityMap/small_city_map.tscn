@@ -316,6 +316,9 @@ surface_material_override/0 = ExtResource("2_upi0u")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/CityFoundation"]
 shape = SubResource("ConvexPolygonShape3D_4pvb3")
 
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="Terrain/CityFoundation"]
+size = Vector3(1000, 2, 1000)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_pbxeh")
 
@@ -2231,6 +2234,9 @@ mesh = SubResource("BoxMesh_ic04a")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/GasStation/Roof"]
 shape = SubResource("ConvexPolygonShape3D_7yx1w")
 
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="PedestrianAreas/GasStation/Roof"]
+size = Vector3(30, 1, 20)
+
 [node name="Pillar3" type="StaticBody3D" parent="PedestrianAreas/GasStation"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 4, 0)
 
@@ -2259,6 +2265,9 @@ mesh = SubResource("BoxMesh_ic04a")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/GasStation/Roof2"]
 shape = SubResource("ConvexPolygonShape3D_7yx1w")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="PedestrianAreas/GasStation/Roof2"]
+size = Vector3(30, 1, 20)
 
 [node name="StandaloneGasPumpProp" parent="PedestrianAreas/GasStation" instance=ExtResource("27_0lddw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)

@@ -4,12 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://dsfroit2iw431" path="res://effects/explosion_colour_noise_texture.tres" id="1_f8odp"]
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_5s0no"]
-size = Vector2(664, 479)
+size = Vector2(664, 118)
 title = "Base colour"
 attached_nodes = PackedInt32Array(2, 3)
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_7l6p1"]
-size = Vector2(2284, 1001)
+size = Vector2(2284, 898)
 title = "Emission"
 tint_color_enabled = true
 tint_color = Color(1, 0.298039, 0.0745098, 1)
@@ -39,7 +39,7 @@ texture_type = 1
 linked_parent_graph_frame = 16
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_ff5jv"]
-size = Vector2(1184, 841)
+size = Vector2(1184, 658)
 title = "Alpha"
 attached_nodes = PackedInt32Array(13, 14, 19, 20, 21)
 
@@ -397,7 +397,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-1338.89, 268.736)
 varyings/TIME_SCALE = "0,0"
 nodes/vertex/2/node = SubResource("VisualShaderNodeInput_c1nqj")
 nodes/vertex/2/position = Vector2(-300, 140)

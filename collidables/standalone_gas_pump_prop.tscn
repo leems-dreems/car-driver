@@ -17,6 +17,7 @@ script = ExtResource("1_vmbgx")
 [node name="StandalonePropBodies" parent="." instance=ExtResource("2_cbp8a")]
 
 [node name="Explosion" parent="." instance=ExtResource("3_qrvbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 explosion_force_multiplier = 600000.0
 explosion_duration = 0.3
 damage_multiplier = 1.0

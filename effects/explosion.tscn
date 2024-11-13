@@ -43,6 +43,7 @@ radial_velocity_curve = SubResource("CurveTexture_legbc")
 scale_min = 0.5
 scale_max = 1.5
 scale_curve = SubResource("CurveTexture_3x0cj")
+collision_mode = 2
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_ru2ja"]
 material = ExtResource("3_1vq0b")
@@ -292,6 +293,8 @@ lifetime = 0.6
 one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
+collision_base_size = 0.1
+visibility_aabb = AABB(-40, -40, -40, 80, 80, 80)
 process_material = SubResource("ParticleProcessMaterial_bby8d")
 draw_pass_1 = SubResource("CylinderMesh_ru2ja")
 script = ExtResource("4_51gev")
@@ -304,6 +307,8 @@ lifetime = 4.0
 one_shot = true
 explosiveness = 0.9
 fixed_fps = 60
+collision_base_size = 1.0
+visibility_aabb = AABB(-10, -10, -10, 20, 20, 20)
 process_material = ExtResource("6_6jk3p")
 draw_pass_1 = SubResource("SphereMesh_wrirc")
 script = ExtResource("4_51gev")
