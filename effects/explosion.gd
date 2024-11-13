@@ -90,5 +90,5 @@ func start_explosion() -> void:
 
 func stop_explosion() -> void:
 #  Engine.time_scale = 1.0
-  finished.emit()
+  queue_free()
   return

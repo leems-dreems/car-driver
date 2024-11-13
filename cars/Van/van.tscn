@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=4 uid="uid://dfcsj3jjvi65m"]
+[gd_scene load_steps=88 format=4 uid="uid://dfcsj3jjvi65m"]
 
 [ext_resource type="Script" path="res://cars/Van/van.gd" id="1_bpvqw"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_131uc"]
@@ -58,7 +58,6 @@
 [ext_resource type="Material" uid="uid://ci1rfkavqidwc" path="res://effects/smoke_white_particle_process_material.tres" id="54_dc840"]
 [ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="55_caj0a"]
 [ext_resource type="Material" uid="uid://8342nbrtebf1" path="res://effects/fire_particle_process_material.tres" id="56_v45ob"]
-[ext_resource type="PackedScene" uid="uid://qj5wm2wpuawj" path="res://effects/explosion.tscn" id="57_j4260"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.6
@@ -337,7 +336,7 @@ shape = SubResource("ConvexPolygonShape3D_vreeo")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 vehicle = NodePath("..")
 longitudinal_slip_threshold = 0.6
-lateral_slip_threshold = 0.6
+lateral_slip_threshold = 0.2
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("6_5bhig")]
 stream = ExtResource("7_o8h5b")
@@ -1044,10 +1043,5 @@ script = ExtResource("53_7nrmg")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
 emitting = false
 process_material = ExtResource("56_v45ob")
-
-[node name="Explosion" parent="." instance=ExtResource("57_j4260")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-explosion_scale = 15.0
-explosion_delay = 0.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

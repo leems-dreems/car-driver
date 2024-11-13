@@ -77,7 +77,9 @@ var show_debug_label := false
 @onready var engine_sparks_emitter: GPUParticles3D = $Sparks
 @onready var engine_fire_emitter: GPUParticles3D = $Fire
 # Explosion
-@onready var explosion: Explosion = $Explosion
+var explosion: Explosion = null
+const explosion_scene := preload("res://effects/explosion.tscn")
+@export var explosion_position: Vector3
 
 
 func _ready () -> void:
@@ -175,6 +177,9 @@ func respawn() -> void:
 
 
 func explode() -> void:
+  explosion = explosion_scene.instantiate()
+  add_child(explosion)
+  explosion.position = explosion_position
   explosion.top_level = true
   explosion.start_explosion()
   apply_burnt_material()

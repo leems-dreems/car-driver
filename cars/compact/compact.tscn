@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=88 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
@@ -34,7 +34,6 @@
 [ext_resource type="ArrayMesh" uid="uid://cpqrod3n8i4eu" path="res://assets/models/vehicles/Cricket/cricket_brakelight_R.obj" id="21_t8q6m"]
 [ext_resource type="Material" uid="uid://8342nbrtebf1" path="res://effects/fire_particle_process_material.tres" id="22_blqn8"]
 [ext_resource type="ArrayMesh" uid="uid://dr0e841bi34bv" path="res://assets/models/vehicles/Cricket/cricket_reverselight_L.obj" id="22_psb7o"]
-[ext_resource type="PackedScene" uid="uid://qj5wm2wpuawj" path="res://effects/explosion.tscn" id="23_0aeo7"]
 [ext_resource type="ArrayMesh" uid="uid://ngn3d0lex2ge" path="res://assets/models/vehicles/Cricket/cricket_reverselight_R.obj" id="23_6oxxb"]
 [ext_resource type="AudioStream" uid="uid://ckde1fwfelw81" path="res://assets/audio/Sound effects package/Impact/Car door.mp3" id="27_7jbco"]
 [ext_resource type="AudioStream" uid="uid://ccc68vqt6ri72" path="res://assets/audio/Sound effects package/Impact/Car hit.mp3" id="28_e7vki"]
@@ -1044,10 +1043,5 @@ script = ExtResource("53_aoxa3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
 emitting = false
 process_material = ExtResource("22_blqn8")
-
-[node name="Explosion" parent="." instance=ExtResource("23_0aeo7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-explosion_scale = 15.0
-explosion_delay = 0.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

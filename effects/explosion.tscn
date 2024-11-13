@@ -326,6 +326,7 @@ draw_pass_1 = SubResource("SphereMesh_svcfy")
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_color = Color(0.983673, 0.470967, 1.34766e-06, 1)
 light_energy = 0.0
+shadow_enabled = true
 omni_range = 10.0
 
 [node name="TestFloor" type="MeshInstance3D" parent="."]
