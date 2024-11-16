@@ -50,8 +50,8 @@ func _process(delta: float):
         #if not wheel.skid_audio.playing:
           #wheel.skid_audio.play()
 
-        var squeal_amount := clampf(pow(abs(wheel.slip_vector.y), 1), 0, 1.0)
-        var skid_amount := clampf(pow(abs(wheel.slip_vector.x), 1), 0, 1.0)
+        var squeal_amount := clampf(pow(absf(wheel.slip_vector.y), 1), 0, 1.0)
+        var skid_amount := clampf(pow(absf(wheel.slip_vector.x), 1), 0, 1.0)
 
         if wheel.last_collider.is_in_group("Road"):
           wheel.squeal_audio.unit_size = lerpf(wheel.squeal_audio.unit_size, maxf(squeal_amount, skid_amount), delta * 10)

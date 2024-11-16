@@ -54,8 +54,9 @@ shader_parameter/tex_frg_17 = ExtResource("3_11gr8")
 [node name="Smoke" type="GPUParticles3D"]
 material_override = SubResource("ShaderMaterial_eadf3")
 emitting = false
-amount = 100
+amount = 32
 lifetime = 2.0
+explosiveness = 1.0
 fixed_fps = 60
 process_material = ExtResource("5_m0acd")
 draw_pass_1 = SubResource("QuadMesh_bx4jl")
