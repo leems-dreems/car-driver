@@ -2,13 +2,13 @@ class_name Explosion extends Node3D
 
 signal finished
 ## Multiplier for sustained explosion force.
-@export var explosion_force_multiplier := 500000.0
+@export var explosion_force_multiplier := 300000.0
 ## How much the explosion Area3D will be scaled up by. For the explosion to work correctly, its
 ## sphere collider should start with a radius of 1
 @export var explosion_scale := 20.0
 @export var explosion_duration := 0.2
 @export var explosion_delay := 0.3
-@export var damage_multiplier := 0.1
+@export var damage_multiplier := 1
 @onready var explosion_area : Area3D = $ExplosionArea
 @onready var explosion_audio : AudioStreamPlayer3D = $ExplosionAudio
 @onready var debris_emitter := $DebrisEmitter

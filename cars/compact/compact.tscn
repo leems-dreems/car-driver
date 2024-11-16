@@ -281,7 +281,7 @@ countersteer_assist = 0.3
 front_brake_bias = 0.3
 enable_stability = false
 stability_yaw_strength = 1.0
-max_torque = 800.0
+max_torque = 500.0
 idle_rpm = 1200.0
 torque_curve = ExtResource("2_sg067")
 max_clutch_torque_ratio = 1.0
@@ -335,13 +335,12 @@ shape = SubResource("ConvexPolygonShape3D_7junj")
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("3_3utam")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 vehicle = NodePath("..")
-longitudinal_slip_threshold = 0.6
-lateral_slip_threshold = 0.6
+longitudinal_slip_threshold = 0.3
+lateral_slip_threshold = 0.2
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_i42xy")]
 stream = ExtResource("5_vu53n")
 unit_size = 2.0
-max_db = -8.0
 vehicle = NodePath("..")
 
 [node name="body" type="MeshInstance3D" parent="."]
@@ -812,6 +811,15 @@ unit_size = 5.0
 pitch_scale = 2.0
 doppler_tracking = 2
 
+[node name="Label3D" type="Label3D" parent="WheelFrontLeft"]
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "1"
+font_size = 24
+outline_size = 6
+
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.823, -0.1, -1.85387)
 script = ExtResource("14_e025k")
@@ -839,6 +847,15 @@ stream = ExtResource("17_rtnly")
 unit_size = 5.0
 pitch_scale = 2.0
 doppler_tracking = 2
+
+[node name="Label3D" type="Label3D" parent="WheelFrontRight"]
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "1"
+font_size = 24
+outline_size = 6
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.823409, -0.1, 1.70898)
@@ -868,6 +885,15 @@ unit_size = 5.0
 pitch_scale = 2.0
 doppler_tracking = 2
 
+[node name="Label3D" type="Label3D" parent="WheelRearLeft"]
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "1"
+font_size = 24
+outline_size = 6
+
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.823, -0.1, 1.70898)
 script = ExtResource("14_e025k")
@@ -895,6 +921,15 @@ stream = ExtResource("17_rtnly")
 unit_size = 5.0
 pitch_scale = 2.0
 doppler_tracking = 2
+
+[node name="Label3D" type="Label3D" parent="WheelRearRight"]
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "1"
+font_size = 24
+outline_size = 6
 
 [node name="ExplosionCatcher" type="StaticBody3D" parent="." groups=["ExplosionCatcher"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.3, -2.5)

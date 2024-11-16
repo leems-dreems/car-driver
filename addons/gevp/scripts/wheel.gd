@@ -8,12 +8,14 @@ class_name Wheel
 extends RayCast3D
 
 @export var wheel_node: Node3D
+@export var show_debug_label := false
 @onready var squeal_audio: AudioStreamPlayer3D = $SquealAudio
 @onready var skid_audio: AudioStreamPlayer3D = $SkidAudio
 @onready var rumble_audio: AudioStreamPlayer3D = $RumbleAudio
+@onready var debug_label: Label3D = $Label3D
 ## Global transform representing where the last skidmark decal started at
-var skid_start_transform: Transform3D
-
+var skidmark_start: Transform3D
+var vector_format_string := "%.2v"
 
 var wheel_mass := 15.0
 var tire_radius := 0.3
@@ -82,8 +84,11 @@ func _process(delta):
       var wheel_lookat_vector := (opposite_wheel.transform * opposite_wheel.wheel_node.position) - (transform * wheel_node.position)
       wheel_node.rotation.z = wheel_lookat_vector.angle_to(Vector3.RIGHT * beam_axle) * signf(wheel_lookat_vector.y * beam_axle)
     wheel_node.rotation.x -= (wrapf(spin * delta, 0, TAU))
+    if show_debug_label:
+      debug_label.text = vector_format_string % slip_vector
     
 func initialize():
+  debug_label.visible = show_debug_label
   wheel_node.rotation_order = EULER_ORDER_ZXY
   wheel_moment = 0.5 * wheel_mass * pow(tire_radius, 2)
   set_target_position(Vector3.DOWN * (spring_length + tire_radius))

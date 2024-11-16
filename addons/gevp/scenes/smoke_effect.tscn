@@ -1,49 +1,62 @@
-[gd_scene load_steps=9 format=3 uid="uid://h6vdpba71kpr"]
+[gd_scene load_steps=17 format=3 uid="uid://h6vdpba71kpr"]
 
 [ext_resource type="Script" path="res://addons/gevp/scripts/wheel_smoke.gd" id="1_3e4qh"]
+[ext_resource type="Shader" uid="uid://d88xwj7fq8fu" path="res://effects/ExplosionShader.tres" id="1_3wi3f"]
+[ext_resource type="Texture2D" uid="uid://b4cv780gfxetj" path="res://assets/textures/smokesprite.png" id="2_dqi3b"]
+[ext_resource type="Texture2D" uid="uid://dh0wvuemvp0cf" path="res://assets/textures/normal+.png" id="2_rjtqw"]
+[ext_resource type="Texture2D" uid="uid://da1ve76f8ghho" path="res://assets/textures/normal-.png" id="3_11gr8"]
+[ext_resource type="Material" uid="uid://ci1rfkavqidwc" path="res://effects/smoke_white_particle_process_material.tres" id="5_m0acd"]
 
-[sub_resource type="Gradient" id="Gradient_wywko"]
-offsets = PackedFloat32Array(0, 0.772152, 1)
-colors = PackedColorArray(1, 1, 1, 0.501961, 1, 1, 1, 0.501961, 1, 1, 1, 0)
+[sub_resource type="Gradient" id="Gradient_kh7ib"]
+offsets = PackedFloat32Array(0.134146, 0.408537)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_5rs2r"]
-gradient = SubResource("Gradient_wywko")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rqfi2"]
+gradient = SubResource("Gradient_kh7ib")
 
-[sub_resource type="Curve" id="Curve_w4wou"]
-_data = [Vector2(0, 0.263736), 0.0, 3.06593, 0, 0, Vector2(1e-05, 0.274725), 2.35875, 2.35875, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 3
+[sub_resource type="Gradient" id="Gradient_m7pxm"]
+offsets = PackedFloat32Array(0, 0.240854)
 
-[sub_resource type="CurveTexture" id="CurveTexture_h3kqi"]
-curve = SubResource("Curve_w4wou")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pnvso"]
+gradient = SubResource("Gradient_m7pxm")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_my0g6"]
-lifetime_randomness = 0.5
-direction = Vector3(0, 0, 0)
-spread = 0.0
-gravity = Vector3(0, 0.1, 0)
-damping_min = 0.5
-damping_max = 0.5
-attractor_interaction_enabled = false
-scale_min = 0.2
-scale_curve = SubResource("CurveTexture_h3kqi")
-color_ramp = SubResource("GradientTexture1D_5rs2r")
+[sub_resource type="Gradient" id="Gradient_xlq5t"]
+offsets = PackedFloat32Array(0, 0.292683, 0.85061)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dkuso"]
-transparency = 1
-vertex_color_use_as_albedo = true
-albedo_color = Color(1, 1, 1, 0.25098)
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bwfvh"]
+gradient = SubResource("Gradient_xlq5t")
 
-[sub_resource type="SphereMesh" id="SphereMesh_t2ioh"]
-material = SubResource("StandardMaterial3D_dkuso")
-radius = 1.0
-height = 2.0
-radial_segments = 8
-rings = 4
+[sub_resource type="Gradient" id="Gradient_eobwo"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cjiew"]
+gradient = SubResource("Gradient_eobwo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eadf3"]
+render_priority = 0
+shader = ExtResource("1_3wi3f")
+shader_parameter/particle_h_frames = 8.0
+shader_parameter/particle_v_frames = 8.0
+shader_parameter/particles_anim_loop = false
+shader_parameter/still_frame = -1.0
+shader_parameter/Soft_limit = 0.1
+shader_parameter/blend_scale = 0.1
+shader_parameter/emission_falloff_multiplier = 1.0
+shader_parameter/tex_frg_2 = ExtResource("2_dqi3b")
+shader_parameter/tex_frg_27 = SubResource("GradientTexture1D_cjiew")
+shader_parameter/tex_frg_24 = SubResource("GradientTexture1D_rqfi2")
+shader_parameter/tex_frg_25 = SubResource("GradientTexture1D_pnvso")
+shader_parameter/tex_frg_26 = SubResource("GradientTexture1D_bwfvh")
+shader_parameter/tex_frg_16 = ExtResource("2_rjtqw")
+shader_parameter/tex_frg_17 = ExtResource("3_11gr8")
+
+[sub_resource type="QuadMesh" id="QuadMesh_bx4jl"]
 
 [node name="Smoke" type="GPUParticles3D"]
+material_override = SubResource("ShaderMaterial_eadf3")
 emitting = false
 amount = 100
 lifetime = 2.0
-process_material = SubResource("ParticleProcessMaterial_my0g6")
-draw_pass_1 = SubResource("SphereMesh_t2ioh")
+fixed_fps = 60
+process_material = ExtResource("5_m0acd")
+draw_pass_1 = SubResource("QuadMesh_bx4jl")
 script = ExtResource("1_3e4qh")
