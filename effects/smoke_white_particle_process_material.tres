@@ -10,7 +10,7 @@ point_count = 2
 curve = SubResource("Curve_1gw6m")
 
 [resource]
-lifetime_randomness = 0.5
+lifetime_randomness = 0.2
 angle_min = 1.07288e-05
 angle_max = 1.00001
 inherit_velocity_ratio = 0.5
