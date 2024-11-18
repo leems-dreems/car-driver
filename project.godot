@@ -203,8 +203,8 @@ Ragdoll={
 
 [physics]
 
-common/physics_ticks_per_second=120
 3d/physics_engine="JoltPhysics3D"
+common/physics_interpolation=true
 jolt_3d/collisions/areas_detect_static_bodies=true
 
 [rendering]

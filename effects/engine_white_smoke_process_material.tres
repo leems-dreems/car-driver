@@ -1,0 +1,25 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://dlf645qtjmyle"]
+
+[sub_resource type="Curve" id="Curve_81wou"]
+min_value = 0.1
+_data = [Vector2(0, 0.1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7d3fu"]
+curve = SubResource("Curve_81wou")
+
+[resource]
+lifetime_randomness = 0.2
+angle_min = 1.07288e-05
+angle_max = 1.00001
+inherit_velocity_ratio = 0.2
+spread = 90.0
+initial_velocity_max = 1.0
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = 9.99998
+gravity = Vector3(0, 3, 0)
+linear_accel_min = -1.0
+linear_accel_max = -1.0
+scale_over_velocity_min = 0.1
+scale_over_velocity_max = 1.0
+scale_over_velocity_curve = SubResource("CurveTexture_7d3fu")

@@ -8,28 +8,29 @@
 [ext_resource type="Material" uid="uid://ci1rfkavqidwc" path="res://effects/smoke_white_particle_process_material.tres" id="5_m0acd"]
 
 [sub_resource type="Gradient" id="Gradient_kh7ib"]
-offsets = PackedFloat32Array(0.134146, 0.408537)
+offsets = PackedFloat32Array(0, 0.615854)
+colors = PackedColorArray(0, 0, 0, 1, 0.462291, 0.462291, 0.462291, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_rqfi2"]
 gradient = SubResource("Gradient_kh7ib")
 
 [sub_resource type="Gradient" id="Gradient_m7pxm"]
-offsets = PackedFloat32Array(0, 0.240854)
+offsets = PackedFloat32Array(0, 0.237805)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_pnvso"]
 gradient = SubResource("Gradient_m7pxm")
 
 [sub_resource type="Gradient" id="Gradient_xlq5t"]
-offsets = PackedFloat32Array(0, 0.292683, 0.85061)
+offsets = PackedFloat32Array(0, 0.125, 1)
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_bwfvh"]
 gradient = SubResource("Gradient_xlq5t")
 
-[sub_resource type="Gradient" id="Gradient_eobwo"]
+[sub_resource type="Gradient" id="Gradient_dsogu"]
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_cjiew"]
-gradient = SubResource("Gradient_eobwo")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_y3uby"]
+gradient = SubResource("Gradient_dsogu")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eadf3"]
 render_priority = 0
@@ -38,11 +39,11 @@ shader_parameter/particle_h_frames = 8.0
 shader_parameter/particle_v_frames = 8.0
 shader_parameter/particles_anim_loop = false
 shader_parameter/still_frame = -1.0
-shader_parameter/Soft_limit = 0.1
-shader_parameter/blend_scale = 0.1
-shader_parameter/emission_falloff_multiplier = 1.0
+shader_parameter/Soft_limit = 0.01
+shader_parameter/blend_scale = 0.01
+shader_parameter/emission_falloff_multiplier = 0.1
 shader_parameter/tex_frg_2 = ExtResource("2_dqi3b")
-shader_parameter/tex_frg_27 = SubResource("GradientTexture1D_cjiew")
+shader_parameter/tex_frg_27 = SubResource("GradientTexture1D_y3uby")
 shader_parameter/tex_frg_24 = SubResource("GradientTexture1D_rqfi2")
 shader_parameter/tex_frg_25 = SubResource("GradientTexture1D_pnvso")
 shader_parameter/tex_frg_26 = SubResource("GradientTexture1D_bwfvh")
@@ -55,8 +56,7 @@ shader_parameter/tex_frg_17 = ExtResource("3_11gr8")
 material_override = SubResource("ShaderMaterial_eadf3")
 emitting = false
 amount = 32
-lifetime = 2.0
-explosiveness = 1.0
+lifetime = 2.5
 fixed_fps = 60
 process_material = ExtResource("5_m0acd")
 draw_pass_1 = SubResource("QuadMesh_bx4jl")

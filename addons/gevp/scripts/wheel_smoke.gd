@@ -3,7 +3,7 @@ extends CarGameParticles
 @export var vehicle : Vehicle
 @export var longitudinal_slip_threshold := 0.5
 @export var lateral_slip_threshold := 1.0
-@export var skidmark_length := 1.0
+@export var skidmark_length := 1.5
 ## Old skidmark decals will be freed up when this many decals have been added
 @export var max_skidmark_decals: int = 100
 const skidmark_decal_scene := preload("res://cars/skidmark_decal.tscn")
@@ -33,7 +33,7 @@ func _process(delta: float):
           new_skidmark.top_level = true
           new_skidmark.position = wheel.last_collision_point
           new_skidmark.transform.basis = wheel.global_transform.looking_at(wheel.skidmark_start.origin).basis
-          new_skidmark.size.z = distance_from_last_decal / skidmark_length
+          new_skidmark.size.z *= distance_from_last_decal / skidmark_length
           skidmark_decals.push_front(new_skidmark)
           add_child(new_skidmark)
           wheel.skidmark_start = Transform3D(wheel.global_transform)

@@ -1,0 +1,25 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://dslgu68amcstn"]
+
+[sub_resource type="Curve" id="Curve_0dhvk"]
+min_value = 0.5
+max_value = 2.0
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_uyte5"]
+curve = SubResource("Curve_0dhvk")
+
+[resource]
+lifetime_randomness = 0.2
+angle_min = 1.07288e-05
+angle_max = 1.00001
+spread = 90.0
+initial_velocity_max = 2.0
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = 9.99998
+gravity = Vector3(0, 3, 0)
+linear_accel_min = -1.0
+linear_accel_max = -1.0
+scale_over_velocity_min = 0.5
+scale_over_velocity_max = 2.0
+scale_over_velocity_curve = SubResource("CurveTexture_uyte5")

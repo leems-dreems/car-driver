@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=4 uid="uid://dfcsj3jjvi65m"]
+[gd_scene load_steps=96 format=4 uid="uid://dfcsj3jjvi65m"]
 
 [ext_resource type="Script" path="res://cars/Van/van.gd" id="1_bpvqw"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_131uc"]
@@ -52,12 +52,13 @@
 [ext_resource type="AudioStream" uid="uid://c3r0shaam8fk0" path="res://assets/audio/Sound effects package/Crashes/Glass Break 01.wav" id="48_f40tx"]
 [ext_resource type="AudioStream" uid="uid://bsykmtu15bbyy" path="res://assets/audio/Sound effects package/Crashes/Glass Break 02.wav" id="49_lsa3n"]
 [ext_resource type="AudioStream" uid="uid://btwfyuao3yspq" path="res://assets/audio/Sound effects package/Crashes/Glass Break 03.wav" id="50_k5rjq"]
-[ext_resource type="Material" uid="uid://bdg4152rp8j33" path="res://effects/smoke_particle_process_material.tres" id="51_o001j"]
-[ext_resource type="QuadMesh" uid="uid://pxlxqqrg7rmf" path="res://effects/fire_quad_mesh.tres" id="52_dkak7"]
+[ext_resource type="Material" uid="uid://bclipohnbqlxm" path="res://effects/engine_black_smoke_material.tres" id="53_6yde1"]
 [ext_resource type="Script" path="res://effects/car_game_particles.gd" id="53_7nrmg"]
-[ext_resource type="Material" uid="uid://ci1rfkavqidwc" path="res://effects/smoke_white_particle_process_material.tres" id="54_dc840"]
-[ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="55_caj0a"]
-[ext_resource type="Material" uid="uid://8342nbrtebf1" path="res://effects/fire_particle_process_material.tres" id="56_v45ob"]
+[ext_resource type="Material" uid="uid://dslgu68amcstn" path="res://effects/engine_black_smoke_process_material.tres" id="54_d0vv0"]
+[ext_resource type="Shader" uid="uid://d88xwj7fq8fu" path="res://effects/ExplosionShader.tres" id="56_vmg6k"]
+[ext_resource type="Material" uid="uid://dk6yd72g0kmj2" path="res://effects/engine_fire_process_material.tres" id="57_3ndmk"]
+[ext_resource type="Material" uid="uid://8vfe26o7lqwj" path="res://effects/engine_white_smoke_material.tres" id="58_u6flm"]
+[ext_resource type="Material" uid="uid://dlf645qtjmyle" path="res://effects/engine_white_smoke_process_material.tres" id="59_lw4yp"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.6
@@ -223,35 +224,61 @@ stream_0/stream = ExtResource("48_f40tx")
 stream_1/stream = ExtResource("49_lsa3n")
 stream_2/stream = ExtResource("50_k5rjq")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc8nd"]
-vertex_color_use_as_albedo = true
+[sub_resource type="QuadMesh" id="QuadMesh_u6ipr"]
 
-[sub_resource type="Gradient" id="Gradient_3afc7"]
-offsets = PackedFloat32Array(0, 0.484582, 0.819383, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.932249, 0.891119, 2.31028e-06, 1, 0.920752, 0.355072, 0, 1, 0, 0, 0, 1)
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_htdp7"]
+load_path = "res://.godot/imported/normal+.png-cbb5d7f0255a83c76cbcd41cac168450.s3tc.ctex"
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_fllr2"]
-gradient = SubResource("Gradient_3afc7")
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fnfsi"]
+load_path = "res://.godot/imported/normal-.png-34f9ec5b8e4802f01e5cea7a7e2454a1.s3tc.ctex"
 
-[sub_resource type="Curve" id="Curve_66u3e"]
-_data = [Vector2(0.0392157, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.84081, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_brt1w"]
+load_path = "res://.godot/imported/smokesprite.png-2e1b143f6bc86cdc768c0f115600eccc.s3tc.ctex"
 
-[sub_resource type="CurveTexture" id="CurveTexture_ygr6i"]
-curve = SubResource("Curve_66u3e")
+[sub_resource type="Gradient" id="Gradient_2ydfx"]
+offsets = PackedFloat32Array(0, 0.262195)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_phnmf"]
-direction = Vector3(0, 1, 0)
-spread = 75.0
-initial_velocity_min = 8.0
-initial_velocity_max = 12.0
-damping_min = 5.0
-damping_max = 10.0
-color_ramp = SubResource("GradientTexture1D_fllr2")
-emission_curve = SubResource("CurveTexture_ygr6i")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ujgsu"]
+gradient = SubResource("Gradient_2ydfx")
 
-[sub_resource type="BoxMesh" id="BoxMesh_gtwax"]
-size = Vector3(0.1, 0.1, 0.1)
+[sub_resource type="Gradient" id="Gradient_p5aeu"]
+offsets = PackedFloat32Array(0, 0.0945122)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yicit"]
+gradient = SubResource("Gradient_p5aeu")
+
+[sub_resource type="Gradient" id="Gradient_bgp68"]
+offsets = PackedFloat32Array(0, 0.228659, 0.368902, 0.469512)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 0.771864, 0.84145, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8dmnf"]
+gradient = SubResource("Gradient_bgp68")
+
+[sub_resource type="Gradient" id="Gradient_k452s"]
+offsets = PackedFloat32Array(0, 0.789634)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1jwor"]
+gradient = SubResource("Gradient_k452s")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bxvbs"]
+render_priority = 0
+shader = ExtResource("56_vmg6k")
+shader_parameter/particle_h_frames = 8.0
+shader_parameter/particle_v_frames = 8.0
+shader_parameter/particles_anim_loop = false
+shader_parameter/still_frame = -1.0
+shader_parameter/Soft_limit = 0.001
+shader_parameter/blend_scale = 0.001
+shader_parameter/emission_falloff_multiplier = 0.1
+shader_parameter/tex_frg_2 = SubResource("CompressedTexture2D_brt1w")
+shader_parameter/tex_frg_27 = SubResource("GradientTexture1D_1jwor")
+shader_parameter/tex_frg_24 = SubResource("GradientTexture1D_ujgsu")
+shader_parameter/tex_frg_25 = SubResource("GradientTexture1D_yicit")
+shader_parameter/tex_frg_26 = SubResource("GradientTexture1D_8dmnf")
+shader_parameter/tex_frg_16 = SubResource("CompressedTexture2D_htdp7")
+shader_parameter/tex_frg_17 = SubResource("CompressedTexture2D_fnfsi")
+
+[sub_resource type="QuadMesh" id="QuadMesh_p70hl"]
 
 [node name="Van" type="RigidBody3D" node_paths=PackedStringArray("brake_light_left_mesh", "brake_light_right_mesh", "reverse_light_left_mesh", "reverse_light_right_mesh", "front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
@@ -336,6 +363,7 @@ shape = SubResource("ConvexPolygonShape3D_vreeo")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 visibility_aabb = AABB(-10, -10, -10, 20, 20, 20)
 vehicle = NodePath("..")
+longitudinal_slip_threshold = 0.3
 lateral_slip_threshold = 0.2
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("6_5bhig")]
@@ -1041,42 +1069,45 @@ stream = SubResource("AudioStreamRandomizer_wqjhd")
 max_polyphony = 3
 
 [node name="EngineSmokeBlack" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -3.4)
+material_override = ExtResource("53_6yde1")
 cast_shadow = 0
-amount = 20
+amount = 40
 amount_ratio = 0.0
+lifetime = 2.0
+explosiveness = 0.1
 randomness = 0.5
-process_material = ExtResource("51_o001j")
-draw_pass_1 = ExtResource("52_dkak7")
+fixed_fps = 60
+process_material = ExtResource("54_d0vv0")
+draw_pass_1 = SubResource("QuadMesh_u6ipr")
+script = ExtResource("53_7nrmg")
+
+[node name="Fire" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -3.4)
+material_override = SubResource("ShaderMaterial_bxvbs")
+cast_shadow = 0
+emitting = false
+amount = 40
+lifetime = 2.0
+explosiveness = 0.1
+randomness = 0.5
+fixed_fps = 60
+process_material = ExtResource("57_3ndmk")
+draw_pass_1 = SubResource("QuadMesh_u6ipr")
 script = ExtResource("53_7nrmg")
 
 [node name="EngineSmokeWhite" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -3.4)
+material_override = ExtResource("58_u6flm")
 cast_shadow = 0
-amount = 10
+amount = 20
 amount_ratio = 0.0
+lifetime = 2.0
+explosiveness = 0.2
 randomness = 0.5
-process_material = ExtResource("54_dc840")
-draw_pass_1 = ExtResource("52_dkak7")
+fixed_fps = 60
+process_material = ExtResource("59_lw4yp")
+draw_pass_1 = SubResource("QuadMesh_p70hl")
 script = ExtResource("53_7nrmg")
-
-[node name="Sparks" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
-material_override = SubResource("StandardMaterial3D_gc8nd")
-emitting = false
-amount = 16
-lifetime = 0.5
-one_shot = true
-explosiveness = 0.78
-randomness = 0.35
-visibility_aabb = AABB(-4.84702, -4, -4, 9.7204, 8, 8)
-process_material = SubResource("ParticleProcessMaterial_phnmf")
-draw_pass_1 = SubResource("BoxMesh_gtwax")
-script = ExtResource("53_7nrmg")
-
-[node name="Fire" parent="." instance=ExtResource("55_caj0a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
-emitting = false
-process_material = ExtResource("56_v45ob")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

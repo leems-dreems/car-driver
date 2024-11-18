@@ -74,7 +74,6 @@ var show_debug_label := false
 # Particle emitters
 @onready var engine_black_smoke_emitter: GPUParticles3D = $EngineSmokeBlack
 @onready var engine_white_smoke_emitter: GPUParticles3D = $EngineSmokeWhite
-@onready var engine_sparks_emitter: GPUParticles3D = $Sparks
 @onready var engine_fire_emitter: GPUParticles3D = $Fire
 # Explosion
 var explosion: Explosion = null
@@ -149,10 +148,8 @@ func _physics_process(delta: float) -> void:
     ignition_on = false
     if not engine_fire_emitter.emitting and not has_caught_fire:
       has_caught_fire = true
-      engine_sparks_emitter.emitting = true
       engine_fire_emitter.emitting = true
       await get_tree().create_timer(5.0).timeout
-      engine_sparks_emitter.emitting = false
       engine_fire_emitter.emitting = false
       explode()
   return
