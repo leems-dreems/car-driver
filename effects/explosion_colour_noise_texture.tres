@@ -1,0 +1,15 @@
+[gd_resource type="NoiseTexture2D" load_steps=3 format=3 uid="uid://dsfroit2iw431"]
+
+[sub_resource type="Gradient" id="Gradient_7tc6o"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mc27w"]
+noise_type = 2
+frequency = 0.006
+fractal_type = 2
+fractal_octaves = 1
+fractal_gain = 2.0
+
+[resource]
+seamless = true
+color_ramp = SubResource("Gradient_7tc6o")
+noise = SubResource("FastNoiseLite_mc27w")

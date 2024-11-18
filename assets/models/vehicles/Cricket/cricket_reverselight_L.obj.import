@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dr0e841bi34bv"
+path="res://.godot/imported/cricket_reverselight_L.obj-aef5c31242702bc61707a9db0c181e09.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cricket_reverselight_L.obj-aef5c31242702bc61707a9db0c181e09.mesh"]
+
+source_file="res://assets/models/vehicles/Cricket/cricket_reverselight_L.obj"
+dest_files=["res://.godot/imported/cricket_reverselight_L.obj-aef5c31242702bc61707a9db0c181e09.mesh", "res://.godot/imported/cricket_reverselight_L.obj-aef5c31242702bc61707a9db0c181e09.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

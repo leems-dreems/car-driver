@@ -1,0 +1,54 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=9 format=3 uid="uid://do7exkbb35ahw"]
+
+[sub_resource type="Curve" id="Curve_tcyf7"]
+_data = [Vector2(0.526667, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xw6c4"]
+texture_mode = 1
+curve = SubResource("Curve_tcyf7")
+
+[sub_resource type="Gradient" id="Gradient_bmgnf"]
+offsets = PackedFloat32Array(0, 0.452532)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_itav8"]
+gradient = SubResource("Gradient_bmgnf")
+
+[sub_resource type="Curve" id="Curve_7pl46"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.25, 0.518793), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_16l04"]
+curve = SubResource("Curve_7pl46")
+
+[sub_resource type="Curve" id="Curve_4004m"]
+_data = [Vector2(0, 0.274725), 0.0, 0.0, 0, 0, Vector2(0.506667, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wocuf"]
+curve = SubResource("Curve_4004m")
+
+[resource]
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+emission_shape = 1
+emission_sphere_radius = 0.2
+angle_min = 1.07288e-05
+angle_max = 360.0
+inherit_velocity_ratio = 0.5
+direction = Vector3(0, 1, 0)
+spread = 90.0
+radial_velocity_min = 5.99998
+radial_velocity_max = 7.99998
+radial_velocity_curve = SubResource("CurveTexture_16l04")
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -1.0
+linear_accel_max = -1.0
+scale_min = 4.0
+scale_max = 6.0
+scale_curve = SubResource("CurveTexture_wocuf")
+color_ramp = SubResource("GradientTexture1D_itav8")
+alpha_curve = SubResource("CurveTexture_xw6c4")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0

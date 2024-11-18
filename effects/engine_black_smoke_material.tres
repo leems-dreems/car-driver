@@ -1,0 +1,55 @@
+[gd_resource type="ShaderMaterial" load_steps=13 format=3 uid="uid://bclipohnbqlxm"]
+
+[ext_resource type="Shader" uid="uid://d88xwj7fq8fu" path="res://effects/ExplosionShader.tres" id="1_x57bo"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y7t3k"]
+load_path = "res://.godot/imported/normal+.png-cbb5d7f0255a83c76cbcd41cac168450.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0jeit"]
+load_path = "res://.godot/imported/normal-.png-34f9ec5b8e4802f01e5cea7a7e2454a1.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kgspv"]
+load_path = "res://.godot/imported/smokesprite.png-2e1b143f6bc86cdc768c0f115600eccc.s3tc.ctex"
+
+[sub_resource type="Gradient" id="Gradient_ep55w"]
+offsets = PackedFloat32Array(0, 0.262195)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_unae1"]
+gradient = SubResource("Gradient_ep55w")
+
+[sub_resource type="Gradient" id="Gradient_oyxcg"]
+offsets = PackedFloat32Array(0, 0.0945122)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_165i6"]
+gradient = SubResource("Gradient_oyxcg")
+
+[sub_resource type="Gradient" id="Gradient_oaafo"]
+offsets = PackedFloat32Array(0, 0.228659, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h6n7a"]
+gradient = SubResource("Gradient_oaafo")
+
+[sub_resource type="Gradient" id="Gradient_x7cyt"]
+offsets = PackedFloat32Array(0, 0.789634)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_onkxc"]
+gradient = SubResource("Gradient_x7cyt")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_x57bo")
+shader_parameter/particle_h_frames = 8.0
+shader_parameter/particle_v_frames = 8.0
+shader_parameter/particles_anim_loop = false
+shader_parameter/still_frame = -1.0
+shader_parameter/Soft_limit = 0.001
+shader_parameter/blend_scale = 0.001
+shader_parameter/emission_falloff_multiplier = 0.1
+shader_parameter/tex_frg_2 = SubResource("CompressedTexture2D_kgspv")
+shader_parameter/tex_frg_27 = SubResource("GradientTexture1D_onkxc")
+shader_parameter/tex_frg_24 = SubResource("GradientTexture1D_unae1")
+shader_parameter/tex_frg_25 = SubResource("GradientTexture1D_165i6")
+shader_parameter/tex_frg_26 = SubResource("GradientTexture1D_h6n7a")
+shader_parameter/tex_frg_16 = SubResource("CompressedTexture2D_y7t3k")
+shader_parameter/tex_frg_17 = SubResource("CompressedTexture2D_0jeit")

@@ -2,6 +2,7 @@ class_name DriveableVehicle extends Vehicle
 
 @export var lights_on := false
 @export var downforce_multiplier := 4.0
+var vehicle_name := "Vehicle"
 var headlight_energy := 10.0
 var brake_light_energy := 5.0
 var reverse_light_energy := 1.0
@@ -73,10 +74,11 @@ var show_debug_label := false
 # Particle emitters
 @onready var engine_black_smoke_emitter: GPUParticles3D = $EngineSmokeBlack
 @onready var engine_white_smoke_emitter: GPUParticles3D = $EngineSmokeWhite
-@onready var engine_sparks_emitter: GPUParticles3D = $Sparks
 @onready var engine_fire_emitter: GPUParticles3D = $Fire
 # Explosion
-@onready var explosion: Explosion = $Explosion
+var explosion: Explosion = null
+const explosion_scene := preload("res://effects/explosion.tscn")
+@export var explosion_position: Vector3
 
 
 func _ready () -> void:
@@ -109,24 +111,15 @@ func _physics_process(delta: float) -> void:
   super(delta)
   # Record current velocity, to refer to when processing collision signals
   _previous_velocity = Vector3(linear_velocity)
-  # Apply downforce if any wheels are touching the ground
+  # Apply downforce if 2 or more wheels are touching the ground
   #if get_wheel_contact_count() > 1:
     # Get Z rotation, then get the square-root of its square to ensure that it's positive
     #var _angle_from_upright := (PI / 2) - sqrt(pow(rotation.z, 2))
     #if _angle_from_upright > 0:
       #apply_central_force(-basis.y * _angle_from_upright * downforce_multiplier * pow(speed, 2))
-  # Update energy of various lights
-  #if is_being_driven:
-    #var _current_brake_light_energy := lerpf(brake_light_left.light_energy, brake_light_energy * brake_amount, delta * 20)
-    #brake_light_left.light_energy = _current_brake_light_energy
-    #brake_light_right.light_energy = _current_brake_light_energy
-  brake_light_left_mesh.transparency = 0.9 - brake_amount
-  brake_light_right_mesh.transparency = 0.9 - brake_amount
+  brake_light_left_mesh.transparency = 1.0 - brake_amount
+  brake_light_right_mesh.transparency = 1.0 - brake_amount
   if current_gear == -1:
-    #if is_being_driven:
-      #var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, reverse_light_energy, delta * 10)
-      #reverse_light_left.light_energy = _current_reverse_light_energy
-      #reverse_light_right.light_energy = _current_reverse_light_energy
     reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 0.0, delta * 10)
     reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 0.0, delta * 10)
   else:
@@ -134,8 +127,8 @@ func _physics_process(delta: float) -> void:
       #var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 10)
       #reverse_light_left.light_energy = _current_reverse_light_energy
       #reverse_light_right.light_energy = _current_reverse_light_energy
-    reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 0.9, delta * 10)
-    reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 0.9, delta * 10)
+    reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 1.0, delta * 10)
+    reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 1.0, delta * 10)
   var _target_headlight_energy := 0.0
   if lights_on:
     _target_headlight_energy = headlight_energy
@@ -155,10 +148,8 @@ func _physics_process(delta: float) -> void:
     ignition_on = false
     if not engine_fire_emitter.emitting and not has_caught_fire:
       has_caught_fire = true
-      engine_sparks_emitter.emitting = true
       engine_fire_emitter.emitting = true
       await get_tree().create_timer(5.0).timeout
-      engine_sparks_emitter.emitting = false
       engine_fire_emitter.emitting = false
       explode()
   return
@@ -183,6 +174,9 @@ func respawn() -> void:
 
 
 func explode() -> void:
+  explosion = explosion_scene.instantiate()
+  add_child(explosion)
+  explosion.position = explosion_position
   explosion.top_level = true
   explosion.start_explosion()
   apply_burnt_material()

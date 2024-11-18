@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=96 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
@@ -7,33 +7,29 @@
 [ext_resource type="PackedScene" uid="uid://b2hlchrj4h2b7" path="res://addons/gevp/scenes/engine_sound.tscn" id="4_i42xy"]
 [ext_resource type="PackedScene" uid="uid://msf4p72duq7l" path="res://effects/car_scrape_emitter.tscn" id="4_m6abc"]
 [ext_resource type="AudioStream" uid="uid://cfqlem3v5t0y6" path="res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Sound effects/Car_Engine_Loop.ogg" id="5_vu53n"]
-[ext_resource type="ArrayMesh" uid="uid://bm6tjdix4yscu" path="res://assets/models/vehicles/cricket_body.obj" id="6_fibcd"]
-[ext_resource type="ArrayMesh" uid="uid://xk5hk1bssrdt" path="res://assets/models/vehicles/cricket_door_FL.obj" id="7_t5urj"]
+[ext_resource type="ArrayMesh" uid="uid://bm6tjdix4yscu" path="res://assets/models/vehicles/Cricket/cricket_body.obj" id="6_fibcd"]
+[ext_resource type="ArrayMesh" uid="uid://xk5hk1bssrdt" path="res://assets/models/vehicles/Cricket/cricket_door_FL.obj" id="7_t5urj"]
 [ext_resource type="PhysicsMaterial" uid="uid://bgc5lkrsa84nb" path="res://cars/car_door_physics_material.tres" id="8_rpaed"]
 [ext_resource type="Script" path="res://scripts/car_door.gd" id="9_653cp"]
 [ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="10_vgexy"]
 [ext_resource type="AudioStream" uid="uid://d02vhghagqdjw" path="res://assets/sfx/car-door-shut.wav" id="11_0cx5o"]
-[ext_resource type="ArrayMesh" uid="uid://b6mrcbowsnkuh" path="res://assets/models/vehicles/cricket_door_FR.obj" id="12_1gu4b"]
+[ext_resource type="ArrayMesh" uid="uid://b6mrcbowsnkuh" path="res://assets/models/vehicles/Cricket/cricket_door_FR.obj" id="12_1gu4b"]
 [ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="13_3hex1"]
-[ext_resource type="ArrayMesh" uid="uid://hpnx78hn5py4" path="res://assets/models/vehicles/cricket_bonnet.obj" id="13_75fjj"]
-[ext_resource type="ArrayMesh" uid="uid://5nji2th5co5l" path="res://assets/models/vehicles/cricket_boot.obj" id="14_4t365"]
+[ext_resource type="ArrayMesh" uid="uid://hpnx78hn5py4" path="res://assets/models/vehicles/Cricket/cricket_bonnet.obj" id="13_75fjj"]
+[ext_resource type="ArrayMesh" uid="uid://5nji2th5co5l" path="res://assets/models/vehicles/Cricket/cricket_boot.obj" id="14_4t365"]
 [ext_resource type="Script" path="res://addons/gevp/scripts/wheel.gd" id="14_e025k"]
 [ext_resource type="AudioStream" uid="uid://d2gr5emhyehgo" path="res://assets/sfx/tires_squal_loop.wav" id="15_68n7x"]
 [ext_resource type="AudioStream" uid="uid://x2riq63vqy7j" path="res://assets/sfx/skid-loop.wav" id="16_wwqhn"]
 [ext_resource type="AudioStream" uid="uid://bw7d3mhbykib" path="res://assets/audio/Hanna-Barbera SFX/clash.wav" id="17_7w5y2"]
 [ext_resource type="AudioStream" uid="uid://b6wjsd5udyqvt" path="res://assets/audio/Hanna-Barbera SFX/rumble_loop.wav" id="17_rtnly"]
-[ext_resource type="Material" uid="uid://bdg4152rp8j33" path="res://effects/smoke_particle_process_material.tres" id="18_6yteg"]
-[ext_resource type="ArrayMesh" uid="uid://b1sqc1ic4xp46" path="res://assets/models/vehicles/cricket_headlight_R.obj" id="18_26f06"]
-[ext_resource type="ArrayMesh" uid="uid://b44aqsaqhcf0m" path="res://assets/models/vehicles/cricket_headlight_L.obj" id="19_j0ugs"]
-[ext_resource type="QuadMesh" uid="uid://pxlxqqrg7rmf" path="res://effects/fire_quad_mesh.tres" id="19_ku3tg"]
-[ext_resource type="ArrayMesh" uid="uid://o8y61at0xra7" path="res://assets/models/vehicles/cricket_brakelight_L.obj" id="20_e4a6x"]
-[ext_resource type="Material" uid="uid://ci1rfkavqidwc" path="res://effects/smoke_white_particle_process_material.tres" id="20_ov1ny"]
-[ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="21_6fmka"]
-[ext_resource type="ArrayMesh" uid="uid://cpqrod3n8i4eu" path="res://assets/models/vehicles/cricket_brakelight_R.obj" id="21_t8q6m"]
-[ext_resource type="Material" uid="uid://8342nbrtebf1" path="res://effects/fire_particle_process_material.tres" id="22_blqn8"]
-[ext_resource type="ArrayMesh" uid="uid://dr0e841bi34bv" path="res://assets/models/vehicles/cricket_reverselight_L.obj" id="22_psb7o"]
-[ext_resource type="PackedScene" uid="uid://qj5wm2wpuawj" path="res://effects/explosion.tscn" id="23_0aeo7"]
-[ext_resource type="ArrayMesh" uid="uid://ngn3d0lex2ge" path="res://assets/models/vehicles/cricket_reverselight_R.obj" id="23_6oxxb"]
+[ext_resource type="ArrayMesh" uid="uid://b1sqc1ic4xp46" path="res://assets/models/vehicles/Cricket/cricket_headlight_R.obj" id="18_26f06"]
+[ext_resource type="Material" uid="uid://duxm05v8wv3mp" path="res://assets/materials/brake_light_emissive_material_3d.tres" id="18_kg4th"]
+[ext_resource type="ArrayMesh" uid="uid://b44aqsaqhcf0m" path="res://assets/models/vehicles/Cricket/cricket_headlight_L.obj" id="19_j0ugs"]
+[ext_resource type="ArrayMesh" uid="uid://o8y61at0xra7" path="res://assets/models/vehicles/Cricket/cricket_brakelight_L.obj" id="20_e4a6x"]
+[ext_resource type="Material" uid="uid://dmtu75kn4a1ac" path="res://assets/materials/reverse_light_emissive_material_3d.tres" id="21_o1ci1"]
+[ext_resource type="ArrayMesh" uid="uid://cpqrod3n8i4eu" path="res://assets/models/vehicles/Cricket/cricket_brakelight_R.obj" id="21_t8q6m"]
+[ext_resource type="ArrayMesh" uid="uid://dr0e841bi34bv" path="res://assets/models/vehicles/Cricket/cricket_reverselight_L.obj" id="22_psb7o"]
+[ext_resource type="ArrayMesh" uid="uid://ngn3d0lex2ge" path="res://assets/models/vehicles/Cricket/cricket_reverselight_R.obj" id="23_6oxxb"]
 [ext_resource type="AudioStream" uid="uid://ckde1fwfelw81" path="res://assets/audio/Sound effects package/Impact/Car door.mp3" id="27_7jbco"]
 [ext_resource type="AudioStream" uid="uid://ccc68vqt6ri72" path="res://assets/audio/Sound effects package/Impact/Car hit.mp3" id="28_e7vki"]
 [ext_resource type="AudioStream" uid="uid://dtbi4h33h4wf4" path="res://assets/audio/Sound effects package/Impact/Metal/metal_01.wav" id="29_so1rx"]
@@ -57,6 +53,12 @@
 [ext_resource type="AudioStream" uid="uid://bsykmtu15bbyy" path="res://assets/audio/Sound effects package/Crashes/Glass Break 02.wav" id="47_ek2u8"]
 [ext_resource type="AudioStream" uid="uid://btwfyuao3yspq" path="res://assets/audio/Sound effects package/Crashes/Glass Break 03.wav" id="48_e2voh"]
 [ext_resource type="Script" path="res://effects/car_game_particles.gd" id="53_aoxa3"]
+[ext_resource type="Material" uid="uid://bclipohnbqlxm" path="res://effects/engine_black_smoke_material.tres" id="53_dhsf8"]
+[ext_resource type="Shader" uid="uid://d88xwj7fq8fu" path="res://effects/ExplosionShader.tres" id="56_rpq7i"]
+[ext_resource type="Material" uid="uid://dslgu68amcstn" path="res://effects/engine_black_smoke_process_material.tres" id="57_nvu71"]
+[ext_resource type="Material" uid="uid://8vfe26o7lqwj" path="res://effects/engine_white_smoke_material.tres" id="58_opldm"]
+[ext_resource type="Material" uid="uid://dk6yd72g0kmj2" path="res://effects/engine_fire_process_material.tres" id="59_pv8nr"]
+[ext_resource type="Material" uid="uid://dlf645qtjmyle" path="res://effects/engine_white_smoke_process_material.tres" id="60_6wncv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.8
@@ -82,17 +84,6 @@ points = PackedVector3Array(-0.700186, 0.934376, 0.742142, -0.668084, 0.812137, 
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mj4f1"]
 points = PackedVector3Array(0, 1.36178, -1.17595, 0, 1.35845, -1.165, 0.192709, 1.3581, -1.17595, 0, 0.908637, -1.67125, -0.00013411, 0.908637, -1.67125, -0.192843, 1.3581, -1.17595, 0.439194, 1.3388, -1.16542, 0.192441, 1.35477, -1.16515, -0.192575, 1.35477, -1.16515, -0.439328, 1.3388, -1.16542, 0.439865, 1.34222, -1.17595, 0.646119, 0.891642, -1.65237, 0.539237, 0.892496, -1.65771, 0, 0.896425, -1.68453, -0.539371, 0.892496, -1.65771, -0.646253, 0.891642, -1.65237, -0.439999, 1.34222, -1.17595, 0.516707, 1.32719, -1.16748, 0.520462, 1.33001, -1.17595, -0.520596, 1.33001, -1.17595, -0.516841, 1.32719, -1.16748, 0.534543, 1.2809, -1.22938, 0.685009, 0.767725, -1.67331, 0, 0.766615, -1.70543, -0.250643, 0.767042, -1.69368, -0.685009, 0.767725, -1.67331, 0.250508, 0.767042, -1.69368, -0.534677, 1.2809, -1.22938, 0.64746, 0.489829, -1.5873, -0.647594, 0.489829, -1.5873, 0.650678, 0.489317, -1.60042, 0.237902, 0.49, -1.64068, 0, 0.490427, -1.66385, -0.650812, 0.489317, -1.60042, -0.238037, 0.49, -1.64068, 0.542992, 0.489488, -1.61089, -0.543126, 0.489488, -1.61089)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i127x"]
-albedo_color = Color(1, 0.196078, 0.196078, 1)
-emission_enabled = true
-emission = Color(1, 0.215686, 0.215686, 1)
-emission_energy_multiplier = 2.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ltwxu"]
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 3.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_uu7oe"]
 
@@ -233,35 +224,61 @@ stream_0/stream = ExtResource("46_3lylc")
 stream_1/stream = ExtResource("47_ek2u8")
 stream_2/stream = ExtResource("48_e2voh")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc8nd"]
-vertex_color_use_as_albedo = true
+[sub_resource type="QuadMesh" id="QuadMesh_cni3b"]
 
-[sub_resource type="Gradient" id="Gradient_3afc7"]
-offsets = PackedFloat32Array(0, 0.484582, 0.819383, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.932249, 0.891119, 2.31028e-06, 1, 0.920752, 0.355072, 0, 1, 0, 0, 0, 1)
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_413ly"]
+load_path = "res://.godot/imported/normal+.png-cbb5d7f0255a83c76cbcd41cac168450.s3tc.ctex"
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_fllr2"]
-gradient = SubResource("Gradient_3afc7")
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b5ted"]
+load_path = "res://.godot/imported/normal-.png-34f9ec5b8e4802f01e5cea7a7e2454a1.s3tc.ctex"
 
-[sub_resource type="Curve" id="Curve_66u3e"]
-_data = [Vector2(0.0392157, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.84081, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tqpwv"]
+load_path = "res://.godot/imported/smokesprite.png-2e1b143f6bc86cdc768c0f115600eccc.s3tc.ctex"
 
-[sub_resource type="CurveTexture" id="CurveTexture_ygr6i"]
-curve = SubResource("Curve_66u3e")
+[sub_resource type="Gradient" id="Gradient_uwc4w"]
+offsets = PackedFloat32Array(0, 0.262195)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_phnmf"]
-direction = Vector3(0, 1, 0)
-spread = 75.0
-initial_velocity_min = 8.0
-initial_velocity_max = 12.0
-damping_min = 5.0
-damping_max = 10.0
-color_ramp = SubResource("GradientTexture1D_fllr2")
-emission_curve = SubResource("CurveTexture_ygr6i")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1ow3g"]
+gradient = SubResource("Gradient_uwc4w")
 
-[sub_resource type="BoxMesh" id="BoxMesh_gtwax"]
-size = Vector3(0.1, 0.1, 0.1)
+[sub_resource type="Gradient" id="Gradient_htxpw"]
+offsets = PackedFloat32Array(0, 0.0945122)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p6uwm"]
+gradient = SubResource("Gradient_htxpw")
+
+[sub_resource type="Gradient" id="Gradient_rt0c2"]
+offsets = PackedFloat32Array(0, 0.228659, 0.368902, 0.469512)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 0.771864, 0.84145, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_10fex"]
+gradient = SubResource("Gradient_rt0c2")
+
+[sub_resource type="Gradient" id="Gradient_jvehn"]
+offsets = PackedFloat32Array(0, 0.789634)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_15y11"]
+gradient = SubResource("Gradient_jvehn")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ymld2"]
+render_priority = 0
+shader = ExtResource("56_rpq7i")
+shader_parameter/particle_h_frames = 8.0
+shader_parameter/particle_v_frames = 8.0
+shader_parameter/particles_anim_loop = false
+shader_parameter/still_frame = -1.0
+shader_parameter/Soft_limit = 0.001
+shader_parameter/blend_scale = 0.001
+shader_parameter/emission_falloff_multiplier = 0.1
+shader_parameter/tex_frg_2 = SubResource("CompressedTexture2D_tqpwv")
+shader_parameter/tex_frg_27 = SubResource("GradientTexture1D_15y11")
+shader_parameter/tex_frg_24 = SubResource("GradientTexture1D_1ow3g")
+shader_parameter/tex_frg_25 = SubResource("GradientTexture1D_p6uwm")
+shader_parameter/tex_frg_26 = SubResource("GradientTexture1D_10fex")
+shader_parameter/tex_frg_16 = SubResource("CompressedTexture2D_413ly")
+shader_parameter/tex_frg_17 = SubResource("CompressedTexture2D_b5ted")
+
+[sub_resource type="QuadMesh" id="QuadMesh_l538h"]
 
 [node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("brake_light_left_mesh", "brake_light_right_mesh", "reverse_light_left_mesh", "reverse_light_right_mesh", "front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
@@ -269,7 +286,7 @@ collision_mask = 83
 mass = 1500.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, 0.4, -0.1)
+center_of_mass = Vector3(0, 0.6, -0.1)
 freeze = true
 freeze_mode = 1
 continuous_cd = true
@@ -277,10 +294,10 @@ contact_monitor = true
 max_contacts_reported = 24
 script = ExtResource("1_vk21t")
 max_hit_points = 50.0
-brake_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightLeft/MeshInstance3D")
-brake_light_right_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightRight/MeshInstance3D")
-reverse_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/ReverseLightLeft/MeshInstance3D")
-reverse_light_right_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/ReverseLightRight/MeshInstance3D")
+brake_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightLeft/EmissiveMesh")
+brake_light_right_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightRight/EmissiveMesh")
+reverse_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/ReverseLightLeft/EmissiveMesh")
+reverse_light_right_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/ReverseLightRight/EmissiveMesh")
 front_left_wheel = NodePath("WheelFrontLeft")
 front_right_wheel = NodePath("WheelFrontRight")
 rear_left_wheel = NodePath("WheelRearLeft")
@@ -291,18 +308,21 @@ countersteer_assist = 0.3
 front_brake_bias = 0.3
 enable_stability = false
 stability_yaw_strength = 1.0
-max_torque = 800.0
+max_torque = 500.0
 idle_rpm = 1200.0
 torque_curve = ExtResource("2_sg067")
 max_clutch_torque_ratio = 1.0
-final_drive = 4.2
 shift_time = 0.2
 automatic_time_between_shifts = 500.0
 front_torque_split = 1.0
 front_variable_split = 0.5
 front_weight_distribution = 0.51
 center_of_gravity_height_offset = 0.0
+front_bump_damp_multiplier = 1.5
+front_rebound_damp_multiplier = 0.667
 front_bump_stop_multiplier = 0.5
+rear_bump_damp_multiplier = 1.5
+rear_rebound_damp_multiplier = 0.667
 rear_bump_stop_multiplier = 0.5
 braking_grip_multiplier = 3.0
 coefficient_of_friction = {
@@ -345,13 +365,12 @@ shape = SubResource("ConvexPolygonShape3D_7junj")
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("3_3utam")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 vehicle = NodePath("..")
-longitudinal_slip_threshold = 0.6
-lateral_slip_threshold = 0.6
+longitudinal_slip_threshold = 0.3
+lateral_slip_threshold = 0.2
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_i42xy")]
 stream = ExtResource("5_vu53n")
 unit_size = 2.0
-max_db = -8.0
 vehicle = NodePath("..")
 
 [node name="body" type="MeshInstance3D" parent="."]
@@ -727,7 +746,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/BrakeLightLeft"]
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 mesh = ExtResource("20_e4a6x")
-surface_material_override/0 = SubResource("StandardMaterial3D_i127x")
+
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/BrakeLightLeft"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("20_e4a6x")
+surface_material_override/0 = ExtResource("18_kg4th")
 
 [node name="BrakeLightRight" type="Node3D" parent="ColliderBits/Boot/OpenBoot/Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -735,7 +759,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/BrakeLightRight"]
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 mesh = ExtResource("21_t8q6m")
-surface_material_override/0 = SubResource("StandardMaterial3D_i127x")
+
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/BrakeLightRight"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("21_t8q6m")
+skeleton = NodePath("../../BrakeLightLeft")
+surface_material_override/0 = ExtResource("18_kg4th")
 
 [node name="ReverseLightLeft" type="Node3D" parent="ColliderBits/Boot/OpenBoot/Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -744,7 +774,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 gi_mode = 2
 mesh = ExtResource("22_psb7o")
-surface_material_override/0 = SubResource("StandardMaterial3D_ltwxu")
+
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/ReverseLightLeft"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("22_psb7o")
+skeleton = NodePath("../../BrakeLightLeft")
+surface_material_override/0 = ExtResource("21_o1ci1")
 
 [node name="ReverseLightRight" type="Node3D" parent="ColliderBits/Boot/OpenBoot/Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -753,14 +789,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
 gi_mode = 2
 mesh = ExtResource("23_6oxxb")
-surface_material_override/0 = SubResource("StandardMaterial3D_ltwxu")
+
+[node name="EmissiveMesh" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot/Lights/ReverseLightRight"]
+transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("23_6oxxb")
+skeleton = NodePath("../../BrakeLightLeft")
+surface_material_override/0 = ExtResource("21_o1ci1")
 
 [node name="EnterCarCollider" type="StaticBody3D" parent="ColliderBits"]
 visible = false
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("13_3hex1")
-vehicle_name = "Compact Car"
+vehicle_name = "Cricket"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/EnterCarCollider"]
 transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 0.693126, -0.00113106)
@@ -799,6 +841,15 @@ unit_size = 5.0
 pitch_scale = 2.0
 doppler_tracking = 2
 
+[node name="Label3D" type="Label3D" parent="WheelFrontLeft"]
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "1"
+font_size = 24
+outline_size = 6
+
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.823, -0.1, -1.85387)
 script = ExtResource("14_e025k")
@@ -826,6 +877,15 @@ stream = ExtResource("17_rtnly")
 unit_size = 5.0
 pitch_scale = 2.0
 doppler_tracking = 2
+
+[node name="Label3D" type="Label3D" parent="WheelFrontRight"]
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "1"
+font_size = 24
+outline_size = 6
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.823409, -0.1, 1.70898)
@@ -855,6 +915,15 @@ unit_size = 5.0
 pitch_scale = 2.0
 doppler_tracking = 2
 
+[node name="Label3D" type="Label3D" parent="WheelRearLeft"]
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "1"
+font_size = 24
+outline_size = 6
+
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.823, -0.1, 1.70898)
 script = ExtResource("14_e025k")
@@ -882,6 +951,15 @@ stream = ExtResource("17_rtnly")
 unit_size = 5.0
 pitch_scale = 2.0
 doppler_tracking = 2
+
+[node name="Label3D" type="Label3D" parent="WheelRearRight"]
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "1"
+font_size = 24
+outline_size = 6
 
 [node name="ExplosionCatcher" type="StaticBody3D" parent="." groups=["ExplosionCatcher"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.3, -2.5)
@@ -993,47 +1071,48 @@ stream = SubResource("AudioStreamRandomizer_wqjhd")
 max_polyphony = 3
 
 [node name="EngineSmokeBlack" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2.3)
+material_override = ExtResource("53_dhsf8")
 cast_shadow = 0
-amount = 20
+amount = 40
 amount_ratio = 0.0
+lifetime = 2.0
+explosiveness = 0.1
 randomness = 0.5
-process_material = ExtResource("18_6yteg")
-draw_pass_1 = ExtResource("19_ku3tg")
+fixed_fps = 60
+process_material = ExtResource("57_nvu71")
+draw_pass_1 = SubResource("QuadMesh_cni3b")
+script = ExtResource("53_aoxa3")
+
+[node name="Fire" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2.3)
+material_override = SubResource("ShaderMaterial_ymld2")
+cast_shadow = 0
+emitting = false
+amount = 40
+lifetime = 2.0
+explosiveness = 0.1
+randomness = 0.5
+fixed_fps = 60
+process_material = ExtResource("59_pv8nr")
+draw_pass_1 = SubResource("QuadMesh_cni3b")
 script = ExtResource("53_aoxa3")
 
 [node name="EngineSmokeWhite" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2.3)
+material_override = ExtResource("58_opldm")
 cast_shadow = 0
-amount = 10
+amount = 20
 amount_ratio = 0.0
+lifetime = 2.0
+explosiveness = 0.2
 randomness = 0.5
-process_material = ExtResource("20_ov1ny")
-draw_pass_1 = ExtResource("19_ku3tg")
+fixed_fps = 60
+process_material = ExtResource("60_6wncv")
+draw_pass_1 = SubResource("QuadMesh_l538h")
 script = ExtResource("53_aoxa3")
 
-[node name="Sparks" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
-material_override = SubResource("StandardMaterial3D_gc8nd")
-emitting = false
-amount = 16
-lifetime = 0.5
-one_shot = true
-explosiveness = 0.78
-randomness = 0.35
-visibility_aabb = AABB(-4.84702, -4, -4, 9.7204, 8, 8)
-process_material = SubResource("ParticleProcessMaterial_phnmf")
-draw_pass_1 = SubResource("BoxMesh_gtwax")
-script = ExtResource("53_aoxa3")
-
-[node name="Fire" parent="." instance=ExtResource("21_6fmka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
-emitting = false
-process_material = ExtResource("22_blqn8")
-
-[node name="Explosion" parent="." instance=ExtResource("23_0aeo7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-explosion_scale = 15.0
-explosion_delay = 0.0
+[node name="DevMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.1)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

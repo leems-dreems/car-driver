@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://cr77wenw0lh5c"]
+[gd_scene load_steps=88 format=3 uid="uid://cr77wenw0lh5c"]
 
 [ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="10_b2bvt"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="12_n3gia"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="13_fg0qv"]
+[ext_resource type="PackedScene" uid="uid://dfcsj3jjvi65m" path="res://cars/Van/van.tscn" id="13_pjkok"]
 [ext_resource type="PackedScene" uid="uid://2g4icv655eh3" path="res://maps/SmallCityMap/4_way_junction.tscn" id="14_4imh1"]
 [ext_resource type="Material" uid="uid://c7ote2txeba1m" path="res://addons/road-generator/resources/road_texture.material" id="14_vie48"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="15_0gxjo"]
@@ -314,6 +315,9 @@ surface_material_override/0 = ExtResource("2_upi0u")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/CityFoundation"]
 shape = SubResource("ConvexPolygonShape3D_4pvb3")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="Terrain/CityFoundation"]
+size = Vector3(1000, 2, 1000)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_pbxeh")
@@ -1466,6 +1470,9 @@ traffic_lights_RP_004 = [NodePath("../../TrafficLights/4WayJunction_D4")]
 [node name="CompactCar" parent="VehicleContainer" instance=ExtResource("8_dvnrp")]
 transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 62, 1.2, 15.1772)
 
+[node name="Van" parent="VehicleContainer" instance=ExtResource("13_pjkok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1.3, 15)
+
 [node name="PedestrianContainer" type="Node3D" parent="."]
 
 [node name="TrafficLights" type="Node3D" parent="."]
@@ -1600,7 +1607,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
 use_collision = true
 size = Vector3(5, 6, 4)
 
-[node name="DispenserButtonSedan" type="CSGBox3D" parent="VehicleDispenser"]
+[node name="DispenserButtonVan" type="CSGBox3D" parent="VehicleDispenser"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.5, -1.6)
 material_override = SubResource("StandardMaterial3D_spxxv")
 use_collision = true
@@ -1609,9 +1616,9 @@ size = Vector3(4, 1, 1)
 script = ExtResource("26_0bws6")
 vehicle_type = 1
 
-[node name="Label3D" type="Label3D" parent="VehicleDispenser/DispenserButtonSedan"]
+[node name="Label3D" type="Label3D" parent="VehicleDispenser/DispenserButtonVan"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.51)
-text = "Sedan"
+text = "Van"
 
 [node name="DispenserButtonCompact" type="CSGBox3D" parent="VehicleDispenser"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -2, -1.6)
@@ -1623,7 +1630,7 @@ script = ExtResource("26_0bws6")
 
 [node name="Label3D" type="Label3D" parent="VehicleDispenser/DispenserButtonCompact"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.51)
-text = "Compact"
+text = "Cricket"
 
 [node name="VehiclePlatform" type="CSGBox3D" parent="VehicleDispenser"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -2.95, 0)
@@ -2227,6 +2234,9 @@ mesh = SubResource("BoxMesh_ic04a")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/GasStation/Roof"]
 shape = SubResource("ConvexPolygonShape3D_7yx1w")
 
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="PedestrianAreas/GasStation/Roof"]
+size = Vector3(30, 1, 20)
+
 [node name="Pillar3" type="StaticBody3D" parent="PedestrianAreas/GasStation"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 4, 0)
 
@@ -2255,6 +2265,9 @@ mesh = SubResource("BoxMesh_ic04a")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PedestrianAreas/GasStation/Roof2"]
 shape = SubResource("ConvexPolygonShape3D_7yx1w")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="PedestrianAreas/GasStation/Roof2"]
+size = Vector3(30, 1, 20)
 
 [node name="StandaloneGasPumpProp" parent="PedestrianAreas/GasStation" instance=ExtResource("27_0lddw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)

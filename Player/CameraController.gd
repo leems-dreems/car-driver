@@ -42,7 +42,7 @@ func _unhandled_input(event: InputEvent) -> void:
     _tilt_input = -event.relative.y * mouse_sensitivity
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
   if not _anchor:
     return
 

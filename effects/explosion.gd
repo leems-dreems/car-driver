@@ -2,18 +2,20 @@ class_name Explosion extends Node3D
 
 signal finished
 ## Multiplier for sustained explosion force.
-@export var explosion_force_multiplier := 500000.0
+@export var explosion_force_multiplier := 300000.0
 ## How much the explosion Area3D will be scaled up by. For the explosion to work correctly, its
 ## sphere collider should start with a radius of 1
 @export var explosion_scale := 20.0
 @export var explosion_duration := 0.2
 @export var explosion_delay := 0.3
-@export var damage_multiplier := 0.1
+@export var damage_multiplier := 1
 @onready var explosion_area : Area3D = $ExplosionArea
 @onready var explosion_audio : AudioStreamPlayer3D = $ExplosionAudio
 @onready var debris_emitter := $DebrisEmitter
-@onready var fire_emitter := $FireEmitter
-@onready var smoke_emitter := $SmokeEmitter
+@onready var explosion_emitter := $ExplosionEmitter
+@onready var blastwave_emitter := $BlastwaveEmitter
+@onready var explosion_light := $OmniLight3D
+@onready var animation_player := $AnimationPlayer
 ## RigidBodies get given an initial impulse when hit by an explosion, and then have a force applied
 ## each physics step after that. We track those bodies here so we only apply that impulse once.
 var impulsed_bodies : Array[RigidBody3D] = []
@@ -78,25 +80,15 @@ func calculate_force_vector_for_body(_body: Node3D) -> Vector3:
 
 func start_explosion() -> void:
 #  Engine.time_scale = 0.02
-  explosion_area.set_deferred("monitoring", true)
-  explosion_area.set_deferred("monitorable", true)
-  debris_emitter.emitting = true
-  fire_emitter.emitting = true
-  smoke_emitter.emitting = true
-  var explosion_tween := create_tween()
-  explosion_tween.tween_property(explosion_area, "scale", Vector3(explosion_scale, explosion_scale, explosion_scale), explosion_duration)
-  explosion_tween.tween_callback(stop_explosion)
+  animation_player.play("explode")
+  animation_player.animation_finished.connect(func(_name: String):
+    stop_explosion()
+  )
   explosion_audio.play()
   return
 
 
 func stop_explosion() -> void:
 #  Engine.time_scale = 1.0
-  debris_emitter.emitting = false
-  fire_emitter.emitting = false
-  smoke_emitter.emitting = false
-  explosion_area.set_deferred("monitoring", false)
-  explosion_area.set_deferred("monitorable", false)
-  explosion_area.scale = Vector3(0.01, 0.01, 0.01)
-  finished.emit()
+  queue_free()
   return
