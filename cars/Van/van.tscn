@@ -311,8 +311,10 @@ torque_curve = ExtResource("2_131uc")
 max_clutch_torque_ratio = 1.0
 shift_time = 0.2
 automatic_time_between_shifts = 500.0
+variable_torque_split = true
+front_variable_split = 0.5
 vehicle_mass = 2500.0
-front_weight_distribution = 0.51
+front_weight_distribution = 0.6
 center_of_gravity_height_offset = 0.0
 front_spring_length = 0.18
 rear_spring_length = 0.24
@@ -363,7 +365,6 @@ shape = SubResource("ConvexPolygonShape3D_vreeo")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 visibility_aabb = AABB(-10, -10, -10, 20, 20, 20)
 vehicle = NodePath("..")
-longitudinal_slip_threshold = 0.3
 lateral_slip_threshold = 0.2
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("6_5bhig")]
