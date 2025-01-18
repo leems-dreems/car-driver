@@ -29,7 +29,7 @@ var useable_target : Node3D = null
 @onready var _vehicle_controller: VehicleController = $VehicleController
 @onready var camera_controller: CameraController = $CameraController
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
-@onready var ragdoll_skeleton: Skeleton3D = $DummyRigPhysical/Rig/Skeleton3D
+@onready var ragdoll_skeleton: Skeleton3D = $square_guy/metarig/Skeleton3D
 @onready var _ragdoll_tracker_bone: PhysicalBone3D = $"DummyRigPhysical/Rig/Skeleton3D/Physical Bone spine"
 #@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
@@ -56,7 +56,6 @@ var _ragdoll_reset_timer: SceneTreeTimer = null
 func _ready() -> void:
   Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
   camera_controller.setup(self)
-  start_ragdoll()
   PropRespawnManager.camera = camera_controller.camera
   TrafficManager.camera = camera_controller.camera
   PedestrianManager.camera = camera_controller.camera
@@ -118,6 +117,8 @@ func _physics_process(delta: float) -> void:
   # Get input and movement state
   var is_just_jumping := Input.is_action_just_pressed("jump") and _is_on_ground
   var is_just_on_floor := _is_on_ground and not _is_on_floor_buffer
+  if Input.is_action_just_pressed("Ragdoll"):
+    go_limp()
 
   # Respond to pause button
   var is_pausing := Input.is_action_just_pressed("Pause")
@@ -272,11 +273,18 @@ func start_ragdoll() -> void:
 
 func go_limp() -> void:
   $HitSound.play()
-  is_ragdolling = true
+  for _bone: PhysicalBone3D in ragdoll_skeleton.find_children("*", "PhysicalBone3D"):
+    var _target_bone_transform := ragdoll_skeleton.get_bone_global_pose(_bone.get_bone_id())
+    _bone.global_transform = ragdoll_skeleton.global_transform * _target_bone_transform
+  ragdoll_skeleton.physical_bones_start_simulation()
   freeze = true
   collision_layer = 0
   get_tree().create_timer(min_ragdoll_time).timeout.connect(func():
     freeze = false
+    ragdoll_skeleton.physical_bones_stop_simulation()
+    for _bone: PhysicalBone3D in ragdoll_skeleton.find_children("*", "PhysicalBone3D"):
+      var _target_bone_transform := ragdoll_skeleton.get_bone_global_pose(_bone.get_bone_id())
+      _bone.global_transform = ragdoll_skeleton.global_transform * _target_bone_transform
     is_waiting_to_reset = true
   )
 
