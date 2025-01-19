@@ -193,11 +193,13 @@ func _physics_process(delta: float) -> void:
       _animation_tree.set("parameters/MidairBlendSpace1D/blend_position", clampf(-linear_velocity.y, -1, 1))
     elif _is_on_ground:
       var xz_velocity := Vector3(linear_velocity.x, 0, linear_velocity.z)
-      if xz_velocity.length() > stopping_speed:
-        _playback.travel("MovingBlendSpace1D")
-        _animation_tree.set("parameters/MovingBlendSpace1D/blend_position", clamp(move_speed, 0.0, 1.0))
+      var _xz_speed := xz_velocity.length()
+      _playback.travel("Moving_BlendTree")
+      _animation_tree.set("parameters/Moving_BlendTree/BlendSpace1D/blend_position", clampf(_xz_speed, 0.0, 8.0))
+      if _xz_speed > stopping_speed:
+        _animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", clampf(_xz_speed, 0.0, 2.0))
       else:
-        _playback.travel("Idle")
+        _animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", 1)
 
     if is_just_on_floor:
       _landing_sound.play()
