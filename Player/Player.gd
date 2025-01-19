@@ -249,18 +249,6 @@ func walk() -> void:
   _playback.travel("MovingBlendSpace1D")
 
 
-func jump() -> void:
-  _playback.travel("DummySkin_Jump_Start")
-
-
-func fall() -> void:
-  _playback.travel("DummySkin_Jump_Idle")
-
-
-func land() -> void:
-  _playback.travel("DummySkin_Jump_Land")
-
-
 func start_ragdoll() -> void:
   var _bone_names: Array[StringName] = []
   for _bone: Node in ragdoll_skeleton.get_children(): 

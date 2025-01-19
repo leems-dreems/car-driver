@@ -32,8 +32,6 @@ class_name Pedestrian extends RigidBody3D
 @onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
 
 var _move_direction := Vector3.ZERO
-var _last_strong_direction := Vector3.FORWARD
-var _default_collision_layer := collision_layer
 var _is_on_floor_buffer := false
 
 var is_ragdolling := false
@@ -43,8 +41,6 @@ var _starting_velocity := Vector3.ZERO
 var _target_position: Vector3
 ## Velocity as of the last physics tick
 var _previous_velocity: Vector3 = Vector3.ZERO
-## Timer used to space out how often we check if we can exit ragdoll
-var _ragdoll_reset_timer: SceneTreeTimer = null
 
 
 func _ready() -> void:
@@ -144,25 +140,6 @@ func _orient_character_to_direction(_direction: Vector3, delta: float) -> void:
   _rotation_root.transform.basis = Basis(_rotation_root.transform.basis.get_rotation_quaternion().slerp(rotation_basis, delta * rotation_speed)).scaled(
     model_scale
   )
-
-
-func set_moving(_moving: bool):
-  if _moving:
-    _playback.travel("MovingBlendSpace1D")
-  else:
-    _playback.travel("Idle")
-
-
-func set_moving_blend(value : float):
-  _animation_tree.set("parameters/MovingBlendSpace1D/blend_position", clamp(move_speed, 0.0, 1.0))
-
-
-func idle() -> void:
-  _playback.travel("Idle")
-
-
-func walk() -> void:
-  _playback.travel("MovingBlendSpace1D")
 
 
 #func start_ragdoll() -> void:

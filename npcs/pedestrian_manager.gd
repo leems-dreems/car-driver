@@ -36,12 +36,6 @@ var _last_spawn_point_checked: int = -1
 var _spawn_point_sighted_delay := 8.0
 ## Distance in metres between spawn points
 var _spawn_point_interval := 20
-## Maximum number of pedestrians that have active ragdoll enabled at one time
-var _active_ragdoll_count: int = 2
-## Interval at which to turn active ragdolls on/off based on pedestrian distance
-var _active_ragdoll_check_interval := 1.0
-## Time that the active ragdoll check was last carried out
-var _time_since_active_ragdoll_check := 1.0
 ## Index of the most recent PedestrianAgent to be updated
 var last_agent_updated: int = 0
 ## Time elapsed since PedestrianManager started. Incremented by the delta of _physics_process each step
@@ -54,7 +48,6 @@ var _time_elapsed := 10.0
 
 func _physics_process(delta: float) -> void:
   _time_elapsed += delta
-  _time_since_active_ragdoll_check += delta
   if len(pedestrian_paths) == 0:
     return
   # If enough time has passed, sort pedestrians by distance and turn active ragdolls on/off
