@@ -43,11 +43,6 @@ var _target_position: Vector3
 var _previous_velocity: Vector3 = Vector3.ZERO
 
 
-func _ready() -> void:
-  #start_ragdoll()
-  return
-
-
 func _on_body_entered(_body: Node) -> void:
   if not is_ragdolling and _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D:
     var _impact_force := (_previous_velocity - linear_velocity).length()
@@ -144,14 +139,6 @@ func _orient_character_to_direction(_direction: Vector3, delta: float) -> void:
   )
 
 
-#func start_ragdoll() -> void:
-  #var _bone_names: Array[StringName] = []
-  #for _bone: Node in ragdoll_skeleton.get_children(): 
-    #if _bone is PhysicalBone3D:
-      #_bone_names.push_back(_bone.name)
-  #ragdoll_skeleton.physical_bones_start_simulation(_bone_names)
-
-
 func go_limp() -> void:
   $HitSound.play()
   is_ragdolling = true
@@ -165,14 +152,6 @@ func go_limp() -> void:
 
 func is_on_ground() -> bool:
   return len(ground_collider.get_overlapping_bodies()) > 0
-
-
-#func can_stand_up() -> bool:
-  #return _ragdoll_tracker_bone.linear_velocity.length() < stopping_speed
-#
-#
-#func get_skeleton_position() -> Vector3:
-  #return _ragdoll_tracker_bone.global_position
 
 
 func despawn() -> void:

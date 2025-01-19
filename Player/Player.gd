@@ -232,35 +232,6 @@ func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
   )
 
 
-func set_moving(_moving: bool):
-  if _moving:
-    _playback.travel("MovingBlendSpace1D")
-  else:
-    _playback.travel("Idle")
-
-
-func set_moving_blend(value : float):
-  _animation_tree.set("parameters/MovingBlendSpace1D/blend_position", clamp(move_speed, 0.0, 1.0))
-
-
-func idle() -> void:
-  _playback.travel("Idle")
-
-
-func walk() -> void:
-  _playback.travel("MovingBlendSpace1D")
-
-
-func start_ragdoll() -> void:
-  var _bone_names: Array[StringName] = []
-  for _bone: Node in ragdoll_skeleton.get_children(): 
-    if _bone is PhysicalBone3D:
-      _bone_names.push_back(_bone.name)
-  ragdoll_skeleton.physical_bones_start_simulation(_bone_names)
-  is_ragdolling = true
-  return
-
-
 func go_limp() -> void:
   $HitSound.play()
   for _bone: PhysicalBone3D in ragdoll_skeleton.find_children("*", "PhysicalBone3D"):
