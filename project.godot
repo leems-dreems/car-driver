@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Fast Traffic"
-run/main_scene="res://maps/SmallCityMap/small_city_map.tscn"
+run/main_scene="res://maps/BinRoninIsland/bin_ronin_island.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 

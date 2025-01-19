@@ -1,6 +1,6 @@
 [gd_scene load_steps=88 format=3 uid="uid://cr77wenw0lh5c"]
 
-[ext_resource type="Script" path="res://maps/SmallCityMap/small_city_map.gd" id="1_a23al"]
+[ext_resource type="Script" path="res://maps/common/playable_map.gd" id="1_a23al"]
 [ext_resource type="Material" uid="uid://cpf68rqbiu7ic" path="res://maps/SmallIslandMap/tarmac_material_3d.tres" id="2_upi0u"]
 [ext_resource type="PhysicsMaterial" uid="uid://xvg1njhe0wed" path="res://assets/materials/road_physics_material.tres" id="3_csym3"]
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact/compact.tscn" id="8_dvnrp"]
