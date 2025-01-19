@@ -35,6 +35,12 @@ project/assembly_name="Fast Traffic"
 
 enabled=PackedStringArray("res://addons/road-generator/plugin.cfg")
 
+[global_group]
+
+Road="Vehicles will treat this surface as a road"
+Grass="Vehicles will treat this surface as grass"
+ExplosionCatcher="Used to fine-tune how explosions push larger objects"
+
 [input]
 
 ui_accept={

@@ -8,10 +8,10 @@
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="12_n3gia"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="13_fg0qv"]
 [ext_resource type="PackedScene" uid="uid://dfcsj3jjvi65m" path="res://cars/Van/van.tscn" id="13_pjkok"]
-[ext_resource type="PackedScene" uid="uid://2g4icv655eh3" path="res://maps/SmallCityMap/4_way_junction.tscn" id="14_4imh1"]
+[ext_resource type="PackedScene" uid="uid://2g4icv655eh3" path="res://maps/common/4_way_junction.tscn" id="14_4imh1"]
 [ext_resource type="Material" uid="uid://c7ote2txeba1m" path="res://addons/road-generator/resources/road_texture.material" id="14_vie48"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_point.gd" id="15_0gxjo"]
-[ext_resource type="PackedScene" uid="uid://4whew70l87gh" path="res://maps/SmallCityMap/t_junction.tscn" id="15_fat5n"]
+[ext_resource type="PackedScene" uid="uid://4whew70l87gh" path="res://maps/common/t_junction.tscn" id="15_fat5n"]
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="16_k8s8v"]
 [ext_resource type="PhysicsMaterial" uid="uid://cc6punypby5f5" path="res://assets/materials/building_physics_material.tres" id="23_s8icf"]
 [ext_resource type="PackedScene" uid="uid://ba0xtl41qmm3s" path="res://maps/KayKitCity/props/traffic_light_a.tscn" id="24_geihi"]
@@ -35,12 +35,12 @@ points = PackedVector3Array(-500, -1, -500, -500, 1, -500, 500, -1, -500, -500, 
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jykgi"]
 
-[sub_resource type="Sky" id="Sky_en3uj"]
+[sub_resource type="Sky" id="Sky_855be"]
 sky_material = SubResource("ProceduralSkyMaterial_jykgi")
 
 [sub_resource type="Environment" id="Environment_pbxeh"]
 background_mode = 2
-sky = SubResource("Sky_en3uj")
+sky = SubResource("Sky_855be")
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.005
 
