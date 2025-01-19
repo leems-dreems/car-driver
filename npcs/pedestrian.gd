@@ -20,8 +20,7 @@ class_name Pedestrian extends RigidBody3D
 ## Minimum time the character will ragdoll for after getting hit
 @export var min_ragdoll_time := 4.0
 
-@onready var _rotation_root: Node3D = $CharacterRotationRoot
-@onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummyRigAnimated
+@onready var _rotation_root: Node3D = $square_guy
 #@onready var ragdoll_skeleton: Skeleton3D = $DummyRigPhysical/Rig/Skeleton3D
 #@onready var _ragdoll_tracker_bone: PhysicalBone3D = $"DummyRigPhysical/Rig/Skeleton3D/Physical Bone spine"
 #@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
@@ -29,10 +28,10 @@ class_name Pedestrian extends RigidBody3D
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 @onready var ground_collider := $GroundCollider
 @onready var _nav_agent: NavigationAgent3D = $NavigationAgent3D
+@onready var _animation_tree: AnimationTree = $square_guy/AnimationTree
+@onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
 
 var _move_direction := Vector3.ZERO
-var _last_strong_direction := Vector3.FORWARD
-var _default_collision_layer := collision_layer
 var _is_on_floor_buffer := false
 
 var is_ragdolling := false
@@ -42,13 +41,6 @@ var _starting_velocity := Vector3.ZERO
 var _target_position: Vector3
 ## Velocity as of the last physics tick
 var _previous_velocity: Vector3 = Vector3.ZERO
-## Timer used to space out how often we check if we can exit ragdoll
-var _ragdoll_reset_timer: SceneTreeTimer = null
-
-
-func _ready() -> void:
-  #start_ragdoll()
-  return
 
 
 func _on_body_entered(_body: Node) -> void:
@@ -109,15 +101,19 @@ func _physics_process(delta: float) -> void:
     _orient_character_to_direction(_move_direction, delta)
   _nav_agent.set_velocity(_move_direction)
   #apply_central_force(_move_direction * acceleration * mass)
-  if not _is_on_ground and linear_velocity.y < 0:
-    _dummy_skin.fall()
+  if not _is_on_ground:
+    _playback.travel("MidairBlendSpace1D")
+    _animation_tree.set("parameters/MidairBlendSpace1D/blend_position", clampf(-linear_velocity.y, -1, 1))
   elif _is_on_ground:
     var xz_velocity := Vector3(linear_velocity.x, 0, linear_velocity.z)
-    if xz_velocity.length() > stopping_speed:
-      _dummy_skin.set_moving(true)
-      _dummy_skin.set_moving_speed(inverse_lerp(0.0, move_speed, xz_velocity.length()))
+    var _xz_speed := xz_velocity.length()
+    _playback.travel("Moving_BlendTree")
+    _animation_tree.set("parameters/Moving_BlendTree/BlendSpace1D/blend_position", clampf(_xz_speed, 0.0, 8.0))
+    if _xz_speed > stopping_speed:
+      _animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", clampf(_xz_speed, 0.0, 2.0))
     else:
-      _dummy_skin.set_moving(false)
+      _animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", 1)
+
   if is_just_on_floor:
     _landing_sound.play()
   return
@@ -143,14 +139,6 @@ func _orient_character_to_direction(_direction: Vector3, delta: float) -> void:
   )
 
 
-#func start_ragdoll() -> void:
-  #var _bone_names: Array[StringName] = []
-  #for _bone: Node in ragdoll_skeleton.get_children(): 
-    #if _bone is PhysicalBone3D:
-      #_bone_names.push_back(_bone.name)
-  #ragdoll_skeleton.physical_bones_start_simulation(_bone_names)
-
-
 func go_limp() -> void:
   $HitSound.play()
   is_ragdolling = true
@@ -164,14 +152,6 @@ func go_limp() -> void:
 
 func is_on_ground() -> bool:
   return len(ground_collider.get_overlapping_bodies()) > 0
-
-
-#func can_stand_up() -> bool:
-  #return _ragdoll_tracker_bone.linear_velocity.length() < stopping_speed
-#
-#
-#func get_skeleton_position() -> Vector3:
-  #return _ragdoll_tracker_bone.global_position
 
 
 func despawn() -> void:

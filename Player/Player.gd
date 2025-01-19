@@ -25,18 +25,19 @@ class_name Player extends RigidBody3D
 ## The useable target the player is looking at
 var useable_target : Node3D = null
 
-@onready var _rotation_root: Node3D = $CharacterRotationRoot
+@onready var _rotation_root: Node3D = $square_guy
 @onready var _vehicle_controller: VehicleController = $VehicleController
 @onready var camera_controller: CameraController = $CameraController
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
-@onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummyRigAnimated
-@onready var ragdoll_skeleton: Skeleton3D = $DummyRigPhysical/Rig/Skeleton3D
-@onready var _ragdoll_tracker_bone: PhysicalBone3D = $"DummyRigPhysical/Rig/Skeleton3D/Physical Bone spine"
+@onready var ragdoll_skeleton: Skeleton3D = $square_guy/metarig/Skeleton3D
+@onready var _ragdoll_tracker_bone: PhysicalBone3D = $"square_guy/metarig/Skeleton3D/Physical Bone spine"
 #@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 @onready var ground_collider := $GroundCollider
 @onready var _nav_agent: NavigationAgent3D = $NavigationAgent3D
+@onready var _animation_tree: AnimationTree = $square_guy/AnimationTree
+@onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
 
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
@@ -55,7 +56,6 @@ var _ragdoll_reset_timer: SceneTreeTimer = null
 func _ready() -> void:
   Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
   camera_controller.setup(self)
-  start_ragdoll()
   PropRespawnManager.camera = camera_controller.camera
   TrafficManager.camera = camera_controller.camera
   PedestrianManager.camera = camera_controller.camera
@@ -87,6 +87,9 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
       global_position = get_skeleton_position()
       state.linear_velocity = Vector3.ZERO
       state.angular_velocity = Vector3.ZERO
+      for _bone: PhysicalBone3D in ragdoll_skeleton.find_children("*", "PhysicalBone3D"):
+        var _target_bone_transform := ragdoll_skeleton.get_bone_global_pose(_bone.get_bone_id())
+        _bone.global_transform = ragdoll_skeleton.global_transform * _target_bone_transform
       is_waiting_to_reset = false
     else:
       _ragdoll_reset_timer = get_tree().create_timer(1.0)
@@ -117,6 +120,8 @@ func _physics_process(delta: float) -> void:
   # Get input and movement state
   var is_just_jumping := Input.is_action_just_pressed("jump") and _is_on_ground
   var is_just_on_floor := _is_on_ground and not _is_on_floor_buffer
+  if Input.is_action_just_pressed("Ragdoll"):
+    go_limp()
 
   # Respond to pause button
   var is_pausing := Input.is_action_just_pressed("Pause")
@@ -183,17 +188,18 @@ func _physics_process(delta: float) -> void:
       apply_central_impulse(Vector3.UP * jump_initial_impulse * mass)
 
     # Set character animation
-    if is_just_jumping:
-      _dummy_skin.jump()
-    elif not _is_on_ground and linear_velocity.y < 0:
-      _dummy_skin.fall()
+    if not _is_on_ground:
+      _playback.travel("MidairBlendSpace1D")
+      _animation_tree.set("parameters/MidairBlendSpace1D/blend_position", clampf(-linear_velocity.y, -1, 1))
     elif _is_on_ground:
       var xz_velocity := Vector3(linear_velocity.x, 0, linear_velocity.z)
-      if xz_velocity.length() > stopping_speed:
-        _dummy_skin.set_moving(true)
-        _dummy_skin.set_moving_speed(inverse_lerp(0.0, move_speed, xz_velocity.length()))
+      var _xz_speed := xz_velocity.length()
+      _playback.travel("Moving_BlendTree")
+      _animation_tree.set("parameters/Moving_BlendTree/BlendSpace1D/blend_position", clampf(_xz_speed, 0.0, 8.0))
+      if _xz_speed > stopping_speed:
+        _animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", clampf(_xz_speed, 0.0, 2.0))
       else:
-        _dummy_skin.set_moving(false)
+        _animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", 1)
 
     if is_just_on_floor:
       _landing_sound.play()
@@ -226,21 +232,18 @@ func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
   )
 
 
-func start_ragdoll() -> void:
-  var _bone_names: Array[StringName] = []
-  for _bone: Node in ragdoll_skeleton.get_children(): 
-    if _bone is PhysicalBone3D:
-      _bone_names.push_back(_bone.name)
-  ragdoll_skeleton.physical_bones_start_simulation(_bone_names)
-
-
 func go_limp() -> void:
   $HitSound.play()
+  for _bone: PhysicalBone3D in ragdoll_skeleton.find_children("*", "PhysicalBone3D"):
+    var _target_bone_transform := ragdoll_skeleton.get_bone_global_pose(_bone.get_bone_id())
+    _bone.global_transform = ragdoll_skeleton.global_transform * _target_bone_transform
+  ragdoll_skeleton.physical_bones_start_simulation()
   is_ragdolling = true
   freeze = true
   collision_layer = 0
   get_tree().create_timer(min_ragdoll_time).timeout.connect(func():
     freeze = false
+    ragdoll_skeleton.physical_bones_stop_simulation()
     is_waiting_to_reset = true
   )
 
