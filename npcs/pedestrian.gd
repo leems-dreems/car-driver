@@ -20,8 +20,7 @@ class_name Pedestrian extends RigidBody3D
 ## Minimum time the character will ragdoll for after getting hit
 @export var min_ragdoll_time := 4.0
 
-@onready var _rotation_root: Node3D = $CharacterRotationRoot
-@onready var _dummy_skin: DummyCharacterSkin = $CharacterRotationRoot/DummyRigAnimated
+@onready var _rotation_root: Node3D = $square_guy
 #@onready var ragdoll_skeleton: Skeleton3D = $DummyRigPhysical/Rig/Skeleton3D
 #@onready var _ragdoll_tracker_bone: PhysicalBone3D = $"DummyRigPhysical/Rig/Skeleton3D/Physical Bone spine"
 #@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
@@ -29,6 +28,8 @@ class_name Pedestrian extends RigidBody3D
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 @onready var ground_collider := $GroundCollider
 @onready var _nav_agent: NavigationAgent3D = $NavigationAgent3D
+@onready var _animation_tree: AnimationTree = $square_guy/AnimationTree
+@onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
 
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
@@ -109,15 +110,17 @@ func _physics_process(delta: float) -> void:
     _orient_character_to_direction(_move_direction, delta)
   _nav_agent.set_velocity(_move_direction)
   #apply_central_force(_move_direction * acceleration * mass)
-  if not _is_on_ground and linear_velocity.y < 0:
-    _dummy_skin.fall()
+  if not _is_on_ground:
+    _playback.travel("MidairBlendSpace1D")
+    _animation_tree.set("parameters/MidairBlendSpace1D/blend_position", clampf(-linear_velocity.y, -1, 1))
   elif _is_on_ground:
     var xz_velocity := Vector3(linear_velocity.x, 0, linear_velocity.z)
     if xz_velocity.length() > stopping_speed:
-      _dummy_skin.set_moving(true)
-      _dummy_skin.set_moving_speed(inverse_lerp(0.0, move_speed, xz_velocity.length()))
+      _playback.travel("MovingBlendSpace1D")
+      _animation_tree.set("parameters/MovingBlendSpace1D/blend_position", clamp(move_speed, 0.0, 1.0))
     else:
-      _dummy_skin.set_moving(false)
+      _playback.travel("Idle")
+
   if is_just_on_floor:
     _landing_sound.play()
   return
@@ -141,6 +144,25 @@ func _orient_character_to_direction(_direction: Vector3, delta: float) -> void:
   _rotation_root.transform.basis = Basis(_rotation_root.transform.basis.get_rotation_quaternion().slerp(rotation_basis, delta * rotation_speed)).scaled(
     model_scale
   )
+
+
+func set_moving(_moving: bool):
+  if _moving:
+    _playback.travel("MovingBlendSpace1D")
+  else:
+    _playback.travel("Idle")
+
+
+func set_moving_blend(value : float):
+  _animation_tree.set("parameters/MovingBlendSpace1D/blend_position", clamp(move_speed, 0.0, 1.0))
+
+
+func idle() -> void:
+  _playback.travel("Idle")
+
+
+func walk() -> void:
+  _playback.travel("MovingBlendSpace1D")
 
 
 #func start_ragdoll() -> void:

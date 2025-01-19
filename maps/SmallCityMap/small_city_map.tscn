@@ -299,7 +299,7 @@ points = PackedVector3Array(-15, -0.5, -10, -15, 0.5, -10, 15, -0.5, -10, -15, -
 script = ExtResource("1_a23al")
 
 [node name="Player" parent="." instance=ExtResource("10_b2bvt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71, 0, 13)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71, 1, 13)
 
 [node name="Terrain" type="Node3D" parent="."]
 
