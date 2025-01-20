@@ -23,6 +23,11 @@ TrafficManager="*res://traffic/traffic_manager.gd"
 PedestrianManager="*res://npcs/pedestrian_manager.gd"
 PauseAndHud="*res://menu/pause_and_hud.tscn"
 
+[debug]
+
+file_logging/enable_file_logging=true
+file_logging/max_log_files=10
+
 [display]
 
 window/size/mode=2
