@@ -38,7 +38,7 @@ project/assembly_name="Fast Traffic"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/road-generator/plugin.cfg")
+enabled=PackedStringArray("res://addons/road-generator/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [global_group]
 

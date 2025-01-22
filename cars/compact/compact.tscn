@@ -306,17 +306,19 @@ steering_speed_decay = 0.1
 steering_slip_assist = 0.3
 countersteer_assist = 0.3
 front_brake_bias = 0.3
+traction_control_max_slip = 1.0
 enable_stability = false
 stability_yaw_strength = 1.0
-max_torque = 500.0
+max_torque = 600.0
 idle_rpm = 1200.0
 torque_curve = ExtResource("2_sg067")
 max_clutch_torque_ratio = 1.0
+final_drive = 5.0
 shift_time = 0.2
 automatic_time_between_shifts = 500.0
 front_torque_split = 1.0
 front_variable_split = 0.5
-front_weight_distribution = 0.51
+front_weight_distribution = 0.6
 center_of_gravity_height_offset = 0.0
 front_bump_damp_multiplier = 1.5
 front_rebound_damp_multiplier = 0.667
@@ -365,8 +367,8 @@ shape = SubResource("ConvexPolygonShape3D_7junj")
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("3_3utam")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 vehicle = NodePath("..")
-longitudinal_slip_threshold = 0.3
-lateral_slip_threshold = 0.2
+longitudinal_slip_threshold = 0.6
+lateral_slip_threshold = 0.5
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_i42xy")]
 stream = ExtResource("5_vu53n")
