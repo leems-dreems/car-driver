@@ -158,6 +158,7 @@ func process_forces(opposite_compression : float, braking : bool, delta : float)
   ## Determine the surface the tire is on. Uses node groups
   if is_colliding():
     last_collider = get_collider()
+    print(str(last_collider.get_instance_id()))
     last_collision_point = get_collision_point()
     last_collision_normal = get_collision_normal()
     var surface_groups : Array[StringName] = last_collider.get_groups()

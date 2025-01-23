@@ -1,9 +1,8 @@
-[gd_scene load_steps=39 format=3 uid="uid://c7llli6v0ccaa"]
+[gd_scene load_steps=38 format=3 uid="uid://c7llli6v0ccaa"]
 
 [ext_resource type="Script" path="res://maps/common/playable_map.gd" id="1_ipygp"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="1_ufmyi"]
 [ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact/compact.tscn" id="3_stxp5"]
-[ext_resource type="PackedScene" uid="uid://dfcsj3jjvi65m" path="res://cars/Van/van.tscn" id="4_3e1tt"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_manager.gd" id="6_bjtrx"]
 [ext_resource type="Script" path="res://addons/road-generator/nodes/road_container.gd" id="7_mt5ln"]
 [ext_resource type="Material" uid="uid://c7ote2txeba1m" path="res://addons/road-generator/resources/road_texture.material" id="8_vl2hq"]
@@ -213,9 +212,6 @@ directional_shadow_max_distance = 200.0
 
 [node name="CompactCar" parent="VehicleContainer" instance=ExtResource("3_stxp5")]
 transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 78, 24.2, 15.1772)
-
-[node name="Van" parent="VehicleContainer" instance=ExtResource("4_3e1tt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 23.3, 15)
 
 [node name="PedestrianContainer" type="Node3D" parent="."]
 
@@ -845,7 +841,7 @@ prior_pt_init = NodePath("../RP_002")
 next_mag = 28.0
 
 [node name="RP_002" type="Node3D" parent="RoadManager/RoadContainer9"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 168, 31, 27)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 168, 29, 10)
 script = ExtResource("9_7qnax")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
@@ -858,7 +854,7 @@ prior_mag = 28.0
 next_mag = 28.0
 
 [node name="RP_003" type="Node3D" parent="RoadManager/RoadContainer9"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 168, 30, 83)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 168, 23, 55)
 script = ExtResource("9_7qnax")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
@@ -871,7 +867,7 @@ prior_mag = 28.0
 next_mag = 28.0
 
 [node name="RP_004" type="Node3D" parent="RoadManager/RoadContainer9"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 168, 25, 166)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 168, 23, 166)
 script = ExtResource("9_7qnax")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
@@ -1015,6 +1011,7 @@ next_mag = 26.6933
 data_directory = "res://maps/Terrain3D_data/bin_ronin_island"
 material = SubResource("Terrain3DMaterial_p83py")
 assets = ExtResource("15_jlvmb")
+mesh_lods = 10
 mesh_size = 8
 top_level = true
 metadata/_edit_lock_ = true
