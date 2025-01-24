@@ -195,7 +195,7 @@ size = Vector2(10000, 10000)
 script = ExtResource("1_ipygp")
 
 [node name="Player" parent="." instance=ExtResource("1_ufmyi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71, 20, 13)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71, 30, -126)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_smjy8")
@@ -211,7 +211,7 @@ directional_shadow_max_distance = 200.0
 [node name="VehicleContainer" type="Node3D" parent="." groups=["AffectsNavMesh"]]
 
 [node name="CompactCar" parent="VehicleContainer" instance=ExtResource("3_stxp5")]
-transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 78, 24.2, 15.1772)
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 78, 34.2, -123.823)
 
 [node name="PedestrianContainer" type="Node3D" parent="."]
 
@@ -1013,6 +1013,7 @@ material = SubResource("Terrain3DMaterial_p83py")
 assets = ExtResource("15_jlvmb")
 mesh_lods = 10
 mesh_size = 8
+render_layers = 2147484673
 top_level = true
 metadata/_edit_lock_ = true
 

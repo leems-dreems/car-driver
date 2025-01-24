@@ -75,7 +75,10 @@ var is_driven := false
 var opposite_wheel : Wheel
 var beam_axle := 0.0
 
-var vehicle : Vehicle
+var vehicle: Vehicle
+
+var last_collision_group := ""
+
 
 func _process(delta):
   if wheel_node:
@@ -158,18 +161,27 @@ func process_forces(opposite_compression : float, braking : bool, delta : float)
   ## Determine the surface the tire is on. Uses node groups
   if is_colliding():
     last_collider = get_collider()
-    print(str(last_collider.get_instance_id()))
     last_collision_point = get_collision_point()
     last_collision_normal = get_collision_normal()
-    var surface_groups : Array[StringName] = last_collider.get_groups()
-    if surface_groups.size() > 0:
-      if surface_type != surface_groups[0]:
-        surface_type = surface_groups[0]
-        current_cof = coefficient_of_friction[surface_type]
-        current_rolling_resistance = rolling_resistance[surface_type]
-        current_lateral_grip_assist = lateral_grip_assist[surface_type]
-        current_longitudinal_grip_ratio = longitudinal_grip_ratio[surface_type]
-        current_tire_stiffness = 1000000.0 + 8000000.0 * tire_stiffnesses[surface_type]
+    if last_collider is Terrain3D:
+      match last_collider.data.get_control_base_id(last_collision_point):
+        0: surface_type = "Road"
+        1: surface_type = "Grass"
+        2: surface_type = "Grass"
+        3: surface_type = "Dirt"
+        4: surface_type = "Grass"
+    else:
+      var surface_groups : Array[StringName] = last_collider.get_groups()
+      if surface_groups.size() > 0:
+        if surface_type != surface_groups[0]:
+          surface_type = surface_groups[0]
+
+    last_collision_group = surface_type
+    current_cof = coefficient_of_friction[surface_type]
+    current_rolling_resistance = rolling_resistance[surface_type]
+    current_lateral_grip_assist = lateral_grip_assist[surface_type]
+    current_longitudinal_grip_ratio = longitudinal_grip_ratio[surface_type]
+    current_tire_stiffness = 1000000.0 + 8000000.0 * tire_stiffnesses[surface_type]
   else:
     last_collider = null
   

@@ -13,5 +13,7 @@ noise = SubResource("FastNoiseLite_3sjyv")
 [node name="Decal" type="Decal"]
 size = Vector3(0.2, 0.1, 1.5)
 texture_albedo = SubResource("NoiseTexture2D_iux01")
+upper_fade = 0.0
+lower_fade = 0.0
 distance_fade_enabled = true
 cull_mask = 1024
