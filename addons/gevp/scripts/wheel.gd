@@ -164,12 +164,16 @@ func process_forces(opposite_compression : float, braking : bool, delta : float)
         2: surface_type = DriveableVehicle.SurfaceTypes.SAND
         3: surface_type = DriveableVehicle.SurfaceTypes.DIRT
         4: surface_type = DriveableVehicle.SurfaceTypes.GRASS
+        5: surface_type = DriveableVehicle.SurfaceTypes.ROAD
     else:
       for _group: StringName in last_collider.get_groups():
-        if _group == "Road":
-          surface_type = DriveableVehicle.SurfaceTypes.ROAD
-          break
-
+        match _group:
+          "Road":
+            surface_type = DriveableVehicle.SurfaceTypes.ROAD
+            break
+          "Building":
+            surface_type = DriveableVehicle.SurfaceTypes.ROAD
+            break
     last_collision_surface_type = surface_type
     current_cof = get_surface_coefficient_of_friction(surface_type)
     current_rolling_resistance = get_surface_rolling_resistance(surface_type)
@@ -375,8 +379,9 @@ func get_surface_lateral_grip_assist(_surface_type: DriveableVehicle.SurfaceType
   match _surface_type:
     DriveableVehicle.SurfaceTypes.GRASS: return 0
     DriveableVehicle.SurfaceTypes.ROAD: return 0.05
-    DriveableVehicle.SurfaceTypes.ROCK: return 0.05
+    DriveableVehicle.SurfaceTypes.ROCK: return 0
     DriveableVehicle.SurfaceTypes.DIRT: return 0
+    DriveableVehicle.SurfaceTypes.SAND: return 0.05
     _: return 0
 
 

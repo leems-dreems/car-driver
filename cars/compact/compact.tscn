@@ -183,10 +183,6 @@ shadow_mesh = SubResource("ArrayMesh_7qo4e")
 [sub_resource type="SphereShape3D" id="SphereShape3D_sp4ri"]
 radius = 0.25
 
-[sub_resource type="SystemFont" id="SystemFont_ylexk"]
-font_names = PackedStringArray("Courier New")
-subpixel_positioning = 0
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1bhxb"]
 streams_count = 2
 stream_0/stream = ExtResource("27_7jbco")
@@ -280,6 +276,10 @@ shader_parameter/tex_frg_17 = SubResource("CompressedTexture2D_b5ted")
 
 [sub_resource type="QuadMesh" id="QuadMesh_l538h"]
 
+[sub_resource type="SystemFont" id="SystemFont_ylexk"]
+font_names = PackedStringArray("Courier New")
+subpixel_positioning = 0
+
 [node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("brake_light_left_mesh", "brake_light_right_mesh", "reverse_light_left_mesh", "reverse_light_right_mesh", "front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
 collision_mask = 83
@@ -306,25 +306,20 @@ steering_speed_decay = 0.1
 steering_slip_assist = 0.3
 countersteer_assist = 0.3
 front_brake_bias = 0.3
-traction_control_max_slip = 1.0
+traction_control_max_slip = 0.0
 enable_stability = false
 stability_yaw_strength = 1.0
-max_torque = 1000.0
-max_rpm = 6000.0
+max_torque = 800.0
 torque_curve = ExtResource("2_sg067")
-final_drive = 5.0
-shift_time = 0.2
-automatic_time_between_shifts = 500.0
-front_torque_split = 1.0
-front_variable_split = 0.5
-front_weight_distribution = 0.6
+front_torque_split = 0.5
+variable_torque_split = true
+front_variable_split = 0.6
+front_weight_distribution = 0.53
 center_of_gravity_height_offset = 0.0
-front_bump_damp_multiplier = 1.5
-front_rebound_damp_multiplier = 0.667
-front_bump_stop_multiplier = 0.5
-rear_bump_damp_multiplier = 1.5
-rear_rebound_damp_multiplier = 0.667
-rear_bump_stop_multiplier = 0.5
+front_damping_ratio = 0.6
+front_bump_stop_multiplier = 0.8
+rear_damping_ratio = 0.6
+rear_bump_stop_multiplier = 0.8
 braking_grip_multiplier = 3.0
 front_tire_radius = 0.4
 rear_tire_radius = 0.4
@@ -352,12 +347,13 @@ shape = SubResource("ConvexPolygonShape3D_7junj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 vehicle = NodePath("..")
 longitudinal_slip_threshold = 0.6
-lateral_slip_threshold = 0.5
+lateral_slip_threshold = 0.2
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_i42xy")]
 stream = ExtResource("5_vu53n")
 unit_size = 2.0
 vehicle = NodePath("..")
+sample_rpm = 5000.0
 
 [node name="body" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1.5, 0, 2.26494e-07, 0, 1.5, 0, -2.26494e-07, 0, -1.5, 0, -0.5, 0)
@@ -991,14 +987,6 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExplosionCatcher6"]
 shape = SubResource("SphereShape3D_sp4ri")
 
-[node name="DebugLabel3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-visible = false
-billboard = 1
-text = "Test"
-font = SubResource("SystemFont_ylexk")
-font_size = 128
-
 [node name="HeadlightRight" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
@@ -1093,6 +1081,14 @@ fixed_fps = 60
 process_material = ExtResource("60_6wncv")
 draw_pass_1 = SubResource("QuadMesh_l538h")
 script = ExtResource("53_aoxa3")
+
+[node name="DebugLabel3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+visible = false
+billboard = 1
+text = "Test"
+font = SubResource("SystemFont_ylexk")
+font_size = 128
 
 [node name="DevMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.1)

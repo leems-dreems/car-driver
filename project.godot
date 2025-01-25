@@ -45,6 +45,7 @@ enabled=PackedStringArray("res://addons/road-generator/plugin.cfg", "res://addon
 Road="Vehicles will treat this surface as a road"
 Grass="Vehicles will treat this surface as grass"
 ExplosionCatcher="Used to fine-tune how explosions push larger objects"
+Building=""
 
 [input]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://c7llli6v0ccaa"]
+[gd_scene load_steps=40 format=3 uid="uid://c7llli6v0ccaa"]
 
 [ext_resource type="Script" path="res://maps/common/playable_map.gd" id="1_ipygp"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="1_ufmyi"]
@@ -12,6 +12,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bag1g7e1ueops" path="res://assets/KayKit_City_Builder_Bits_1.0_SOURCE/Assets/obj/road_junction.obj" id="11_yjdp8"]
 [ext_resource type="Script" path="res://traffic/traffic_path.gd" id="12_tou3l"]
 [ext_resource type="PackedScene" uid="uid://2g4icv655eh3" path="res://maps/common/4_way_junction.tscn" id="14_rirmq"]
+[ext_resource type="PackedScene" uid="uid://d32fxiwh1hh25" path="res://maps/common/house_boxy.tscn" id="15_1bqan"]
 [ext_resource type="Terrain3DAssets" uid="uid://krekjaqgod8q" path="res://maps/BinRoninIsland/terrain_3d_assets.tres" id="15_jlvmb"]
 [ext_resource type="Material" uid="uid://dpf5o0j7adasj" path="res://maps/SmallIslandMap/sea_material_3d.tres" id="16_8mr5s"]
 
@@ -202,7 +203,7 @@ point_count = 2
 script = ExtResource("1_ipygp")
 
 [node name="Player" parent="." instance=ExtResource("1_ufmyi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71, 30, -18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -286, 19, -192)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_smjy8")
@@ -218,7 +219,7 @@ directional_shadow_max_distance = 200.0
 [node name="VehicleContainer" type="Node3D" parent="." groups=["AffectsNavMesh"]]
 
 [node name="CompactCar" parent="VehicleContainer" instance=ExtResource("3_stxp5")]
-transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 78, 34.2, -15.823)
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, -279, 23.2, -189.823)
 
 [node name="PedestrianContainer" type="Node3D" parent="."]
 
@@ -1072,3 +1073,8 @@ path_joined = false
 [node name="CSGBox3D" type="CSGBox3D" parent="Foundations"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 16, -280)
 size = Vector3(235, 2.5, 30)
+
+[node name="Buildings" type="Node3D" parent="."]
+
+[node name="House_Boxy" parent="Buildings" instance=ExtResource("15_1bqan")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -284, 17.4, -106)
