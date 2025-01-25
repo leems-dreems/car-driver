@@ -161,7 +161,7 @@ func process_forces(opposite_compression : float, braking : bool, delta : float)
       match last_collider.data.get_control_base_id(last_collision_point):
         0: surface_type = DriveableVehicle.SurfaceTypes.ROCK
         1: surface_type = DriveableVehicle.SurfaceTypes.GRASS
-        2: surface_type = DriveableVehicle.SurfaceTypes.GRASS
+        2: surface_type = DriveableVehicle.SurfaceTypes.SAND
         3: surface_type = DriveableVehicle.SurfaceTypes.DIRT
         4: surface_type = DriveableVehicle.SurfaceTypes.GRASS
     else:
@@ -347,7 +347,8 @@ func get_surface_tire_stiffness(_surface_type: DriveableVehicle.SurfaceTypes) ->
     DriveableVehicle.SurfaceTypes.ROAD: return 5.0
     DriveableVehicle.SurfaceTypes.ROCK: return 5.0
     DriveableVehicle.SurfaceTypes.DIRT: return 0.5
-  return 0.0
+    DriveableVehicle.SurfaceTypes.SAND: return 0.5
+    _: return 0.0
 
 
 func get_surface_coefficient_of_friction(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
@@ -356,7 +357,8 @@ func get_surface_coefficient_of_friction(_surface_type: DriveableVehicle.Surface
     DriveableVehicle.SurfaceTypes.ROAD: return 2.0
     DriveableVehicle.SurfaceTypes.ROCK: return 2.0
     DriveableVehicle.SurfaceTypes.DIRT: return 1.4
-  return 0.0
+    DriveableVehicle.SurfaceTypes.SAND: return 1.4
+    _: return 0.0
 
 
 func get_surface_rolling_resistance(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
@@ -365,7 +367,8 @@ func get_surface_rolling_resistance(_surface_type: DriveableVehicle.SurfaceTypes
     DriveableVehicle.SurfaceTypes.ROAD: return 1.0
     DriveableVehicle.SurfaceTypes.ROCK: return 1.0
     DriveableVehicle.SurfaceTypes.DIRT: return 3.0
-  return 0.0
+    DriveableVehicle.SurfaceTypes.SAND: return 3.0
+    _: return 0.0
 
 
 func get_surface_lateral_grip_assist(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
@@ -374,7 +377,7 @@ func get_surface_lateral_grip_assist(_surface_type: DriveableVehicle.SurfaceType
     DriveableVehicle.SurfaceTypes.ROAD: return 0.05
     DriveableVehicle.SurfaceTypes.ROCK: return 0.05
     DriveableVehicle.SurfaceTypes.DIRT: return 0
-  return 0.0
+    _: return 0
 
 
 func get_surface_longitudinal_grip_ratio(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
@@ -383,4 +386,4 @@ func get_surface_longitudinal_grip_ratio(_surface_type: DriveableVehicle.Surface
     DriveableVehicle.SurfaceTypes.ROAD: return 0.5
     DriveableVehicle.SurfaceTypes.ROCK: return 0.5
     DriveableVehicle.SurfaceTypes.DIRT: return 0.5
-  return 0.0
+    _: return 0.5

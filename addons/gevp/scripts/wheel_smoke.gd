@@ -11,6 +11,8 @@ const skidmark_decal_scene := preload("res://cars/skidmark_decal.tscn")
 var skidmark_decals: Array[Decal] = []
 ## Grass spray emitter
 @onready var _grass_spray: CarGameParticles = $GrassSpray
+@onready var _dirt_spray: CarGameParticles = $DirtSpray
+@onready var _sand_spray: CarGameParticles = $SandSpray
 
 
 func _ready() -> void:
@@ -35,7 +37,7 @@ func _process(delta: float):
               emit_particle(smoke_transform, wheel.global_transform.basis * ((wheel.local_velocity * 0.2) - (Vector3.FORWARD * wheel.spin * wheel.tire_radius * 0.2)) * self.global_transform.basis, Color.WHITE, Color.WHITE, 5) #EMIT_FLAG_POSITION + EMIT_FLAG_VELOCITY)
             DriveableVehicle.SurfaceTypes.ROCK:
               emit_particle(smoke_transform, wheel.global_transform.basis * ((wheel.local_velocity * 0.2) - (Vector3.FORWARD * wheel.spin * wheel.tire_radius * 0.2)) * self.global_transform.basis, Color.WHITE, Color.WHITE, 5) #EMIT_FLAG_POSITION + EMIT_FLAG_VELOCITY)
-            _:
+            DriveableVehicle.SurfaceTypes.GRASS:
               var _spray_vector: Vector3
               if wheel.spin >= 0:
                 _spray_vector = wheel.global_transform.basis.z.rotated(wheel.global_transform.basis.x, -PI / 4) * wheel.spin * wheel.tire_radius * 0.5 * self.global_transform.basis
@@ -46,6 +48,29 @@ func _process(delta: float):
               else:
                 _spray_vector = _spray_vector.rotated(wheel.global_transform.basis.y, PI / 4)
               _grass_spray.emit_particle(smoke_transform, _spray_vector, Color.WHITE, Color.WHITE, 5) #EMIT_FLAG_POSITION + EMIT_FLAG_VELOCITY)
+              _dirt_spray.emit_particle(smoke_transform, _spray_vector * randf_range(0.9, 1.1), Color.WHITE, Color.WHITE, 5) #EMIT_FLAG_POSITION + EMIT_FLAG_VELOCITY)
+            DriveableVehicle.SurfaceTypes.DIRT:
+              var _spray_vector: Vector3
+              if wheel.spin >= 0:
+                _spray_vector = wheel.global_transform.basis.z.rotated(wheel.global_transform.basis.x, -PI / 4) * wheel.spin * wheel.tire_radius * 0.5 * self.global_transform.basis
+              else:
+                _spray_vector = (-wheel.global_transform.basis.z).rotated(wheel.global_transform.basis.x, -PI / 4) * wheel.spin * wheel.tire_radius * 0.5 * self.global_transform.basis
+              if wheel.position.x < 0:
+                _spray_vector = _spray_vector.rotated(wheel.global_transform.basis.y, -PI / 4)
+              else:
+                _spray_vector = _spray_vector.rotated(wheel.global_transform.basis.y, PI / 4)
+              _dirt_spray.emit_particle(smoke_transform, _spray_vector, Color.WHITE, Color.WHITE, 5) #EMIT_FLAG_POSITION + EMIT_FLAG_VELOCITY)
+            DriveableVehicle.SurfaceTypes.SAND:
+              var _spray_vector: Vector3
+              if wheel.spin >= 0:
+                _spray_vector = wheel.global_transform.basis.z.rotated(wheel.global_transform.basis.x, -PI / 4) * wheel.spin * wheel.tire_radius * 0.5 * self.global_transform.basis
+              else:
+                _spray_vector = (-wheel.global_transform.basis.z).rotated(wheel.global_transform.basis.x, -PI / 4) * wheel.spin * wheel.tire_radius * 0.5 * self.global_transform.basis
+              if wheel.position.x < 0:
+                _spray_vector = _spray_vector.rotated(wheel.global_transform.basis.y, -PI / 4)
+              else:
+                _spray_vector = _spray_vector.rotated(wheel.global_transform.basis.y, PI / 4)
+              _sand_spray.emit_particle(smoke_transform, _spray_vector, Color.WHITE, Color.WHITE, 5) #EMIT_FLAG_POSITION + EMIT_FLAG_VELOCITY)
           var new_skidmark := skidmark_decal_scene.instantiate()
           new_skidmark.top_level = true
           new_skidmark.position = wheel.last_collision_point
@@ -54,6 +79,7 @@ func _process(delta: float):
           match wheel.last_collision_surface_type:
             DriveableVehicle.SurfaceTypes.ROAD: new_skidmark.albedo_mix = 1
             DriveableVehicle.SurfaceTypes.ROCK: new_skidmark.albedo_mix = 1
+            DriveableVehicle.SurfaceTypes.DIRT: new_skidmark.albedo_mix = 0.2
             _: new_skidmark.albedo_mix = 0.5
           skidmark_decals.push_front(new_skidmark)
           add_child(new_skidmark)
