@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://c7llli6v0ccaa"]
+[gd_scene load_steps=39 format=3 uid="uid://c7llli6v0ccaa"]
 
 [ext_resource type="Script" path="res://maps/common/playable_map.gd" id="1_ipygp"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="1_ufmyi"]
@@ -191,11 +191,18 @@ auto_shader = true
 material = ExtResource("16_8mr5s")
 size = Vector2(10000, 10000)
 
+[sub_resource type="Curve3D" id="Curve3D_medpy"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, -75.475, -5, 5, -56, 17.075, 1, 10, 2, 5, 0, 0, 0, -176.937, 23.378, -26.017),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
 [node name="BinRoninIsland" type="Node3D"]
 script = ExtResource("1_ipygp")
 
 [node name="Player" parent="." instance=ExtResource("1_ufmyi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71, 30, -126)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71, 30, -18)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_smjy8")
@@ -211,7 +218,7 @@ directional_shadow_max_distance = 200.0
 [node name="VehicleContainer" type="Node3D" parent="." groups=["AffectsNavMesh"]]
 
 [node name="CompactCar" parent="VehicleContainer" instance=ExtResource("3_stxp5")]
-transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 78, 34.2, -123.823)
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 78, 34.2, -15.823)
 
 [node name="PedestrianContainer" type="Node3D" parent="."]
 
@@ -239,19 +246,21 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_002")
 next_pt_init = NodePath("../RP_004")
 prior_mag = 5.52547
 next_mag = 16.0
 
 [node name="RP_002" type="Node3D" parent="RoadManager/RoadContainer"]
-transform = Transform3D(0.012569, -0.0649484, 0.997809, -0.0804537, 0.994587, 0.0657521, -0.996679, -0.0811039, 0.00727567, -60.3877, 20.3542, 1.66365)
+transform = Transform3D(0.012569, -0.0649484, 0.997809, -0.0804537, 0.994587, 0.0657521, -0.996679, -0.0811039, 0.00727567, -60, 20, 1)
 script = ExtResource("9_7qnax")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_003")
 next_pt_init = NodePath("../RP_001")
 prior_mag = 65.8728
@@ -265,6 +274,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 next_pt_init = NodePath("../RP_002")
 prior_mag = 42.5256
 next_mag = 65.8728
@@ -277,6 +287,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_001")
 prior_mag = 16.0
 next_mag = 16.0
@@ -448,6 +459,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_002")
 next_pt_init = NodePath("../../4WayJunction/RP_004")
 next_mag = 16.0
@@ -460,6 +472,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_003")
 next_pt_init = NodePath("../RP_001")
 prior_mag = 16.0
@@ -473,6 +486,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_004")
 next_pt_init = NodePath("../RP_002")
 prior_mag = 16.0
@@ -486,6 +500,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_005")
 next_pt_init = NodePath("../RP_003")
 prior_mag = 16.0
@@ -499,6 +514,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 next_pt_init = NodePath("../RP_004")
 prior_mag = 16.0
 next_mag = 16.0
@@ -526,6 +542,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_002")
 next_mag = 16.0
 
@@ -537,6 +554,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_003")
 next_pt_init = NodePath("../RP_001")
 prior_mag = 28.0
@@ -550,6 +568,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_004")
 next_pt_init = NodePath("../RP_002")
 prior_mag = 28.0
@@ -563,6 +582,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_005")
 next_pt_init = NodePath("../RP_003")
 prior_mag = 28.0
@@ -576,6 +596,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 next_pt_init = NodePath("../RP_004")
 prior_mag = 28.0
 next_mag = 28.0
@@ -603,6 +624,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_002")
 next_mag = 16.0
 
@@ -614,6 +636,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_003")
 next_pt_init = NodePath("../RP_001")
 prior_mag = 28.0
@@ -627,6 +650,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 next_pt_init = NodePath("../RP_002")
 prior_mag = 28.0
 next_mag = 28.0
@@ -647,13 +671,14 @@ edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
 edge_rp_local_dirs = Array[int]([0, 1])
 
 [node name="RP_001" type="Node3D" parent="RoadManager/RoadContainer5"]
-transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -201.121, 26, -53.625)
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -201.009, 26, -53.3866)
 script = ExtResource("9_7qnax")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_002")
 next_mag = 16.0
 
@@ -665,6 +690,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 next_pt_init = NodePath("../RP_001")
 prior_mag = 16.0
 next_mag = 16.0
@@ -688,6 +714,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_002")
 next_mag = 16.0
 
@@ -699,6 +726,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_003")
 next_pt_init = NodePath("../RP_001")
 prior_mag = 28.0
@@ -712,6 +740,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 next_pt_init = NodePath("../RP_002")
 prior_mag = 28.0
 next_mag = 28.0
@@ -735,6 +764,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 prior_pt_init = NodePath("../RP_002")
 next_mag = 28.0
 
@@ -746,6 +776,7 @@ lanes = Array[int]([5, 5])
 lane_width = 7.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
 next_pt_init = NodePath("../RP_001")
 prior_mag = 28.0
 next_mag = 28.0
@@ -1011,7 +1042,6 @@ next_mag = 26.6933
 data_directory = "res://maps/Terrain3D_data/bin_ronin_island"
 material = SubResource("Terrain3DMaterial_p83py")
 assets = ExtResource("15_jlvmb")
-mesh_lods = 10
 mesh_size = 8
 render_layers = 2147484673
 top_level = true
@@ -1020,3 +1050,25 @@ metadata/_edit_lock_ = true
 [node name="Sea" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("PlaneMesh_gqvqr")
+
+[node name="Foundations" type="Node3D" parent="."]
+
+[node name="Path3D" type="Path3D" parent="Foundations"]
+curve = SubResource("Curve3D_medpy")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Foundations/Path3D"]
+polygon = PackedVector2Array(-15, 0, -15, 1, 15, 1, 15, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Foundations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 16, -280)
+size = Vector3(235, 2.5, 30)
