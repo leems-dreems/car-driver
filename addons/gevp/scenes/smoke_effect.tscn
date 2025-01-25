@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://h6vdpba71kpr"]
+[gd_scene load_steps=27 format=3 uid="uid://h6vdpba71kpr"]
 
 [ext_resource type="Script" path="res://addons/gevp/scripts/wheel_smoke.gd" id="1_3e4qh"]
 [ext_resource type="Shader" uid="uid://d88xwj7fq8fu" path="res://effects/ExplosionShader.tres" id="1_3wi3f"]
@@ -67,12 +67,21 @@ point_count = 3
 [sub_resource type="CurveTexture" id="CurveTexture_dqjxc"]
 curve = SubResource("Curve_ghbu2")
 
+[sub_resource type="Curve" id="Curve_sae76"]
+max_value = 50.0
+_data = [Vector2(0, 50), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_b4trg"]
+curve = SubResource("Curve_sae76")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dvhy1"]
 particle_flag_align_y = true
 direction = Vector3(0, 1, 0)
 spread = 90.0
 initial_velocity_min = 12.0
 initial_velocity_max = 20.0
+velocity_limit_curve = SubResource("CurveTexture_b4trg")
 attractor_interaction_enabled = false
 scale_min = 0.5
 scale_max = 1.5
@@ -95,10 +104,10 @@ process_material = ExtResource("5_m0acd")
 draw_pass_1 = SubResource("QuadMesh_bx4jl")
 script = ExtResource("1_3e4qh")
 
-[node name="Spray" type="GPUParticles3D" parent="."]
+[node name="GrassSpray" type="GPUParticles3D" parent="."]
 emitting = false
 amount = 32
-lifetime = 0.6
+lifetime = 0.5
 fixed_fps = 60
 interpolate = false
 transform_align = 3

@@ -1,5 +1,7 @@
 class_name DriveableVehicle extends Vehicle
 
+enum SurfaceTypes { ROAD = 0, GRASS = 1, DIRT = 2, SAND = 3, ROCK = 4 }
+
 @export var lights_on := false
 @export var downforce_multiplier := 4.0
 var vehicle_name := "Vehicle"

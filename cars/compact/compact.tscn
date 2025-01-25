@@ -21,7 +21,6 @@
 [ext_resource type="AudioStream" uid="uid://d2gr5emhyehgo" path="res://assets/sfx/tires_squal_loop.wav" id="15_68n7x"]
 [ext_resource type="AudioStream" uid="uid://x2riq63vqy7j" path="res://assets/sfx/skid-loop.wav" id="16_wwqhn"]
 [ext_resource type="AudioStream" uid="uid://bw7d3mhbykib" path="res://assets/audio/Hanna-Barbera SFX/clash.wav" id="17_7w5y2"]
-[ext_resource type="AudioStream" uid="uid://b6wjsd5udyqvt" path="res://assets/audio/Hanna-Barbera SFX/rumble_loop.wav" id="17_rtnly"]
 [ext_resource type="ArrayMesh" uid="uid://b1sqc1ic4xp46" path="res://assets/models/vehicles/Cricket/cricket_headlight_R.obj" id="18_26f06"]
 [ext_resource type="Material" uid="uid://duxm05v8wv3mp" path="res://assets/materials/brake_light_emissive_material_3d.tres" id="18_kg4th"]
 [ext_resource type="ArrayMesh" uid="uid://b44aqsaqhcf0m" path="res://assets/models/vehicles/Cricket/cricket_headlight_L.obj" id="19_j0ugs"]
@@ -30,6 +29,7 @@
 [ext_resource type="ArrayMesh" uid="uid://cpqrod3n8i4eu" path="res://assets/models/vehicles/Cricket/cricket_brakelight_R.obj" id="21_t8q6m"]
 [ext_resource type="ArrayMesh" uid="uid://dr0e841bi34bv" path="res://assets/models/vehicles/Cricket/cricket_reverselight_L.obj" id="22_psb7o"]
 [ext_resource type="ArrayMesh" uid="uid://ngn3d0lex2ge" path="res://assets/models/vehicles/Cricket/cricket_reverselight_R.obj" id="23_6oxxb"]
+[ext_resource type="AudioStream" uid="uid://dbqii1a3cimcu" path="res://assets/audio/sfx/tires_on_grass.wav" id="27_0t8da"]
 [ext_resource type="AudioStream" uid="uid://ckde1fwfelw81" path="res://assets/audio/Sound effects package/Impact/Car door.mp3" id="27_7jbco"]
 [ext_resource type="AudioStream" uid="uid://ccc68vqt6ri72" path="res://assets/audio/Sound effects package/Impact/Car hit.mp3" id="28_e7vki"]
 [ext_resource type="AudioStream" uid="uid://dtbi4h33h4wf4" path="res://assets/audio/Sound effects package/Impact/Metal/metal_01.wav" id="29_so1rx"]
@@ -326,21 +326,6 @@ rear_bump_damp_multiplier = 1.5
 rear_rebound_damp_multiplier = 0.667
 rear_bump_stop_multiplier = 0.5
 braking_grip_multiplier = 3.0
-coefficient_of_friction = {
-"Dirt": 1.0,
-"Grass": 1.25,
-"Road": 1.5
-}
-lateral_grip_assist = {
-"Dirt": 0.0,
-"Grass": 0.0,
-"Road": 0.0
-}
-longitudinal_grip_ratio = {
-"Dirt": 1.5,
-"Grass": 1.5,
-"Road": 1.5
-}
 front_tire_radius = 0.4
 rear_tire_radius = 0.4
 
@@ -837,9 +822,8 @@ stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
-stream = ExtResource("17_rtnly")
+stream = ExtResource("27_0t8da")
 unit_size = 5.0
-pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelFrontLeft"]
@@ -874,9 +858,8 @@ stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
-stream = ExtResource("17_rtnly")
+stream = ExtResource("27_0t8da")
 unit_size = 5.0
-pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelFrontRight"]
@@ -911,9 +894,8 @@ stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
-stream = ExtResource("17_rtnly")
+stream = ExtResource("27_0t8da")
 unit_size = 5.0
-pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelRearLeft"]
@@ -948,9 +930,8 @@ stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
-stream = ExtResource("17_rtnly")
+stream = ExtResource("27_0t8da")
 unit_size = 5.0
-pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelRearRight"]

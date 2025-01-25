@@ -244,30 +244,6 @@ extends RigidBody3D
 ## Tire force applied to the ground is also applied to the vehicle body as a
 ## torque centered on the wheel. 
 @export var wheel_to_body_torque_multiplier := 1.0
-## Represents tire stiffness in the brush tire model. Higher values increase
-## the responsivness of the tire.
-## Surface detection uses node groups to identify the surface, so make sure
-## your staticbodies and rigidbodies belong to one of these groups.
-@export var tire_stiffnesses := {"Road" : 10.0, "Dirt" : 0.5, "Grass" : 0.5}
-## A multiplier for the amount of force a tire can apply based on the surface.
-## Surface detection uses node groups to identify the surface, so make sure
-## your staticbodies and rigidbodies belong to one of these groups.
-@export var coefficient_of_friction := {"Road" : 3.0, "Dirt" : 2.4, "Grass" : 2.0}
-## A multiplier for the amount of rolling resistance force based on the surface.
-## Surface detection uses node groups to identify the surface, so make sure
-## your staticbodies and rigidbodies belong to one of these groups.
-@export var rolling_resistance := {"Road" : 1.0, "Dirt" : 2.0, "Grass" : 4.0}
-## A multiplier to provide more grip based on the amount of lateral wheel slip.
-## This can be used to keep vehicles from sliding a long distance, but may provide
-## unrealistically high amounts of grip.
-## Surface detection uses node groups to identify the surface, so make sure
-## your staticbodies and rigidbodies belong to one of these groups.
-@export var lateral_grip_assist := {"Road" : 0.05, "Dirt" : 0.0, "Grass" : 0.0}
-## A multiplier to adjust longitudinal grip to differ from lateral grip.
-## Useful for allowing vehicles to have wheel spin and maintain high lateral grip.
-## Surface detection uses node groups to identify the surface, so make sure
-## your staticbodies and rigidbodies belong to one of these groups.
-@export var longitudinal_grip_ratio := {"Road" : 0.5, "Dirt": 0.5, "Grass" : 0.5}
 @export_subgroup("Front Axle", "front_")
 ## Tire radius in meters
 @export var front_tire_radius := 0.3
@@ -395,27 +371,8 @@ func _integrate_forces(state : PhysicsDirectBodyState3D):
 
 func initialize():
   # Check to verify that surface types are provided
-  if tire_stiffnesses.size() == 0:
-    push_error("No surface types provided for tire stiffness")
-    return
-  
-  if coefficient_of_friction.size() == 0:
-    push_error("No surface types provided for coefficient of friction")
-    return
-  
-  if rolling_resistance.size() == 0:
-    push_error("No surface types provided in rolling resistance")
-    return
-  
-  if lateral_grip_assist.size() == 0:
-    push_error("No surface types provided in lateral grip assist")
-    return
-  
-  if longitudinal_grip_ratio.size() == 0:
-    push_error("No surface types provided in longitudinal grip ratio")
-    return
-  
-  var default_surface : String = tire_stiffnesses.keys()[0]
+
+  var default_surface := DriveableVehicle.SurfaceTypes.DIRT
   
   center_of_mass_mode = RigidBody3D.CENTER_OF_MASS_MODE_CUSTOM
   mass = vehicle_mass
@@ -459,13 +416,8 @@ func initialize():
   
   for wheel in wheel_array:
     wheel.surface_type = default_surface
-    wheel.tire_stiffnesses = tire_stiffnesses
     wheel.contact_patch = contact_patch
     wheel.braking_grip_multiplier = braking_grip_multiplier
-    wheel.coefficient_of_friction = coefficient_of_friction
-    wheel.rolling_resistance = rolling_resistance
-    wheel.lateral_grip_assist = lateral_grip_assist
-    wheel.longitudinal_grip_ratio = longitudinal_grip_ratio
     wheel.wheel_to_body_torque_multiplier = wheel_to_body_torque_multiplier
   
   var front_weight_per_wheel := vehicle_mass * front_weight_distribution * 4.9
@@ -1021,14 +973,14 @@ func get_max_steering_slip_angle() -> float:
       steering_slip = wheel.slip_vector.x
   return steering_slip
 
-func calculate_average_tire_friction(weight : float, surface : String) -> float:
+func calculate_average_tire_friction(weight : float, _surface_type : DriveableVehicle.SurfaceTypes) -> float:
   var friction := 0.0
   for wheel in wheel_array:
-    friction += wheel.get_friction(weight / wheel_array.size(), surface)
+    friction += wheel.get_friction(weight / wheel_array.size(), _surface_type)
   return friction
 
 func calculate_brake_force():
-  var friction := calculate_average_tire_friction(vehicle_mass * 9.8, "Road")
+  var friction := calculate_average_tire_friction(vehicle_mass * 9.8, DriveableVehicle.SurfaceTypes.ROAD)
   max_brake_force = ((friction * braking_grip_multiplier) * average_drive_wheel_radius) / wheel_array.size()
   max_handbrake_force = ((friction * braking_grip_multiplier * 0.05) / average_drive_wheel_radius)
 
