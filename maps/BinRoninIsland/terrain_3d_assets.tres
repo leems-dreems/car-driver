@@ -1,7 +1,8 @@
-[gd_resource type="Terrain3DAssets" load_steps=27 format=3 uid="uid://krekjaqgod8q"]
+[gd_resource type="Terrain3DAssets" load_steps=30 format=3 uid="uid://krekjaqgod8q"]
 
 [ext_resource type="Texture2D" uid="uid://cdscfiq1ytwb4" path="res://assets/textures/SBS - Tiny Texture Pack 2 - 256x256/Stone_01-256x256.png" id="1_1cixu"]
 [ext_resource type="PackedScene" uid="uid://ceblk12hrv0o8" path="res://assets/models/foliage/tree_scatter_1.gltf" id="1_8lhv5"]
+[ext_resource type="Texture2D" uid="uid://0i1m8o5u36ab" path="res://assets/textures/grass_scatter.png" id="2_kynwr"]
 [ext_resource type="Texture2D" uid="uid://c0yp35yf8oybr" path="res://assets/textures/SBS - Tiny Texture Pack - 256x256/Grass_03-256x256.png" id="3_cpmjb"]
 [ext_resource type="Texture2D" uid="uid://npkn8dr4h5ud" path="res://assets/textures/SBS - Tiny Texture Pack 2 - 256x256/Dirt_13-256x256.png" id="3_l5e1h"]
 [ext_resource type="Texture2D" uid="uid://bv63rcj1lxwqq" path="res://assets/textures/SBS - Tiny Texture Pack 2 - 256x256/Dirt_01-256x256.png" id="4_6edqw"]
@@ -14,6 +15,26 @@ height_offset = -0.5
 density = 0.0680629
 visibility_range = 720.0
 scene_file = ExtResource("1_8lhv5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3vc16"]
+transparency = 4
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_kynwr")
+backlight_enabled = true
+backlight = Color(0.5, 0.5, 0.5, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 960.0
+distance_fade_max_distance = 480.0
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_q0cs1"]
+name = "Grass"
+id = 1
+height_offset = 0.4
+density = 0.1
+visibility_range = 256.0
+material_override = SubResource("StandardMaterial3D_3vc16")
+generated_type = 1
 
 [sub_resource type="Image" id="Image_8ggv7"]
 data = {
@@ -123,5 +144,5 @@ albedo_texture = ExtResource("6_dxoo6")
 normal_texture = SubResource("ImageTexture_it76h")
 
 [resource]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_hg1jc")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_hg1jc"), SubResource("Terrain3DMeshAsset_q0cs1")])
 texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_0iw6e"), SubResource("Terrain3DTextureAsset_g2381"), SubResource("Terrain3DTextureAsset_1lafk"), SubResource("Terrain3DTextureAsset_fi20p"), SubResource("Terrain3DTextureAsset_xrqx6"), SubResource("Terrain3DTextureAsset_uaeoh")])
