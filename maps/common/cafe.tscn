@@ -119,12 +119,6 @@ surface_material_override/0 = ExtResource("2_a5sr2")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConcavePolygonShape3D_vh6c0")
 
-[node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 4)
-visible = false
-shaded = true
-text = "Cafe"
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 3.9, 4.6)
 mesh = SubResource("TextMesh_e6wid")
