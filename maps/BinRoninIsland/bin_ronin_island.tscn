@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://c7llli6v0ccaa"]
+[gd_scene load_steps=41 format=3 uid="uid://c7llli6v0ccaa"]
 
 [ext_resource type="Script" path="res://maps/common/playable_map.gd" id="1_ipygp"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="1_ufmyi"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://d32fxiwh1hh25" path="res://maps/common/house_boxy.tscn" id="15_1bqan"]
 [ext_resource type="Terrain3DAssets" uid="uid://krekjaqgod8q" path="res://maps/BinRoninIsland/terrain_3d_assets.tres" id="15_jlvmb"]
 [ext_resource type="Material" uid="uid://dpf5o0j7adasj" path="res://maps/SmallIslandMap/sea_material_3d.tres" id="16_8mr5s"]
+[ext_resource type="PackedScene" uid="uid://dq3ue7kw6hjts" path="res://maps/common/cafe.tscn" id="16_rrcep"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pgokt"]
 
@@ -1058,6 +1059,7 @@ mesh = SubResource("PlaneMesh_gqvqr")
 curve = SubResource("Curve3D_medpy")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="Foundations/Path3D"]
+use_collision = true
 polygon = PackedVector2Array(-15, 0, -15, 1, 15, 1, 15, 0)
 mode = 2
 path_node = NodePath("..")
@@ -1072,9 +1074,16 @@ path_joined = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Foundations"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 16, -280)
+use_collision = true
 size = Vector3(235, 2.5, 30)
 
 [node name="Buildings" type="Node3D" parent="."]
 
 [node name="House_Boxy" parent="Buildings" instance=ExtResource("15_1bqan")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -284, 17.4, -106)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -284.3, 17.4, -102)
+
+[node name="House_Boxy2" parent="Buildings" instance=ExtResource("15_1bqan")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -272.3, 17.4, -102)
+
+[node name="Cafe" parent="Buildings" instance=ExtResource("16_rrcep")]
+transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -298.332, 17.5, -213.599)
