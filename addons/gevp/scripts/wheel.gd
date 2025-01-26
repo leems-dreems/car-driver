@@ -82,8 +82,19 @@ func _process(delta):
       wheel_node.rotation.z = wheel_lookat_vector.angle_to(Vector3.RIGHT * beam_axle) * signf(wheel_lookat_vector.y * beam_axle)
     wheel_node.rotation.x -= (wrapf(spin * delta, 0, TAU))
     if show_debug_label:
-      debug_label.text = vector_format_string % slip_vector
-    
+      debug_label.text = ""
+      #debug_label.text = vector_format_string % slip_vector + "\n"
+      match surface_type:
+        DriveableVehicle.SurfaceTypes.GRASS: debug_label.text += "Grass"
+        DriveableVehicle.SurfaceTypes.ROAD: debug_label.text += "Road"
+        DriveableVehicle.SurfaceTypes.ROCK: debug_label.text += "Rock"
+        DriveableVehicle.SurfaceTypes.DIRT: debug_label.text += "Dirt"
+        DriveableVehicle.SurfaceTypes.SAND: debug_label.text += "Sand"
+        _: debug_label.text += "Undefined"
+      if last_collider is Terrain3D:
+        debug_label.text += "\n" + str(Game.active_terrain.data.get_texture_id(last_collision_point))
+
+
 func initialize():
   debug_label.visible = show_debug_label
   wheel_node.rotation_order = EULER_ORDER_ZXY
@@ -158,13 +169,21 @@ func process_forces(opposite_compression : float, braking : bool, delta : float)
     last_collision_point = get_collision_point()
     last_collision_normal = get_collision_normal()
     if last_collider is Terrain3D:
-      match last_collider.data.get_control_base_id(last_collision_point):
-        0: surface_type = DriveableVehicle.SurfaceTypes.ROCK
-        1: surface_type = DriveableVehicle.SurfaceTypes.GRASS
-        2: surface_type = DriveableVehicle.SurfaceTypes.SAND
-        3: surface_type = DriveableVehicle.SurfaceTypes.DIRT
-        4: surface_type = DriveableVehicle.SurfaceTypes.GRASS
-        5: surface_type = DriveableVehicle.SurfaceTypes.ROAD
+      if last_collider.data.get_control_auto(last_collision_point):
+        # This part of the terrain is autoshaded, so we look for the texture blend value
+        if Game.active_terrain.data.get_texture_id(last_collision_point)[2] < 0.5:
+          surface_type = DriveableVehicle.SurfaceTypes.ROCK
+        else:
+          surface_type = DriveableVehicle.SurfaceTypes.GRASS
+      else:
+        # This part of the terrain is manually shaded, so get the base texture id
+        match last_collider.data.get_control_base_id(last_collision_point):
+          0: surface_type = DriveableVehicle.SurfaceTypes.ROCK
+          1: surface_type = DriveableVehicle.SurfaceTypes.GRASS
+          2: surface_type = DriveableVehicle.SurfaceTypes.SAND
+          3: surface_type = DriveableVehicle.SurfaceTypes.DIRT
+          4: surface_type = DriveableVehicle.SurfaceTypes.GRASS
+          5: surface_type = DriveableVehicle.SurfaceTypes.ROAD
     else:
       for _group: StringName in last_collider.get_groups():
         match _group:

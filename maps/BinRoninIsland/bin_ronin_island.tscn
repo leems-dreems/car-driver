@@ -787,6 +787,41 @@ next_mag = 28.0
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 168, 18, -280)
 collider_group_name = "Road"
 
+[node name="RoadContainer11" type="Node3D" parent="RoadManager"]
+script = ExtResource("7_mt5ln")
+material_resource = ExtResource("8_vl2hq")
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
+edge_rp_local_dirs = Array[int]([0, 1])
+
+[node name="RP_001" type="Node3D" parent="RoadManager/RoadContainer11"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 180, 18, -280)
+script = ExtResource("9_7qnax")
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
+lane_width = 7.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
+prior_pt_init = NodePath("../RP_002")
+next_mag = 16.0
+
+[node name="RP_002" type="Node3D" parent="RoadManager/RoadContainer11"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 218, 15.5, -280)
+script = ExtResource("9_7qnax")
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
+lane_width = 7.0
+shoulder_width_l = 4.0
+shoulder_width_r = 4.0
+gutter_profile = Vector2(2, -1)
+next_pt_init = NodePath("../RP_001")
+prior_mag = 16.0
+next_mag = 16.0
+
 [node name="RoadContainer8" type="Node3D" parent="RoadManager"]
 script = ExtResource("7_mt5ln")
 material_resource = ExtResource("8_vl2hq")
