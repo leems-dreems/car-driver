@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://c7llli6v0ccaa"]
+[gd_scene load_steps=43 format=3 uid="uid://c7llli6v0ccaa"]
 
 [ext_resource type="Script" path="res://maps/common/playable_map.gd" id="1_ipygp"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="1_ufmyi"]
@@ -17,6 +17,7 @@
 [ext_resource type="Material" uid="uid://dpf5o0j7adasj" path="res://maps/SmallIslandMap/sea_material_3d.tres" id="16_8mr5s"]
 [ext_resource type="PackedScene" uid="uid://dq3ue7kw6hjts" path="res://maps/common/cafe.tscn" id="16_rrcep"]
 [ext_resource type="PackedScene" uid="uid://ds6xtk4wy22q" path="res://maps/common/garage.tscn" id="17_qa3or"]
+[ext_resource type="PackedScene" uid="uid://cklcxewrfavka" path="res://maps/common/dump_office.tscn" id="18_jlnx1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pgokt"]
 
@@ -1126,3 +1127,6 @@ transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -298.332, 
 
 [node name="Garage" parent="Buildings" instance=ExtResource("17_qa3or")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -257, 17.5176, -206)
+
+[node name="DumpOffice" parent="Buildings" instance=ExtResource("18_jlnx1")]
+transform = Transform3D(-0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, 287.49, 15.5, -257)
