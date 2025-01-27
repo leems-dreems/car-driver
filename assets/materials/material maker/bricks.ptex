@@ -1,0 +1,75 @@
+{
+	"connections": [
+		{
+			"from": "bricks",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "@@322",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"nodes": [
+		{
+			"export_paths": {
+
+			},
+			"name": "Material",
+			"node_position": {
+				"x": 0,
+				"y": 0
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1,
+					"b": 1,
+					"g": 1,
+					"r": 1,
+					"type": "Color"
+				},
+				"ao": 1,
+				"depth_scale": 0.5,
+				"emission_energy": 1,
+				"flags_transparent": true,
+				"metallic": 0,
+				"normal": 1,
+				"roughness": 1,
+				"size": 11,
+				"sss": 1
+			},
+			"seed_int": 0,
+			"type": "material"
+		},
+		{
+			"name": "bricks",
+			"node_position": {
+				"x": -454.137207,
+				"y": -1.452296
+			},
+			"parameters": {
+				"bevel": 0.1,
+				"columns": 3,
+				"corner": 0.3,
+				"mortar": 0.1,
+				"pattern": 0,
+				"repeat": 1,
+				"round": 0,
+				"row_offset": 0.5,
+				"rows": 6
+			},
+			"seed_int": 0,
+			"type": "bricks3"
+		}
+	],
+	"parameters": {
+
+	},
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}

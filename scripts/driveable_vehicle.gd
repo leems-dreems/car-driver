@@ -1,5 +1,7 @@
 class_name DriveableVehicle extends Vehicle
 
+enum SurfaceTypes { ROAD = 0, GRASS = 1, DIRT = 2, SAND = 3, ROCK = 4 }
+
 @export var lights_on := false
 @export var downforce_multiplier := 4.0
 var vehicle_name := "Vehicle"
@@ -100,6 +102,7 @@ func _process(_delta: float) -> void:
   # Update the debug label, if it's set to visible
   if debug_label.visible:
     debug_label.text = "Speed: " + "%.2f" % speed + "\n"
+    debug_label.text += "Gear: " + "%.2f" % current_gear + "\n"
     debug_label.text += "Accel: " + "%.2f" % throttle_amount + "\n"
     debug_label.text += "Cltch: " + "%.2f" % clutch_amount + "\n"
     debug_label.text += "Brake: " + "%.2f" % brake_amount + "\n"

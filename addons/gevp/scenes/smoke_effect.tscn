@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://h6vdpba71kpr"]
+[gd_scene load_steps=45 format=3 uid="uid://h6vdpba71kpr"]
 
 [ext_resource type="Script" path="res://addons/gevp/scripts/wheel_smoke.gd" id="1_3e4qh"]
 [ext_resource type="Shader" uid="uid://d88xwj7fq8fu" path="res://effects/ExplosionShader.tres" id="1_3wi3f"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dh0wvuemvp0cf" path="res://assets/textures/normal+.png" id="2_rjtqw"]
 [ext_resource type="Texture2D" uid="uid://da1ve76f8ghho" path="res://assets/textures/normal-.png" id="3_11gr8"]
 [ext_resource type="Material" uid="uid://ci1rfkavqidwc" path="res://effects/smoke_white_particle_process_material.tres" id="5_m0acd"]
+[ext_resource type="Material" uid="uid://eejc46smc8ke" path="res://assets/materials/grass_standard_material_3d.tres" id="7_ijgg2"]
+[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="7_vd5f7"]
 
 [sub_resource type="Gradient" id="Gradient_kh7ib"]
 offsets = PackedFloat32Array(0, 0.615854)
@@ -39,8 +41,8 @@ shader_parameter/particle_h_frames = 8.0
 shader_parameter/particle_v_frames = 8.0
 shader_parameter/particles_anim_loop = false
 shader_parameter/still_frame = -1.0
-shader_parameter/Soft_limit = 0.01
-shader_parameter/blend_scale = 0.01
+shader_parameter/Soft_limit = 0.001
+shader_parameter/blend_scale = 0.001
 shader_parameter/emission_falloff_multiplier = 0.1
 shader_parameter/tex_frg_2 = ExtResource("2_dqi3b")
 shader_parameter/tex_frg_27 = SubResource("GradientTexture1D_y3uby")
@@ -52,6 +54,134 @@ shader_parameter/tex_frg_17 = ExtResource("3_11gr8")
 
 [sub_resource type="QuadMesh" id="QuadMesh_bx4jl"]
 
+[sub_resource type="Gradient" id="Gradient_6os73"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_b60x0"]
+gradient = SubResource("Gradient_6os73")
+
+[sub_resource type="Curve" id="Curve_ghbu2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_dqjxc"]
+curve = SubResource("Curve_ghbu2")
+
+[sub_resource type="Curve" id="Curve_sae76"]
+max_value = 50.0
+_data = [Vector2(0, 50), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_b4trg"]
+curve = SubResource("Curve_sae76")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dvhy1"]
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+spread = 90.0
+initial_velocity_min = 12.0
+initial_velocity_max = 20.0
+velocity_limit_curve = SubResource("CurveTexture_b4trg")
+attractor_interaction_enabled = false
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_dqjxc")
+color_ramp = SubResource("GradientTexture1D_b60x0")
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_4sll3"]
+material = ExtResource("7_ijgg2")
+shape = 0
+size = 0.02
+section_length = 0.05
+
+[sub_resource type="Gradient" id="Gradient_q40d2"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xifak"]
+gradient = SubResource("Gradient_q40d2")
+
+[sub_resource type="Curve" id="Curve_r24n2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_arlc3"]
+curve = SubResource("Curve_r24n2")
+
+[sub_resource type="Curve" id="Curve_d4woc"]
+max_value = 50.0
+_data = [Vector2(0, 50), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mavb5"]
+curve = SubResource("Curve_d4woc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kr8ww"]
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+spread = 90.0
+initial_velocity_min = 12.0
+initial_velocity_max = 20.0
+velocity_limit_curve = SubResource("CurveTexture_mavb5")
+attractor_interaction_enabled = false
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_arlc3")
+color_ramp = SubResource("GradientTexture1D_xifak")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a31ut"]
+albedo_color = Color(0.498039, 0.317647, 0.0705882, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_kyvko"]
+material = SubResource("StandardMaterial3D_a31ut")
+radius = 0.05
+height = 0.1
+radial_segments = 32
+rings = 16
+
+[sub_resource type="Gradient" id="Gradient_wigcy"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yc8cp"]
+gradient = SubResource("Gradient_wigcy")
+
+[sub_resource type="Curve" id="Curve_36ddp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_y3olv"]
+curve = SubResource("Curve_36ddp")
+
+[sub_resource type="Curve" id="Curve_g3oy7"]
+max_value = 50.0
+_data = [Vector2(0, 50), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lhaup"]
+curve = SubResource("Curve_g3oy7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_80h40"]
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+spread = 90.0
+initial_velocity_min = 12.0
+initial_velocity_max = 20.0
+velocity_limit_curve = SubResource("CurveTexture_lhaup")
+attractor_interaction_enabled = false
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_y3olv")
+color_ramp = SubResource("GradientTexture1D_yc8cp")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nkggj"]
+albedo_color = Color(0.917647, 0.811765, 0.639216, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_q0wsr"]
+material = SubResource("StandardMaterial3D_nkggj")
+radius = 0.05
+height = 0.1
+radial_segments = 32
+rings = 16
+
 [node name="Smoke" type="GPUParticles3D"]
 material_override = SubResource("ShaderMaterial_eadf3")
 emitting = false
@@ -61,3 +191,36 @@ fixed_fps = 60
 process_material = ExtResource("5_m0acd")
 draw_pass_1 = SubResource("QuadMesh_bx4jl")
 script = ExtResource("1_3e4qh")
+
+[node name="GrassSpray" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 32
+lifetime = 0.6
+fixed_fps = 60
+interpolate = false
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_dvhy1")
+draw_pass_1 = SubResource("RibbonTrailMesh_4sll3")
+script = ExtResource("7_vd5f7")
+
+[node name="DirtSpray" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 32
+lifetime = 0.5
+fixed_fps = 60
+interpolate = false
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_kr8ww")
+draw_pass_1 = SubResource("SphereMesh_kyvko")
+script = ExtResource("7_vd5f7")
+
+[node name="SandSpray" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 32
+lifetime = 0.5
+fixed_fps = 60
+interpolate = false
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_80h40")
+draw_pass_1 = SubResource("SphereMesh_q0wsr")
+script = ExtResource("7_vd5f7")

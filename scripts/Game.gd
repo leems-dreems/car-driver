@@ -1,6 +1,7 @@
 extends Node
 
 signal player_changed_vehicle
+var active_terrain: Terrain3D = null
 
 
 func change_window_mode(toggle_on: bool) -> void:

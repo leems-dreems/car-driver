@@ -23,13 +23,7 @@ var tire_width := 205.0
 var ackermann := 0.15
 var contact_patch := 0.2
 var braking_grip_multiplier := 1.4
-var surface_type := ""
-var tire_stiffnesses := { "Road" : 5.0, "Dirt" : 0.5, "Grass" : 0.5 }
-var coefficient_of_friction := { "Road" : 2.0, "Dirt" : 1.4, "Grass" : 1.0 }
-var rolling_resistance := { "Road" : 1.0, "Dirt" : 2.0, "Grass" : 4.0 }
-var lateral_grip_assist := { "Road" : 0.05, "Dirt" : 0.0, "Grass" : 0.0}
-var longitudinal_grip_ratio := { "Road" : 0.5, "Dirt": 0.5, "Grass" : 0.5}
-
+var surface_type: DriveableVehicle.SurfaceTypes
 var spring_length := 0.15
 var spring_rate := 0.0
 var slow_bump := 0.0
@@ -75,7 +69,10 @@ var is_driven := false
 var opposite_wheel : Wheel
 var beam_axle := 0.0
 
-var vehicle : Vehicle
+var vehicle: Vehicle
+
+var last_collision_surface_type: DriveableVehicle.SurfaceTypes
+
 
 func _process(delta):
   if wheel_node:
@@ -85,8 +82,19 @@ func _process(delta):
       wheel_node.rotation.z = wheel_lookat_vector.angle_to(Vector3.RIGHT * beam_axle) * signf(wheel_lookat_vector.y * beam_axle)
     wheel_node.rotation.x -= (wrapf(spin * delta, 0, TAU))
     if show_debug_label:
-      debug_label.text = vector_format_string % slip_vector
-    
+      debug_label.text = ""
+      #debug_label.text = vector_format_string % slip_vector + "\n"
+      match surface_type:
+        DriveableVehicle.SurfaceTypes.GRASS: debug_label.text += "Grass"
+        DriveableVehicle.SurfaceTypes.ROAD: debug_label.text += "Road"
+        DriveableVehicle.SurfaceTypes.ROCK: debug_label.text += "Rock"
+        DriveableVehicle.SurfaceTypes.DIRT: debug_label.text += "Dirt"
+        DriveableVehicle.SurfaceTypes.SAND: debug_label.text += "Sand"
+        _: debug_label.text += "Undefined"
+      if last_collider is Terrain3D:
+        debug_label.text += "\n" + str(Game.active_terrain.data.get_texture_id(last_collision_point))
+
+
 func initialize():
   debug_label.visible = show_debug_label
   wheel_node.rotation_order = EULER_ORDER_ZXY
@@ -94,11 +102,11 @@ func initialize():
   set_target_position(Vector3.DOWN * (spring_length + tire_radius))
   vehicle = get_parent()
   max_spring_length = spring_length
-  current_cof = coefficient_of_friction[surface_type]
-  current_rolling_resistance = rolling_resistance[surface_type]
-  current_lateral_grip_assist = lateral_grip_assist[surface_type]
-  current_longitudinal_grip_ratio = longitudinal_grip_ratio[surface_type]
-  current_tire_stiffness = 1000000.0 + 8000000.0 * tire_stiffnesses[surface_type]
+  current_cof = get_surface_coefficient_of_friction(surface_type)
+  current_rolling_resistance = get_surface_rolling_resistance(surface_type)
+  current_lateral_grip_assist = get_surface_lateral_grip_assist(surface_type)
+  current_longitudinal_grip_ratio = get_surface_longitudinal_grip_ratio(surface_type)
+  current_tire_stiffness = 1000000.0 + 8000000.0 * get_surface_tire_stiffness(surface_type)
 
 func steer(input : float, max_steering_angle : float):
   input *= steering_ratio
@@ -160,15 +168,37 @@ func process_forces(opposite_compression : float, braking : bool, delta : float)
     last_collider = get_collider()
     last_collision_point = get_collision_point()
     last_collision_normal = get_collision_normal()
-    var surface_groups : Array[StringName] = last_collider.get_groups()
-    if surface_groups.size() > 0:
-      if surface_type != surface_groups[0]:
-        surface_type = surface_groups[0]
-        current_cof = coefficient_of_friction[surface_type]
-        current_rolling_resistance = rolling_resistance[surface_type]
-        current_lateral_grip_assist = lateral_grip_assist[surface_type]
-        current_longitudinal_grip_ratio = longitudinal_grip_ratio[surface_type]
-        current_tire_stiffness = 1000000.0 + 8000000.0 * tire_stiffnesses[surface_type]
+    if last_collider is Terrain3D:
+      if last_collider.data.get_control_auto(last_collision_point):
+        # This part of the terrain is autoshaded, so we look for the texture blend value
+        if Game.active_terrain.data.get_texture_id(last_collision_point)[2] < 0.5:
+          surface_type = DriveableVehicle.SurfaceTypes.ROCK
+        else:
+          surface_type = DriveableVehicle.SurfaceTypes.GRASS
+      else:
+        # This part of the terrain is manually shaded, so get the base texture id
+        match last_collider.data.get_control_base_id(last_collision_point):
+          0: surface_type = DriveableVehicle.SurfaceTypes.ROCK
+          1: surface_type = DriveableVehicle.SurfaceTypes.GRASS
+          2: surface_type = DriveableVehicle.SurfaceTypes.SAND
+          3: surface_type = DriveableVehicle.SurfaceTypes.DIRT
+          4: surface_type = DriveableVehicle.SurfaceTypes.GRASS
+          5: surface_type = DriveableVehicle.SurfaceTypes.ROAD
+    else:
+      for _group: StringName in last_collider.get_groups():
+        match _group:
+          "Road":
+            surface_type = DriveableVehicle.SurfaceTypes.ROAD
+            break
+          "Building":
+            surface_type = DriveableVehicle.SurfaceTypes.ROAD
+            break
+    last_collision_surface_type = surface_type
+    current_cof = get_surface_coefficient_of_friction(surface_type)
+    current_rolling_resistance = get_surface_rolling_resistance(surface_type)
+    current_lateral_grip_assist = get_surface_lateral_grip_assist(surface_type)
+    current_longitudinal_grip_ratio = get_surface_longitudinal_grip_ratio(surface_type)
+    current_tire_stiffness = 1000000.0 + 8000000.0 * get_surface_tire_stiffness(surface_type)
   else:
     last_collider = null
   
@@ -327,8 +357,57 @@ func process_rolling_resistance() -> float:
 func get_reaction_torque() -> float:
   return force_vector.y * tire_radius
 
-func get_friction(normal_force : float, surface : String) -> float:
+func get_friction(normal_force: float, _surface_type: DriveableVehicle.SurfaceTypes) -> float:
   var surface_cof = 1.0
-  if coefficient_of_friction.has(surface):
-    surface_cof = coefficient_of_friction[surface]
+  if get_surface_coefficient_of_friction(_surface_type) != 0.0:
+    surface_cof = get_surface_coefficient_of_friction(_surface_type)
   return surface_cof * normal_force - (normal_force / (tire_width * contact_patch * 0.2))
+
+## Lookup methods for terrain-specific handling
+func get_surface_tire_stiffness(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
+  match _surface_type:
+    DriveableVehicle.SurfaceTypes.GRASS: return 0.5
+    DriveableVehicle.SurfaceTypes.ROAD: return 5.0
+    DriveableVehicle.SurfaceTypes.ROCK: return 5.0
+    DriveableVehicle.SurfaceTypes.DIRT: return 0.5
+    DriveableVehicle.SurfaceTypes.SAND: return 0.5
+    _: return 0.0
+
+
+func get_surface_coefficient_of_friction(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
+  match _surface_type:
+    DriveableVehicle.SurfaceTypes.GRASS: return 2.0
+    DriveableVehicle.SurfaceTypes.ROAD: return 2.0
+    DriveableVehicle.SurfaceTypes.ROCK: return 2.0
+    DriveableVehicle.SurfaceTypes.DIRT: return 1.4
+    DriveableVehicle.SurfaceTypes.SAND: return 1.4
+    _: return 0.0
+
+
+func get_surface_rolling_resistance(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
+  match _surface_type:
+    DriveableVehicle.SurfaceTypes.GRASS: return 4.0
+    DriveableVehicle.SurfaceTypes.ROAD: return 1.0
+    DriveableVehicle.SurfaceTypes.ROCK: return 1.0
+    DriveableVehicle.SurfaceTypes.DIRT: return 3.0
+    DriveableVehicle.SurfaceTypes.SAND: return 3.0
+    _: return 0.0
+
+
+func get_surface_lateral_grip_assist(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
+  match _surface_type:
+    DriveableVehicle.SurfaceTypes.GRASS: return 0
+    DriveableVehicle.SurfaceTypes.ROAD: return 0.05
+    DriveableVehicle.SurfaceTypes.ROCK: return 0
+    DriveableVehicle.SurfaceTypes.DIRT: return 0
+    DriveableVehicle.SurfaceTypes.SAND: return 0.05
+    _: return 0
+
+
+func get_surface_longitudinal_grip_ratio(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
+  match _surface_type:
+    DriveableVehicle.SurfaceTypes.GRASS: return 0.5
+    DriveableVehicle.SurfaceTypes.ROAD: return 0.5
+    DriveableVehicle.SurfaceTypes.ROCK: return 0.5
+    DriveableVehicle.SurfaceTypes.DIRT: return 0.5
+    _: return 0.5

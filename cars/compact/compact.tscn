@@ -21,7 +21,6 @@
 [ext_resource type="AudioStream" uid="uid://d2gr5emhyehgo" path="res://assets/sfx/tires_squal_loop.wav" id="15_68n7x"]
 [ext_resource type="AudioStream" uid="uid://x2riq63vqy7j" path="res://assets/sfx/skid-loop.wav" id="16_wwqhn"]
 [ext_resource type="AudioStream" uid="uid://bw7d3mhbykib" path="res://assets/audio/Hanna-Barbera SFX/clash.wav" id="17_7w5y2"]
-[ext_resource type="AudioStream" uid="uid://b6wjsd5udyqvt" path="res://assets/audio/Hanna-Barbera SFX/rumble_loop.wav" id="17_rtnly"]
 [ext_resource type="ArrayMesh" uid="uid://b1sqc1ic4xp46" path="res://assets/models/vehicles/Cricket/cricket_headlight_R.obj" id="18_26f06"]
 [ext_resource type="Material" uid="uid://duxm05v8wv3mp" path="res://assets/materials/brake_light_emissive_material_3d.tres" id="18_kg4th"]
 [ext_resource type="ArrayMesh" uid="uid://b44aqsaqhcf0m" path="res://assets/models/vehicles/Cricket/cricket_headlight_L.obj" id="19_j0ugs"]
@@ -30,6 +29,7 @@
 [ext_resource type="ArrayMesh" uid="uid://cpqrod3n8i4eu" path="res://assets/models/vehicles/Cricket/cricket_brakelight_R.obj" id="21_t8q6m"]
 [ext_resource type="ArrayMesh" uid="uid://dr0e841bi34bv" path="res://assets/models/vehicles/Cricket/cricket_reverselight_L.obj" id="22_psb7o"]
 [ext_resource type="ArrayMesh" uid="uid://ngn3d0lex2ge" path="res://assets/models/vehicles/Cricket/cricket_reverselight_R.obj" id="23_6oxxb"]
+[ext_resource type="AudioStream" uid="uid://dbqii1a3cimcu" path="res://assets/audio/sfx/tires_on_grass.wav" id="27_0t8da"]
 [ext_resource type="AudioStream" uid="uid://ckde1fwfelw81" path="res://assets/audio/Sound effects package/Impact/Car door.mp3" id="27_7jbco"]
 [ext_resource type="AudioStream" uid="uid://ccc68vqt6ri72" path="res://assets/audio/Sound effects package/Impact/Car hit.mp3" id="28_e7vki"]
 [ext_resource type="AudioStream" uid="uid://dtbi4h33h4wf4" path="res://assets/audio/Sound effects package/Impact/Metal/metal_01.wav" id="29_so1rx"]
@@ -183,10 +183,6 @@ shadow_mesh = SubResource("ArrayMesh_7qo4e")
 [sub_resource type="SphereShape3D" id="SphereShape3D_sp4ri"]
 radius = 0.25
 
-[sub_resource type="SystemFont" id="SystemFont_ylexk"]
-font_names = PackedStringArray("Courier New")
-subpixel_positioning = 0
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1bhxb"]
 streams_count = 2
 stream_0/stream = ExtResource("27_7jbco")
@@ -280,6 +276,10 @@ shader_parameter/tex_frg_17 = SubResource("CompressedTexture2D_b5ted")
 
 [sub_resource type="QuadMesh" id="QuadMesh_l538h"]
 
+[sub_resource type="SystemFont" id="SystemFont_ylexk"]
+font_names = PackedStringArray("Courier New")
+subpixel_positioning = 0
+
 [node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("brake_light_left_mesh", "brake_light_right_mesh", "reverse_light_left_mesh", "reverse_light_right_mesh", "front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
 collision_mask = 83
@@ -306,40 +306,21 @@ steering_speed_decay = 0.1
 steering_slip_assist = 0.3
 countersteer_assist = 0.3
 front_brake_bias = 0.3
+traction_control_max_slip = 0.0
 enable_stability = false
 stability_yaw_strength = 1.0
-max_torque = 500.0
-idle_rpm = 1200.0
+max_torque = 800.0
 torque_curve = ExtResource("2_sg067")
-max_clutch_torque_ratio = 1.0
-shift_time = 0.2
-automatic_time_between_shifts = 500.0
-front_torque_split = 1.0
-front_variable_split = 0.5
-front_weight_distribution = 0.51
+front_torque_split = 0.5
+variable_torque_split = true
+front_variable_split = 0.6
+front_weight_distribution = 0.53
 center_of_gravity_height_offset = 0.0
-front_bump_damp_multiplier = 1.5
-front_rebound_damp_multiplier = 0.667
+front_damping_ratio = 0.6
 front_bump_stop_multiplier = 0.5
-rear_bump_damp_multiplier = 1.5
-rear_rebound_damp_multiplier = 0.667
+rear_damping_ratio = 0.6
 rear_bump_stop_multiplier = 0.5
 braking_grip_multiplier = 3.0
-coefficient_of_friction = {
-"Dirt": 1.0,
-"Grass": 1.25,
-"Road": 1.5
-}
-lateral_grip_assist = {
-"Dirt": 0.0,
-"Grass": 0.0,
-"Road": 0.0
-}
-longitudinal_grip_ratio = {
-"Dirt": 1.5,
-"Grass": 1.5,
-"Road": 1.5
-}
 front_tire_radius = 0.4
 rear_tire_radius = 0.4
 
@@ -365,13 +346,14 @@ shape = SubResource("ConvexPolygonShape3D_7junj")
 [node name="Smoke" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("3_3utam")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 vehicle = NodePath("..")
-longitudinal_slip_threshold = 0.3
+longitudinal_slip_threshold = 0.6
 lateral_slip_threshold = 0.2
 
 [node name="EngineSound" parent="." node_paths=PackedStringArray("vehicle") instance=ExtResource("4_i42xy")]
 stream = ExtResource("5_vu53n")
 unit_size = 2.0
 vehicle = NodePath("..")
+sample_rpm = 5000.0
 
 [node name="body" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1.5, 0, 2.26494e-07, 0, 1.5, 0, -2.26494e-07, 0, -1.5, 0, -0.5, 0)
@@ -836,9 +818,8 @@ stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
-stream = ExtResource("17_rtnly")
+stream = ExtResource("27_0t8da")
 unit_size = 5.0
-pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelFrontLeft"]
@@ -873,9 +854,8 @@ stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
-stream = ExtResource("17_rtnly")
+stream = ExtResource("27_0t8da")
 unit_size = 5.0
-pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelFrontRight"]
@@ -910,9 +890,8 @@ stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
-stream = ExtResource("17_rtnly")
+stream = ExtResource("27_0t8da")
 unit_size = 5.0
-pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelRearLeft"]
@@ -947,9 +926,8 @@ stream = ExtResource("16_wwqhn")
 unit_size = 3.0
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
-stream = ExtResource("17_rtnly")
+stream = ExtResource("27_0t8da")
 unit_size = 5.0
-pitch_scale = 2.0
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelRearRight"]
@@ -1008,14 +986,6 @@ collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExplosionCatcher6"]
 shape = SubResource("SphereShape3D_sp4ri")
-
-[node name="DebugLabel3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-visible = false
-billboard = 1
-text = "Test"
-font = SubResource("SystemFont_ylexk")
-font_size = 128
 
 [node name="HeadlightRight" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -1111,6 +1081,14 @@ fixed_fps = 60
 process_material = ExtResource("60_6wncv")
 draw_pass_1 = SubResource("QuadMesh_l538h")
 script = ExtResource("53_aoxa3")
+
+[node name="DebugLabel3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+visible = false
+billboard = 1
+text = "Test"
+font = SubResource("SystemFont_ylexk")
+font_size = 128
 
 [node name="DevMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.1)

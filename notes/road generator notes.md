@@ -1,0 +1,2 @@
+- Creating RoadLane nodes inside RoadParent nodes will automatically create the correct curve, but the RoadLane nodes seem to disappear after selecting "Refresh roads" from the dropdown
+- Automatically generated AI lanes work pretty well, but don't have an easy way to connect to lanes on intersections
