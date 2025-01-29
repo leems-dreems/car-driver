@@ -29,6 +29,7 @@ var useable_target : Node3D = null
 @onready var _vehicle_controller: VehicleController = $VehicleController
 @onready var camera_controller: CameraController = $CameraController
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
+@onready var _pickup_collider: Area3D = $square_guy/PickupCollider
 @onready var ragdoll_skeleton: Skeleton3D = $square_guy/metarig/Skeleton3D
 @onready var _ragdoll_tracker_bone: PhysicalBone3D = $"square_guy/metarig/Skeleton3D/Physical Bone spine"
 #@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
@@ -51,6 +52,8 @@ var is_waiting_to_reset := false
 var _previous_velocity: Vector3 = Vector3.ZERO
 ## Timer used to space out how often we check if we can exit ragdoll
 var _ragdoll_reset_timer: SceneTreeTimer = null
+## Carryable items in pickup range
+var _pickups_in_range: Array[Node3D]
 
 
 func _ready() -> void:
@@ -132,6 +135,17 @@ func _physics_process(delta: float) -> void:
 
   var is_in_vehicle := current_vehicle != null
   var is_using := Input.is_action_just_pressed("use")
+
+  # Get pickups in range, and sort by distance to pickup collider
+  _pickups_in_range = _pickup_collider.get_overlapping_bodies().filter(func(_body: Node3D):
+    return _body is CarryableItem
+  )
+  var _pickup_distances := {}
+  for _pickup: CarryableItem in _pickups_in_range:
+    _pickup_distances[_pickup.get_instance_id()] = _pickup.global_position.distance_squared_to(_pickup_collider.global_position)
+  _pickups_in_range.sort_custom(func(a: Node3D, b: Node3D):
+    return _pickup_distances[a.get_instance_id()] > _pickup_distances[b.get_instance_id()]
+  )
 
   _is_on_floor_buffer = _is_on_ground
   _move_direction = _get_camera_oriented_input()

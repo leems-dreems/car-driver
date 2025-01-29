@@ -204,6 +204,7 @@ Ragdoll={
 3d_physics/layer_11="TrafficAgent"
 3d_physics/layer_12="TrafficSpawnPoint"
 3d_physics/layer_13="MovingScenery"
+3d_physics/layer_17="CarryableItem"
 3d_physics/layer_18="CarBumper"
 3d_physics/layer_19="CarDoor"
 3d_physics/layer_21="Explosion"

@@ -111,6 +111,9 @@ func _update_hud() -> void:
       use_label.text = player.useable_target.objective_text
     else:
       use_label.text = "Use"
+  elif len(player._pickups_in_range) > 0:
+    use_label.visible = true
+    use_label.text = "Pick up " + player._pickups_in_range[0].item_name
   else:
     use_label.visible = false
     use_label.text = ""
