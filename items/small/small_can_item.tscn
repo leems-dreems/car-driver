@@ -1,22 +1,24 @@
-[gd_scene load_steps=8 format=4 uid="uid://0uwi576g6lao"]
+[gd_scene load_steps=13 format=4 uid="uid://0uwi576g6lao"]
 
 [ext_resource type="Script" path="res://items/carryable_item.gd" id="1_kmt6j"]
-[ext_resource type="Texture2D" uid="uid://bgdk0yoc6m34r" path="res://assets/models/items/small/can_uv_painted.png" id="1_owcn2"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2vbca"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h1vhk"]
+load_path = "res://.godot/imported/can_uv_painted.png-5fec36000887c75e21d4dba43f6c64de.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sq1yo"]
 resource_name = "Label"
 cull_mode = 2
-albedo_texture = ExtResource("1_owcn2")
+albedo_texture = SubResource("CompressedTexture2D_h1vhk")
 roughness = 0.5
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w32qx"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dskym"]
 resource_name = "Tin"
 cull_mode = 2
 albedo_color = Color(0.441859, 0.441859, 0.441859, 1)
 metallic = 1.0
 roughness = 0.513636
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_j6rcm"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_iwifb"]
 _surfaces = [{
 "aabb": AABB(-0.0695434, -0.0998554, -0.0695434, 0.139087, 0.199711, 0.139087),
 "format": 34896613377,
@@ -40,7 +42,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_stker"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_elxp7"]
 resource_name = "can_Cylinder"
 _surfaces = [{
 "aabb": AABB(-0.0695434, -0.0998554, -0.0695434, 0.139087, 0.199711, 0.139087),
@@ -48,7 +50,7 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 192,
 "index_data": PackedByteArray("AAAGAAIAAAAEAAYABQAKAAcABQAIAAoACQAOAAsACQAMAA4ADQASAA8ADQAQABIAEQAWABMAEQAUABYAFQAaABcAFQAYABoAGQAeABsAGQAcAB4AHQAjAB8AHQAhACMAIAAnACIAIAAlACcAJAArACYAJAApACsAKAAvACoAKAAtAC8ALAAzAC4ALAAxADMAMAA3ADIAMAA1ADcANAA7ADYANAA5ADsAOAA/ADoAOAA9AD8APABCAD4APABAAEIAQQBGAEMAQQBEAEYARQBKAEcARQBIAEoASQBOAEsASQBMAE4ATQBSAE8ATQBQAFIAUQBWAFMAUQBUAFYAVQBaAFcAVQBYAFoAWQBeAFsAWQBcAF4AXQBiAF8AXQBgAGIAYQBnAGMAYQBlAGcAZABrAGYAZABpAGsAaABvAGoAaABtAG8AbABzAG4AbABxAHMAcAB3AHIAcAB1AHcAdAB7AHYAdAB5AHsAeAB/AHoAeAB9AH8AfAADAH4AfAABAAMA"),
-"material": SubResource("StandardMaterial3D_2vbca"),
+"material": SubResource("StandardMaterial3D_sq1yo"),
 "name": "Label",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -60,7 +62,7 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 180,
 "index_data": PackedByteArray("BQABAAMAAQA9AD8APQA5ADsAOQA1ADcANQAxADMAMQAtAC8ALQApACsAKQAlACcAJQAhACMAIQAdAB8AHQAZABsAGQAVABcAFQARABMAEQANAA8ADQAJAAsACQAFAAcABQA9AAEAPQA1ADkANQAtADEALQAlACkAJQAdACEAHQAVABkAFQANABEADQAFAAkABQA1AD0ANQAlAC0AJQAVAB0AFQAFAA0ABQAlADUAJQAFABUAPgACAAAAAgAGAAQABgAKAAgACgAOAAwADgASABAAEgAWABQAFgAaABgAGgAeABwAHgAiACAAIgAmACQAJgAqACgAKgAuACwALgAyADAAMgA2ADQANgA6ADgAOgA+ADwAPgAGAAIABgAOAAoADgAWABIAFgAeABoAHgAmACIAJgAuACoALgA2ADIANgA+ADoAPgAOAAYADgAeABYAHgAuACYALgA+ADYAPgAeAA4AHgA+AC4A"),
-"material": SubResource("StandardMaterial3D_w32qx"),
+"material": SubResource("StandardMaterial3D_dskym"),
 "name": "Tin",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -68,10 +70,69 @@ _surfaces = [{
 "vertex_data": PackedByteArray("/38AAAAAHz//f///AAAP0/iYAAB1Ah8/+Jj//3UCD9P7sAAAvgkfP/uw//++CQ/THMcAAJIVHz8cx///khUP04HaAAB9JR8/gdr//30lD9Ns6gAA4jgfP2zq///iOA/TQPYAAANPHz9A9v//A08P04n9AAAGZx8/if3//wZnD9P//wAA/38fP///////fw/Tif0AAPiYHz+J/f//+JgP00D2AAD7sB8/QPb///uwD9Ns6gAAHMcfP2zq//8cxw/TgdoAAIHaHz+B2v//gdoP0xzHAABs6h8/HMf//2zqD9P7sAAAQPYfP/uw//9A9g/T+JgAAIn9Hz/4mP//if0P0/9/AAD//x8//3//////D9MGZwAAif0fPwZn//+J/Q/TA08AAED2Hz8DT///QPYP0+I4AABs6h8/4jj//2zqD9N9JQAAgdofP30l//+B2g/TkhUAABzHHz+SFf//HMcP074JAAD7sB8/vgn///uwD9N1AgAA+JgfP3UC///4mA/TAAAAAP9/Hz8AAP///38P03UCAAAGZx8/dQL//wZnD9O+CQAAA08fP74J//8DTw/TkhUAAOI4Hz+SFf//4jgP030lAAB9JR8/fSX//30lD9PiOAAAkhUfP+I4//+SFQ/TA08AAL4JHz8DT///vgkP0wZnAAB1Ah8/Bmf//3UCD9NIHVtxwNaBLUkdWnHA1oEtSB1bccDWgS1JHVpxwNaBLUkdWnHA1oEtSR1accDWgS1IHVtxwNaBLUkdWnHA1oEtSR1accDWgS1JHVpxwNaBLUgdW3HA1oEtSR1accDWgS1IHVtxwNaBLUkdWnHA1oEtSR1accDWgS1JHVpxwNaBLUgdW3HA1oEtSR1accDWgS1IHVtxwNaBLUkdWnHA1oEtSR1accDWgS1IHVtxwNaBLUkdWnHA1oEtSR1accDWgS1IHVtxwNaBLUkdWnHA1oEtSB1bccDWgS1JHVpxwNaBLUgdW3HA1oEtSR1accDWgS1JHVpxwNaBLUkdWnHA1oEt")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_j6rcm")
+shadow_mesh = SubResource("ArrayMesh_iwifb")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_d7r6n"]
 points = PackedVector3Array(-0.0695434, -0.0998554, -1.36197e-05, -0.0682092, -0.0998554, -0.0135738, -0.0682092, -0.0998554, 0.0135602, -0.0695434, 0.0998358, -1.36197e-05, -0.0682092, 0.0998358, -0.0135738, -0.064261, -0.0998554, -0.0266166, -0.064261, -0.0998554, 0.026603, -0.0682092, 0.0998358, 0.0135602, -0.064261, 0.0998358, -0.0266166, -0.0578349, -0.0998554, -0.0386383, -0.0578349, -0.0998554, 0.0386247, -0.064261, 0.0998358, 0.026603, -0.0578349, 0.0998358, -0.0386383, -0.049176, -0.0998554, -0.049176, -0.049176, -0.0998554, 0.0491624, -0.0578349, 0.0998358, 0.0386247, -0.049176, 0.0998358, -0.049176, -0.0386383, -0.0998554, -0.0578349, -0.0386383, -0.0998554, 0.0578213, -0.049176, 0.0998358, 0.0491624, -0.0386383, 0.0998358, -0.0578349, -0.0266165, -0.0998554, -0.064261, -0.0266165, -0.0998554, 0.0642474, -0.0386383, 0.0998358, 0.0578213, -0.0266165, 0.0998358, -0.064261, -0.0135737, -0.0998554, -0.0682092, -0.0135737, -0.0998554, 0.0681956, -0.0266165, 0.0998358, 0.0642474, -0.0135737, 0.0998358, -0.0682092, -1.35899e-05, -0.0998554, -0.0695434, -1.35899e-05, -0.0998554, 0.0695434, -0.0135737, 0.0998358, 0.0681956, -1.35899e-05, 0.0998358, -0.0695434, 0.0135602, -0.0998554, -0.0682092, 0.0135602, -0.0998554, 0.0681956, -1.35899e-05, 0.0998358, 0.0695434, 0.0135602, 0.0998358, -0.0682092, 0.026603, -0.0998554, -0.064261, 0.026603, -0.0998554, 0.0642474, 0.0135602, 0.0998358, 0.0681956, 0.026603, 0.0998358, -0.064261, 0.0386247, -0.0998554, -0.0578349, 0.0386247, -0.0998554, 0.0578213, 0.026603, 0.0998358, 0.0642474, 0.0386247, 0.0998358, -0.0578349, 0.0491624, -0.0998554, -0.049176, 0.0491624, -0.0998554, 0.0491624, 0.0386247, 0.0998358, 0.0578213, 0.0491624, 0.0998358, -0.049176, 0.0578213, -0.0998554, -0.0386383, 0.0578213, -0.0998554, 0.0386247, 0.0491624, 0.0998358, 0.0491624, 0.0578213, 0.0998358, -0.0386383, 0.0642474, -0.0998554, -0.0266166, 0.0642474, -0.0998554, 0.026603, 0.0578213, 0.0998358, 0.0386247, 0.0642474, 0.0998358, -0.0266166, 0.0681956, -0.0998554, -0.0135738, 0.0681956, -0.0998554, 0.0135602, 0.0642474, 0.0998358, 0.026603, 0.0681956, 0.0998358, -0.0135738, 0.0695435, -0.0998554, -1.36197e-05, 0.0681956, 0.0998358, 0.0135602, 0.0695435, 0.0998358, -1.36197e-05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_36ue6"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="Animation" id="Animation_rxh4e"]
+resource_name = "highlight"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cylinder:surface_material_override/1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_36ue6")]
+}
+
+[sub_resource type="Animation" id="Animation_0asyl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cylinder:surface_material_override/1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+
+[sub_resource type="Animation" id="Animation_v6b8s"]
+resource_name = "un_highlight"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cylinder:surface_material_override/1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_73s5p"]
+_data = {
+"RESET": SubResource("Animation_0asyl"),
+"highlight": SubResource("Animation_rxh4e"),
+"un_highlight": SubResource("Animation_v6b8s")
+}
 
 [node name="SmallCanItem" type="RigidBody3D"]
 collision_layer = 65600
@@ -80,8 +141,13 @@ script = ExtResource("1_kmt6j")
 item_name = "small can"
 
 [node name="Cylinder" type="MeshInstance3D" parent="."]
-mesh = SubResource("ArrayMesh_stker")
+mesh = SubResource("ArrayMesh_elxp7")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_d7r6n")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_73s5p")
+}

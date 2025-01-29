@@ -1133,10 +1133,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -257, 17.5176, -206)
 transform = Transform3D(-0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, 287.49, 15.5, -257)
 
 [node name="SmallCanItem" parent="Buildings" instance=ExtResource("19_3mfki")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -300, 18, -216)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -274, 18, -202)
 
 [node name="SmallCanItem2" parent="Buildings" instance=ExtResource("19_3mfki")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -300, 18, -215)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -274, 18, -201)
 
 [node name="SmallCanItem3" parent="Buildings" instance=ExtResource("19_3mfki")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -299, 18, -215)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -273, 18, -201)
+
+[node name="SmallCanItem4" parent="Buildings" instance=ExtResource("19_3mfki")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -274, 18, -200)
+
+[node name="SmallCanItem5" parent="Buildings" instance=ExtResource("19_3mfki")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -274, 18, -199)
+
+[node name="SmallCanItem6" parent="Buildings" instance=ExtResource("19_3mfki")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -273, 18, -199)
+
+[node name="SmallCanItem7" parent="Buildings" instance=ExtResource("19_3mfki")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -271, 18, -200)
+
+[node name="SmallCanItem8" parent="Buildings" instance=ExtResource("19_3mfki")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -271, 18, -199)
+
+[node name="SmallCanItem9" parent="Buildings" instance=ExtResource("19_3mfki")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -270, 18, -199)

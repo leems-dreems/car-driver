@@ -54,6 +54,7 @@ var _previous_velocity: Vector3 = Vector3.ZERO
 var _ragdoll_reset_timer: SceneTreeTimer = null
 ## Carryable items in pickup range
 var _pickups_in_range: Array[Node3D]
+var _carried_item: CarryableItem
 
 
 func _ready() -> void:
@@ -68,6 +69,11 @@ func _ready() -> void:
   camera_controller.top_level = true
   $CameraController/PlayerCamera.top_level = true
   PauseAndHud.player = self
+  _pickup_collider.body_exited.connect(func(_body: Node3D):
+    if _body is CarryableItem and _body.is_highlighted:
+      _body.unhighlight()
+  )
+  return
 
 
 func _on_body_entered(_body: Node) -> void:
@@ -136,17 +142,6 @@ func _physics_process(delta: float) -> void:
   var is_in_vehicle := current_vehicle != null
   var is_using := Input.is_action_just_pressed("use")
 
-  # Get pickups in range, and sort by distance to pickup collider
-  _pickups_in_range = _pickup_collider.get_overlapping_bodies().filter(func(_body: Node3D):
-    return _body is CarryableItem
-  )
-  var _pickup_distances := {}
-  for _pickup: CarryableItem in _pickups_in_range:
-    _pickup_distances[_pickup.get_instance_id()] = _pickup.global_position.distance_squared_to(_pickup_collider.global_position)
-  _pickups_in_range.sort_custom(func(a: Node3D, b: Node3D):
-    return _pickup_distances[a.get_instance_id()] > _pickup_distances[b.get_instance_id()]
-  )
-
   _is_on_floor_buffer = _is_on_ground
   _move_direction = _get_camera_oriented_input()
 
@@ -185,18 +180,41 @@ func _physics_process(delta: float) -> void:
     useable_target = aim_collider
 
     # Try to use whatever we're aiming at
-    if is_using and useable_target != null:
-      if useable_target.has_method("open_or_shut"):
-        useable_target.open_or_shut()
-      elif useable_target is EnterVehicleCollider:
-        enterVehicle(useable_target.vehicle)
-      elif useable_target is ObjectiveArea:
-        if useable_target.start_mission:
-          current_mission = useable_target.get_parent()
-        useable_target.trigger(self)
-      elif useable_target is VehicleDispenserButton:
-        var dispenser: VehicleDispenser = useable_target.get_parent()
-        dispenser.spawn_vehicle(useable_target.vehicle_type)
+    if is_using:
+      if useable_target != null:
+        if useable_target.has_method("open_or_shut"):
+          useable_target.open_or_shut()
+        elif useable_target is EnterVehicleCollider:
+          enterVehicle(useable_target.vehicle)
+        elif useable_target is ObjectiveArea:
+          if useable_target.start_mission:
+            current_mission = useable_target.get_parent()
+          useable_target.trigger(self)
+        elif useable_target is VehicleDispenserButton:
+          var dispenser: VehicleDispenser = useable_target.get_parent()
+          dispenser.spawn_vehicle(useable_target.vehicle_type)
+      elif len(_pickups_in_range) > 0:
+        pickup_item(_pickups_in_range[0])
+    else:
+      # Get pickups in range, and sort by distance to pickup collider
+      _pickups_in_range = _pickup_collider.get_overlapping_bodies().filter(func(_body: Node3D):
+        return _body is CarryableItem
+      )
+      if len(_pickups_in_range) > 0:
+        var _pickup_distances := {}
+        for _pickup: CarryableItem in _pickups_in_range:
+          _pickup_distances[_pickup.get_instance_id()] = _pickup.global_position.distance_squared_to(_pickup_collider.global_position)
+        _pickups_in_range.sort_custom(func(a: Node3D, b: Node3D):
+          return _pickup_distances[a.get_instance_id()] < _pickup_distances[b.get_instance_id()]
+        )
+        var i: int = 0
+        for _pickup in _pickups_in_range:
+          if i == 0:
+            if not _pickup.is_highlighted:
+              _pickup.highlight()
+          else:
+            _pickup.unhighlight()
+          i += 1
 
     if is_just_jumping:
       apply_central_impulse(Vector3.UP * jump_initial_impulse * mass)
@@ -297,3 +315,9 @@ func exitVehicle () -> void:
   await get_tree().create_timer(0.1).timeout
   $CharacterCollisionShape.disabled = false
   visible = true
+
+
+func pickup_item(_item: CarryableItem) -> void:
+  _item.queue_free()
+  _pickups_in_range = []
+  return
