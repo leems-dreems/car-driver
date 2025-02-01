@@ -75,6 +75,21 @@ shadow_mesh = SubResource("ArrayMesh_iwifb")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_d7r6n"]
 points = PackedVector3Array(-0.0695434, -0.0998554, -1.36197e-05, -0.0682092, -0.0998554, -0.0135738, -0.0682092, -0.0998554, 0.0135602, -0.0695434, 0.0998358, -1.36197e-05, -0.0682092, 0.0998358, -0.0135738, -0.064261, -0.0998554, -0.0266166, -0.064261, -0.0998554, 0.026603, -0.0682092, 0.0998358, 0.0135602, -0.064261, 0.0998358, -0.0266166, -0.0578349, -0.0998554, -0.0386383, -0.0578349, -0.0998554, 0.0386247, -0.064261, 0.0998358, 0.026603, -0.0578349, 0.0998358, -0.0386383, -0.049176, -0.0998554, -0.049176, -0.049176, -0.0998554, 0.0491624, -0.0578349, 0.0998358, 0.0386247, -0.049176, 0.0998358, -0.049176, -0.0386383, -0.0998554, -0.0578349, -0.0386383, -0.0998554, 0.0578213, -0.049176, 0.0998358, 0.0491624, -0.0386383, 0.0998358, -0.0578349, -0.0266165, -0.0998554, -0.064261, -0.0266165, -0.0998554, 0.0642474, -0.0386383, 0.0998358, 0.0578213, -0.0266165, 0.0998358, -0.064261, -0.0135737, -0.0998554, -0.0682092, -0.0135737, -0.0998554, 0.0681956, -0.0266165, 0.0998358, 0.0642474, -0.0135737, 0.0998358, -0.0682092, -1.35899e-05, -0.0998554, -0.0695434, -1.35899e-05, -0.0998554, 0.0695434, -0.0135737, 0.0998358, 0.0681956, -1.35899e-05, 0.0998358, -0.0695434, 0.0135602, -0.0998554, -0.0682092, 0.0135602, -0.0998554, 0.0681956, -1.35899e-05, 0.0998358, 0.0695434, 0.0135602, 0.0998358, -0.0682092, 0.026603, -0.0998554, -0.064261, 0.026603, -0.0998554, 0.0642474, 0.0135602, 0.0998358, 0.0681956, 0.026603, 0.0998358, -0.064261, 0.0386247, -0.0998554, -0.0578349, 0.0386247, -0.0998554, 0.0578213, 0.026603, 0.0998358, 0.0642474, 0.0386247, 0.0998358, -0.0578349, 0.0491624, -0.0998554, -0.049176, 0.0491624, -0.0998554, 0.0491624, 0.0386247, 0.0998358, 0.0578213, 0.0491624, 0.0998358, -0.049176, 0.0578213, -0.0998554, -0.0386383, 0.0578213, -0.0998554, 0.0386247, 0.0491624, 0.0998358, 0.0491624, 0.0578213, 0.0998358, -0.0386383, 0.0642474, -0.0998554, -0.0266166, 0.0642474, -0.0998554, 0.026603, 0.0578213, 0.0998358, 0.0386247, 0.0642474, 0.0998358, -0.0266166, 0.0681956, -0.0998554, -0.0135738, 0.0681956, -0.0998554, 0.0135602, 0.0642474, 0.0998358, 0.026603, 0.0681956, 0.0998358, -0.0135738, 0.0695435, -0.0998554, -1.36197e-05, 0.0681956, 0.0998358, 0.0135602, 0.0695435, 0.0998358, -1.36197e-05)
 
+[sub_resource type="Animation" id="Animation_0asyl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:surface_material_override/1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_36ue6"]
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
@@ -86,7 +101,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Cylinder:surface_material_override/1")
+tracks/0/path = NodePath("MeshInstance3D:surface_material_override/1")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -96,28 +111,13 @@ tracks/0/keys = {
 "values": [SubResource("StandardMaterial3D_36ue6")]
 }
 
-[sub_resource type="Animation" id="Animation_0asyl"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Cylinder:surface_material_override/1")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-
 [sub_resource type="Animation" id="Animation_v6b8s"]
 resource_name = "un_highlight"
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Cylinder:surface_material_override/1")
+tracks/0/path = NodePath("MeshInstance3D:surface_material_override/1")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -137,10 +137,11 @@ _data = {
 [node name="SmallCanItem" type="RigidBody3D"]
 collision_layer = 65600
 collision_mask = 4307
+continuous_cd = true
 script = ExtResource("1_kmt6j")
 item_name = "small can"
 
-[node name="Cylinder" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_elxp7")
 skeleton = NodePath("")
 

@@ -54,7 +54,11 @@ var _previous_velocity: Vector3 = Vector3.ZERO
 var _ragdoll_reset_timer: SceneTreeTimer = null
 ## Carryable items in pickup range
 var _pickups_in_range: Array[Node3D]
-var _carried_item: CarryableItem
+var _carried_item: CarryableItem = null
+var _carried_mesh: MeshInstance3D = null
+var _right_hand_bone_idx: int
+var _left_hand_bone_idx: int
+@onready var _carried_mesh_container := $CarriedItem
 
 
 func _ready() -> void:
@@ -69,6 +73,8 @@ func _ready() -> void:
   camera_controller.top_level = true
   $CameraController/PlayerCamera.top_level = true
   PauseAndHud.player = self
+  _right_hand_bone_idx = ragdoll_skeleton.find_bone("hand.R")
+  _left_hand_bone_idx = ragdoll_skeleton.find_bone("hand.L")
   _pickup_collider.body_exited.connect(func(_body: Node3D):
     if _body is CarryableItem and _body.is_highlighted:
       _body.unhighlight()
@@ -105,6 +111,12 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
       _ragdoll_reset_timer.timeout.connect(func():
         _ragdoll_reset_timer = null
       )
+
+
+func _process(delta: float) -> void:
+  if _carried_item != null:
+    _carried_mesh.global_transform = ragdoll_skeleton.global_transform * ragdoll_skeleton.get_bone_global_pose(_right_hand_bone_idx)
+  return
 
 
 func _physics_process(delta: float) -> void:
@@ -175,46 +187,50 @@ func _physics_process(delta: float) -> void:
     if linear_velocity.length() < move_speed:
       apply_central_force(_move_direction * acceleration * mass)
 
-    # Try to get a useable target from the camera raycast
-    var aim_collider := camera_controller.get_aim_collider()
-    useable_target = aim_collider
-
-    # Try to use whatever we're aiming at
-    if is_using:
-      if useable_target != null:
-        if useable_target.has_method("open_or_shut"):
-          useable_target.open_or_shut()
-        elif useable_target is EnterVehicleCollider:
-          enterVehicle(useable_target.vehicle)
-        elif useable_target is ObjectiveArea:
-          if useable_target.start_mission:
-            current_mission = useable_target.get_parent()
-          useable_target.trigger(self)
-        elif useable_target is VehicleDispenserButton:
-          var dispenser: VehicleDispenser = useable_target.get_parent()
-          dispenser.spawn_vehicle(useable_target.vehicle_type)
-      elif len(_pickups_in_range) > 0:
-        pickup_item(_pickups_in_range[0])
+    if _carried_item != null:
+      # See if we should drop our carried item
+      if is_using:
+        drop_item()
     else:
-      # Get pickups in range, and sort by distance to pickup collider
-      _pickups_in_range = _pickup_collider.get_overlapping_bodies().filter(func(_body: Node3D):
-        return _body is CarryableItem
-      )
-      if len(_pickups_in_range) > 0:
-        var _pickup_distances := {}
-        for _pickup: CarryableItem in _pickups_in_range:
-          _pickup_distances[_pickup.get_instance_id()] = _pickup.global_position.distance_squared_to(_pickup_collider.global_position)
-        _pickups_in_range.sort_custom(func(a: Node3D, b: Node3D):
-          return _pickup_distances[a.get_instance_id()] < _pickup_distances[b.get_instance_id()]
+      # Try to get a useable target from the camera raycast
+      var aim_collider := camera_controller.get_aim_collider()
+      useable_target = aim_collider
+      # Try to use whatever we're aiming at
+      if is_using:
+        if useable_target != null:
+          if useable_target.has_method("open_or_shut"):
+            useable_target.open_or_shut()
+          elif useable_target is EnterVehicleCollider:
+            enterVehicle(useable_target.vehicle)
+          elif useable_target is ObjectiveArea:
+            if useable_target.start_mission:
+              current_mission = useable_target.get_parent()
+            useable_target.trigger(self)
+          elif useable_target is VehicleDispenserButton:
+            var dispenser: VehicleDispenser = useable_target.get_parent()
+            dispenser.spawn_vehicle(useable_target.vehicle_type)
+        elif len(_pickups_in_range) > 0:
+          pickup_item(_pickups_in_range[0])
+      else:
+        # Get pickups in range, and sort by distance to pickup collider
+        _pickups_in_range = _pickup_collider.get_overlapping_bodies().filter(func(_body: Node3D):
+          return _body is CarryableItem
         )
-        var i: int = 0
-        for _pickup in _pickups_in_range:
-          if i == 0:
-            if not _pickup.is_highlighted:
-              _pickup.highlight()
-          else:
-            _pickup.unhighlight()
-          i += 1
+        if len(_pickups_in_range) > 0:
+          var _pickup_distances := {}
+          for _pickup: CarryableItem in _pickups_in_range:
+            _pickup_distances[_pickup.get_instance_id()] = _pickup.global_position.distance_squared_to(_pickup_collider.global_position)
+          _pickups_in_range.sort_custom(func(a: Node3D, b: Node3D):
+            return _pickup_distances[a.get_instance_id()] < _pickup_distances[b.get_instance_id()]
+          )
+          var i: int = 0
+          for _pickup in _pickups_in_range:
+            if i == 0:
+              if not _pickup.is_highlighted:
+                _pickup.highlight()
+            else:
+              _pickup.unhighlight()
+            i += 1
 
     if is_just_jumping:
       apply_central_impulse(Vector3.UP * jump_initial_impulse * mass)
@@ -318,6 +334,29 @@ func exitVehicle () -> void:
 
 
 func pickup_item(_item: CarryableItem) -> void:
-  _item.queue_free()
+  if _carried_item != null:
+    print("attempted duplicate pickup")
+    return
+  _carried_item = _item
+  _carried_mesh = _item.get_mesh().duplicate()
+  _carried_item.get_collider().disabled = true
+  _carried_item.freeze = true
+  _carried_item.visible = false
+  _carried_mesh_container.add_child(_carried_mesh)
+  _carried_mesh.set_disable_scale(true)
   _pickups_in_range = []
+  return
+
+
+func drop_item() -> void:
+  if _carried_item == null:
+    print("attempted to drop nothing")
+    return
+  _carried_item.global_transform = _carried_mesh.global_transform
+  _carried_mesh.queue_free()
+  _carried_item.get_collider().disabled = false
+  _carried_item.freeze = false
+  _carried_item.visible = true
+  _carried_mesh = null
+  _carried_item = null  
   return
