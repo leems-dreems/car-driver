@@ -33,7 +33,10 @@ var useable_target : Node3D = null
 @onready var ragdoll_skeleton: Skeleton3D = $square_guy/metarig/Skeleton3D
 @onready var _ragdoll_tracker_bone: PhysicalBone3D = $"square_guy/metarig/Skeleton3D/Physical Bone spine"
 #@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
+@onready var _step_raycast: RayCast3D = $square_guy/StepRayCast3D
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
+@onready var _grass_step_sound: AudioStreamPlayer3D = $GrassStepSound
+@onready var _dirt_step_sound: AudioStreamPlayer3D = $DirtStepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 @onready var ground_collider := $GroundCollider
 @onready var _nav_agent: NavigationAgent3D = $NavigationAgent3D
@@ -267,8 +270,37 @@ func _get_camera_oriented_input() -> Vector3:
 
 
 func play_foot_step_sound() -> void:
-  _step_sound.pitch_scale = randfn(1.2, 0.2)
-  _step_sound.play()
+  var _step_collider := _step_raycast.get_collider()
+  var _step_collision_point := _step_raycast.get_collision_point()
+  var _step_surface: DriveableVehicle.SurfaceTypes
+  if _step_collider is Terrain3D:
+    if _step_collider.data.get_control_auto(_step_collision_point):
+      # This part of the terrain is autoshaded, so we look for the texture blend value
+      if Game.active_terrain.data.get_texture_id(_step_collision_point)[2] < 0.5:
+        _step_surface = DriveableVehicle.SurfaceTypes.ROCK
+      else:
+        _step_surface = DriveableVehicle.SurfaceTypes.GRASS
+    else:
+      # This part of the terrain is manually shaded, so get the base texture id
+      match _step_collider.data.get_control_base_id(_step_collision_point):
+        0: _step_surface = DriveableVehicle.SurfaceTypes.ROCK
+        1: _step_surface = DriveableVehicle.SurfaceTypes.GRASS
+        2: _step_surface = DriveableVehicle.SurfaceTypes.SAND
+        3: _step_surface = DriveableVehicle.SurfaceTypes.DIRT
+        4: _step_surface = DriveableVehicle.SurfaceTypes.GRASS
+        5: _step_surface = DriveableVehicle.SurfaceTypes.ROAD
+
+  match _step_surface:
+    DriveableVehicle.SurfaceTypes.DIRT:
+      _dirt_step_sound.unit_size = clampf(linear_velocity.length(), 1, 4)
+      _dirt_step_sound.play()
+    DriveableVehicle.SurfaceTypes.GRASS:
+      _grass_step_sound.unit_size = clampf(linear_velocity.length(), 1, 4)
+      _grass_step_sound.play()
+    _:
+      _step_sound.unit_size = clampf(linear_velocity.length(), 1, 4)
+      _step_sound.play()
+  return
 
 
 func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
@@ -278,6 +310,7 @@ func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
   _rotation_root.transform.basis = Basis(_rotation_root.transform.basis.get_rotation_quaternion().slerp(rotation_basis, delta * rotation_speed)).scaled(
     model_scale
   )
+  return
 
 
 func go_limp() -> void:
@@ -294,6 +327,7 @@ func go_limp() -> void:
     ragdoll_skeleton.physical_bones_stop_simulation()
     is_waiting_to_reset = true
   )
+  return
 
 
 func is_on_ground() -> bool:
