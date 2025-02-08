@@ -190,6 +190,7 @@ _shader_parameters = {
 "noise_texture": SubResource("NoiseTexture2D_qg3yd"),
 "vertex_normals_distance": 128.0
 }
+texture_filtering = 1
 auto_shader = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_gqvqr"]
