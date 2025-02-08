@@ -32,7 +32,15 @@ func physics_update(_delta: float) -> void:
 				else:
 					_pickup.unhighlight()
 				i += 1
-	#elif Input.is_action_just_pressed("move_up"):
-		#finished.emit(JUMPING)
-	#elif Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
-		#finished.emit(RUNNING)
+
+
+func enter(previous_state_path: String, data := {}) -> void:
+	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.THIRD_PERSON)
+	return
+
+
+func exit() -> void:
+	for _pickup in player._pickups_in_range:
+		if _pickup.is_highlighted:
+			_pickup.unhighlight()
+	

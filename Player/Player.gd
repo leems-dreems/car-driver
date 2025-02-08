@@ -392,5 +392,21 @@ func drop_item() -> void:
 	_carried_item.freeze = false
 	_carried_item.visible = true
 	_carried_mesh = null
-	_carried_item = null  
+	_carried_item = null
+	return
+
+
+func throw_item() -> void:
+	if _carried_item == null:
+		print("attempted to throw nothing")
+		return
+	_carried_item.global_transform = $CameraController/ThrowOrigin.global_transform
+	_carried_mesh.queue_free()
+	_carried_item.get_collider().disabled = false
+	_carried_item.freeze = false
+	_carried_item.visible = true
+	var _throw_vector: Vector3 = $CameraController/ThrowTarget.global_position - $CameraController/ThrowOrigin.global_position
+	_carried_item.apply_central_impulse(_throw_vector * 5)
+	_carried_mesh = null
+	_carried_item = null
 	return
