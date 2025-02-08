@@ -164,8 +164,10 @@ func _physics_process(delta: float) -> void:
 	# this also ensures a good normalized value for the rotation basis.
 	if _move_direction.length() > 0.2:
 		_last_strong_direction = _move_direction.normalized()
-
-	_orient_character_to_direction(_last_strong_direction, delta)
+	if camera_controller._current_pivot_type == CameraController.CAMERA_PIVOT.THIRD_PERSON:
+		_orient_character_to_direction(_last_strong_direction, delta)
+	else:
+		_orient_character_to_direction(camera_controller.global_transform.basis.z, delta)
 
 	if is_in_vehicle:
 		useable_target = null
