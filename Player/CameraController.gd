@@ -12,6 +12,7 @@ enum CAMERA_PIVOT { OVER_SHOULDER, THIRD_PERSON }
 @export var player_camera_distance := 10.0
 @export var vehicle_camera_distance := 15.0
 @export var camera_distance_change_speed := 1.5
+@export var player_camera_stiffness := 10.0
 @export var follow_cam_min_velocity := 1.0
 @export var follow_cam_stiffness := 0.25
 @export var follow_cam_delay := 2.0
@@ -105,7 +106,9 @@ func _process(delta: float) -> void:
 
 	# CameraController and PlayerCamera exist in global space, pivots are local
 	transform.basis = Basis.from_euler(_euler_rotation)
-	camera.global_transform = _pivot.global_transform
+	camera.global_transform.basis = camera.global_transform.basis.slerp(_pivot.global_transform.basis.orthonormalized(), delta * player_camera_stiffness)
+	camera.global_position = camera.global_position.slerp(_pivot.global_position, delta * player_camera_stiffness)
+	#camera.global_transform = _pivot.global_transform
 	camera.rotation.z = 0
 
 	_rotation_input = 0.0

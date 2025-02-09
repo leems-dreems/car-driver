@@ -9,7 +9,9 @@ func physics_update(_delta: float) -> void:
 		player._last_strong_direction = player.camera_controller.global_transform.basis.z
 		finished.emit(CARRYING)
 	if Input.is_action_just_pressed("throw"):
+		player._last_strong_direction = player.camera_controller.global_transform.basis.z
 		player.throw_item()
+		finished.emit(EMPTY_HANDED)
 	return
 
 
