@@ -42,6 +42,7 @@ var useable_target : Node3D = null
 @onready var _nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var _animation_tree: AnimationTree = $square_guy/AnimationTree
 @onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
+@onready var use_label: Sprite3D = $UseLabel
 
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD

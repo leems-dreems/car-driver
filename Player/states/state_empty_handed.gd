@@ -27,11 +27,16 @@ func physics_update(_delta: float) -> void:
 			var i: int = 0
 			for _pickup in player._pickups_in_range:
 				if i == 0:
+					player.use_label.visible = true
+					player.use_label.global_position = _pickup.global_position
+					player.use_label.position.y += 0.5
 					if not _pickup.is_highlighted:
 						_pickup.highlight()
 				else:
 					_pickup.unhighlight()
 				i += 1
+		else:
+			player.use_label.visible = false
 
 
 func enter(previous_state_path: String, data := {}) -> void:
@@ -40,6 +45,7 @@ func enter(previous_state_path: String, data := {}) -> void:
 
 
 func exit() -> void:
+	player.use_label.visible = false
 	for _pickup in player._pickups_in_range:
 		if _pickup.is_highlighted:
 			_pickup.unhighlight()
