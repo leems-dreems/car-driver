@@ -5,7 +5,7 @@ func physics_update(_delta: float) -> void:
 	if Input.is_action_just_pressed("use"):
 		player.drop_item()
 		finished.emit(EMPTY_HANDED)
-	if Input.is_action_pressed("aim"):
+	if player.is_on_ground() and Input.is_action_pressed("aim"):
 		finished.emit(AIMING_THROW)
 	return
 
