@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
-[ext_resource type="Theme" uid="uid://conwfwgwniuhd" path="res://ui/use_label.tres" id="3_6v203"]
 [ext_resource type="StyleBox" uid="uid://b4phqf84dag0" path="res://ui/options_panel.tres" id="4_phyb6"]
 [ext_resource type="SystemFont" uid="uid://bfrqonkrt6mpy" path="res://ui/ui_font.tres" id="4_rrxj5"]
 [ext_resource type="Theme" uid="uid://djel5wi5nvl5d" path="res://ui/hud_theme.tres" id="5_ekyou"]
 [ext_resource type="AudioStream" uid="uid://dkj1253vpd2oh" path="res://assets/audio/Sound effects package/Tools/Wood 2x4 01.wav" id="6_v27v4"]
-[ext_resource type="LabelSettings" uid="uid://c885emvux500g" path="res://ui/use_label_settings.tres" id="7_4w4uq"]
 [ext_resource type="AudioStream" uid="uid://dyhnf0pmv6opf" path="res://assets/audio/Sound effects package/Arcade and Games/Ping Pong Paddle 01.wav" id="7_f12fv"]
+[ext_resource type="Texture2D" uid="uid://0ldt4dv2bgsc" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_7.png" id="8_mg6v0"]
+[ext_resource type="Texture2D" uid="uid://c75yy1il6bngs" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_8.png" id="9_xap3b"]
+[ext_resource type="LabelSettings" uid="uid://d1feibeuvvyf3" path="res://ui/controls_label_settings.tres" id="9_yc66f"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ag0bj"]
 font = ExtResource("4_rrxj5")
@@ -23,13 +24,6 @@ shadow_offset = Vector2(5, 5)
 
 [sub_resource type="LabelSettings" id="LabelSettings_juqyv"]
 font_size = 32
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xdi1o"]
-content_margin_left = 16.0
-content_margin_top = 0.0
-content_margin_right = 16.0
-content_margin_bottom = 5.0
-bg_color = Color(0.93845, 0.93845, 0.93845, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_q7nlx"]
 font_size = 32
@@ -124,10 +118,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("5_ekyou")
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 60
 
 [node name="CrossHairContainer" type="CenterContainer" parent="HUD"]
 layout_mode = 2
@@ -150,19 +144,6 @@ text = "Mission: None"
 label_settings = SubResource("LabelSettings_juqyv")
 horizontal_alignment = 1
 
-[node name="UseLabelContainer" type="MarginContainer" parent="HUD"]
-layout_mode = 2
-theme_override_constants/margin_top = 1000
-
-[node name="UseLabel" type="Label" parent="HUD/UseLabelContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("3_6v203")
-theme_override_styles/normal = SubResource("StyleBoxFlat_xdi1o")
-text = "use something"
-label_settings = ExtResource("7_4w4uq")
-horizontal_alignment = 1
-
 [node name="VehicleInfoLabel" type="Label" parent="HUD"]
 visible = false
 layout_mode = 2
@@ -171,6 +152,33 @@ size_flags_vertical = 8
 text = "Speed:"
 label_settings = SubResource("LabelSettings_q7nlx")
 horizontal_alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+alignment = 2
+
+[node name="Use_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Unpressed_TextureRect" type="TextureRect" parent="HUD/VBoxContainer/Use_HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("8_mg6v0")
+expand_mode = 3
+
+[node name="Pressed_TextureRect" type="TextureRect" parent="HUD/VBoxContainer/Use_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("9_xap3b")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Use_HBoxContainer"]
+layout_mode = 2
+text = "Use"
+label_settings = ExtResource("9_yc66f")
+vertical_alignment = 1
 
 [node name="ClickAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_v27v4")

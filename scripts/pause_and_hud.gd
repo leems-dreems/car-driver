@@ -3,7 +3,6 @@ extends CanvasLayer
 @export var vehicle : Vehicle
 @export var player : Player
 @onready var vehicle_hud_label := $HUD/VehicleInfoLabel
-@onready var use_label := $HUD/UseLabelContainer/UseLabel
 @onready var mission_label := $HUD/MissionLabelContainer/MissionLabel
 @onready var paused_UI := $PausedUI
 @onready var pause_menu := $PausedUI/PauseMenu
@@ -53,6 +52,12 @@ func _process(_delta: float) -> void:
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton.grab_focus.call_deferred()
 	elif Input.is_action_just_pressed("ui_up") and _focussed_control == null:
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton.grab_focus.call_deferred()
+	if Input.is_action_pressed("use"):
+		$HUD/VBoxContainer/Use_HBoxContainer/Unpressed_TextureRect.visible = false
+		$HUD/VBoxContainer/Use_HBoxContainer/Pressed_TextureRect.visible = true
+	else:
+		$HUD/VBoxContainer/Use_HBoxContainer/Unpressed_TextureRect.visible = true
+		$HUD/VBoxContainer/Use_HBoxContainer/Pressed_TextureRect.visible = false
 	return
 
 
@@ -104,19 +109,20 @@ func _update_hud() -> void:
 		#vehicle_hud_label.text = ""
 
 	if player.useable_target != null:
-		use_label.visible = true
+		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Use"
 		if player.useable_target.has_method("get_use_label"):
-			use_label.text = player.useable_target.get_use_label()
+			$HUD/VBoxContainer/Use_HBoxContainer/Label.text = player.useable_target.get_use_label()
 		elif player.useable_target is ObjectiveArea:
-			use_label.text = player.useable_target.objective_text
+			$HUD/VBoxContainer/Use_HBoxContainer/Label.text = player.useable_target.objective_text
 		else:
-			use_label.text = "Use"
+			$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Use"
 	elif len(player._pickups_in_range) > 0:
-		use_label.visible = true
-		use_label.text = "Pick up " + player._pickups_in_range[0].item_name
+		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Pickup " + player._pickups_in_range[0].item_name
 	else:
-		use_label.visible = false
-		use_label.text = ""
+		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Use"
 	return
 
 

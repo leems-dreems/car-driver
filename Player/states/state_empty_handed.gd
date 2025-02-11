@@ -37,6 +37,7 @@ func physics_update(_delta: float) -> void:
 				i += 1
 		else:
 			player.use_label.visible = false
+	return
 
 
 func enter(previous_state_path: String, data := {}) -> void:
@@ -49,4 +50,4 @@ func exit() -> void:
 	for _pickup in player._pickups_in_range:
 		if _pickup.is_highlighted:
 			_pickup.unhighlight()
-	
+	return
