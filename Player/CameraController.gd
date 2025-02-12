@@ -106,9 +106,11 @@ func _process(delta: float) -> void:
 
 	# CameraController and PlayerCamera exist in global space, pivots are local
 	transform.basis = Basis.from_euler(_euler_rotation)
-	camera.global_transform.basis = camera.global_transform.basis.slerp(_pivot.global_transform.basis.orthonormalized(), delta * player_camera_stiffness)
-	camera.global_position = camera.global_position.slerp(_pivot.global_position, delta * player_camera_stiffness)
-	#camera.global_transform = _pivot.global_transform
+	if _anchor.current_vehicle != null:
+		camera.global_transform = _pivot.global_transform
+	else:
+		camera.global_transform.basis = camera.global_transform.basis.slerp(_pivot.global_transform.basis.orthonormalized(), delta * player_camera_stiffness)
+		camera.global_position = camera.global_position.slerp(_pivot.global_position, delta * player_camera_stiffness)
 	camera.rotation.z = 0
 
 	_rotation_input = 0.0

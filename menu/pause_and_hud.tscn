@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://btmduyhkublv7"]
+[gd_scene load_steps=17 format=3 uid="uid://btmduyhkublv7"]
 
 [ext_resource type="Script" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
@@ -8,8 +8,10 @@
 [ext_resource type="AudioStream" uid="uid://dkj1253vpd2oh" path="res://assets/audio/Sound effects package/Tools/Wood 2x4 01.wav" id="6_v27v4"]
 [ext_resource type="AudioStream" uid="uid://dyhnf0pmv6opf" path="res://assets/audio/Sound effects package/Arcade and Games/Ping Pong Paddle 01.wav" id="7_f12fv"]
 [ext_resource type="Texture2D" uid="uid://0ldt4dv2bgsc" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_7.png" id="8_mg6v0"]
+[ext_resource type="Texture2D" uid="uid://djf0p4j65waqb" path="res://assets/icons/SimpleFlatKeys/Light/E-Key.png" id="8_yn5h2"]
 [ext_resource type="Texture2D" uid="uid://c75yy1il6bngs" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_8.png" id="9_xap3b"]
 [ext_resource type="LabelSettings" uid="uid://d1feibeuvvyf3" path="res://ui/controls_label_settings.tres" id="9_yc66f"]
+[ext_resource type="Texture2D" uid="uid://belhbl4mj8t2q" path="res://assets/icons/SimpleFlatKeys/Dark/E-Key.png" id="9_yv6c2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ag0bj"]
 font = ExtResource("4_rrxj5")
@@ -161,17 +163,29 @@ alignment = 2
 
 [node name="Use_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 20
 
-[node name="Unpressed_TextureRect" type="TextureRect" parent="HUD/VBoxContainer/Use_HBoxContainer"]
+[node name="Gamepad_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Use_HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("8_mg6v0")
 expand_mode = 3
 
-[node name="Pressed_TextureRect" type="TextureRect" parent="HUD/VBoxContainer/Use_HBoxContainer"]
+[node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Use_HBoxContainer"]
 visible = false
 layout_mode = 2
 texture = ExtResource("9_xap3b")
+expand_mode = 3
+
+[node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Use_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("8_yn5h2")
+expand_mode = 3
+
+[node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Use_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("9_yv6c2")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Use_HBoxContainer"]
@@ -195,8 +209,8 @@ volume_db = -24.0
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="handle_resume_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="handle_quit_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]

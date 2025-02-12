@@ -14,6 +14,9 @@ var is_opening := false
 var is_closing := false
 var modulate_opaque := Color(1, 1, 1, 1)
 var modulate_transparent := Color(1, 1, 1, 0)
+enum INPUT_METHODS { GAMEPAD, KEYBOARD }
+var last_input_method: INPUT_METHODS
+var input_switch_timer: SceneTreeTimer = null
 
 
 func _ready() -> void:
@@ -32,6 +35,18 @@ func _process(_delta: float) -> void:
 	# Respond to pause button
 	if get_tree().paused and Input.is_action_just_pressed("Pause") and not (is_closing or is_opening):
 		animate_closed()
+	if input_switch_timer == null:
+		match last_input_method:
+			INPUT_METHODS.GAMEPAD:
+				if Input.is_action_pressed("keyboard_input") or Input.get_last_mouse_velocity().length_squared() > 10000:
+					last_input_method = INPUT_METHODS.KEYBOARD
+					input_switch_timer = get_tree().create_timer(1.0)
+					input_switch_timer.timeout.connect(func(): input_switch_timer = null)
+			INPUT_METHODS.KEYBOARD:
+				if Input.is_action_pressed("gamepad_input") or Input.get_action_strength("gamepad_axes") > 0 or Input.get_action_strength("gamepad_axes_n") > 0:
+					last_input_method = INPUT_METHODS.GAMEPAD
+					input_switch_timer = get_tree().create_timer(1.0)
+					input_switch_timer.timeout.connect(func(): input_switch_timer = null)
 	if get_tree().paused:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		$HUD.visible = false
@@ -52,12 +67,7 @@ func _process(_delta: float) -> void:
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton.grab_focus.call_deferred()
 	elif Input.is_action_just_pressed("ui_up") and _focussed_control == null:
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton.grab_focus.call_deferred()
-	if Input.is_action_pressed("use"):
-		$HUD/VBoxContainer/Use_HBoxContainer/Unpressed_TextureRect.visible = false
-		$HUD/VBoxContainer/Use_HBoxContainer/Pressed_TextureRect.visible = true
-	else:
-		$HUD/VBoxContainer/Use_HBoxContainer/Unpressed_TextureRect.visible = true
-		$HUD/VBoxContainer/Use_HBoxContainer/Pressed_TextureRect.visible = false
+	set_use_key_pressed(Input.is_action_pressed("use"))
 	return
 
 
@@ -107,8 +117,10 @@ func _update_hud() -> void:
 		#vehicle_hud_label.text += "\nGear: " + str(player.current_vehicle.current_gear)
 	#else:
 		#vehicle_hud_label.text = ""
-
-	if player.useable_target != null:
+	if player.current_vehicle != null:
+		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Exit " + player.current_vehicle.vehicle_name
+	elif player.useable_target != null:
 		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Use"
 		if player.useable_target.has_method("get_use_label"):
@@ -123,6 +135,21 @@ func _update_hud() -> void:
 	else:
 		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
 		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Use"
+	return
+
+
+func set_use_key_pressed(_pressed: bool) -> void:
+	match last_input_method:
+		INPUT_METHODS.GAMEPAD:
+			$HUD/VBoxContainer/Use_HBoxContainer/Gamepad_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Use_HBoxContainer/Gamepad_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Use_HBoxContainer/Keyboard_Unpressed.visible = false
+			$HUD/VBoxContainer/Use_HBoxContainer/Keyboard_Pressed.visible = false
+		INPUT_METHODS.KEYBOARD:
+			$HUD/VBoxContainer/Use_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Use_HBoxContainer/Keyboard_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Use_HBoxContainer/Gamepad_Unpressed.visible = false
+			$HUD/VBoxContainer/Use_HBoxContainer/Gamepad_Pressed.visible = false
 	return
 
 
