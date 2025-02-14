@@ -117,16 +117,19 @@ func _update_hud() -> void:
 		#vehicle_hud_label.text += "\nGear: " + str(player.current_vehicle.current_gear)
 	#else:
 		#vehicle_hud_label.text = ""
+	var _useable_target: Node3D = null
+	if len(player._useables_in_range) > 0:
+		_useable_target = player._useables_in_range[0]
 	if player.current_vehicle != null:
 		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Exit " + player.current_vehicle.vehicle_name
-	elif player.useable_target != null:
+	elif _useable_target != null:
 		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Use"
-		if player.useable_target.has_method("get_use_label"):
-			$HUD/VBoxContainer/Use_HBoxContainer/Label.text = player.useable_target.get_use_label()
-		elif player.useable_target is ObjectiveArea:
-			$HUD/VBoxContainer/Use_HBoxContainer/Label.text = player.useable_target.objective_text
+		if _useable_target.has_method("get_use_label"):
+			$HUD/VBoxContainer/Use_HBoxContainer/Label.text = _useable_target.get_use_label()
+		elif _useable_target is ObjectiveArea:
+			$HUD/VBoxContainer/Use_HBoxContainer/Label.text = _useable_target.objective_text
 		else:
 			$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Use"
 	elif len(player._pickups_in_range) > 0:

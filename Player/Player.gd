@@ -58,6 +58,8 @@ var _previous_velocity: Vector3 = Vector3.ZERO
 var _ragdoll_reset_timer: SceneTreeTimer = null
 ## Carryable items in pickup range
 var _pickups_in_range: Array[Node3D]
+## Useable items in range
+var _useables_in_range: Array[Node3D]
 var _carried_item: CarryableItem = null
 var _carried_mesh: MeshInstance3D = null
 var _right_hand_bone_idx: int
@@ -80,7 +82,7 @@ func _ready() -> void:
 	_right_hand_bone_idx = ragdoll_skeleton.find_bone("hand.R")
 	_left_hand_bone_idx = ragdoll_skeleton.find_bone("hand.L")
 	_pickup_collider.body_exited.connect(func(_body: Node3D):
-		if _body is CarryableItem and _body.is_highlighted:
+		if _body.has_method("unhighlight") and _body.is_highlighted:
 			_body.unhighlight()
 	)
 	return
@@ -186,9 +188,6 @@ func _physics_process(delta: float) -> void:
 		if current_vehicle.current_gear == -1:
 			current_vehicle.brake_input = Input.get_action_strength("Accelerate")
 			current_vehicle.throttle_input = Input.get_action_strength("Brake or Reverse")
-
-		if is_using:
-			exitVehicle()
 	else:
 		if linear_velocity.length() < move_speed:
 			apply_central_force(_move_direction * acceleration * mass)

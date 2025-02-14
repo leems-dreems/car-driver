@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cfc2aow8bbriw"]
+
+[ext_resource type="Shader" path="res://assets/shaders/outline.gdshader" id="1_5feti"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iwhqk"]
+render_priority = 0
+shader = ExtResource("1_5feti")
+shader_parameter/outline_threshold = 0.5
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+
+[resource]
+next_pass = SubResource("ShaderMaterial_iwhqk")
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)

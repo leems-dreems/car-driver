@@ -24,5 +24,6 @@ func physics_update(_delta: float) -> void:
 
 
 func enter(previous_state_path: String, data := {}) -> void:
+	unhighlight_all_useables()
 	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.OVER_SHOULDER)
 	return

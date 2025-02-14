@@ -3,14 +3,13 @@ extends PlayerState
 
 func physics_update(_delta: float) -> void:
 	if Input.is_action_just_pressed("use"):
-		player.drop_item()
+		player.exitVehicle()
 		finished.emit(EMPTY_HANDED)
-	if player.is_on_ground() and Input.is_action_pressed("aim"):
-		finished.emit(AIMING_THROW)
-	update_use_target()
 	return
 
 
 func enter(previous_state_path: String, data := {}) -> void:
-	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.THIRD_PERSON)
+	unhighlight_all_useables()
+	if player._carried_item != null:
+		player.drop_item()
 	return
