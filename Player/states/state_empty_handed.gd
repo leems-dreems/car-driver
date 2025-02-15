@@ -2,20 +2,12 @@ extends PlayerState
 
 
 func physics_update(_delta: float) -> void:
-	# Try to get a useable target from the camera raycast
-	var aim_collider := player.camera_controller.get_aim_collider()
-	player.useable_target = aim_collider
-# Try to use whatever we're aiming at
-	if Input.is_action_just_pressed("use"):
-		if len(player._useables_in_range) > 0:
-			use_aim_target(player._useables_in_range[0])
-		if len(player._pickups_in_range) > 0:
-			player.pickup_item(player._pickups_in_range[0])
-			finished.emit(CARRYING)
+	if Input.is_action_just_pressed("pickup_drop") and len(player._pickups_in_range) > 0:
+		player.pickup_item(player._pickups_in_range[0])
+		finished.emit(CARRYING)
 	else:
 		# Get pickups in range, and sort by distance to pickup collider
 		player._pickups_in_range = []
-		player._useables_in_range = []
 		for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
 			if _body is CarryableItem:
 				player._pickups_in_range.push_back(_body)
@@ -41,7 +33,17 @@ func physics_update(_delta: float) -> void:
 				i += 1
 		else:
 			player.use_label.visible = false
-		update_use_target()
+
+	if Input.is_action_just_pressed("interact"):
+		if len(player._useables_in_range) > 0:
+			use_aim_target(player._useables_in_range[0])
+	else:
+		player._useables_in_range = []
+		for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
+			if _body is not CarryableItem:
+				player._useables_in_range.push_back(_body)
+
+	update_use_target()
 	return
 
 

@@ -6,7 +6,7 @@
 render_priority = 0
 shader = ExtResource("1_5feti")
 shader_parameter/outline_threshold = 0.5
-shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_color = Color(0, 0, 0, 1)
 
 [resource]
 next_pass = SubResource("ShaderMaterial_iwhqk")

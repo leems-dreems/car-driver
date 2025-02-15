@@ -17,6 +17,9 @@ var modulate_transparent := Color(1, 1, 1, 0)
 enum INPUT_METHODS { GAMEPAD, KEYBOARD }
 var last_input_method: INPUT_METHODS
 var input_switch_timer: SceneTreeTimer = null
+var _pickup_press_timer: SceneTreeTimer = null
+var _interact_press_timer: SceneTreeTimer = null
+const _button_minimum_press_time := 0.2
 
 
 func _ready() -> void:
@@ -67,7 +70,15 @@ func _process(_delta: float) -> void:
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton.grab_focus.call_deferred()
 	elif Input.is_action_just_pressed("ui_up") and _focussed_control == null:
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton.grab_focus.call_deferred()
-	set_use_key_pressed(Input.is_action_pressed("use"))
+
+	if Input.is_action_just_pressed("pickup_drop"):
+		_pickup_press_timer = get_tree().create_timer(_button_minimum_press_time)
+		_pickup_press_timer.timeout.connect(func(): _pickup_press_timer = null)
+	if Input.is_action_just_pressed("interact"):
+		_interact_press_timer = get_tree().create_timer(_button_minimum_press_time)
+		_interact_press_timer.timeout.connect(func(): _interact_press_timer = null)
+	set_pickup_key_pressed(Input.is_action_pressed("pickup_drop") or _pickup_press_timer != null)
+	set_interact_key_pressed(Input.is_action_pressed("interact") or _interact_press_timer != null)
 	return
 
 
@@ -120,39 +131,61 @@ func _update_hud() -> void:
 	var _useable_target: Node3D = null
 	if len(player._useables_in_range) > 0:
 		_useable_target = player._useables_in_range[0]
+	$HUD/VBoxContainer/Pickup_HBoxContainer.visible = player.current_vehicle == null
 	if player.current_vehicle != null:
-		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Exit " + player.current_vehicle.vehicle_name
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Exit " + player.current_vehicle.vehicle_name
 	elif _useable_target != null:
-		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Use"
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Interact"
 		if _useable_target.has_method("get_use_label"):
-			$HUD/VBoxContainer/Use_HBoxContainer/Label.text = _useable_target.get_use_label()
+			$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = _useable_target.get_use_label()
 		elif _useable_target is ObjectiveArea:
-			$HUD/VBoxContainer/Use_HBoxContainer/Label.text = _useable_target.objective_text
+			$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = _useable_target.objective_text
 		else:
-			$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Use"
-	elif len(player._pickups_in_range) > 0:
-		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Pickup " + player._pickups_in_range[0].item_name
+			$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Interact"
 	else:
-		$HUD/VBoxContainer/Use_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
-		$HUD/VBoxContainer/Use_HBoxContainer/Label.text = "Use"
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Interact"
+	if player._carried_item != null:
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Drop " + player._carried_item.item_name
+	elif len(player._pickups_in_range) > 0:
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup " + player._pickups_in_range[0].item_name
+	else:
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup"
 	return
 
 
-func set_use_key_pressed(_pressed: bool) -> void:
+func set_pickup_key_pressed(_pressed: bool) -> void:
 	match last_input_method:
 		INPUT_METHODS.GAMEPAD:
-			$HUD/VBoxContainer/Use_HBoxContainer/Gamepad_Unpressed.visible = not _pressed
-			$HUD/VBoxContainer/Use_HBoxContainer/Gamepad_Pressed.visible = _pressed
-			$HUD/VBoxContainer/Use_HBoxContainer/Keyboard_Unpressed.visible = false
-			$HUD/VBoxContainer/Use_HBoxContainer/Keyboard_Pressed.visible = false
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Gamepad_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Gamepad_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Unpressed.visible = false
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Pressed.visible = false
 		INPUT_METHODS.KEYBOARD:
-			$HUD/VBoxContainer/Use_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
-			$HUD/VBoxContainer/Use_HBoxContainer/Keyboard_Pressed.visible = _pressed
-			$HUD/VBoxContainer/Use_HBoxContainer/Gamepad_Unpressed.visible = false
-			$HUD/VBoxContainer/Use_HBoxContainer/Gamepad_Pressed.visible = false
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Gamepad_Unpressed.visible = false
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Gamepad_Pressed.visible = false
+	return
+
+
+func set_interact_key_pressed(_pressed: bool) -> void:
+	match last_input_method:
+		INPUT_METHODS.GAMEPAD:
+			$HUD/VBoxContainer/Interact_HBoxContainer/Gamepad_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Interact_HBoxContainer/Gamepad_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Unpressed.visible = false
+			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Pressed.visible = false
+		INPUT_METHODS.KEYBOARD:
+			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Interact_HBoxContainer/Gamepad_Unpressed.visible = false
+			$HUD/VBoxContainer/Interact_HBoxContainer/Gamepad_Pressed.visible = false
 	return
 
 

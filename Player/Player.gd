@@ -158,7 +158,7 @@ func _physics_process(delta: float) -> void:
 		)
 
 	var is_in_vehicle := current_vehicle != null
-	var is_using := Input.is_action_just_pressed("use")
+	var is_using := Input.is_action_just_pressed("pickup_drop")
 
 	_is_on_floor_buffer = _is_on_ground
 	_move_direction = _get_camera_oriented_input()

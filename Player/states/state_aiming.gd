@@ -7,7 +7,7 @@ var _hold_timer: SceneTreeTimer = null
 func physics_update(_delta: float) -> void:
 	if _hold_timer != null:
 		return
-	if Input.is_action_just_pressed("use"):
+	if Input.is_action_just_pressed("pickup_drop"):
 		player.drop_item()
 		finished.emit(EMPTY_HANDED)
 	if not Input.is_action_pressed("aim") or not player.is_on_ground():
