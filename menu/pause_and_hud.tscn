@@ -19,7 +19,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_ag0bj"]
 font = ExtResource("4_rrxj5")
-font_size = 64
+font_size = 96
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 5
@@ -49,6 +49,7 @@ theme_override_constants/separation = 0
 
 [node name="PauseMenu" type="PanelContainer" parent="PausedUI"]
 clip_contents = true
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 theme = ExtResource("2_oe57f")
 
@@ -65,7 +66,8 @@ size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/CenterContainer"]
 layout_mode = 2
-text = "Commute Legend"
+text = "Bin
+Day"
 label_settings = SubResource("LabelSettings_ag0bj")
 horizontal_alignment = 1
 
@@ -163,6 +165,7 @@ horizontal_alignment = 2
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
+theme_override_constants/separation = 10
 alignment = 2
 
 [node name="Interact_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]

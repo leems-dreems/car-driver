@@ -9,6 +9,9 @@ const OPENING_DOOR = "Opening"
 const DRIVING = "Driving"
 
 var player: Player
+## Player won't update the interact target while this timer is running
+var _interact_target_timer: SceneTreeTimer = null
+const _interact_target_delay := 0.2
 
 
 func _ready() -> void:
@@ -34,14 +37,14 @@ func use_aim_target(_aim_target: Node) -> void:
 	return
 
 
-func update_use_target() -> void:
+func update_interact_target() -> void:
+	if _interact_target_timer != null:
+		return
+
 	if len(player._useables_in_range) > 0:
-		var _useable_distances := {}
-		for _useable: Node3D in player._useables_in_range:
-			_useable_distances[_useable.get_instance_id()] = _useable.global_position.distance_squared_to(player._pickup_collider.global_position)
-		player._useables_in_range.sort_custom(func(a: Node3D, b: Node3D):
-			return _useable_distances[a.get_instance_id()] < _useable_distances[b.get_instance_id()]
-		)
+		_interact_target_timer = get_tree().create_timer(_interact_target_delay)
+		_interact_target_timer.timeout.connect(func(): _interact_target_timer = null)
+
 		var i: int = 0
 		for _useable in player._useables_in_range:
 			if i == 0:

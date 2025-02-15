@@ -18,6 +18,7 @@ class_name CarDoor extends RigidBody3D
 @export var hinge_separation_collider_B: Area3D
 const outline_material := preload("res://assets/materials/outline_material_overlay.tres")
 @onready var open_door_mesh: MeshInstance3D = $MeshInstance3D
+@onready var interact_target: Marker3D = $InteractTarget
 var shut_basis: Basis
 var hinge_limit_upper: float
 var hinge_limit_lower: float

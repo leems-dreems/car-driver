@@ -467,6 +467,9 @@ collision_mask = 32
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorLeft/OpenDoorLeft/LeftDoorLatch"]
 shape = SubResource("SphereShape3D_jv0dm")
 
+[node name="InteractTarget" type="Marker3D" parent="ColliderBits/DoorLeft/OpenDoorLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 1.1, 0)
+
 [node name="DoorRight" type="Node3D" parent="ColliderBits"]
 
 [node name="HingeJointRight" type="JoltHingeJoint3D" parent="ColliderBits/DoorRight"]
@@ -549,6 +552,9 @@ collision_mask = 32
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorRight/OpenDoorRight/RightDoorLatch"]
 shape = SubResource("SphereShape3D_jv0dm")
+
+[node name="InteractTarget" type="Marker3D" parent="ColliderBits/DoorRight/OpenDoorRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 1.1, -9.61651e-08)
 
 [node name="Bonnet" type="Node3D" parent="ColliderBits"]
 

@@ -11,8 +11,6 @@ func physics_update(_delta: float) -> void:
 		for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
 			if _body is CarryableItem:
 				player._pickups_in_range.push_back(_body)
-			else:
-				player._useables_in_range.push_back(_body)
 		if len(player._pickups_in_range) > 0:
 			var _pickup_distances := {}
 			for _pickup: CarryableItem in player._pickups_in_range:
@@ -42,8 +40,19 @@ func physics_update(_delta: float) -> void:
 		for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
 			if _body is not CarryableItem:
 				player._useables_in_range.push_back(_body)
+		var _useable_distances := {}
+		for _useable: Node3D in player._useables_in_range:
+			var _useable_position: Vector3
+			if _useable is CarDoor:
+				_useable_position = _useable.interact_target.global_position
+			else:
+				_useable_position = _useable.global_position
+			_useable_distances[_useable.get_instance_id()] = _useable_position.distance_squared_to(player._pickup_collider.global_position)
+		player._useables_in_range.sort_custom(func(a: Node3D, b: Node3D):
+			return _useable_distances[a.get_instance_id()] < _useable_distances[b.get_instance_id()]
+		)
 
-	update_use_target()
+	update_interact_target()
 	return
 
 

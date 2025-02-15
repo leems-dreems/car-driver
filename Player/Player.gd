@@ -22,8 +22,6 @@ class_name Player extends RigidBody3D
 ## Vehicle the player is currently in
 @export var current_vehicle : DriveableVehicle = null
 @export var current_mission : Mission = null
-## The useable target the player is looking at
-var useable_target : Node3D = null
 
 @onready var _rotation_root: Node3D = $square_guy
 @onready var _vehicle_controller: VehicleController = $VehicleController
@@ -173,7 +171,6 @@ func _physics_process(delta: float) -> void:
 		_orient_character_to_direction(camera_controller.global_transform.basis.z, delta)
 
 	if is_in_vehicle:
-		useable_target = null
 		global_position = current_vehicle.global_position
 		current_vehicle.brake_input = Input.get_action_strength("Brake or Reverse")
 		current_vehicle.steering_input = Input.get_action_strength("Steer Left") - Input.get_action_strength("Steer Right")
@@ -191,51 +188,6 @@ func _physics_process(delta: float) -> void:
 	else:
 		if linear_velocity.length() < move_speed:
 			apply_central_force(_move_direction * acceleration * mass)
-
-		#if _carried_item != null:
-			## See if we should drop our carried item
-			#if is_using:
-				#drop_item()
-		#else:
-		# Try to get a useable target from the camera raycast
-		var aim_collider := camera_controller.get_aim_collider()
-		useable_target = aim_collider
-		# Try to use whatever we're aiming at
-		#if is_using:
-			#if useable_target != null:
-				#if useable_target.has_method("open_or_shut"):
-					#useable_target.open_or_shut()
-				#elif useable_target is EnterVehicleCollider:
-					#enterVehicle(useable_target.vehicle)
-				#elif useable_target is ObjectiveArea:
-					#if useable_target.start_mission:
-						#current_mission = useable_target.get_parent()
-					#useable_target.trigger(self)
-				#elif useable_target is VehicleDispenserButton:
-					#var dispenser: VehicleDispenser = useable_target.get_parent()
-					#dispenser.spawn_vehicle(useable_target.vehicle_type)
-			#elif len(_pickups_in_range) > 0:
-				#pickup_item(_pickups_in_range[0])
-		#else:
-			## Get pickups in range, and sort by distance to pickup collider
-			#_pickups_in_range = _pickup_collider.get_overlapping_bodies().filter(func(_body: Node3D):
-				#return _body is CarryableItem
-			#)
-			#if len(_pickups_in_range) > 0:
-				#var _pickup_distances := {}
-				#for _pickup: CarryableItem in _pickups_in_range:
-					#_pickup_distances[_pickup.get_instance_id()] = _pickup.global_position.distance_squared_to(_pickup_collider.global_position)
-				#_pickups_in_range.sort_custom(func(a: Node3D, b: Node3D):
-					#return _pickup_distances[a.get_instance_id()] < _pickup_distances[b.get_instance_id()]
-				#)
-				#var i: int = 0
-				#for _pickup in _pickups_in_range:
-					#if i == 0:
-						#if not _pickup.is_highlighted:
-							#_pickup.highlight()
-					#else:
-						#_pickup.unhighlight()
-					#i += 1
 
 		if is_just_jumping:
 			apply_central_impulse(Vector3.UP * jump_initial_impulse * mass)
