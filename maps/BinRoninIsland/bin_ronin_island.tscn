@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://c7llli6v0ccaa"]
+[gd_scene load_steps=45 format=3 uid="uid://c7llli6v0ccaa"]
 
 [ext_resource type="Script" path="res://maps/common/playable_map.gd" id="1_ipygp"]
 [ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://Player/Player.tscn" id="1_ufmyi"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://ds6xtk4wy22q" path="res://maps/common/garage.tscn" id="17_qa3or"]
 [ext_resource type="PackedScene" uid="uid://cklcxewrfavka" path="res://maps/common/dump_office.tscn" id="18_jlnx1"]
 [ext_resource type="PackedScene" uid="uid://0uwi576g6lao" path="res://items/small/small_can_item.tscn" id="19_3mfki"]
+[ext_resource type="PackedScene" uid="uid://df8mbdhlomb01" path="res://collidables/standalone_bin_prop.tscn" id="20_3etlk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pgokt"]
 
@@ -1159,3 +1160,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -271, 18, -199)
 
 [node name="SmallCanItem9" parent="Buildings" instance=ExtResource("19_3mfki")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -270, 18, -199)
+
+[node name="StandaloneBinProp" parent="." instance=ExtResource("20_3etlk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -279, 17.5, -206)

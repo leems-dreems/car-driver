@@ -55,9 +55,11 @@ var _previous_velocity: Vector3 = Vector3.ZERO
 ## Timer used to space out how often we check if we can exit ragdoll
 var _ragdoll_reset_timer: SceneTreeTimer = null
 ## Carryable items in pickup range
-var _pickups_in_range: Array[Node3D]
+var pickups_in_range: Array[Node3D]
 ## Useable items in range
-var _useables_in_range: Array[Node3D]
+var useables_in_range: Array[Node3D]
+## Item containers in range
+var containers_in_range: Array[Node3D]
 var _carried_item: CarryableItem = null
 var _carried_mesh: MeshInstance3D = null
 var _right_hand_bone_idx: int
@@ -332,7 +334,7 @@ func pickup_item(_item: CarryableItem) -> void:
 	_carried_item.visible = false
 	_carried_mesh_container.add_child(_carried_mesh)
 	_carried_mesh.set_disable_scale(true)
-	_pickups_in_range = []
+	pickups_in_range = []
 	return
 
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dc8sax4rbvaj4"]
+[gd_scene load_steps=8 format=3 uid="uid://dc8sax4rbvaj4"]
 
 [ext_resource type="Script" path="res://collidables/standalone_prop_bodies.gd" id="1_htapq"]
 [ext_resource type="ArrayMesh" uid="uid://cgsmitsotxc04" path="res://assets/models/trashCanSquare.obj" id="2_rhkmq"]
+[ext_resource type="Script" path="res://collidables/collidable_container.gd" id="2_ylw4c"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j5txw"]
 friction = 0.5
@@ -22,7 +23,7 @@ points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.02732
 script = ExtResource("1_htapq")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
-collision_layer = 64
+collision_layer = 72
 collision_mask = 83
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -33,6 +34,8 @@ gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 10
 angular_damp = 1.0
+script = ExtResource("2_ylw4c")
+container_name = "bin"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 mesh = ExtResource("2_rhkmq")
@@ -45,6 +48,9 @@ shape = SubResource("ConvexPolygonShape3D_li3qs")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 radius = 1.1
 affect_navigation_mesh = true
+
+[node name="Label3D" type="Label3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="."]
 linear_limit_x/upper = 1.0

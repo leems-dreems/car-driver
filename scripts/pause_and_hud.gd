@@ -129,8 +129,8 @@ func _update_hud() -> void:
 	#else:
 		#vehicle_hud_label.text = ""
 	var _useable_target: Node3D = null
-	if len(player._useables_in_range) > 0:
-		_useable_target = player._useables_in_range[0]
+	if len(player.useables_in_range) > 0:
+		_useable_target = player.useables_in_range[0]
 	$HUD/VBoxContainer/Pickup_HBoxContainer.visible = player.current_vehicle == null
 	if player.current_vehicle != null:
 		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
@@ -148,11 +148,15 @@ func _update_hud() -> void:
 		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
 		$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Interact"
 	if player._carried_item != null:
+		if len(player.containers_in_range) > 0:
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Put " + player._carried_item.item_name + " in " + player.containers_in_range[0].container_name
+		else:
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Drop " + player._carried_item.item_name
+	elif len(player.pickups_in_range) > 0:
 		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Drop " + player._carried_item.item_name
-	elif len(player._pickups_in_range) > 0:
-		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup " + player._pickups_in_range[0].item_name
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup " + player.pickups_in_range[0].item_name
 	else:
 		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
 		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup"

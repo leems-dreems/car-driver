@@ -97,6 +97,7 @@ func react_to_collision(velocity_change: Vector3) -> void:
 		boot.fall_open()
 	return
 
+
 func explode() -> void:
 	door_left.fall_open()
 	door_right.fall_open()

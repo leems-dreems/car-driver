@@ -66,8 +66,7 @@ size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/CenterContainer"]
 layout_mode = 2
-text = "Bin
-Day"
+text = "Bin Day"
 label_settings = SubResource("LabelSettings_ag0bj")
 horizontal_alignment = 1
 
