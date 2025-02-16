@@ -9,6 +9,7 @@ func _ready() -> void:
 	TrafficManager.add_spawn_points()
 	PedestrianManager.pedestrian_container_node = $PedestrianContainer
 	PedestrianManager.add_spawn_points()
+	Game.physics_item_container = $PhysicsItemContainer
 	for _child_terrain: Terrain3D in find_children("Terrain3D", "Terrain3D"):
 		Game.active_terrain = _child_terrain
 	await get_tree().create_timer(1.0).timeout

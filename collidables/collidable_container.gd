@@ -7,8 +7,8 @@ var _prop_bodies: StandalonePropBodies
 var _contained_items := {}
 var _label: Label3D = null
 const outline_material := preload("res://assets/materials/outline_material_overlay.tres")
+const bin_bag_scene := preload("res://items/medium/bin_bag.tscn")
 @onready var _mesh_instance: MeshInstance3D = $MeshInstance3D
-
 
 func _ready() -> void:
 	await owner.ready
@@ -32,6 +32,14 @@ func highlight() -> void:
 func unhighlight() -> void:
 	is_highlighted = false
 	_mesh_instance.material_overlay = null
+	return
+
+## Respond to the player long-pressing the pickup button
+func long_press_pickup() -> void:
+	var _bin_bag := bin_bag_scene.instantiate()
+	Game.physics_item_container.add_child(_bin_bag)
+	_bin_bag.global_position = global_position
+	_bin_bag.global_position.y += 2
 	return
 
 

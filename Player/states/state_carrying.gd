@@ -35,3 +35,10 @@ func physics_update(_delta: float) -> void:
 func enter(previous_state_path: String, data := {}) -> void:
 	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.THIRD_PERSON)
 	return
+
+
+func exit() -> void:
+	player.pickups_in_range = []
+	player.useables_in_range = []
+	player.containers_in_range = []
+	return

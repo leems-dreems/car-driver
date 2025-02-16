@@ -229,6 +229,8 @@ transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, -279, 23
 
 [node name="PedestrianContainer" type="Node3D" parent="."]
 
+[node name="PhysicsItemContainer" type="Node3D" parent="."]
+
 [node name="RoadManager" type="Node3D" parent="."]
 script = ExtResource("6_bjtrx")
 

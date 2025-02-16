@@ -1,16 +1,31 @@
 extends PlayerState
 
-var _button_hold_timer: SceneTreeTimer = null
-const _button_hold_delay := 1.0
+const _pickup_button_delay := 1.0 ## How long pickup button needs to be held for long-press actions
+var _pickup_button_timer: SceneTreeTimer = null
+var _pickup_button_target: Node3D = null ## Target of current long-press pickup action
 
 
 func physics_update(_delta: float) -> void:
 	if Input.is_action_just_released("pickup_drop"):
-		_button_hold_timer.free()
-		_button_hold_timer = null
-	if Input.is_action_just_pressed("pickup_drop") and len(player.containers_in_range) > 0:
-		_button_hold_timer = get_tree().create_timer(_button_hold_delay)
-	if Input.is_action_pressed("pickup_drop") and _button_hold_timer != null:
+		if _pickup_button_timer != null:
+			_pickup_button_timer = null
+			_pickup_button_target = null
+	if Input.is_action_just_pressed("pickup_drop"):
+		player.containers_in_range = []
+		for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
+			if _body is CollidableContainer:
+				player.containers_in_range.push_back(_body)
+		if len(player.containers_in_range) > 0:
+			_pickup_button_timer = get_tree().create_timer(_pickup_button_delay)
+			_pickup_button_target = player.containers_in_range[0]
+			_pickup_button_timer.timeout.connect(func():
+				_pickup_button_timer = null
+				if _pickup_button_target == null:
+					return
+				if _pickup_button_target.has_method("long_press_pickup"):
+					_pickup_button_target.long_press_pickup()
+			)
+	if Input.is_action_pressed("pickup_drop") and _pickup_button_timer != null:
 		return
 	# ?
 	if Input.is_action_just_pressed("pickup_drop") and len(player.pickups_in_range) > 0:
@@ -77,4 +92,7 @@ func exit() -> void:
 	for _pickup in player.pickups_in_range:
 		if _pickup.is_highlighted:
 			_pickup.unhighlight()
+	player.pickups_in_range = []
+	player.useables_in_range = []
+	player.containers_in_range = []
 	return

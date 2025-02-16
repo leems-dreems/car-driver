@@ -27,3 +27,10 @@ func enter(previous_state_path: String, data := {}) -> void:
 	unhighlight_all_useables()
 	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.OVER_SHOULDER)
 	return
+
+
+func exit() -> void:
+	player.pickups_in_range = []
+	player.useables_in_range = []
+	player.containers_in_range = []
+	return
