@@ -2,61 +2,83 @@ extends PlayerState
 
 const _pickup_button_delay := 1.0 ## How long pickup button needs to be held for long-press actions
 var _pickup_button_timer: SceneTreeTimer = null
-var _pickup_button_target: Node3D = null ## Target of current long-press pickup action
 
 
 func physics_update(_delta: float) -> void:
 	if Input.is_action_just_released("pickup_drop"):
 		if _pickup_button_timer != null:
+			_pickup_button_timer.timeout.disconnect(_on_pickup_long_press)
 			_pickup_button_timer = null
-			_pickup_button_target = null
-	if Input.is_action_just_pressed("pickup_drop"):
+			player.targeted_container = null
+			player.container_marker_anim.stop()
+			player.container_marker_anim.seek(0)
+			if len(player.pickups_in_range) > 0:
+				player.pickups_in_range[0].unhighlight()
+				player.pickup_item(player.pickups_in_range[0])
+				finished.emit(CARRYING)
+				return
+	elif Input.is_action_just_pressed("pickup_drop"):
+		if len(player.containers_in_range) > 0:
+			player.container_marker_anim.play("long_press")
+			_pickup_button_timer = get_tree().create_timer(_pickup_button_delay)
+			player.targeted_container = player.containers_in_range[0]
+			_pickup_button_timer.timeout.connect(_on_pickup_long_press)
+		elif len(player.pickups_in_range) > 0:
+			player.pickups_in_range[0].unhighlight()
+			player.pickup_item(player.pickups_in_range[0])
+			finished.emit(CARRYING)
+			return
+	if not Input.is_action_pressed("pickup_drop"):
 		player.containers_in_range = []
 		for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
-			if _body is CollidableContainer:
+			if _body is CollidableContainer and _body.total_count > 0:
 				player.containers_in_range.push_back(_body)
 		if len(player.containers_in_range) > 0:
-			_pickup_button_timer = get_tree().create_timer(_pickup_button_delay)
-			_pickup_button_target = player.containers_in_range[0]
-			_pickup_button_timer.timeout.connect(func():
-				_pickup_button_timer = null
-				if _pickup_button_target == null:
-					return
-				if _pickup_button_target.has_method("long_press_pickup"):
-					_pickup_button_target.long_press_pickup()
+			var _container_distances := {}
+			for _container: CollidableContainer in player.containers_in_range:
+				_container_distances[_container.get_instance_id()] = _container.global_position.distance_squared_to(player._pickup_collider.global_position)
+			player.containers_in_range.sort_custom(func(a: Node3D, b: Node3D):
+				return _container_distances[a.get_instance_id()] < _container_distances[b.get_instance_id()]
 			)
-	if Input.is_action_pressed("pickup_drop") and _pickup_button_timer != null:
-		return
-	# ?
-	if Input.is_action_just_pressed("pickup_drop") and len(player.pickups_in_range) > 0:
-		player.pickup_item(player.pickups_in_range[0])
-		finished.emit(CARRYING)
-	else:
-		# Get pickups in range, and sort by distance to pickup collider
-		player.pickups_in_range = []
-		for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
-			if _body is CarryableItem:
-				player.pickups_in_range.push_back(_body)
-		if len(player.pickups_in_range) > 0:
-			var _pickup_distances := {}
-			for _pickup: CarryableItem in player.pickups_in_range:
-				_pickup_distances[_pickup.get_instance_id()] = _pickup.global_position.distance_squared_to(player._pickup_collider.global_position)
-			player.pickups_in_range.sort_custom(func(a: Node3D, b: Node3D):
-				return _pickup_distances[a.get_instance_id()] < _pickup_distances[b.get_instance_id()]
-			)
+			
 			var i: int = 0
-			for _pickup in player.pickups_in_range:
+			for _container in player.containers_in_range:
 				if i == 0:
-					player.use_label.visible = true
-					player.use_label.global_position = _pickup.global_position
-					player.use_label.position.y += 0.5
-					if not _pickup.is_highlighted:
-						_pickup.highlight()
+					player.container_marker.visible = true
+					player.container_marker.global_position = _container.global_position
+					player.container_marker.position.y += 3
+					if not _container.is_highlighted:
+						_container.highlight()
 				else:
-					_pickup.unhighlight()
+					_container.unhighlight()
 				i += 1
 		else:
-			player.use_label.visible = false
+			player.container_marker.visible = false
+
+	player.pickups_in_range = []
+	for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
+		if _body is CarryableItem:
+			player.pickups_in_range.push_back(_body)
+	if len(player.pickups_in_range) > 0:
+		var _pickup_distances := {}
+		for _pickup: CarryableItem in player.pickups_in_range:
+			_pickup_distances[_pickup.get_instance_id()] = _pickup.global_position.distance_squared_to(player._pickup_collider.global_position)
+		player.pickups_in_range.sort_custom(func(a: Node3D, b: Node3D):
+			return _pickup_distances[a.get_instance_id()] < _pickup_distances[b.get_instance_id()]
+		)
+		var i: int = 0
+		for _pickup in player.pickups_in_range:
+			if i == 0:
+				player.pickup_marker.visible = true
+				player.pickup_marker.global_position = _pickup.global_position
+				player.pickup_marker.position.y += 0.5
+				if not _pickup.is_highlighted:
+					_pickup.highlight()
+			else:
+				_pickup.unhighlight()
+			i += 1
+	else:
+		player.pickup_marker.visible = false
 
 	if Input.is_action_just_pressed("interact"):
 		if len(player.useables_in_range) > 0:
@@ -88,11 +110,22 @@ func enter(previous_state_path: String, data := {}) -> void:
 
 
 func exit() -> void:
-	player.use_label.visible = false
+	player.pickup_marker.visible = false
 	for _pickup in player.pickups_in_range:
 		if _pickup.is_highlighted:
 			_pickup.unhighlight()
 	player.pickups_in_range = []
 	player.useables_in_range = []
 	player.containers_in_range = []
+	return
+
+
+func _on_pickup_long_press() -> void:
+	_pickup_button_timer = null
+	player.container_marker_anim.stop()
+	player.container_marker_anim.seek(0)
+	if player.targeted_container == null:
+		return
+	if player.targeted_container.has_method("long_press_pickup"):
+		player.targeted_container.long_press_pickup()
 	return

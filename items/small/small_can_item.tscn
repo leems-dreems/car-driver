@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=4 uid="uid://0uwi576g6lao"]
+[gd_scene load_steps=14 format=4 uid="uid://0uwi576g6lao"]
 
 [ext_resource type="Script" path="res://items/carryable_item.gd" id="1_kmt6j"]
+[ext_resource type="AudioStream" uid="uid://33u1gmdods12" path="res://assets/audio/Sound effects package/Arcade and Games/Ping Pong Ball on Table 01.wav" id="2_q6kb1"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h1vhk"]
 load_path = "res://.godot/imported/can_uv_painted.png-5fec36000887c75e21d4dba43f6c64de.s3tc.ctex"
@@ -152,3 +153,6 @@ shape = SubResource("ConvexPolygonShape3D_d7r6n")
 libraries = {
 "": SubResource("AnimationLibrary_73s5p")
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_q6kb1")

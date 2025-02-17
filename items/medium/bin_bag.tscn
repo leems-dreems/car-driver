@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=4 uid="uid://ddn6ryeh1v0al"]
+[gd_scene load_steps=7 format=4 uid="uid://ddn6ryeh1v0al"]
 
 [ext_resource type="Script" path="res://items/carryable_item.gd" id="1_gl4e7"]
+[ext_resource type="AudioStream" uid="uid://33u1gmdods12" path="res://assets/audio/Sound effects package/Arcade and Games/Ping Pong Ball on Table 01.wav" id="2_h5kl0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c6iqq"]
 resource_name = "BlackBag"
@@ -45,7 +46,7 @@ shadow_mesh = SubResource("ArrayMesh_ffbfm")
 points = PackedVector3Array(-0.38256, -0.190835, -7.11977e-05, -0.293349, -0.221421, -0.213704, -0.195589, -0.30274, -7.11977e-05, -0.293349, -0.221421, 0.213633, -0.335799, 0.0163072, 0.109165, -0.335799, 0.0163072, -0.109236, -0.0504105, -0.297724, -0.200041, -0.207571, 0.0100767, -0.286007, -0.118652, -0.181853, -0.363504, 0.0165893, -0.355173, -7.11977e-05, -0.0504105, -0.297724, 0.19997, -0.118652, -0.181853, 0.363504, -0.207571, 0.0100767, 0.285935, -0.224011, 0.182425, 0.16268, -0.263319, 0.2067, -7.11977e-05, -0.224011, 0.182425, -0.162751, 0.184564, -0.289713, -0.123611, 0.112815, -0.207584, -0.345784, -6.935e-05, -3.76105e-05, -0.35347, -0.0813897, 0.2067, -0.250425, 0.184564, -0.289713, 0.12354, 0.112815, -0.207584, 0.345642, -6.935e-05, -3.76105e-05, 0.353398, -0.0813897, 0.2067, 0.250353, -0.0420081, 0.471453, 0.0122401, -6.935e-05, 0.459154, -0.0593505, 0.308407, -0.16737, -0.224664, 0.363863, -0.199088, -7.11977e-05, 0.207433, -0.010152, -0.286007, 0.0854887, 0.182425, -0.263305, 0.308407, -0.16737, 0.224592, 0.207433, -0.010152, 0.285935, 0.0854887, 0.182425, 0.263234, 0.0418695, 0.471453, 0.0122401, 0.212986, 0.2067, -0.154781, 0.335733, -0.0163824, -0.109236, 0.335733, -0.0163824, 0.109165, 0.212986, 0.2067, 0.15471, 0.276771, 0.182425, -7.11977e-05)
 
 [node name="BinBag" type="RigidBody3D"]
-collision_layer = 64
+collision_layer = 65600
 collision_mask = 83
 mass = 10.0
 center_of_mass_mode = 1
@@ -60,3 +61,6 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_8pgib")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_h5kl0")

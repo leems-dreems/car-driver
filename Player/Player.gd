@@ -40,7 +40,10 @@ class_name Player extends RigidBody3D
 @onready var _nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var _animation_tree: AnimationTree = $square_guy/AnimationTree
 @onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
-@onready var use_label: Sprite3D = $UseLabel
+@onready var pickup_marker: Sprite3D = $PickupMarker
+@onready var container_marker: Sprite3D = $ContainerMarker
+@onready var container_marker_anim: AnimationPlayer = $ContainerMarker/AnimationPlayer
+@onready var _carried_mesh_container := $CarriedItem
 
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
@@ -60,11 +63,13 @@ var pickups_in_range: Array[Node3D]
 var useables_in_range: Array[Node3D]
 ## Item containers in range
 var containers_in_range: Array[Node3D]
+## Container being targeted by a long-press action
+var targeted_container: CollidableContainer = null
+
 var _carried_item: CarryableItem = null
 var _carried_mesh: MeshInstance3D = null
 var _right_hand_bone_idx: int
 var _left_hand_bone_idx: int
-@onready var _carried_mesh_container := $CarriedItem
 
 
 func _ready() -> void:
@@ -327,6 +332,7 @@ func pickup_item(_item: CarryableItem) -> void:
 	if _carried_item != null:
 		print("attempted duplicate pickup")
 		return
+	_item.play_pickup_effect()
 	_carried_item = _item
 	_carried_mesh = _item.get_mesh().duplicate()
 	_carried_item.get_collider().disabled = true
@@ -362,7 +368,7 @@ func throw_item() -> void:
 	_carried_item.freeze = false
 	_carried_item.visible = true
 	var _throw_vector: Vector3 = $CameraController/ThrowTarget.global_position - $CameraController/ThrowOrigin.global_position
-	_carried_item.apply_central_impulse(_throw_vector * 7)
+	_carried_item.apply_central_impulse(_throw_vector * 15)
 	_carried_mesh = null
 	_carried_item = null
 	return

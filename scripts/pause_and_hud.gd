@@ -160,6 +160,12 @@ func _update_hud() -> void:
 	else:
 		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
 		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup"
+	if len(player.containers_in_range) > 0 and player.containers_in_range[0].can_be_emptied():
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.text = "(Hold) Empty " + player.containers_in_range[0].container_name
+	else:
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.text = "(Hold)"
 	return
 
 
@@ -170,11 +176,19 @@ func set_pickup_key_pressed(_pressed: bool) -> void:
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Gamepad_Pressed.visible = _pressed
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Unpressed.visible = false
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Pressed.visible = false
+			$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Gamepad_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Gamepad_Pressed.visible = _pressed
+			$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Keyboard_Unpressed.visible = false
+			$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Keyboard_Pressed.visible = false
 		INPUT_METHODS.KEYBOARD:
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Pressed.visible = _pressed
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Gamepad_Unpressed.visible = false
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Gamepad_Pressed.visible = false
+			$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Keyboard_Pressed.visible = _pressed
+			$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Gamepad_Unpressed.visible = false
+			$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Gamepad_Pressed.visible = false
 	return
 
 
