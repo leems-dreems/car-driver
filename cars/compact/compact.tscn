@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=102 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
@@ -59,6 +59,7 @@
 [ext_resource type="Material" uid="uid://8vfe26o7lqwj" path="res://effects/engine_white_smoke_material.tres" id="58_opldm"]
 [ext_resource type="Material" uid="uid://dk6yd72g0kmj2" path="res://effects/engine_fire_process_material.tres" id="59_pv8nr"]
 [ext_resource type="Material" uid="uid://dlf645qtjmyle" path="res://effects/engine_white_smoke_process_material.tres" id="60_6wncv"]
+[ext_resource type="Script" path="res://cars/vehicle_item_container.gd" id="60_6027d"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
 friction = 0.8
@@ -279,6 +280,21 @@ shader_parameter/tex_frg_17 = SubResource("CompressedTexture2D_b5ted")
 [sub_resource type="SystemFont" id="SystemFont_ylexk"]
 font_names = PackedStringArray("Courier New")
 subpixel_positioning = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_igjhu"]
+size = Vector3(2, 0.3, 3.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t7f8v"]
+size = Vector3(0.2, 1.7, 3.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_foxu2"]
+size = Vector3(2, 0.2, 3.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oxkh8"]
+size = Vector3(2, 1.8, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ryk1m"]
+size = Vector3(2, 1.8, 0.4)
 
 [node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("brake_light_left_mesh", "brake_light_right_mesh", "reverse_light_left_mesh", "reverse_light_right_mesh", "front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
@@ -1098,5 +1114,43 @@ font_size = 128
 
 [node name="DevMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.1)
+
+[node name="VehicleItemContainer" type="RigidBody3D" parent="."]
+collision_layer = 524296
+collision_mask = 65536
+gravity_scale = 0.0
+continuous_cd = true
+script = ExtResource("60_6027d")
+
+[node name="Marker3D" type="Marker3D" parent="VehicleItemContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0.7)
+
+[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="VehicleItemContainer"]
+node_a = NodePath("../..")
+node_b = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleItemContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.11759e-08, 0.7)
+shape = SubResource("BoxShape3D_igjhu")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="VehicleItemContainer"]
+transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, -0.9, 0.75, 0.7)
+shape = SubResource("BoxShape3D_t7f8v")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="VehicleItemContainer"]
+transform = Transform3D(0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 0.9, 0.75, 0.7)
+shape = SubResource("BoxShape3D_t7f8v")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="VehicleItemContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, 0.7)
+shape = SubResource("BoxShape3D_foxu2")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="VehicleItemContainer"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0.737059, 2.0517)
+shape = SubResource("BoxShape3D_oxkh8")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="VehicleItemContainer"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0.75, -0.8)
+shape = SubResource("BoxShape3D_ryk1m")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

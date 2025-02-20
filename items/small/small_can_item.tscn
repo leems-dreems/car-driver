@@ -137,7 +137,7 @@ _data = {
 
 [node name="SmallCanItem" type="RigidBody3D"]
 collision_layer = 65600
-collision_mask = 4307
+collision_mask = 528595
 continuous_cd = true
 script = ExtResource("1_kmt6j")
 item_name = "small can"

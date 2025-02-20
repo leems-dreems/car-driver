@@ -42,7 +42,7 @@ class_name Player extends RigidBody3D
 @onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
 @onready var pickup_marker: Sprite3D = $PickupMarker
 @onready var container_marker: Sprite3D = $ContainerMarker
-@onready var container_marker_anim: AnimationPlayer = $ContainerMarker/AnimationPlayer
+@onready var long_press_anim: AnimationPlayer = $ContainerMarker/AnimationPlayer
 @onready var _carried_mesh_container := $CarriedItem
 
 var _move_direction := Vector3.ZERO
@@ -64,7 +64,9 @@ var useables_in_range: Array[Node3D]
 ## Item containers in range
 var containers_in_range: Array[Node3D]
 ## Container being targeted by a long-press action
-var targeted_container: CollidableContainer = null
+var targeted_container: Node3D = null
+## CarryableItem being targeted by a long-press action
+var targeted_item: CarryableItem = null
 
 var _carried_item: CarryableItem = null
 var _carried_mesh: MeshInstance3D = null
@@ -368,7 +370,7 @@ func throw_item() -> void:
 	_carried_item.freeze = false
 	_carried_item.visible = true
 	var _throw_vector: Vector3 = $CameraController/ThrowTarget.global_position - $CameraController/ThrowOrigin.global_position
-	_carried_item.apply_central_impulse(_throw_vector * 15)
+	_carried_item.apply_central_impulse(_throw_vector * 7 * _carried_item.mass)
 	_carried_mesh = null
 	_carried_item = null
 	return

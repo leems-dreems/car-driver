@@ -5,6 +5,8 @@ enum ITEM_SIZE { SMALL, MEDIUM, LARGE }
 @export var item_size: ITEM_SIZE
 @onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer
 var is_highlighted := false
+## The container this item is currently in, if any
+var container_node: Node3D = null
 const outline_material := preload("res://assets/materials/outline_material_overlay.tres")
 
 

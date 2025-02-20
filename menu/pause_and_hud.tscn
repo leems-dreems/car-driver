@@ -1,18 +1,16 @@
-[gd_scene load_steps=23 format=4 uid="uid://btmduyhkublv7"]
+[gd_scene load_steps=21 format=4 uid="uid://btmduyhkublv7"]
 
 [ext_resource type="Script" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
 [ext_resource type="StyleBox" uid="uid://b4phqf84dag0" path="res://ui/options_panel.tres" id="4_phyb6"]
 [ext_resource type="SystemFont" uid="uid://bfrqonkrt6mpy" path="res://ui/ui_font.tres" id="4_rrxj5"]
 [ext_resource type="Theme" uid="uid://djel5wi5nvl5d" path="res://ui/hud_theme.tres" id="5_ekyou"]
+[ext_resource type="Texture2D" uid="uid://dbvjb2liknhp4" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_y_7.png" id="6_1h24m"]
 [ext_resource type="AudioStream" uid="uid://dkj1253vpd2oh" path="res://assets/audio/Sound effects package/Tools/Wood 2x4 01.wav" id="6_v27v4"]
 [ext_resource type="Texture2D" uid="uid://0ldt4dv2bgsc" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_7.png" id="8_mg6v0"]
 [ext_resource type="Texture2D" uid="uid://djf0p4j65waqb" path="res://assets/icons/SimpleFlatKeys/Light/E-Key.png" id="8_yn5h2"]
-[ext_resource type="Texture2D" uid="uid://c75yy1il6bngs" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_8.png" id="9_xap3b"]
 [ext_resource type="LabelSettings" uid="uid://d1feibeuvvyf3" path="res://ui/controls_label_settings.tres" id="9_yc66f"]
 [ext_resource type="Texture2D" uid="uid://belhbl4mj8t2q" path="res://assets/icons/SimpleFlatKeys/Dark/E-Key.png" id="9_yv6c2"]
-[ext_resource type="Texture2D" uid="uid://cht08pa3yirav" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_y_1.png" id="11_d0djn"]
-[ext_resource type="Texture2D" uid="uid://p0r5fgpbb0uy" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_1.png" id="11_efwm7"]
 [ext_resource type="Texture2D" uid="uid://buvu8efb42j44" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_2.png" id="12_c7j8t"]
 [ext_resource type="Texture2D" uid="uid://clvs8wuf2j1nm" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_y_2.png" id="12_yhcyu"]
 [ext_resource type="Texture2D" uid="uid://ojl552x8gn5x" path="res://assets/icons/SimpleFlatKeys/Light/F-Key.png" id="13_1xd2t"]
@@ -178,7 +176,7 @@ theme_override_constants/separation = 20
 
 [node name="Gamepad_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("11_d0djn")
+texture = ExtResource("6_1h24m")
 expand_mode = 3
 
 [node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
@@ -211,7 +209,7 @@ theme_override_constants/separation = 20
 
 [node name="Gamepad_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Pickup_HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("11_efwm7")
+texture = ExtResource("8_mg6v0")
 expand_mode = 3
 
 [node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Pickup_HBoxContainer"]
@@ -250,7 +248,7 @@ expand_mode = 3
 [node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/PickupLongPress_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("9_xap3b")
+texture = ExtResource("12_c7j8t")
 expand_mode = 3
 
 [node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/PickupLongPress_HBoxContainer"]

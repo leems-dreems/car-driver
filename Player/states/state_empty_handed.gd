@@ -10,37 +10,45 @@ func physics_update(_delta: float) -> void:
 			_pickup_button_timer.timeout.disconnect(_on_pickup_long_press)
 			_pickup_button_timer = null
 			player.targeted_container = null
-			player.container_marker_anim.stop()
-			player.container_marker_anim.seek(0)
-			if len(player.pickups_in_range) > 0:
+			player.targeted_item = null
+			player.long_press_anim.stop()
+			player.long_press_anim.seek(0)
+			if len(player.pickups_in_range) > 0 and player.pickups_in_range[0].container_node == null:
 				player.pickups_in_range[0].unhighlight()
 				player.pickup_item(player.pickups_in_range[0])
 				finished.emit(CARRYING)
 				return
 	elif Input.is_action_just_pressed("pickup_drop"):
 		if len(player.containers_in_range) > 0:
-			player.container_marker_anim.play("long_press")
+			player.long_press_anim.play("long_press")
 			_pickup_button_timer = get_tree().create_timer(_pickup_button_delay)
 			player.targeted_container = player.containers_in_range[0]
 			_pickup_button_timer.timeout.connect(_on_pickup_long_press)
 		elif len(player.pickups_in_range) > 0:
-			player.pickups_in_range[0].unhighlight()
-			player.pickup_item(player.pickups_in_range[0])
-			finished.emit(CARRYING)
-			return
+			if player.pickups_in_range[0].container_node != null:
+				player.long_press_anim.play("long_press")
+				_pickup_button_timer = get_tree().create_timer(_pickup_button_delay)
+				player.targeted_item = player.pickups_in_range[0]
+				_pickup_button_timer.timeout.connect(_on_pickup_long_press)
+			else:
+				player.pickups_in_range[0].unhighlight()
+				player.pickup_item(player.pickups_in_range[0])
+				finished.emit(CARRYING)
+				return
+
 	if not Input.is_action_pressed("pickup_drop"):
 		player.containers_in_range = []
 		for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
-			if _body is CollidableContainer and _body.total_count > 0:
+			if _body is RigidBinContainer and _body.total_count > 0:
 				player.containers_in_range.push_back(_body)
+
 		if len(player.containers_in_range) > 0:
 			var _container_distances := {}
-			for _container: CollidableContainer in player.containers_in_range:
+			for _container: RigidBinContainer in player.containers_in_range:
 				_container_distances[_container.get_instance_id()] = _container.global_position.distance_squared_to(player._pickup_collider.global_position)
 			player.containers_in_range.sort_custom(func(a: Node3D, b: Node3D):
 				return _container_distances[a.get_instance_id()] < _container_distances[b.get_instance_id()]
 			)
-			
 			var i: int = 0
 			for _container in player.containers_in_range:
 				if i == 0:
@@ -59,6 +67,7 @@ func physics_update(_delta: float) -> void:
 	for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
 		if _body is CarryableItem:
 			player.pickups_in_range.push_back(_body)
+
 	if len(player.pickups_in_range) > 0:
 		var _pickup_distances := {}
 		for _pickup: CarryableItem in player.pickups_in_range:
@@ -86,7 +95,7 @@ func physics_update(_delta: float) -> void:
 	else:
 		player.useables_in_range = []
 		for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
-			if _body is not CarryableItem and _body is not CollidableContainer:
+			if _body is not CarryableItem and _body is not RigidBinContainer and _body is not VehicleItemContainer:
 				player.useables_in_range.push_back(_body)
 		var _useable_distances := {}
 		for _useable: Node3D in player.useables_in_range:
@@ -122,10 +131,13 @@ func exit() -> void:
 
 func _on_pickup_long_press() -> void:
 	_pickup_button_timer = null
-	player.container_marker_anim.stop()
-	player.container_marker_anim.seek(0)
-	if player.targeted_container == null:
-		return
-	if player.targeted_container.has_method("long_press_pickup"):
-		player.targeted_container.long_press_pickup()
+	player.long_press_anim.stop()
+	player.long_press_anim.seek(0)
+	if player.targeted_container != null:
+		if player.targeted_container.has_method("long_press_pickup"):
+			player.targeted_container.long_press_pickup()
+	elif player.targeted_item != null:
+		player.pickups_in_range[0].unhighlight()
+		player.pickup_item(player.targeted_item)
+		finished.emit(CARRYING)
 	return

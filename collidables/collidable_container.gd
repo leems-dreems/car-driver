@@ -1,28 +1,14 @@
 ## An item container that is itself a physics object. May be a child of a StandalonePropBodies node.
-class_name CollidableContainer extends RigidBody3D
+class_name RigidBinContainer extends RigidBody3D
 
 @export var container_name := "container"
 var is_highlighted := false
-var _prop_bodies: StandalonePropBodies
 var contained_items := {}
 var total_count: int = 0
-var _label: Label3D = null
 const outline_material := preload("res://assets/materials/outline_material_overlay.tres")
 const bin_bag_scene := preload("res://items/medium/bin_bag.tscn")
+@onready var _label: Label3D = $Label3D
 @onready var _mesh_instance: MeshInstance3D = $MeshInstance3D
-
-
-func _ready() -> void:
-	await owner.ready
-	_prop_bodies = owner as StandalonePropBodies
-	_label = find_child("Label3D")
-	return
-
-
-func _physics_process(delta: float) -> void:
-	if _prop_bodies and not _prop_bodies.is_detached_from_parent:
-		return
-	return
 
 
 func highlight() -> void:

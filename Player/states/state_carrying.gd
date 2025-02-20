@@ -18,7 +18,7 @@ func physics_update(_delta: float) -> void:
 	else:
 		player.containers_in_range = []
 		for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
-			if _body is CollidableContainer:
+			if _body is RigidBinContainer or _body is VehicleItemContainer:
 				player.containers_in_range.push_back(_body)
 		var _container_distances := {}
 		for _container: Node3D in player.containers_in_range:
