@@ -41,7 +41,7 @@ class_name Player extends RigidBody3D
 @onready var _animation_tree: AnimationTree = $square_guy/AnimationTree
 @onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
 @onready var pickup_marker: Sprite3D = $PickupMarker
-@onready var container_marker: Sprite3D = $ContainerMarker
+@onready var long_press_marker: Sprite3D = $ContainerMarker
 @onready var long_press_anim: AnimationPlayer = $ContainerMarker/AnimationPlayer
 @onready var _carried_mesh_container := $CarriedItem
 
@@ -72,6 +72,29 @@ var _carried_item: CarryableItem = null
 var _carried_mesh: MeshInstance3D = null
 var _right_hand_bone_idx: int
 var _left_hand_bone_idx: int
+
+# Signals used to update the HUD
+signal short_press_pickup_highlight(_target: Node3D)
+signal short_press_pickup_unhighlight
+signal short_press_pickup_start
+signal short_press_pickup_finish
+signal item_picked_up(_item: CarryableItem)
+signal item_dropped
+signal short_press_drop_highlight(_target: Node3D)
+signal short_press_drop_unhighlight
+signal short_press_drop_start
+signal short_press_drop_finish
+signal long_press_pickup_highlight(_target: Node3D)
+signal long_press_pickup_unhighlight
+signal long_press_pickup_start
+signal long_press_pickup_cancel
+signal long_press_pickup_finish
+signal short_press_interact_highlight(_target: Node3D)
+signal short_press_interact_unhighlight
+signal short_press_interact_start
+signal short_press_interact_finish
+signal vehicle_entered(_vehicle: DriveableVehicle)
+signal vehicle_exited
 
 
 func _ready() -> void:
@@ -180,6 +203,7 @@ func _physics_process(delta: float) -> void:
 		_orient_character_to_direction(camera_controller.global_transform.basis.z, delta)
 
 	if is_in_vehicle:
+		_animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", 0)
 		global_position = current_vehicle.global_position
 		current_vehicle.brake_input = Input.get_action_strength("Brake or Reverse")
 		current_vehicle.steering_input = Input.get_action_strength("Steer Left") - Input.get_action_strength("Steer Right")
@@ -306,6 +330,7 @@ func get_skeleton_position() -> Vector3:
 
 
 func enterVehicle (vehicle: DriveableVehicle) -> void:
+	vehicle_entered.emit(vehicle)
 	current_vehicle = vehicle
 	_vehicle_controller.vehicle_node = vehicle
 	vehicle.is_being_driven = true
@@ -315,6 +340,7 @@ func enterVehicle (vehicle: DriveableVehicle) -> void:
 
 
 func exitVehicle () -> void:
+	vehicle_exited.emit()
 	current_vehicle.is_being_driven = false
 	current_vehicle.steering_input = 0
 	current_vehicle.throttle_input = 0
@@ -334,6 +360,7 @@ func pickup_item(_item: CarryableItem) -> void:
 	if _carried_item != null:
 		print("attempted duplicate pickup")
 		return
+	item_picked_up.emit(_item)
 	_item.play_pickup_effect()
 	_carried_item = _item
 	_carried_mesh = _item.get_mesh().duplicate()
@@ -350,6 +377,7 @@ func drop_item() -> void:
 	if _carried_item == null:
 		print("attempted to drop nothing")
 		return
+	item_dropped.emit()
 	_carried_item.global_transform = _carried_mesh.global_transform
 	_carried_mesh.queue_free()
 	_carried_item.get_collider().disabled = false
@@ -364,6 +392,7 @@ func throw_item() -> void:
 	if _carried_item == null:
 		print("attempted to throw nothing")
 		return
+	item_dropped.emit()
 	_carried_item.global_transform = $CameraController/ThrowOrigin.global_transform
 	_carried_mesh.queue_free()
 	_carried_item.get_collider().disabled = false

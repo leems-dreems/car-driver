@@ -66,7 +66,7 @@ func apply_burnt_material() -> void:
 
 ## Connect the vehicle's `body_entered` signal to this method
 func _on_body_entered(_body: Node) -> void:
-	if _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D:
+	if _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D or _body is Terrain3D:
 		var _velocity_change := _previous_velocity - linear_velocity
 		var _impact_force := _velocity_change.length() * 0.1
 		if _impact_force > impact_force_threshold_1:

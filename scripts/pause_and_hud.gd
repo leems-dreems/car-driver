@@ -1,7 +1,10 @@
 extends CanvasLayer
 
 @export var vehicle : Vehicle
-@export var player : Player
+@export var player : Player:
+	set(_player):
+		player = _player
+		connect_to_player(_player)
 @onready var vehicle_hud_label := $HUD/VehicleInfoLabel
 @onready var mission_label := $HUD/MissionLabelContainer/MissionLabel
 @onready var paused_UI := $PausedUI
@@ -16,6 +19,7 @@ var modulate_opaque := Color(1, 1, 1, 1)
 var modulate_transparent := Color(1, 1, 1, 0)
 enum INPUT_METHODS { GAMEPAD, KEYBOARD }
 var last_input_method: INPUT_METHODS
+var _carried_item_name := ""
 var input_switch_timer: SceneTreeTimer = null
 var _pickup_press_timer: SceneTreeTimer = null
 var _interact_press_timer: SceneTreeTimer = null
@@ -31,6 +35,7 @@ func _ready() -> void:
 	for _pause_menu_button in pause_menu_buttons.get_children():
 		_pause_menu_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_pause_menu_button.focus_mode = Control.FOCUS_NONE
+	reset_controls()
 	return
 
 
@@ -71,12 +76,12 @@ func _process(_delta: float) -> void:
 	elif Input.is_action_just_pressed("ui_up") and _focussed_control == null:
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton.grab_focus.call_deferred()
 
-	if Input.is_action_just_pressed("pickup_drop"):
-		_pickup_press_timer = get_tree().create_timer(_button_minimum_press_time)
-		_pickup_press_timer.timeout.connect(func(): _pickup_press_timer = null)
-	if Input.is_action_just_pressed("interact"):
-		_interact_press_timer = get_tree().create_timer(_button_minimum_press_time)
-		_interact_press_timer.timeout.connect(func(): _interact_press_timer = null)
+	#if Input.is_action_just_pressed("pickup_drop"):
+		#_pickup_press_timer = get_tree().create_timer(_button_minimum_press_time)
+		#_pickup_press_timer.timeout.connect(func(): _pickup_press_timer = null)
+	#if Input.is_action_just_pressed("interact"):
+		#_interact_press_timer = get_tree().create_timer(_button_minimum_press_time)
+		#_interact_press_timer.timeout.connect(func(): _interact_press_timer = null)
 	set_pickup_key_pressed(Input.is_action_pressed("pickup_drop") or _pickup_press_timer != null)
 	set_interact_key_pressed(Input.is_action_pressed("interact") or _interact_press_timer != null)
 	return
@@ -122,50 +127,16 @@ func _update_hud() -> void:
 			mission_label.text = "Mission complete"
 		else:
 			mission_label.text = current_objective.objective_text
-	
-	#if player.current_vehicle != null:
-		#vehicle_hud_label.text = "Speed: " + str(int(player.current_vehicle.linear_velocity.length()))
-		#vehicle_hud_label.text += "\nGear: " + str(player.current_vehicle.current_gear)
-	#else:
-		#vehicle_hud_label.text = ""
-	var _useable_target: Node3D = null
-	if len(player.useables_in_range) > 0:
-		_useable_target = player.useables_in_range[0]
-	$HUD/VBoxContainer/Pickup_HBoxContainer.visible = player.current_vehicle == null
-	if player.current_vehicle != null:
-		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Exit " + player.current_vehicle.vehicle_name
-	elif _useable_target != null:
-		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Interact"
-		if _useable_target.has_method("get_use_label"):
-			$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = _useable_target.get_use_label()
-		elif _useable_target is ObjectiveArea:
-			$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = _useable_target.objective_text
-		else:
-			$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Interact"
-	else:
-		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
-		$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Interact"
-	if player._carried_item != null:
-		if len(player.containers_in_range) > 0:
-			$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-			$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Put " + player._carried_item.item_name + " in " + player.containers_in_range[0].container_name
-		else:
-			$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-			$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Drop " + player._carried_item.item_name
-	elif len(player.pickups_in_range) > 0:
-		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup " + player.pickups_in_range[0].item_name
-	else:
-		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
-		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup"
-	if len(player.containers_in_range) > 0 and player.containers_in_range[0].can_be_emptied():
-		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.text = "(Hold) Empty " + player.containers_in_range[0].container_name
-	else:
-		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
-		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.text = "(Hold)"
+	return
+
+
+func reset_controls() -> void:
+	$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+	$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Interact"
+	$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+	$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup"
+	$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+	$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.text = "(Hold)"
 	return
 
 
@@ -272,4 +243,96 @@ func on_button_focussed() -> void:
 func on_pause_menu_mouse_entered() -> void:
 	for _button in pause_menu_buttons.get_children():
 		_button.release_focus.call_deferred()
+	return
+
+
+func connect_to_player(_player: Player) -> void:
+	_player.short_press_interact_highlight.connect(func(_target: Node3D):
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		if _target.has_method("get_use_label"):
+			$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = _target.get_use_label()
+		elif _target is ObjectiveArea:
+			$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = _target.objective_text
+		else:
+			$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Interact"
+	)
+	_player.short_press_interact_unhighlight.connect(func():
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Interact"
+	)
+	_player.short_press_interact_start.connect(func():
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(0.91, 0.94, 0.01, 1.0)
+	)
+	_player.short_press_interact_finish.connect(func():
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Interact"
+	)
+
+	_player.short_press_pickup_highlight.connect(func(_target: Node3D):
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup " + _target.item_name
+	)
+	_player.short_press_pickup_unhighlight.connect(func():
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup"
+	)
+	_player.short_press_pickup_start.connect(func():
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(0.91, 0.94, 0.01, 1.0)
+	)
+
+	_player.item_picked_up.connect(func(_item: CarryableItem):
+		_carried_item_name = _item.item_name
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Drop " + _carried_item_name
+	)
+	_player.item_dropped.connect(func():
+		_carried_item_name = ""
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Pickup"
+	)
+	_player.short_press_drop_highlight.connect(func(_target: Node3D):
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Put " + _carried_item_name + " in " + _target.container_name
+	)
+	_player.short_press_drop_unhighlight.connect(func():
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.text = "Drop " + _carried_item_name
+	)
+	_player.short_press_drop_start.connect(func():
+		$HUD/VBoxContainer/Pickup_HBoxContainer/Label.modulate = Color(0.91, 0.94, 0.01, 1.0)
+	)
+
+	_player.long_press_pickup_highlight.connect(func(_target: Node3D):
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		if _target is CarryableItem:
+			$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.text = "(Hold) Take " + _target.item_name + " from " + _target.container_node.container_name
+		elif _target is RigidBinContainer:
+			$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.text = "(Hold) Empty " + _target.container_name
+	)
+	_player.long_press_pickup_unhighlight.connect(func():
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.text = "(Hold)"
+	)
+	_player.long_press_pickup_start.connect(func():
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.modulate = Color(0.91, 0.94, 0.01, 1.0)
+	)
+	_player.long_press_pickup_cancel.connect(func():
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.text = "(Hold)"
+	)
+	_player.long_press_pickup_finish.connect(func():
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer/Label.text = "(Hold)"
+	)
+
+	_player.vehicle_entered.connect(func(_vehicle: DriveableVehicle):
+		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = false
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer.visible = false
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/VBoxContainer/Interact_HBoxContainer/Label.text = "Exit " + _vehicle.vehicle_name
+	)
+	_player.vehicle_exited.connect(func():
+		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = true
+		$HUD/VBoxContainer/PickupLongPress_HBoxContainer.visible = true
+	)
 	return
