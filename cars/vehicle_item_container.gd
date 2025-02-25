@@ -41,15 +41,15 @@ func deposit_item(_item: CarryableItem) -> void:
 		"small can":
 			var _new_can := _small_can_scene.instantiate()
 			_new_can.global_transform = _item_placement_marker.global_transform
-			_new_can.collision_layer = 65536
-			_new_can.collision_mask = 524288
+			_new_can.collision_layer = pow(2, 17-1)
+			_new_can.collision_mask = pow(2, 17-1) + pow(2, 20-1)
 			_new_can.container_node = self
 			Game.physics_item_container.add_child(_new_can)
 		"bin bag":
 			var _new_bin_bag := _bin_bag_scene.instantiate()
 			_new_bin_bag.global_transform = _item_placement_marker.global_transform
-			_new_bin_bag.collision_layer = 65536
-			_new_bin_bag.collision_mask = 524288
+			_new_bin_bag.collision_layer = pow(2, 17-1)
+			_new_bin_bag.collision_mask = pow(2, 17-1) + pow(2, 20-1)
 			_new_bin_bag.container_node = self
 			Game.physics_item_container.add_child(_new_bin_bag)
 	

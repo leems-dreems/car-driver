@@ -5,8 +5,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iwhqk"]
 render_priority = 0
 shader = ExtResource("1_5feti")
-shader_parameter/outline_threshold = 0.5
-shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/color = Color(1, 1, 1, 0.392157)
+shader_parameter/size = 1.05
 
 [resource]
 next_pass = SubResource("ShaderMaterial_iwhqk")

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://t46t43625gfx"]
+
+[ext_resource type="ArrayMesh" uid="uid://dfu07oghu1pex" path="res://maps/BinRoninIsland/terrain_array_mesh.tres" id="1_3ajpf"]
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+mesh = ExtResource("1_3ajpf")
+skeleton = NodePath("")

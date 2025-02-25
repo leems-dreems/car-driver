@@ -76,12 +76,6 @@ func _process(_delta: float) -> void:
 	elif Input.is_action_just_pressed("ui_up") and _focussed_control == null:
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton.grab_focus.call_deferred()
 
-	#if Input.is_action_just_pressed("pickup_drop"):
-		#_pickup_press_timer = get_tree().create_timer(_button_minimum_press_time)
-		#_pickup_press_timer.timeout.connect(func(): _pickup_press_timer = null)
-	#if Input.is_action_just_pressed("interact"):
-		#_interact_press_timer = get_tree().create_timer(_button_minimum_press_time)
-		#_interact_press_timer.timeout.connect(func(): _interact_press_timer = null)
 	set_pickup_key_pressed(Input.is_action_pressed("pickup_drop") or _pickup_press_timer != null)
 	set_interact_key_pressed(Input.is_action_pressed("interact") or _interact_press_timer != null)
 	return
