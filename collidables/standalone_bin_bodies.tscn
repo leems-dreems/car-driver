@@ -36,6 +36,8 @@ max_contacts_reported = 10
 angular_damp = 1.0
 script = ExtResource("2_ylw4c")
 container_name = "bin"
+short_press_verb = "kick"
+long_press_verb = "empty"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 mesh = ExtResource("2_rhkmq")

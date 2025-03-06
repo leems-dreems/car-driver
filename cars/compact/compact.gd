@@ -35,6 +35,7 @@ var burnt_material: StandardMaterial3D
 
 func _ready() -> void:
 	vehicle_name = "Cricket"
+	vehicle_category = "Car"
 	var _paintjob: Dictionary = paintjobs.pick_random()
 	contact_checker.vehicle = self
 	#burnt_material = _skin.burnt_material

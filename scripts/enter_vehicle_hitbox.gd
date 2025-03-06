@@ -7,7 +7,7 @@ var is_highlighted := false
 
 
 func get_use_label() -> String:
-	return 'Drive ' + vehicle_name
+	return 'Drive ' + vehicle.vehicle_category
 
 
 func highlight() -> void:

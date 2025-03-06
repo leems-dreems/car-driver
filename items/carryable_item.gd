@@ -7,7 +7,15 @@ enum ITEM_SIZE { SMALL, MEDIUM, LARGE }
 var is_highlighted := false
 ## The container this item is currently in, if any
 var container_node: Node3D = null
+var _default_collision_layer: int
+var _default_collision_mask: int
 const outline_material := preload("res://assets/materials/outline_material_overlay.tres")
+
+
+func _init() -> void:
+	_default_collision_layer = collision_layer
+	_default_collision_mask = collision_mask
+	return
 
 
 func highlight() -> void:

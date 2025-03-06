@@ -4,7 +4,8 @@ enum SurfaceTypes { ROAD = 0, GRASS = 1, DIRT = 2, SAND = 3, ROCK = 4 }
 
 @export var lights_on := false
 @export var downforce_multiplier := 4.0
-var vehicle_name := "Vehicle"
+var vehicle_name := "[Vehicle Name]"
+var vehicle_category := "[Vehicle Category]"
 var headlight_energy := 10.0
 var brake_light_energy := 5.0
 var reverse_light_energy := 1.0

@@ -54,7 +54,7 @@
 [ext_resource type="AudioStream" uid="uid://btwfyuao3yspq" path="res://assets/audio/Sound effects package/Crashes/Glass Break 03.wav" id="48_e2voh"]
 [ext_resource type="Script" path="res://effects/car_game_particles.gd" id="53_aoxa3"]
 [ext_resource type="Material" uid="uid://bclipohnbqlxm" path="res://effects/engine_black_smoke_material.tres" id="53_dhsf8"]
-[ext_resource type="Shader" uid="uid://d88xwj7fq8fu" path="res://effects/ExplosionShader.tres" id="56_rpq7i"]
+[ext_resource type="Shader" uid="uid://tlp28e2gppgs" path="res://effects/ExplosionShader.tres" id="56_rpq7i"]
 [ext_resource type="Material" uid="uid://dslgu68amcstn" path="res://effects/engine_black_smoke_process_material.tres" id="57_nvu71"]
 [ext_resource type="Material" uid="uid://8vfe26o7lqwj" path="res://effects/engine_white_smoke_material.tres" id="58_opldm"]
 [ext_resource type="Material" uid="uid://dk6yd72g0kmj2" path="res://effects/engine_fire_process_material.tres" id="59_pv8nr"]

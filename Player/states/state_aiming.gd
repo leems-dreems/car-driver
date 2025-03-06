@@ -31,6 +31,5 @@ func enter(previous_state_path: String, data := {}) -> void:
 
 func exit() -> void:
 	player.pickups_in_range = []
-	player.useables_in_range = []
 	player.containers_in_range = []
 	return

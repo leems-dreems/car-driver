@@ -16,7 +16,7 @@ func _ready() -> void:
 	await owner.ready
 	vehicle = owner as Vehicle
 	assert(vehicle != null, "The VehicleItemContainer node must be the child of a DriveableVehicle node")
-	container_name = vehicle.vehicle_name
+	container_name = vehicle.vehicle_category
 	return
 
 

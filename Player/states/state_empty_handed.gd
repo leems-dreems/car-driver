@@ -5,11 +5,9 @@ func physics_update(_delta: float) -> void:
 	process_pickup_button()
 	update_pickup_target()
 
-	if Input.is_action_just_pressed("interact"):
-		if len(player.useables_in_range) > 0:
-			use_aim_target(player.useables_in_range[0])
+	player.process_interact_button()
 
-	update_interact_target()
+	#update_interact_target()
 	return
 
 
@@ -19,12 +17,12 @@ func enter(previous_state_path: String, data := {}) -> void:
 
 
 func exit() -> void:
+	player.set_pickup_marker_borders(false)
 	player.pickup_marker.visible = false
 	player.long_press_marker.visible = false
 	for _pickup in player.pickups_in_range:
 		if _pickup.is_highlighted:
 			_pickup.unhighlight()
 	player.pickups_in_range = []
-	player.useables_in_range = []
 	player.containers_in_range = []
 	return

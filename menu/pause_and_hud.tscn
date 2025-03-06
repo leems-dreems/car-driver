@@ -170,39 +170,6 @@ size_flags_vertical = 8
 theme_override_constants/separation = 10
 alignment = 2
 
-[node name="Interact_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="Gamepad_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("6_1h24m")
-expand_mode = 3
-
-[node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
-visible = false
-layout_mode = 2
-texture = ExtResource("12_yhcyu")
-expand_mode = 3
-
-[node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
-visible = false
-layout_mode = 2
-texture = ExtResource("13_1xd2t")
-expand_mode = 3
-
-[node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
-visible = false
-layout_mode = 2
-texture = ExtResource("14_riw73")
-expand_mode = 3
-
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
-layout_mode = 2
-text = "Interact"
-label_settings = ExtResource("9_yc66f")
-vertical_alignment = 1
-
 [node name="Pickup_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
@@ -236,34 +203,67 @@ text = "Pickup"
 label_settings = ExtResource("9_yc66f")
 vertical_alignment = 1
 
-[node name="PickupLongPress_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
+[node name="Interact_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Gamepad_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/PickupLongPress_HBoxContainer"]
+[node name="Gamepad_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_1h24m")
+expand_mode = 3
+
+[node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("12_yhcyu")
+expand_mode = 3
+
+[node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("13_1xd2t")
+expand_mode = 3
+
+[node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("14_riw73")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
+layout_mode = 2
+text = "Interact"
+label_settings = ExtResource("9_yc66f")
+vertical_alignment = 1
+
+[node name="Interact_LongPress_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Gamepad_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("8_mg6v0")
 expand_mode = 3
 
-[node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/PickupLongPress_HBoxContainer"]
+[node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 visible = false
 layout_mode = 2
 texture = ExtResource("12_c7j8t")
 expand_mode = 3
 
-[node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/PickupLongPress_HBoxContainer"]
+[node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 visible = false
 layout_mode = 2
 texture = ExtResource("8_yn5h2")
 expand_mode = 3
 
-[node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/PickupLongPress_HBoxContainer"]
+[node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 visible = false
 layout_mode = 2
 texture = ExtResource("9_yv6c2")
 expand_mode = 3
 
-[node name="Label" type="Label" parent="HUD/VBoxContainer/PickupLongPress_HBoxContainer"]
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 layout_mode = 2
 text = "(Hold)"
 label_settings = ExtResource("9_yc66f")

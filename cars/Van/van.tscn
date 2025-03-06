@@ -320,21 +320,6 @@ front_spring_length = 0.18
 rear_spring_length = 0.24
 contact_patch = 0.25
 braking_grip_multiplier = 3.0
-coefficient_of_friction = {
-"Dirt": 1.0,
-"Grass": 1.25,
-"Road": 1.5
-}
-lateral_grip_assist = {
-"Dirt": 0.0,
-"Grass": 0.2,
-"Road": 0.05
-}
-longitudinal_grip_ratio = {
-"Dirt": 1.0,
-"Grass": 1.0,
-"Road": 1.0
-}
 front_tire_radius = 0.5
 front_tire_width = 280.0
 front_wheel_mass = 18.0

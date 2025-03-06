@@ -13,12 +13,14 @@ func physics_update(_delta: float) -> void:
 		player.short_press_drop_start.emit()
 		_drop_button_short_press_timer = get_tree().create_timer(_drop_button_short_press_delay)
 		_drop_button_short_press_timer.timeout.connect(func():
+			var _item := player._carried_item
+			player.drop_item()
 			if len(player.containers_in_range) > 0 and player.containers_in_range[0].has_method("deposit_item"):
-				player.containers_in_range[0].deposit_item(player._carried_item)
-				player._carried_item.queue_free()
+				player.containers_in_range[0].deposit_item(_item)
+				_item.queue_free()
+				player.containers_in_range[0].unhighlight()
 			_drop_button_short_press_timer = null
 			player.short_press_drop_finish.emit()
-			player.drop_item()
 			finished.emit(EMPTY_HANDED)
 		)
 	else:
@@ -34,7 +36,7 @@ func physics_update(_delta: float) -> void:
 		)
 
 	update_drop_target()
-	update_interact_target()
+	player.update_interact_target()
 	return
 
 
@@ -46,6 +48,5 @@ func enter(previous_state_path: String, data := {}) -> void:
 func exit() -> void:
 	drop_target = null
 	player.pickups_in_range = []
-	player.useables_in_range = []
 	player.containers_in_range = []
 	return

@@ -44,6 +44,12 @@ class_name Player extends RigidBody3D
 @onready var long_press_marker: Sprite3D = $ContainerMarker
 @onready var long_press_anim: AnimationPlayer = $ContainerMarker/AnimationPlayer
 @onready var _carried_mesh_container := $CarriedItem
+@onready var interact_short_press_timer: Timer = $TimerNodes/InteractShortPressTimer
+@onready var interact_long_press_timer: Timer = $TimerNodes/InteractLongPressTimer
+@onready var interact_target_timer: Timer = $TimerNodes/InteractTargetTimer
+const _interact_button_short_press_delay := 0.2
+const _interact_button_long_press_delay := 1.0
+const _interact_target_delay := 0.2 ## How long to wait after targeting an interactable before looking for a new target
 
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
@@ -60,11 +66,13 @@ var _ragdoll_reset_timer: SceneTreeTimer = null
 ## Carryable items in pickup range
 var pickups_in_range: Array[Node3D]
 ## Useable items in range
-var useables_in_range: Array[Node3D]
+var interactables_in_range: Array[Node3D]
 ## Item containers in range
 var containers_in_range: Array[Node3D]
 ## Container being targeted by a long-press action
 var targeted_container: Node3D = null
+## Interactable item being targeted
+var targeted_interactable: Node3D = null
 ## CarryableItem being targeted by a long-press action
 var targeted_item: CarryableItem = null
 
@@ -93,6 +101,11 @@ signal short_press_interact_highlight(_target: Node3D)
 signal short_press_interact_unhighlight
 signal short_press_interact_start
 signal short_press_interact_finish
+signal long_press_interact_highlight(_target: Node3D)
+signal long_press_interact_unhighlight
+signal long_press_interact_start
+signal long_press_interact_cancel
+signal long_press_interact_finish
 signal vehicle_entered(_vehicle: DriveableVehicle)
 signal vehicle_exited
 
@@ -111,10 +124,35 @@ func _ready() -> void:
 	PauseAndHud.player = self
 	_right_hand_bone_idx = ragdoll_skeleton.find_bone("hand.R")
 	_left_hand_bone_idx = ragdoll_skeleton.find_bone("hand.L")
+
+	_pickup_collider.body_entered.connect(func(_body: Node3D):
+		if _body.has_method("can_interact_short_press") and (_body.can_interact_short_press() or _body.can_interact_long_press()):
+			if interactables_in_range.find(_body) == -1:
+				interactables_in_range.push_back(_body)
+		if _body.has_method("pickup_short_press") or _body.has_method("pickup_long_press"):
+			if pickups_in_range.find(_body) == -1:
+				pickups_in_range.push_back(_body)
+	)
 	_pickup_collider.body_exited.connect(func(_body: Node3D):
+		if _body == targeted_interactable:
+			targeted_interactable = null
+		if _body.has_method("interact_short_press") or _body.has_method("interact_long_press"):
+			var _index := interactables_in_range.find(_body)
+			if _index != -1:
+				interactables_in_range.remove_at(_index)
+		if _body.has_method("pickup_short_press") or _body.has_method("pickup_long_press"):
+			var _index := pickups_in_range.find(_body)
+			if _index != -1:
+				pickups_in_range.remove_at(_index)
 		if _body.has_method("unhighlight") and _body.is_highlighted:
+			short_press_interact_unhighlight.emit()
 			_body.unhighlight()
 	)
+
+	interact_long_press_timer.timeout.connect(interact_long_press_timeout)
+	interact_short_press_timer.timeout.connect(interact_short_press_timeout)
+	interact_target_timer.timeout.connect(func(): interact_target_timer.stop())
+
 	return
 
 
@@ -369,7 +407,12 @@ func pickup_item(_item: CarryableItem) -> void:
 	_carried_item.visible = false
 	_carried_mesh_container.add_child(_carried_mesh)
 	_carried_mesh.set_disable_scale(true)
-	pickups_in_range = []
+	_carried_item.collision_layer = _carried_item._default_collision_layer
+	_carried_item.collision_mask = _carried_item._default_collision_mask
+	_carried_item.container_node = null
+	var _index := pickups_in_range.find(_item)
+	if _index != -1:
+		pickups_in_range.remove_at(_index)
 	return
 
 
@@ -402,4 +445,108 @@ func throw_item() -> void:
 	_carried_item.apply_central_impulse(_throw_vector * 7 * _carried_item.mass)
 	_carried_mesh = null
 	_carried_item = null
+	return
+
+
+func set_pickup_marker_text(_text: String) -> void:
+	$PickupMarker/SubViewport/CenterContainer/PanelContainer/MarginContainer/Label.text = _text
+	return
+
+
+func set_pickup_marker_borders(_visible: bool) -> void:
+	if _visible:
+		$PickupMarker/AnimationPlayer.play("show_borders")
+	else:
+		$PickupMarker/AnimationPlayer.play("hide_borders")
+	return
+
+
+func process_interact_button() -> void:
+	if targeted_interactable == null:
+		update_interact_target()
+		return
+
+	if Input.is_action_just_released("interact"):
+		if not interact_short_press_timer.is_stopped():
+			interact_short_press_timer.stop()
+			short_press_interact_finish.emit()
+			targeted_interactable.interact_short_press()
+			targeted_interactable.unhighlight()
+			targeted_interactable = null
+		if not interact_long_press_timer.is_stopped():
+			interact_long_press_timer.stop()
+			long_press_interact_cancel.emit()
+			targeted_interactable.unhighlight()
+			targeted_interactable = null
+
+	elif Input.is_action_just_pressed("interact") and interact_short_press_timer.is_stopped() and interact_long_press_timer.is_stopped():
+		if targeted_interactable.can_interact_short_press():
+			short_press_interact_start.emit()
+			interact_short_press_timer.start(_interact_button_short_press_delay)
+		elif targeted_interactable.can_interact_long_press():
+			long_press_interact_start.emit()
+			interact_long_press_timer.start(_interact_button_long_press_delay)
+	
+	else:
+		update_interact_target()
+	return
+
+
+func interact_short_press_timeout() -> void:
+	interact_short_press_timer.stop()
+	if targeted_interactable.has_method("interact_long_press") and targeted_interactable.can_interact_long_press():
+		short_press_interact_finish.emit()
+		long_press_interact_start.emit()
+		interact_long_press_timer.start(_interact_button_long_press_delay)
+	else:
+		short_press_interact_finish.emit()
+		targeted_interactable.interact_short_press()
+	return
+
+
+func interact_long_press_timeout() -> void:
+	interact_long_press_timer.stop()
+	long_press_interact_finish.emit()
+	if targeted_interactable != null and targeted_interactable.can_interact_long_press():
+		targeted_interactable.interact_long_press()
+		targeted_interactable.unhighlight()
+		targeted_interactable = null
+	return
+
+
+func update_interact_target() -> void:
+	if not interact_target_timer.is_stopped() or not interact_short_press_timer.is_stopped() or not interact_long_press_timer.is_stopped():
+		return
+
+	if len(interactables_in_range) > 0:
+		var _useable_distances := {}
+		for _useable: Node3D in interactables_in_range:
+			var _useable_position: Vector3
+			if _useable is CarDoor:
+				_useable_position = _useable.interact_target.global_position
+			else:
+				_useable_position = _useable.global_position
+			_useable_distances[_useable.get_instance_id()] = _useable_position.distance_squared_to(_pickup_collider.global_position)
+
+		interactables_in_range.sort_custom(func(a: Node3D, b: Node3D):
+			return _useable_distances[a.get_instance_id()] < _useable_distances[b.get_instance_id()]
+		)
+
+		var i: int = 0
+		for _interactable in interactables_in_range:
+			if i == 0:
+				targeted_interactable = _interactable
+				if not _interactable.is_highlighted:
+					interact_target_timer.start()
+					if _interactable.can_interact_short_press():
+						short_press_interact_highlight.emit(_interactable)
+					if _interactable.can_interact_long_press():
+						long_press_interact_highlight.emit(_interactable)
+					_interactable.highlight()
+			elif _interactable.is_highlighted:
+				_interactable.unhighlight()
+			i += 1
+	elif targeted_interactable != null:
+		targeted_interactable = null
+		short_press_interact_unhighlight.emit()
 	return
