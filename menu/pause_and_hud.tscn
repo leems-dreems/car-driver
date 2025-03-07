@@ -242,25 +242,25 @@ theme_override_constants/separation = 20
 
 [node name="Gamepad_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("8_mg6v0")
+texture = ExtResource("6_1h24m")
 expand_mode = 3
 
 [node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("12_c7j8t")
+texture = ExtResource("12_yhcyu")
 expand_mode = 3
 
 [node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("8_yn5h2")
+texture = ExtResource("13_1xd2t")
 expand_mode = 3
 
 [node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("9_yv6c2")
+texture = ExtResource("14_riw73")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
@@ -281,17 +281,17 @@ volume_db = -24.0
 
 [connection signal="mouse_entered" from="PausedUI/PauseMenu" to="." method="on_pause_menu_mouse_entered"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="handle_resume_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="handle_quit_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="handle_options_back_button"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="on_button_pressed"]
 [connection signal="toggled" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="handle_fullscreen_toggle"]

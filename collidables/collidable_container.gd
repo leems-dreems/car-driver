@@ -9,9 +9,9 @@ var contained_items := {}
 var total_count: int = 0
 const outline_material := preload("res://assets/materials/outline_material_overlay.tres")
 const bin_bag_scene := preload("res://items/medium/bin_bag.tscn")
-var _label_show_timer: SceneTreeTimer = null
-const _label_show_duration := 3.0
-@onready var _label: Label3D = $Label3D
+var label_show_timer: SceneTreeTimer = null
+const label_show_duration := 3.0
+@onready var label: Label3D = $Label3D
 @onready var _mesh_instance: MeshInstance3D = $MeshInstance3D
 
 
@@ -32,16 +32,16 @@ func can_interact_short_press() -> bool:
 
 ## Handle a short-press of the interact button
 func interact_short_press() -> void:
-	if _label_show_timer != null:
-		_label_show_timer.time_left = _label_show_duration
+	if label_show_timer != null:
+		label_show_timer.time_left = label_show_duration
 		return
-	_label.transparency = 1
-	_label.visible = true
-	_label_show_timer = get_tree().create_timer(_label_show_duration)
-	create_tween().tween_property(_label, "transparency", 0, 0.2)
-	_label_show_timer.timeout.connect(func():
-		create_tween().tween_property(_label, "transparency", 1, 0.2)
-		_label_show_timer = null
+	label.transparency = 1
+	label.visible = true
+	label_show_timer = get_tree().create_timer(label_show_duration)
+	create_tween().tween_property(label, "transparency", 0, 0.2)
+	label_show_timer.timeout.connect(func():
+		create_tween().tween_property(label, "transparency", 1, 0.2)
+		label_show_timer = null
 	)
 	return
 
@@ -53,7 +53,7 @@ func can_interact_long_press() -> bool:
 func interact_long_press() -> void:
 	contained_items = {}
 	total_count = 0
-	_label.text = ""
+	label.text = ""
 	var _bin_bag := bin_bag_scene.instantiate()
 	Game.physics_item_container.add_child(_bin_bag)
 	_bin_bag.global_position = global_position
@@ -70,14 +70,14 @@ func deposit_item(_item: CarryableItem) -> void:
 	for _key in contained_items.keys():
 		total_count += contained_items[_key]
 	
-	_label.text = ""
+	label.text = ""
 	var i: int = 0
 	for _key in contained_items.keys():
 		if i > 0:
-			_label.text += "\n"
-		_label.text += _key + ": " + str(contained_items[_key])
+			label.text += "\n"
+		label.text += _key + ": " + str(contained_items[_key])
 		i += 1
-	_label.text += "\nTotal: " + str(total_count)
+	label.text += "\nTotal: " + str(total_count)
 	return
 
 ## Checks if this container is a valid target for emptying

@@ -44,6 +44,7 @@ class_name Player extends RigidBody3D
 @onready var long_press_marker: Sprite3D = $ContainerMarker
 @onready var long_press_anim: AnimationPlayer = $ContainerMarker/AnimationPlayer
 @onready var _carried_mesh_container := $CarriedItem
+@onready var state_machine: StateMachine = $StateMachine
 @onready var interact_short_press_timer: Timer = $TimerNodes/InteractShortPressTimer
 @onready var interact_long_press_timer: Timer = $TimerNodes/InteractLongPressTimer
 @onready var interact_target_timer: Timer = $TimerNodes/InteractTargetTimer
@@ -125,28 +126,28 @@ func _ready() -> void:
 	_right_hand_bone_idx = ragdoll_skeleton.find_bone("hand.R")
 	_left_hand_bone_idx = ragdoll_skeleton.find_bone("hand.L")
 
-	_pickup_collider.body_entered.connect(func(_body: Node3D):
-		if _body.has_method("can_interact_short_press") and (_body.can_interact_short_press() or _body.can_interact_long_press()):
-			if interactables_in_range.find(_body) == -1:
-				interactables_in_range.push_back(_body)
-		if _body.has_method("pickup_short_press") or _body.has_method("pickup_long_press"):
-			if pickups_in_range.find(_body) == -1:
-				pickups_in_range.push_back(_body)
+	_pickup_collider.area_entered.connect(func(_area: Area3D):
+		if _area is InteractableArea:
+			if interactables_in_range.find(_area) == -1:
+				interactables_in_range.push_back(_area)
+		if _area.has_method("pickup_short_press") or _area.has_method("pickup_long_press"):
+			if pickups_in_range.find(_area) == -1:
+				pickups_in_range.push_back(_area)
 	)
-	_pickup_collider.body_exited.connect(func(_body: Node3D):
-		if _body == targeted_interactable:
+	_pickup_collider.area_exited.connect(func(_area: Area3D):
+		if _area == targeted_interactable:
 			targeted_interactable = null
-		if _body.has_method("interact_short_press") or _body.has_method("interact_long_press"):
-			var _index := interactables_in_range.find(_body)
+		if _area is InteractableArea:
+			var _index := interactables_in_range.find(_area)
 			if _index != -1:
 				interactables_in_range.remove_at(_index)
-		if _body.has_method("pickup_short_press") or _body.has_method("pickup_long_press"):
-			var _index := pickups_in_range.find(_body)
+		if _area.has_method("pickup_short_press") or _area.has_method("pickup_long_press"):
+			var _index := pickups_in_range.find(_area)
 			if _index != -1:
 				pickups_in_range.remove_at(_index)
-		if _body.has_method("unhighlight") and _body.is_highlighted:
+		if _area is InteractableArea and _area.is_highlighted:
 			short_press_interact_unhighlight.emit()
-			_body.unhighlight()
+			_area.unhighlight()
 	)
 
 	interact_long_press_timer.timeout.connect(interact_long_press_timeout)
@@ -375,6 +376,8 @@ func enterVehicle (vehicle: DriveableVehicle) -> void:
 	$CharacterCollisionShape.disabled = true
 	visible = false
 	Game.player_changed_vehicle.emit()
+	state_machine.state.finished.emit(PlayerState.DRIVING)
+	return
 
 
 func exitVehicle () -> void:
@@ -392,6 +395,7 @@ func exitVehicle () -> void:
 	await get_tree().create_timer(0.1).timeout
 	$CharacterCollisionShape.disabled = false
 	visible = true
+	return
 
 
 func pickup_item(_item: CarryableItem) -> void:
@@ -508,6 +512,8 @@ func interact_long_press_timeout() -> void:
 	interact_long_press_timer.stop()
 	long_press_interact_finish.emit()
 	if targeted_interactable != null and targeted_interactable.can_interact_long_press():
+		if targeted_interactable is CarDoorInteractArea:
+			enterVehicle(targeted_interactable.car_door.parent_car)
 		targeted_interactable.interact_long_press()
 		targeted_interactable.unhighlight()
 		targeted_interactable = null

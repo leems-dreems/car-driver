@@ -245,7 +245,7 @@ func connect_to_player(_player: Player) -> void:
 	_player.short_press_interact_highlight.connect(func(_target: Node3D):
 		_interact_short_press_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		if _target.has_method("interact_long_press"):
-			_interact_short_press_label.text = _target.short_press_verb.capitalize() + " " + _target.container_name
+			_interact_short_press_label.text = _target.short_press_text.capitalize()
 		elif _target is ObjectiveArea:
 			_interact_short_press_label.text = _target.objective_text
 		else:
@@ -266,7 +266,7 @@ func connect_to_player(_player: Player) -> void:
 	_player.long_press_interact_highlight.connect(func(_target: Node3D):
 		_interact_long_press_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		if _target is RigidBinContainer:
-			_interact_long_press_label.text = "(Hold) " + _target.long_press_verb.capitalize() + " " + _target.container_name
+			_interact_long_press_label.text = "(Hold) " + _target.long_press_text.capitalize()
 		elif _target is EnterVehicleCollider:
 			_interact_long_press_label.text = "(Hold) Enter " + _target.vehicle.vehicle_category
 	)

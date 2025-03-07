@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=104 format=4 uid="uid://civapmbuqx1uv"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
@@ -10,6 +10,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bm6tjdix4yscu" path="res://assets/models/vehicles/Cricket/cricket_body.obj" id="6_fibcd"]
 [ext_resource type="ArrayMesh" uid="uid://xk5hk1bssrdt" path="res://assets/models/vehicles/Cricket/cricket_door_FL.obj" id="7_t5urj"]
 [ext_resource type="PhysicsMaterial" uid="uid://bgc5lkrsa84nb" path="res://cars/car_door_physics_material.tres" id="8_rpaed"]
+[ext_resource type="Script" path="res://scripts/car_door_interact_target.gd" id="9_8euio"]
 [ext_resource type="Script" path="res://scripts/car_door.gd" id="9_653cp"]
 [ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="10_vgexy"]
 [ext_resource type="AudioStream" uid="uid://d02vhghagqdjw" path="res://assets/sfx/car-door-shut.wav" id="11_0cx5o"]
@@ -76,6 +77,9 @@ radius = 0.1
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_batkb"]
 points = PackedVector3Array(0.743183, 0.324082, 0.675825, 0.743062, 0.324082, 0.763252, 0.7435, 0.324183, 0.406443, 0.766994, 0.488401, 0.406443, 0.76585, 0.487995, 0.685488, 0.765461, 0.487894, 0.776058, 0.716625, 0.896915, 0.757315, 0.703759, 0.937411, 0.750447, 0.665308, 1.01972, 0.663718, 0.519626, 1.33192, 0.334965, 0.74384, 0.326721, 0.158016, 0.74457, 0.331796, -0.350714, 0.744521, 0.33139, -0.307175, 0.768088, 0.496013, -0.387151, 0.767358, 0.490938, 0.146025, 0.761327, 0.766596, 0.771984, 0.709086, 0.937919, 0.416921, 0.520575, 1.36095, -0.413228, 0.520502, 1.35922, -0.370155, 0.519918, 1.34136, 0.0894479, 0.761497, 0.767713, -0.385289, 0.761497, 0.767713, 0.406443, 0.708234, 0.937513, -0.362239, 0.532905, 1.33304, -0.409968)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hrlhf"]
+size = Vector3(0.3, 1.6, 1.3)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bbm10"]
 points = PackedVector3Array(-0.743208, 0.324082, 0.675825, -0.74311, 0.324082, 0.763252, -0.743524, 0.324183, 0.406443, -0.519626, 1.33192, 0.334965, -0.665332, 1.01972, 0.663718, -0.703784, 0.937411, 0.750447, -0.716649, 0.896915, 0.757315, -0.765486, 0.487894, 0.776058, -0.765875, 0.487995, 0.685488, -0.767018, 0.488401, 0.406443, -0.743889, 0.326721, 0.158016, -0.744618, 0.331796, -0.350714, -0.744545, 0.33139, -0.307175, -0.519942, 1.34136, 0.0894479, -0.520599, 1.36095, -0.413228, -0.761351, 0.766596, 0.771984, -0.70911, 0.937919, 0.416921, -0.767383, 0.490938, 0.146025, -0.768039, 0.495607, -0.341517, -0.768088, 0.496013, -0.387151, -0.52055, 1.35922, -0.370155, -0.761521, 0.767713, -0.385289, -0.53293, 1.33304, -0.409968, -0.708283, 0.937513, -0.362239, -0.7614, 0.766901, 0.682461, -0.761521, 0.767713, 0.406443)
@@ -486,6 +490,17 @@ shape = SubResource("SphereShape3D_jv0dm")
 [node name="InteractTarget" type="Marker3D" parent="ColliderBits/DoorLeft/OpenDoorLeft"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 1.1, 0)
 
+[node name="InteractTarget2" type="Area3D" parent="ColliderBits/DoorLeft/OpenDoorLeft"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1, 1.2, 0.3)
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("9_8euio")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorLeft/OpenDoorLeft/InteractTarget2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 5.96046e-08, 0.15)
+shape = SubResource("BoxShape3D_hrlhf")
+
 [node name="DoorRight" type="Node3D" parent="ColliderBits"]
 
 [node name="HingeJointRight" type="JoltHingeJoint3D" parent="ColliderBits/DoorRight"]
@@ -571,6 +586,17 @@ shape = SubResource("SphereShape3D_jv0dm")
 
 [node name="InteractTarget" type="Marker3D" parent="ColliderBits/DoorRight/OpenDoorRight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 1.1, -9.61651e-08)
+
+[node name="InteractTarget2" type="Area3D" parent="ColliderBits/DoorRight/OpenDoorRight"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1, 1.2, 0.3)
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("9_8euio")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorRight/OpenDoorRight/InteractTarget2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 5.96046e-08, 0.15)
+shape = SubResource("BoxShape3D_hrlhf")
 
 [node name="Bonnet" type="Node3D" parent="ColliderBits"]
 

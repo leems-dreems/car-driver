@@ -1,0 +1,49 @@
+class_name CarDoorInteractArea extends InteractableArea
+
+var car_door: CarDoor
+var block_short_press_timer: SceneTreeTimer = null
+const block_short_press_delay := 0.5
+
+
+func _init() -> void:
+	short_press_text = "open door"
+	long_press_text = "get in car"
+	return
+
+
+func _ready() -> void:
+	await owner.ready
+	car_door = get_parent_node_3d() as CarDoor
+	assert(car_door != null, "This class needs the owner to be a CarDoor node.")
+	return
+
+
+func highlight() -> void:
+	is_highlighted = true
+	car_door.shut_door_mesh.material_overlay = car_door.outline_material
+	car_door.open_door_mesh.material_overlay = car_door.outline_material
+	return
+
+
+func unhighlight() -> void:
+	is_highlighted = false
+	car_door.shut_door_mesh.material_overlay = null
+	car_door.open_door_mesh.material_overlay = null
+	return
+
+
+func can_interact_short_press() -> bool:
+	return block_short_press_timer == null
+
+
+func interact_short_press() -> void:
+	if block_short_press_timer != null:
+		return
+	block_short_press_timer = get_tree().create_timer(block_short_press_delay)
+	block_short_press_timer.timeout.connect(func(): block_short_press_timer = null)
+	car_door.open_or_shut()
+	return
+
+
+func can_interact_long_press() -> bool:
+	return true
