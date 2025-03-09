@@ -9,9 +9,24 @@ func physics_update(_delta: float) -> void:
 
 
 func enter(previous_state_path: String, data := {}) -> void:
-	player.pickups_in_range = []
-	player.interactables_in_range = []
-	player.containers_in_range = []
+	if player.targeted_interactable != null:
+		player.short_press_interact_unhighlight.emit()
+		player.long_press_interact_unhighlight.emit()
+		player.targeted_interactable.unhighlight()
+		player.targeted_interactable = null
+	if player.targeted_pickup != null:
+		player.short_press_pickup_unhighlight.emit()
+		player.targeted_pickup.unhighlight()
+		player.targeted_pickup = null
+	if player.drop_target != null:
+		player.short_press_drop_unhighlight.emit()
+		player.drop_target.unhighlight()
+		player.drop_target = null
 	if player._carried_item != null:
 		player.drop_item()
+	return
+
+
+func exit() -> void:
+	player.vehicle_exited.emit()
 	return

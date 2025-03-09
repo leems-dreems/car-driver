@@ -48,9 +48,15 @@ class_name Player extends RigidBody3D
 @onready var interact_short_press_timer: Timer = $TimerNodes/InteractShortPressTimer
 @onready var interact_long_press_timer: Timer = $TimerNodes/InteractLongPressTimer
 @onready var interact_target_timer: Timer = $TimerNodes/InteractTargetTimer
+@onready var pickup_short_press_timer: Timer = $TimerNodes/PickupShortPressTimer
+@onready var pickup_target_timer: Timer = $TimerNodes/PickupTargetTimer
+@onready var drop_target_timer: Timer = $TimerNodes/DropTargetTimer
 const _interact_button_short_press_delay := 0.2
 const _interact_button_long_press_delay := 1.0
 const _interact_target_delay := 0.2 ## How long to wait after targeting an interactable before looking for a new target
+const _pickup_button_short_press_delay := 0.2
+const _pickup_target_delay := 0.2 ## How long to wait after targeting a pickup before looking for a new target
+const _drop_target_delay := 0.2 ## How long to wait after targeting a drop target before looking for a new target
 
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
@@ -69,13 +75,13 @@ var pickups_in_range: Array[Node3D]
 ## Useable items in range
 var interactables_in_range: Array[Node3D]
 ## Item containers in range
-var containers_in_range: Array[Node3D]
+var drop_targets: Array[Node3D]
 ## Container being targeted by a long-press action
-var targeted_container: Node3D = null
+var drop_target: Node3D = null
 ## Interactable item being targeted
 var targeted_interactable: Node3D = null
 ## CarryableItem being targeted by a long-press action
-var targeted_item: CarryableItem = null
+var targeted_pickup: CarryableItem = null
 
 var _carried_item: CarryableItem = null
 var _carried_mesh: MeshInstance3D = null
@@ -98,7 +104,7 @@ signal long_press_pickup_unhighlight
 signal long_press_pickup_start
 signal long_press_pickup_cancel
 signal long_press_pickup_finish
-signal short_press_interact_highlight(_target: Node3D)
+signal short_press_interact_highlight(_interactable_area: InteractableArea)
 signal short_press_interact_unhighlight
 signal short_press_interact_start
 signal short_press_interact_finish
@@ -127,12 +133,14 @@ func _ready() -> void:
 	_left_hand_bone_idx = ragdoll_skeleton.find_bone("hand.L")
 
 	_pickup_collider.area_entered.connect(func(_area: Area3D):
-		if _area is InteractableArea:
-			if interactables_in_range.find(_area) == -1:
-				interactables_in_range.push_back(_area)
-		if _area.has_method("pickup_short_press") or _area.has_method("pickup_long_press"):
-			if pickups_in_range.find(_area) == -1:
-				pickups_in_range.push_back(_area)
+		if _area is InteractableArea and not interactables_in_range.has(_area):
+			interactables_in_range.push_back(_area)
+	)
+	_pickup_collider.body_entered.connect(func(_body: Node3D):
+		if _body is CarryableItem and not pickups_in_range.has(_body):
+			pickups_in_range.push_back(_body)
+		elif (_body is RigidBinContainer or _body is VehicleItemContainer) and not drop_targets.has(_body):
+			drop_targets.push_back(_body)
 	)
 	_pickup_collider.area_exited.connect(func(_area: Area3D):
 		if _area == targeted_interactable:
@@ -141,18 +149,40 @@ func _ready() -> void:
 			var _index := interactables_in_range.find(_area)
 			if _index != -1:
 				interactables_in_range.remove_at(_index)
-		if _area.has_method("pickup_short_press") or _area.has_method("pickup_long_press"):
-			var _index := pickups_in_range.find(_area)
+			if _area.is_highlighted:
+				short_press_interact_unhighlight.emit()
+				long_press_interact_unhighlight.emit()
+				_area.unhighlight()
+	)
+	_pickup_collider.body_exited.connect(func(_body: Node3D):
+		if _body is CarryableItem:
+			if _body == targeted_pickup:
+				targeted_pickup = null
+				pickup_marker.visible = false
+				short_press_pickup_unhighlight.emit()
+			var _index := pickups_in_range.find(_body)
 			if _index != -1:
 				pickups_in_range.remove_at(_index)
-		if _area is InteractableArea and _area.is_highlighted:
-			short_press_interact_unhighlight.emit()
-			_area.unhighlight()
+			if _body.is_highlighted:
+				short_press_pickup_unhighlight.emit()
+				_body.unhighlight()
+		elif _body is RigidBinContainer or _body is VehicleItemContainer:
+			if _body == drop_target:
+				drop_target = null
+			var _index := drop_targets.find(_body)
+			if _index != -1:
+				drop_targets.remove_at(_index)
+			if _body.is_highlighted:
+				short_press_drop_unhighlight.emit()
+				_body.unhighlight()
 	)
 
 	interact_long_press_timer.timeout.connect(interact_long_press_timeout)
 	interact_short_press_timer.timeout.connect(interact_short_press_timeout)
 	interact_target_timer.timeout.connect(func(): interact_target_timer.stop())
+	pickup_short_press_timer.timeout.connect(pickup_short_press_timeout)
+	pickup_target_timer.timeout.connect(func(): pickup_target_timer.stop())
+	drop_target_timer.timeout.connect(func(): drop_target_timer.stop())
 
 	return
 
@@ -369,19 +399,19 @@ func get_skeleton_position() -> Vector3:
 
 
 func enterVehicle (vehicle: DriveableVehicle) -> void:
-	vehicle_entered.emit(vehicle)
 	current_vehicle = vehicle
 	_vehicle_controller.vehicle_node = vehicle
 	vehicle.is_being_driven = true
 	$CharacterCollisionShape.disabled = true
+	_pickup_collider.process_mode = Node.PROCESS_MODE_DISABLED
 	visible = false
 	Game.player_changed_vehicle.emit()
 	state_machine.state.finished.emit(PlayerState.DRIVING)
+	vehicle_entered.emit(vehicle)
 	return
 
 
 func exitVehicle () -> void:
-	vehicle_exited.emit()
 	current_vehicle.is_being_driven = false
 	current_vehicle.steering_input = 0
 	current_vehicle.throttle_input = 0
@@ -394,6 +424,7 @@ func exitVehicle () -> void:
 	Game.player_changed_vehicle.emit()
 	await get_tree().create_timer(0.1).timeout
 	$CharacterCollisionShape.disabled = false
+	_pickup_collider.process_mode = Node.PROCESS_MODE_INHERIT
 	visible = true
 	return
 
@@ -417,6 +448,7 @@ func pickup_item(_item: CarryableItem) -> void:
 	var _index := pickups_in_range.find(_item)
 	if _index != -1:
 		pickups_in_range.remove_at(_index)
+	state_machine.state.finished.emit(PlayerState.CARRYING)
 	return
 
 
@@ -465,6 +497,61 @@ func set_pickup_marker_borders(_visible: bool) -> void:
 	return
 
 
+func process_pickup_button() -> void:
+	if targeted_pickup == null:
+		update_pickup_target()
+		return
+	if Input.is_action_just_pressed("pickup_drop") and pickup_short_press_timer.is_stopped():
+		short_press_pickup_start.emit()
+		pickup_short_press_timer.start(_pickup_button_short_press_delay)
+		pickup_item(targeted_pickup)
+		targeted_pickup.unhighlight()
+		targeted_pickup = null
+	else:
+		update_pickup_target()
+	return
+
+
+func pickup_short_press_timeout() -> void:
+	pickup_short_press_timer.stop()
+	short_press_pickup_finish.emit()
+	return
+
+
+func update_pickup_target(_force_update := false) -> void:
+	if not pickup_target_timer.is_stopped() or not pickup_short_press_timer.is_stopped():
+		return
+
+	if len(pickups_in_range) > 0:
+		var pickup_distances := {}
+		for _pickup: Node3D in pickups_in_range:
+			pickup_distances[_pickup.get_instance_id()] = _pickup.global_position.distance_squared_to(_pickup_collider.global_position)
+		pickups_in_range.sort_custom(func(a: Node3D, b: Node3D):
+			return pickup_distances[a.get_instance_id()] < pickup_distances[b.get_instance_id()]
+		)
+
+		var i: int = 0
+		for _pickup in pickups_in_range:
+			if i == 0:
+				targeted_pickup = _pickup
+				if _force_update or not _pickup.is_highlighted:
+					pickup_target_timer.start()
+					set_pickup_marker_text(_pickup.item_name.capitalize())
+					short_press_pickup_highlight.emit(_pickup)
+					pickup_marker.visible = true
+					pickup_marker.global_position = _pickup.global_position
+					pickup_marker.position.y += 0.5
+					_pickup.highlight()
+			elif _pickup.is_highlighted:
+				_pickup.unhighlight()
+			i += 1
+	elif targeted_pickup != null:
+		targeted_pickup = null
+		pickup_marker.visible = false
+		short_press_pickup_unhighlight.emit()
+	return
+
+
 func process_interact_button() -> void:
 	if targeted_interactable == null:
 		update_interact_target()
@@ -475,13 +562,19 @@ func process_interact_button() -> void:
 			interact_short_press_timer.stop()
 			short_press_interact_finish.emit()
 			targeted_interactable.interact_short_press()
-			targeted_interactable.unhighlight()
-			targeted_interactable = null
+			if _pickup_collider.overlaps_area(targeted_interactable):
+				short_press_interact_highlight.emit(targeted_interactable)
+			else:
+				targeted_interactable.unhighlight()
+				targeted_interactable = null
 		if not interact_long_press_timer.is_stopped():
 			interact_long_press_timer.stop()
 			long_press_interact_cancel.emit()
-			targeted_interactable.unhighlight()
-			targeted_interactable = null
+			if _pickup_collider.overlaps_area(targeted_interactable):
+				long_press_interact_highlight.emit(targeted_interactable)
+			else:
+				targeted_interactable.unhighlight()
+				targeted_interactable = null
 
 	elif Input.is_action_just_pressed("interact") and interact_short_press_timer.is_stopped() and interact_long_press_timer.is_stopped():
 		if targeted_interactable.can_interact_short_press():
@@ -498,13 +591,20 @@ func process_interact_button() -> void:
 
 func interact_short_press_timeout() -> void:
 	interact_short_press_timer.stop()
-	if targeted_interactable.has_method("interact_long_press") and targeted_interactable.can_interact_long_press():
+	if targeted_interactable.can_interact_long_press():
 		short_press_interact_finish.emit()
 		long_press_interact_start.emit()
 		interact_long_press_timer.start(_interact_button_long_press_delay)
+		if _pickup_collider.overlaps_area(targeted_interactable):
+			short_press_interact_highlight.emit(targeted_interactable)
 	else:
 		short_press_interact_finish.emit()
 		targeted_interactable.interact_short_press()
+		if _pickup_collider.overlaps_area(targeted_interactable):
+			short_press_interact_highlight.emit(targeted_interactable)
+		else:
+			targeted_interactable.unhighlight()
+			targeted_interactable = null
 	return
 
 
@@ -514,13 +614,14 @@ func interact_long_press_timeout() -> void:
 	if targeted_interactable != null and targeted_interactable.can_interact_long_press():
 		if targeted_interactable is CarDoorInteractArea:
 			enterVehicle(targeted_interactable.car_door.parent_car)
-		targeted_interactable.interact_long_press()
-		targeted_interactable.unhighlight()
-		targeted_interactable = null
+		else:
+			targeted_interactable.interact_long_press()
+			targeted_interactable.unhighlight()
+			targeted_interactable = null
 	return
 
 
-func update_interact_target() -> void:
+func update_interact_target(_force_update := false) -> void:
 	if not interact_target_timer.is_stopped() or not interact_short_press_timer.is_stopped() or not interact_long_press_timer.is_stopped():
 		return
 
@@ -542,7 +643,7 @@ func update_interact_target() -> void:
 		for _interactable in interactables_in_range:
 			if i == 0:
 				targeted_interactable = _interactable
-				if not _interactable.is_highlighted:
+				if _force_update or not _interactable.is_highlighted:
 					interact_target_timer.start()
 					if _interactable.can_interact_short_press():
 						short_press_interact_highlight.emit(_interactable)
@@ -555,4 +656,51 @@ func update_interact_target() -> void:
 	elif targeted_interactable != null:
 		targeted_interactable = null
 		short_press_interact_unhighlight.emit()
+		long_press_interact_unhighlight.emit()
+	return
+
+
+func process_drop_button() -> void:
+	if Input.is_action_just_pressed("pickup_drop"):
+		short_press_drop_start.emit()
+		var _item := _carried_item
+		drop_item()
+		if len(drop_targets) > 0 and drop_targets[0].has_method("deposit_item"):
+			drop_targets[0].deposit_item(_item)
+			_item.queue_free()
+			drop_targets[0].unhighlight()
+		short_press_drop_finish.emit()
+		state_machine.state.finished.emit(PlayerState.EMPTY_HANDED)
+	else:
+		update_drop_target()
+	return
+
+
+func update_drop_target(_force_update := false) -> void:
+	if not drop_target_timer.is_stopped():
+		return
+
+	var _drop_target_distances := {}
+	for _drop_target: Node3D in drop_targets:
+		_drop_target_distances[_drop_target.get_instance_id()] = _drop_target.global_position.distance_squared_to(_pickup_collider.global_position)
+	drop_targets.sort_custom(func(a: Node3D, b: Node3D):
+		return _drop_target_distances[a.get_instance_id()] < _drop_target_distances[b.get_instance_id()]
+	)
+
+	if len(drop_targets) > 0:
+		var i: int = 0
+		for _drop_target in drop_targets:
+			if i == 0:
+				if _drop_target.has_method("highlight") and (_force_update or not _drop_target.is_highlighted):
+					drop_target_timer.start()
+					short_press_drop_highlight.emit(_drop_target)
+					drop_target = _drop_target
+					_drop_target.highlight()
+			elif _drop_target.has_method("unhighlight"):
+				_drop_target.unhighlight()
+			i += 1
+	else:
+		if drop_target != null:
+			short_press_drop_unhighlight.emit()
+		drop_target = null
 	return

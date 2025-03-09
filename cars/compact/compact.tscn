@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=4 uid="uid://civapmbuqx1uv"]
+[gd_scene load_steps=104 format=4 uid="uid://bjybpumswq7gl"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]

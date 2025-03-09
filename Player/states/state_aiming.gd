@@ -7,9 +7,8 @@ var _hold_timer: SceneTreeTimer = null
 func physics_update(_delta: float) -> void:
 	if _hold_timer != null:
 		return
-	if Input.is_action_just_pressed("pickup_drop"):
-		player.drop_item()
-		finished.emit(EMPTY_HANDED)
+	player.process_interact_button()
+	player.process_drop_button()
 	if not Input.is_action_pressed("aim") or not player.is_on_ground():
 		player._last_strong_direction = player.camera_controller.global_transform.basis.z
 		finished.emit(CARRYING)
@@ -24,12 +23,7 @@ func physics_update(_delta: float) -> void:
 
 
 func enter(previous_state_path: String, data := {}) -> void:
-	unhighlight_all_useables()
 	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.OVER_SHOULDER)
-	return
-
-
-func exit() -> void:
-	player.pickups_in_range = []
-	player.containers_in_range = []
+	player.update_interact_target(true)
+	player.update_drop_target(true)
 	return

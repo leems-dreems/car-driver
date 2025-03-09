@@ -9,44 +9,16 @@ func physics_update(_delta: float) -> void:
 		finished.emit(AIMING_THROW)
 		return
 
-	if Input.is_action_just_pressed("pickup_drop"):
-		player.short_press_drop_start.emit()
-		_drop_button_short_press_timer = get_tree().create_timer(_drop_button_short_press_delay)
-		_drop_button_short_press_timer.timeout.connect(func():
-			var _item := player._carried_item
-			player.drop_item()
-			if len(player.containers_in_range) > 0 and player.containers_in_range[0].has_method("deposit_item"):
-				player.containers_in_range[0].deposit_item(_item)
-				_item.queue_free()
-				player.containers_in_range[0].unhighlight()
-			_drop_button_short_press_timer = null
-			player.short_press_drop_finish.emit()
-			finished.emit(EMPTY_HANDED)
-		)
-	else:
-		player.containers_in_range = []
-		for _body: Node3D in player._pickup_collider.get_overlapping_bodies():
-			if _body is RigidBinContainer or _body is VehicleItemContainer:
-				player.containers_in_range.push_back(_body)
-		var _container_distances := {}
-		for _container: Node3D in player.containers_in_range:
-			_container_distances[_container.get_instance_id()] = _container.global_position.distance_squared_to(player._pickup_collider.global_position)
-		player.containers_in_range.sort_custom(func(a: Node3D, b: Node3D):
-			return _container_distances[a.get_instance_id()] < _container_distances[b.get_instance_id()]
-		)
-
-	update_drop_target()
-	player.update_interact_target()
+	player.process_drop_button()
 	return
 
 
 func enter(previous_state_path: String, data := {}) -> void:
 	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.THIRD_PERSON)
+	player.update_interact_target(true)
+	player.update_drop_target(true)
 	return
 
 
 func exit() -> void:
-	drop_target = null
-	player.pickups_in_range = []
-	player.containers_in_range = []
 	return

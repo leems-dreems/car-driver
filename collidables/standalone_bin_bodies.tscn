@@ -57,6 +57,7 @@ affect_navigation_mesh = true
 
 [node name="Label3D" type="Label3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+visible = false
 
 [node name="InteractableArea" type="Area3D" parent="RigidBody3D"]
 collision_layer = 8

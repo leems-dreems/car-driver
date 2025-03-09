@@ -142,19 +142,11 @@ func set_pickup_key_pressed(_pressed: bool) -> void:
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Gamepad_Pressed.visible = _pressed
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Unpressed.visible = false
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Pressed.visible = false
-			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Unpressed.visible = not _pressed
-			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Pressed.visible = _pressed
-			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Unpressed.visible = false
-			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Pressed.visible = false
 		INPUT_METHODS.KEYBOARD:
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Keyboard_Pressed.visible = _pressed
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Gamepad_Unpressed.visible = false
 			$HUD/VBoxContainer/Pickup_HBoxContainer/Gamepad_Pressed.visible = false
-			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
-			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Pressed.visible = _pressed
-			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Unpressed.visible = false
-			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Pressed.visible = false
 	return
 
 
@@ -165,11 +157,19 @@ func set_interact_key_pressed(_pressed: bool) -> void:
 			$HUD/VBoxContainer/Interact_HBoxContainer/Gamepad_Pressed.visible = _pressed
 			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Unpressed.visible = false
 			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Pressed.visible = false
+			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Unpressed.visible = false
+			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Pressed.visible = false
 		INPUT_METHODS.KEYBOARD:
 			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
 			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Pressed.visible = _pressed
 			$HUD/VBoxContainer/Interact_HBoxContainer/Gamepad_Unpressed.visible = false
 			$HUD/VBoxContainer/Interact_HBoxContainer/Gamepad_Pressed.visible = false
+			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Unpressed.visible = false
+			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Pressed.visible = false
 	return
 
 
@@ -240,16 +240,11 @@ func on_pause_menu_mouse_entered() -> void:
 		_button.release_focus.call_deferred()
 	return
 
-
+# TODO: Move each block into its own function, then connect those functions to new player signals e.g. interact, pickup etc
 func connect_to_player(_player: Player) -> void:
-	_player.short_press_interact_highlight.connect(func(_target: Node3D):
+	_player.short_press_interact_highlight.connect(func(_target: InteractableArea):
 		_interact_short_press_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		if _target.has_method("interact_long_press"):
-			_interact_short_press_label.text = _target.short_press_text.capitalize()
-		elif _target is ObjectiveArea:
-			_interact_short_press_label.text = _target.objective_text
-		else:
-			_interact_short_press_label.text = "Interact"
+		_interact_short_press_label.text = _target.short_press_text.capitalize()
 	)
 	_player.short_press_interact_unhighlight.connect(func():
 		_interact_short_press_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
@@ -265,10 +260,7 @@ func connect_to_player(_player: Player) -> void:
 
 	_player.long_press_interact_highlight.connect(func(_target: Node3D):
 		_interact_long_press_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		if _target is RigidBinContainer:
-			_interact_long_press_label.text = "(Hold) " + _target.long_press_text.capitalize()
-		elif _target is EnterVehicleCollider:
-			_interact_long_press_label.text = "(Hold) Enter " + _target.vehicle.vehicle_category
+		_interact_long_press_label.text = "(Hold) " + _target.long_press_text.capitalize()
 	)
 	_player.long_press_interact_unhighlight.connect(func():
 		_interact_long_press_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
@@ -321,12 +313,14 @@ func connect_to_player(_player: Player) -> void:
 	)
 
 	_player.vehicle_entered.connect(func(_vehicle: DriveableVehicle):
+		reset_controls()
 		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = false
 		$HUD/VBoxContainer/Interact_LongPress_HBoxContainer.visible = false
 		_interact_short_press_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		_interact_short_press_label.text = "Exit " + _vehicle.vehicle_category
 	)
 	_player.vehicle_exited.connect(func():
+		reset_controls()
 		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = true
 		$HUD/VBoxContainer/Interact_LongPress_HBoxContainer.visible = true
 	)

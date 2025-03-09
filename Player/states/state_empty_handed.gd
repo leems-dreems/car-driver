@@ -2,8 +2,8 @@ extends PlayerState
 
 
 func physics_update(_delta: float) -> void:
-	process_pickup_button()
-	update_pickup_target()
+	player.process_pickup_button()
+	#update_pickup_target()
 
 	player.process_interact_button()
 
@@ -13,6 +13,7 @@ func physics_update(_delta: float) -> void:
 
 func enter(previous_state_path: String, data := {}) -> void:
 	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.THIRD_PERSON)
+	player.update_interact_target(true)
 	return
 
 
@@ -23,6 +24,4 @@ func exit() -> void:
 	for _pickup in player.pickups_in_range:
 		if _pickup.is_highlighted:
 			_pickup.unhighlight()
-	player.pickups_in_range = []
-	player.containers_in_range = []
 	return
