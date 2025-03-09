@@ -1,9 +1,9 @@
 class_name Player extends RigidBody3D
 
-## Character maximum run speed on the ground.
-@export var move_speed := 8.0
+## Maximum movement speed for the player, as the square of our linear velocity
+@export var move_speed := 200
 ## Movement acceleration (how fast character achieve maximum speed)
-@export var acceleration := 30.0
+@export var acceleration := 20.0
 ## Jump impulse
 @export var jump_initial_impulse := 8.0
 ## Jump impulse when player keeps pressing jump
@@ -16,9 +16,9 @@ class_name Player extends RigidBody3D
 ## Speed to switch from walking to running
 @export var running_speed := 4.0
 ## Minimum impact force that will cause player to start ragdolling
-@export var impact_resistance := 10.0
+@export var impact_resistance := 15.0
 ## Minimum time the player will ragdoll for after getting hit
-@export var min_ragdoll_time := 4.0
+@export var min_ragdoll_time := 1.5
 ## Vehicle the player is currently in
 @export var current_vehicle : DriveableVehicle = null
 @export var current_mission : Mission = null
@@ -52,7 +52,7 @@ class_name Player extends RigidBody3D
 @onready var pickup_target_timer: Timer = $TimerNodes/PickupTargetTimer
 @onready var drop_target_timer: Timer = $TimerNodes/DropTargetTimer
 const _interact_button_short_press_delay := 0.2
-const _interact_button_long_press_delay := 1.0
+const _interact_button_long_press_delay := 0.6
 const _interact_target_delay := 0.2 ## How long to wait after targeting an interactable before looking for a new target
 const _pickup_button_short_press_delay := 0.2
 const _pickup_target_delay := 0.2 ## How long to wait after targeting a pickup before looking for a new target
@@ -63,6 +63,7 @@ var _last_strong_direction := Vector3.FORWARD
 var _ground_height: float = 0.0
 var _default_collision_layer := collision_layer
 var _is_on_floor_buffer := false
+var can_sprint := true
 
 var is_ragdolling := false
 var is_waiting_to_reset := false
@@ -99,11 +100,6 @@ signal short_press_drop_highlight(_target: Node3D)
 signal short_press_drop_unhighlight
 signal short_press_drop_start
 signal short_press_drop_finish
-signal long_press_pickup_highlight(_target: Node3D)
-signal long_press_pickup_unhighlight
-signal long_press_pickup_start
-signal long_press_pickup_cancel
-signal long_press_pickup_finish
 signal short_press_interact_highlight(_interactable_area: InteractableArea)
 signal short_press_interact_unhighlight
 signal short_press_interact_start
@@ -202,6 +198,7 @@ func _on_body_entered(_body: Node) -> void:
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	if is_waiting_to_reset and _ragdoll_reset_timer == null:
 		if can_stand_up():
+			ragdoll_skeleton.physical_bones_stop_simulation()
 			is_ragdolling = false
 			collision_layer = _default_collision_layer
 			global_position = get_skeleton_position()
@@ -210,6 +207,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 			for _bone: PhysicalBone3D in ragdoll_skeleton.find_children("*", "PhysicalBone3D"):
 				var _target_bone_transform := ragdoll_skeleton.get_bone_global_pose(_bone.get_bone_id())
 				_bone.global_transform = ragdoll_skeleton.global_transform * _target_bone_transform
+			freeze = false
 			is_waiting_to_reset = false
 		else:
 			_ragdoll_reset_timer = get_tree().create_timer(1.0)
@@ -218,7 +216,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 			)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if _carried_item != null:
 		_carried_mesh.global_transform = ragdoll_skeleton.global_transform * ragdoll_skeleton.get_bone_global_pose(_right_hand_bone_idx)
 	return
@@ -238,13 +236,8 @@ func _physics_process(delta: float) -> void:
 	if global_position.y < _ground_height:
 		_ground_height = global_position.y
 
-	if _is_on_ground:
-		linear_damp = 5
-	else:
-		linear_damp = 0
-
 	# Get input and movement state
-	var is_just_jumping := Input.is_action_just_pressed("jump") and _is_on_ground
+	var is_just_jumping := not is_ragdolling and Input.is_action_just_pressed("jump") and _is_on_ground
 	var is_just_on_floor := _is_on_ground and not _is_on_floor_buffer
 	if Input.is_action_just_pressed("Ragdoll"):
 		go_limp()
@@ -257,10 +250,14 @@ func _physics_process(delta: float) -> void:
 		)
 
 	var is_in_vehicle := current_vehicle != null
-	var is_using := Input.is_action_just_pressed("pickup_drop")
 
 	_is_on_floor_buffer = _is_on_ground
 	_move_direction = _get_camera_oriented_input()
+
+	if _is_on_ground:
+		linear_damp = 2
+	else:
+		linear_damp = 0
 
 	# To not orient quickly to the last input, we save a last strong direction,
 	# this also ensures a good normalized value for the rotation basis.
@@ -288,8 +285,11 @@ func _physics_process(delta: float) -> void:
 			current_vehicle.brake_input = Input.get_action_strength("Accelerate")
 			current_vehicle.throttle_input = Input.get_action_strength("Brake or Reverse")
 	else:
-		if linear_velocity.length() < move_speed:
-			apply_central_force(_move_direction * acceleration * mass)
+		if linear_velocity.length_squared() < move_speed:
+			if Input.is_action_pressed("sprint"):
+				apply_central_force(_move_direction * (acceleration * 2) * mass)
+			else:
+				apply_central_force(_move_direction * acceleration * mass)
 
 		if is_just_jumping:
 			apply_central_impulse(Vector3.UP * jump_initial_impulse * mass)
@@ -299,7 +299,11 @@ func _physics_process(delta: float) -> void:
 			_playback.travel("MidairBlendSpace1D")
 			_animation_tree.set("parameters/MidairBlendSpace1D/blend_position", clampf(-linear_velocity.y, -1, 1))
 		elif _is_on_ground:
-			var xz_velocity := Vector3(linear_velocity.x, 0, linear_velocity.z)
+			var xz_velocity: Vector3
+			if _move_direction.length_squared() > 0.2:
+				xz_velocity = Vector3(linear_velocity.x, 0, linear_velocity.z)
+			else:
+				xz_velocity = Vector3.ZERO
 			var _xz_speed := xz_velocity.length()
 			_playback.travel("Moving_BlendTree")
 			_animation_tree.set("parameters/Moving_BlendTree/BlendSpace1D/blend_position", clampf(_xz_speed, 0.0, 8.0))
@@ -313,6 +317,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _get_camera_oriented_input() -> Vector3:
+	if is_ragdolling:
+		return Vector3.ZERO
+ 
 	var raw_input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
 	var input := Vector3.ZERO
@@ -374,13 +381,15 @@ func go_limp() -> void:
 	for _bone: PhysicalBone3D in ragdoll_skeleton.find_children("*", "PhysicalBone3D"):
 		var _target_bone_transform := ragdoll_skeleton.get_bone_global_pose(_bone.get_bone_id())
 		_bone.global_transform = ragdoll_skeleton.global_transform * _target_bone_transform
+		_bone.apply_central_impulse(linear_velocity * _bone.mass)
 	ragdoll_skeleton.physical_bones_start_simulation()
+	for _bone: PhysicalBone3D in ragdoll_skeleton.find_children("*", "PhysicalBone3D"):
+		_bone.apply_central_impulse(linear_velocity * _bone.mass)
+	#_ragdoll_tracker_bone.apply_central_impulse(linear_velocity * _ragdoll_tracker_bone.mass)
 	is_ragdolling = true
 	freeze = true
 	collision_layer = 0
 	get_tree().create_timer(min_ragdoll_time).timeout.connect(func():
-		freeze = false
-		ragdoll_skeleton.physical_bones_stop_simulation()
 		is_waiting_to_reset = true
 	)
 	return
@@ -405,7 +414,6 @@ func enterVehicle (vehicle: DriveableVehicle) -> void:
 	$CharacterCollisionShape.disabled = true
 	_pickup_collider.process_mode = Node.PROCESS_MODE_DISABLED
 	visible = false
-	Game.player_changed_vehicle.emit()
 	state_machine.state.finished.emit(PlayerState.DRIVING)
 	vehicle_entered.emit(vehicle)
 	return
@@ -419,13 +427,14 @@ func exitVehicle () -> void:
 	current_vehicle.brake_input = 0
 	_vehicle_controller.vehicle_node = null
 	global_position = current_vehicle.global_position
+	linear_velocity = current_vehicle.linear_velocity
 	global_position.y += 5
 	current_vehicle = null
-	Game.player_changed_vehicle.emit()
 	await get_tree().create_timer(0.1).timeout
 	$CharacterCollisionShape.disabled = false
 	_pickup_collider.process_mode = Node.PROCESS_MODE_INHERIT
 	visible = true
+	vehicle_exited.emit()
 	return
 
 

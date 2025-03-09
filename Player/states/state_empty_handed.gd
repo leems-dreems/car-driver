@@ -3,15 +3,11 @@ extends PlayerState
 
 func physics_update(_delta: float) -> void:
 	player.process_pickup_button()
-	#update_pickup_target()
-
 	player.process_interact_button()
-
-	#update_interact_target()
 	return
 
 
-func enter(previous_state_path: String, data := {}) -> void:
+func enter(_previous_state_path: String, _data := {}) -> void:
 	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.THIRD_PERSON)
 	player.update_interact_target(true)
 	return

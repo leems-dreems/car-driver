@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://btmduyhkublv7"]
+[gd_scene load_steps=21 format=4 uid="uid://cxtkay8p3i0n"]
 
 [ext_resource type="Script" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
@@ -268,6 +268,15 @@ layout_mode = 2
 text = "(Hold)"
 label_settings = ExtResource("9_yc66f")
 vertical_alignment = 1
+
+[node name="Interact_LongPress_Bar_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="HUD/VBoxContainer/Interact_LongPress_Bar_HBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
 
 [node name="ClickAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_v27v4")

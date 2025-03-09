@@ -1,6 +1,5 @@
 class_name Explosion extends Node3D
 
-signal finished
 ## Multiplier for sustained explosion force.
 @export var explosion_force_multiplier := 300000.0
 ## How much the explosion Area3D will be scaled up by. For the explosion to work correctly, its

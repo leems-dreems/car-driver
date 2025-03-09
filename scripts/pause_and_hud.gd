@@ -15,6 +15,9 @@ extends CanvasLayer
 @onready var _pickup_label := $HUD/VBoxContainer/Pickup_HBoxContainer/Label
 @onready var _interact_short_press_label := $HUD/VBoxContainer/Interact_HBoxContainer/Label
 @onready var _interact_long_press_label := $HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Label
+@onready var _interact_long_press_bar := $HUD/VBoxContainer/Interact_LongPress_Bar_HBoxContainer/ColorRect
+const _interact_long_press_time := 0.6 ## This should match the value in Player.gd
+var _long_press_bar_tween: Tween
 var paused_timer: SceneTreeTimer = null
 var is_opening := false
 var is_closing := false
@@ -268,14 +271,20 @@ func connect_to_player(_player: Player) -> void:
 	)
 	_player.long_press_interact_start.connect(func():
 		_interact_long_press_label.modulate = Color(0.91, 0.94, 0.01, 1.0)
+		_long_press_bar_tween = get_tree().create_tween()
+		_long_press_bar_tween.tween_property(_interact_long_press_bar, "custom_minimum_size", _interact_long_press_bar.get_parent().size, _interact_long_press_time)
 	)
 	_player.long_press_interact_cancel.connect(func():
 		_interact_long_press_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
 		_interact_long_press_label.text = "(Hold)"
+		_long_press_bar_tween.kill()
+		_interact_long_press_bar.custom_minimum_size = _interact_long_press_bar.get_parent().custom_minimum_size
 	)
 	_player.long_press_interact_finish.connect(func():
 		_interact_long_press_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
 		_interact_long_press_label.text = "(Hold)"
+		_long_press_bar_tween.kill()
+		_interact_long_press_bar.custom_minimum_size = _interact_long_press_bar.get_parent().custom_minimum_size
 	)
 
 	_player.short_press_pickup_highlight.connect(func(_target: Node3D):

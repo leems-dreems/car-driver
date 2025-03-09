@@ -1,6 +1,5 @@
 extends Node
 
-signal player_changed_vehicle
 var active_terrain: Terrain3D = null
 var physics_item_container: Node3D = null
 

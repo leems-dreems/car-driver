@@ -22,7 +22,7 @@ func physics_update(_delta: float) -> void:
 	return
 
 
-func enter(previous_state_path: String, data := {}) -> void:
+func enter(_previous_state_path: String, _data := {}) -> void:
 	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.OVER_SHOULDER)
 	player.update_interact_target(true)
 	player.update_drop_target(true)

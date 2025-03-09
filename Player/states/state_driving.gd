@@ -8,7 +8,7 @@ func physics_update(_delta: float) -> void:
 	return
 
 
-func enter(previous_state_path: String, data := {}) -> void:
+func enter(_previous_state_path: String, _data := {}) -> void:
 	if player.targeted_interactable != null:
 		player.short_press_interact_unhighlight.emit()
 		player.long_press_interact_unhighlight.emit()
@@ -24,9 +24,4 @@ func enter(previous_state_path: String, data := {}) -> void:
 		player.drop_target = null
 	if player._carried_item != null:
 		player.drop_item()
-	return
-
-
-func exit() -> void:
-	player.vehicle_exited.emit()
 	return

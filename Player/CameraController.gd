@@ -94,7 +94,7 @@ func _process(delta: float) -> void:
 			target_position = _anchor.get_skeleton_position() + _offset
 		else:
 			target_position = _anchor.global_position + _offset
-		target_position.y = lerp(global_position.y, _anchor._ground_height, 0.1)
+			target_position.y = lerp(global_position.y, _anchor._ground_height, 0.1)
 		global_position = target_position
 		# Lerp camera distance
 		_camera_spring_arm.spring_length = lerpf(_camera_spring_arm.spring_length, player_camera_distance, delta * camera_distance_change_speed)
