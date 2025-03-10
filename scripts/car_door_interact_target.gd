@@ -1,12 +1,14 @@
 class_name CarDoorInteractArea extends InteractableArea
 
+@export var is_enterable := true ## Whether player can enter vehicle through this door
+@export var door_name := "door"
 var car_door: CarDoor
 var block_short_press_timer: SceneTreeTimer = null
 const block_short_press_delay := 0.5
 
 
 func _init() -> void:
-	short_press_text = "open door"
+	short_press_text = "open " + door_name
 	long_press_text = "get in car"
 	return
 
@@ -15,6 +17,10 @@ func _ready() -> void:
 	await owner.ready
 	car_door = get_parent_node_3d() as CarDoor
 	assert(car_door != null, "This class needs the owner to be a CarDoor node.")
+	if not car_door.is_shut:
+		short_press_text = "Shut " + door_name
+	else:
+		short_press_text = "Open " + door_name
 	return
 
 
@@ -39,11 +45,19 @@ func can_interact_short_press() -> bool:
 func interact_short_press() -> void:
 	if block_short_press_timer != null:
 		return
+	set_deferred("monitorable", false)
 	block_short_press_timer = get_tree().create_timer(block_short_press_delay)
-	block_short_press_timer.timeout.connect(func(): block_short_press_timer = null)
+	block_short_press_timer.timeout.connect(func():
+		set_deferred("monitorable", true)
+		block_short_press_timer = null
+	)
+	if car_door.is_shut:
+		short_press_text = "Shut " + door_name
+	else:
+		short_press_text = "Open " + door_name
 	car_door.open_or_shut()
 	return
 
 
 func can_interact_long_press() -> bool:
-	return true
+	return is_enterable

@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=4 uid="uid://bjybpumswq7gl"]
+[gd_scene load_steps=105 format=4 uid="uid://bjybpumswq7gl"]
 
 [ext_resource type="Script" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_sg067"]
@@ -89,6 +89,9 @@ points = PackedVector3Array(-0.700186, 0.934376, 0.742142, -0.668084, 0.812137, 
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mj4f1"]
 points = PackedVector3Array(0, 1.36178, -1.17595, 0, 1.35845, -1.165, 0.192709, 1.3581, -1.17595, 0, 0.908637, -1.67125, -0.00013411, 0.908637, -1.67125, -0.192843, 1.3581, -1.17595, 0.439194, 1.3388, -1.16542, 0.192441, 1.35477, -1.16515, -0.192575, 1.35477, -1.16515, -0.439328, 1.3388, -1.16542, 0.439865, 1.34222, -1.17595, 0.646119, 0.891642, -1.65237, 0.539237, 0.892496, -1.65771, 0, 0.896425, -1.68453, -0.539371, 0.892496, -1.65771, -0.646253, 0.891642, -1.65237, -0.439999, 1.34222, -1.17595, 0.516707, 1.32719, -1.16748, 0.520462, 1.33001, -1.17595, -0.520596, 1.33001, -1.17595, -0.516841, 1.32719, -1.16748, 0.534543, 1.2809, -1.22938, 0.685009, 0.767725, -1.67331, 0, 0.766615, -1.70543, -0.250643, 0.767042, -1.69368, -0.685009, 0.767725, -1.67331, 0.250508, 0.767042, -1.69368, -0.534677, 1.2809, -1.22938, 0.64746, 0.489829, -1.5873, -0.647594, 0.489829, -1.5873, 0.650678, 0.489317, -1.60042, 0.237902, 0.49, -1.64068, 0, 0.490427, -1.66385, -0.650812, 0.489317, -1.60042, -0.238037, 0.49, -1.64068, 0.542992, 0.489488, -1.61089, -0.543126, 0.489488, -1.61089)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uwv30"]
+size = Vector3(1.6, 1.6, 0.6)
 
 [sub_resource type="BoxMesh" id="BoxMesh_uu7oe"]
 
@@ -649,6 +652,8 @@ body_latch = NodePath("../BonnetBodyLatch")
 is_openable = false
 hinge_separation_collider_A = NodePath("../HingeJointBonnet/BonnetBodyHingeSeparationCollider")
 hinge_separation_collider_B = NodePath("BonnetHingeSeparationCollider")
+hinge_open_motor_duration = -1.0
+hinge_close_motor_duration = 0.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/Bonnet/OpenBonnet"]
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
@@ -687,7 +692,8 @@ shape = SubResource("SphereShape3D_jv0dm")
 [node name="HingeJointBoot" type="JoltHingeJoint3D" parent="ColliderBits/Boot"]
 limit_enabled = true
 limit_upper = 1.309
-motor_target_velocity = -2.0944
+motor_target_velocity = 0.698132
+motor_max_torque = 100.0
 node_a = NodePath("../../..")
 node_b = NodePath("../OpenBoot")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.54333, 1.76463)
@@ -730,10 +736,11 @@ enter_car_collision_shape = NodePath("../../EnterCarCollider/CollisionShape3D")
 door_latch = NodePath("BootLatch")
 body_latch = NodePath("../BootBodyLatch")
 latch_velocity_threshold = 2.0
-is_openable = false
 hide_rigidbody_when_shut = false
 hinge_separation_collider_A = NodePath("../HingeJointBoot/BootBodyHingeSeparationCollider")
 hinge_separation_collider_B = NodePath("BootHingeSeparationCollider")
+hinge_open_motor_duration = -1.0
+hinge_close_motor_duration = 0.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ColliderBits/Boot/OpenBoot"]
 transform = Transform3D(-1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, 0, 0, 0)
@@ -826,6 +833,19 @@ transparency = 1.0
 mesh = ExtResource("23_6oxxb")
 skeleton = NodePath("../../BrakeLightLeft")
 surface_material_override/0 = ExtResource("21_o1ci1")
+
+[node name="InteractTarget2" type="Area3D" parent="ColliderBits/Boot/OpenBoot"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.3, 2)
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("9_8euio")
+is_enterable = false
+door_name = "boot"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/Boot/OpenBoot/InteractTarget2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.15)
+shape = SubResource("BoxShape3D_uwv30")
 
 [node name="EnterCarCollider" type="StaticBody3D" parent="ColliderBits"]
 visible = false

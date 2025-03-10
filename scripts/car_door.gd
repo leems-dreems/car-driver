@@ -16,6 +16,10 @@ class_name CarDoor extends RigidBody3D
 ## If the hinge separation colliders move apart, the door will detach
 @export var hinge_separation_collider_A: Area3D
 @export var hinge_separation_collider_B: Area3D
+## When opening, hinge motor will be turned on for this long. Set to -1 and motor will stay on
+@export var hinge_open_motor_duration := 0.1
+## When closing, hinge motor will be turned on for this long. Set to -1 and motor won't turn off until door is latched shut
+@export var hinge_close_motor_duration := 0.1 
 const outline_material := preload("res://assets/materials/outline_material_overlay.tres")
 @onready var open_door_mesh: MeshInstance3D = $MeshInstance3D
 @onready var interact_target: Marker3D = $InteractTarget
@@ -71,18 +75,25 @@ func pull_open() -> void:
 	hinge_joint.limit_lower = hinge_limit_lower
 	is_shut = false
 	visible = true
-	hinge_joint.motor_target_velocity = motor_target_velocity
-	hinge_joint.motor_enabled = true
+	
+	if hinge_open_motor_duration == 0:
+		hinge_joint.motor_enabled = false
+	else:
+		hinge_joint.motor_target_velocity = motor_target_velocity
+		hinge_joint.motor_enabled = true
+		if hinge_open_motor_duration != -1:
+			open_timer = get_tree().create_timer(hinge_open_motor_duration)
+			open_timer.timeout.connect(func():
+				hinge_joint.motor_enabled = false
+				open_timer = null
+			)
+
 	shut_door_mesh.visible = false
 	door_open_SFX.play()
 	enter_car_collision_shape.disabled = false
 	set_collision_layer_value(19, true)
 	set_latches_active(true)
-	open_timer = get_tree().create_timer(0.05)
-	open_timer.timeout.connect(func():
-		hinge_joint.motor_enabled = false
-		open_timer = null
-	)
+	return
 
 
 func fall_open() -> void:
@@ -90,18 +101,25 @@ func fall_open() -> void:
 	hinge_joint.limit_lower = hinge_limit_lower
 	is_shut = false
 	visible = true
-	hinge_joint.motor_target_velocity = motor_target_velocity
-	hinge_joint.motor_enabled = true
+	
+	if hinge_open_motor_duration == 0:
+		hinge_joint.motor_enabled = false
+	else:
+		hinge_joint.motor_target_velocity = motor_target_velocity
+		hinge_joint.motor_enabled = true
+		if hinge_open_motor_duration != -1:
+			open_timer = get_tree().create_timer(hinge_open_motor_duration)
+			open_timer.timeout.connect(func():
+				hinge_joint.motor_enabled = false
+				open_timer = null
+			)
+
 	shut_door_mesh.visible = false
 	door_open_SFX.play()
 	enter_car_collision_shape.disabled = false
 	set_collision_layer_value(19, true)
 	set_latches_active(true)
-	open_timer = get_tree().create_timer(0.05)
-	open_timer.timeout.connect(func():
-		hinge_joint.motor_enabled = false
-		open_timer = null
-	)
+	return
 
 
 func shut() -> void:
@@ -115,6 +133,7 @@ func shut() -> void:
 	enter_car_collision_shape.disabled = true
 	set_collision_layer_value(19, false)
 	set_latches_active(false)
+	return
 
 
 func open_or_shut() -> void:
@@ -122,13 +141,18 @@ func open_or_shut() -> void:
 	if is_shut:
 		pull_open()
 	else:
-		hinge_joint.motor_target_velocity = -motor_target_velocity
-		hinge_joint.motor_enabled = true
-		shut_timer = get_tree().create_timer(0.2)
-		shut_timer.timeout.connect(func():
+		if hinge_close_motor_duration == 0:
 			hinge_joint.motor_enabled = false
-			shut_timer = null
-		)
+		else:
+			hinge_joint.motor_target_velocity = -motor_target_velocity
+			hinge_joint.motor_enabled = true
+			if hinge_close_motor_duration != -1:
+				shut_timer = get_tree().create_timer(hinge_close_motor_duration)
+				shut_timer.timeout.connect(func():
+					hinge_joint.motor_enabled = false
+					shut_timer = null
+				)
+	return
 
 
 func set_latches_active(_active: bool) -> void:
