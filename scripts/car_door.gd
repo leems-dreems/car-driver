@@ -2,6 +2,7 @@ class_name CarDoor extends RigidBody3D
 
 @export var parent_car: DriveableVehicle
 @export var shut_door_mesh: MeshInstance3D
+@export var shut_door_colliders: Array[CollisionShape3D]
 @export var hinge_joint: JoltHingeJoint3D
 @export var door_open_SFX: AudioStreamPlayer3D
 @export var door_shut_SFX: AudioStreamPlayer3D
@@ -23,6 +24,7 @@ class_name CarDoor extends RigidBody3D
 const outline_material := preload("res://assets/materials/outline_material_overlay.tres")
 @onready var open_door_mesh: MeshInstance3D = $MeshInstance3D
 @onready var interact_target: Marker3D = $InteractTarget
+@onready var _collider := $CollisionShape3D
 var shut_basis: Basis
 var hinge_limit_upper: float
 var hinge_limit_lower: float
@@ -31,6 +33,12 @@ var is_shut: bool
 var open_timer: SceneTreeTimer
 var shut_timer: SceneTreeTimer
 var is_highlighted := false
+var _initial_mass: float
+
+
+func _init() -> void:
+	_initial_mass = mass
+	return
 
 
 func _ready():
@@ -42,9 +50,11 @@ func _ready():
 	motor_target_velocity = hinge_joint.motor_target_velocity
 	hinge_joint.limit_upper = 0
 	hinge_joint.limit_lower = 0
+	mass = 0.1
 	is_shut = true
 	visible = !hide_rigidbody_when_shut
 	shut_door_mesh.visible = hide_rigidbody_when_shut
+	_collider.disabled = true
 	set_collision_layer_value(19, false)
 	set_latches_active(false)
 	if hinge_separation_collider_A:
@@ -91,6 +101,9 @@ func pull_open() -> void:
 	shut_door_mesh.visible = false
 	door_open_SFX.play()
 	enter_car_collision_shape.disabled = false
+	for _shut_door_collider in shut_door_colliders:
+		_shut_door_collider.disabled = true
+	_collider.disabled = false
 	set_collision_layer_value(19, true)
 	set_latches_active(true)
 	return
@@ -117,7 +130,10 @@ func fall_open() -> void:
 	shut_door_mesh.visible = false
 	door_open_SFX.play()
 	enter_car_collision_shape.disabled = false
+	for _shut_door_collider in shut_door_colliders:
+		_shut_door_collider.disabled = true
 	set_collision_layer_value(19, true)
+	_collider.disabled = false
 	set_latches_active(true)
 	return
 
@@ -131,7 +147,10 @@ func shut() -> void:
 	shut_door_mesh.visible = hide_rigidbody_when_shut
 	door_shut_SFX.play()
 	enter_car_collision_shape.disabled = true
+	for _shut_door_collider in shut_door_colliders:
+		_shut_door_collider.disabled = false
 	set_collision_layer_value(19, false)
+	_collider.disabled = true
 	set_latches_active(false)
 	return
 
@@ -172,6 +191,7 @@ func detach() -> void:
 	hinge_joint.motor_enabled = false
 	hinge_joint.limit_enabled = false
 	hinge_joint.enabled = false
+	mass = _initial_mass
 	return
 
 
