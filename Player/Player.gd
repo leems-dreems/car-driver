@@ -600,7 +600,7 @@ func process_interact_button() -> void:
 
 func interact_short_press_timeout() -> void:
 	interact_short_press_timer.stop()
-	if targeted_interactable.can_interact_long_press():
+	if targeted_interactable != null and targeted_interactable.can_interact_long_press():
 		short_press_interact_finish.emit()
 		long_press_interact_start.emit()
 		interact_long_press_timer.start(_interact_button_long_press_delay)
@@ -608,12 +608,13 @@ func interact_short_press_timeout() -> void:
 			short_press_interact_highlight.emit(targeted_interactable)
 	else:
 		short_press_interact_finish.emit()
-		targeted_interactable.interact_short_press()
-		if _pickup_collider.overlaps_area(targeted_interactable):
-			short_press_interact_highlight.emit(targeted_interactable)
-		else:
-			targeted_interactable.unhighlight()
-			targeted_interactable = null
+		if targeted_interactable != null:
+			targeted_interactable.interact_short_press()
+			if _pickup_collider.overlaps_area(targeted_interactable):
+				short_press_interact_highlight.emit(targeted_interactable)
+			else:
+				targeted_interactable.unhighlight()
+				targeted_interactable = null
 	return
 
 

@@ -2,7 +2,7 @@ class_name CarDoorInteractArea extends InteractableArea
 
 @export var is_enterable := true ## Whether player can enter vehicle through this door
 @export var door_name := "door"
-var car_door: CarDoor
+@export var car_door: CarDoor
 var block_short_press_timer: SceneTreeTimer = null
 const block_short_press_delay := 0.5
 
@@ -14,9 +14,6 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	await owner.ready
-	car_door = get_parent_node_3d() as CarDoor
-	assert(car_door != null, "This class needs the owner to be a CarDoor node.")
 	if not car_door.is_shut:
 		short_press_text = "Shut " + door_name
 	else:

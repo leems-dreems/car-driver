@@ -277,6 +277,7 @@ sprint={
 3d_physics/layer_12="TrafficSpawnPoint"
 3d_physics/layer_13="MovingScenery"
 3d_physics/layer_14="PhysicalTerrain"
+3d_physics/layer_16="ItemInsideVehicle"
 3d_physics/layer_17="CarryableItem"
 3d_physics/layer_18="CarBumper"
 3d_physics/layer_19="CarDoor"
