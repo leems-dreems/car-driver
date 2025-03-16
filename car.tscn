@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://diteqdv8nyojo"]
 
-[ext_resource type="Script" path="res://car.gd" id="1_5e5gp"]
+[ext_resource type="Script" uid="uid://bg47025mugliw" path="res://car.gd" id="1_5e5gp"]
 [ext_resource type="ArrayMesh" uid="uid://ykoc8xvlfsgw" path="res://assets/models/car_feisty.obj" id="2_33kof"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lcdbu"]

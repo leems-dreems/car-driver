@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ck6644jswd7c"]
 
-[ext_resource type="Script" path="res://maps/SmallCityMap/spinning_whacker.gd" id="1_wr3wh"]
+[ext_resource type="Script" uid="uid://b8owyh2cdc03j" path="res://maps/SmallCityMap/spinning_whacker.gd" id="1_wr3wh"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_t18df"]
 
@@ -31,13 +31,13 @@ mesh = SubResource("CylinderMesh_t18df")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 shape = SubResource("ConvexPolygonShape3D_vj84j")
 
-[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="."]
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+node_a = NodePath("../StaticBody3D")
+node_b = NodePath("../Whack Arm")
 angular_limit_y/enabled = false
 angular_motor_y/enabled = true
 angular_motor_y/target_velocity = 3.14159
-node_a = NodePath("../StaticBody3D")
-node_b = NodePath("../Whack Arm")
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 
 [node name="Whack Arm" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)

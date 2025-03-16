@@ -4,7 +4,7 @@ class_name StandalonePropBodies extends Node3D
 
 var is_detached_from_parent := false
 @onready var rigid_body := $RigidBody3D
-@onready var joint: JoltGeneric6DOFJoint3D = $JoltGeneric6DOFJoint3D
+@onready var joint: Generic6DOFJoint3D = $Generic6DOFJoint3D
 @onready var static_body := $StaticBody3D
 @onready var respawn_area := $Area3D
 

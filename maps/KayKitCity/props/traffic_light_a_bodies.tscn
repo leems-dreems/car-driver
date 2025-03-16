@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://dkgfw60uv84fp"]
 
-[ext_resource type="Script" path="res://maps/KayKitCity/props/traffic_light_a_bodies.gd" id="1_egxgu"]
+[ext_resource type="Script" uid="uid://vpxi0imrd4io" path="res://maps/KayKitCity/props/traffic_light_a_bodies.gd" id="1_egxgu"]
 [ext_resource type="ArrayMesh" uid="uid://c17atyys3y7ra" path="res://assets/models/props/pole_6m.obj" id="2_ii4w5"]
 [ext_resource type="ArrayMesh" uid="uid://bpsonievboh4l" path="res://assets/models/props/traffic_light_head.obj" id="3_r1csc"]
 [ext_resource type="AudioStream" uid="uid://dtbi4h33h4wf4" path="res://assets/audio/Sound effects package/Impact/Metal/metal_01.wav" id="4_4c2bk"]
@@ -86,7 +86,7 @@ stream = SubResource("AudioStreamRandomizer_7jy6q")
 unit_size = 2.0
 max_polyphony = 5
 
-[node name="HeadJoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="."]
+[node name="HeadGeneric6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
 node_a = NodePath("../RigidBody3D")
 node_b = NodePath("../Head")
 
@@ -137,17 +137,11 @@ stream = SubResource("AudioStreamRandomizer_7jy6q")
 unit_size = 2.0
 max_polyphony = 5
 
-[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="."]
-linear_limit_x/upper = 1.0
-linear_limit_x/lower = -1.0
-linear_limit_z/upper = 1.0
-linear_limit_z/lower = -1.0
-linear_spring_x/enabled = true
-linear_spring_x/frequency = 10.0
-linear_spring_z/enabled = true
-linear_spring_z/frequency = 10.0
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
 node_a = NodePath("../StaticBody3D")
 node_b = NodePath("../RigidBody3D")
+linear_spring_x/enabled = true
+linear_spring_z/enabled = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 0

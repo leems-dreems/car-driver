@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=4 uid="uid://0uwi576g6lao"]
 
-[ext_resource type="Script" path="res://items/carryable_item.gd" id="1_kmt6j"]
+[ext_resource type="Script" uid="uid://baadb6i3uijy7" path="res://items/carryable_item.gd" id="1_kmt6j"]
 [ext_resource type="AudioStream" uid="uid://33u1gmdods12" path="res://assets/audio/Sound effects package/Arcade and Games/Ping Pong Ball on Table 01.wav" id="2_q6kb1"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h1vhk"]
@@ -130,9 +130,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_73s5p"]
 _data = {
-"RESET": SubResource("Animation_0asyl"),
-"highlight": SubResource("Animation_rxh4e"),
-"un_highlight": SubResource("Animation_v6b8s")
+&"RESET": SubResource("Animation_0asyl"),
+&"highlight": SubResource("Animation_rxh4e"),
+&"un_highlight": SubResource("Animation_v6b8s")
 }
 
 [node name="SmallCanItem" type="RigidBody3D"]
@@ -151,7 +151,7 @@ shape = SubResource("ConvexPolygonShape3D_d7r6n")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_73s5p")
+&"": SubResource("AnimationLibrary_73s5p")
 }
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bcctf2eb0h5f2" path="res://assets/textures/stillFlame.png" id="1_qghlc"]
 [ext_resource type="Texture2D" uid="uid://d1jy3bqnsbkwu" path="res://assets/textures/FlameSheet.png" id="2_qg21p"]
-[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="3_0si1p"]
+[ext_resource type="Script" uid="uid://6xuvaw3wn6kx" path="res://effects/car_game_particles.gd" id="3_0si1p"]
 
 [sub_resource type="Curve" id="Curve_dawdi"]
 _data = [Vector2(0.827451, 0.978723), 0.0, -21.7021, 0, 0, Vector2(1, 0.010989), -27.0981, 0.0, 0, 0]

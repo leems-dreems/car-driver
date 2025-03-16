@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=4 uid="uid://ddn6ryeh1v0al"]
 
-[ext_resource type="Script" path="res://items/carryable_item.gd" id="1_gl4e7"]
+[ext_resource type="Script" uid="uid://baadb6i3uijy7" path="res://items/carryable_item.gd" id="1_gl4e7"]
 [ext_resource type="AudioStream" uid="uid://33u1gmdods12" path="res://assets/audio/Sound effects package/Arcade and Games/Ping Pong Ball on Table 01.wav" id="2_h5kl0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c6iqq"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://di0h8fimsg84o"]
 
-[ext_resource type="Script" path="res://collidables/standalone_prop_bodies.gd" id="1_xa2st"]
+[ext_resource type="Script" uid="uid://dxx1mmla58uw3" path="res://collidables/standalone_prop_bodies.gd" id="1_xa2st"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j5txw"]
 friction = 0.5

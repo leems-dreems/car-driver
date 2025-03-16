@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://78pe57wriy2b"]
 
-[ext_resource type="Script" path="res://collidables/TrashCanSquare.gd" id="1_561to"]
+[ext_resource type="Script" uid="uid://cg7bvlwrgr5mc" path="res://collidables/TrashCanSquare.gd" id="1_561to"]
 [ext_resource type="ArrayMesh" uid="uid://cgsmitsotxc04" path="res://assets/models/trashCanSquare.obj" id="2_la16u"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5r7l0"]

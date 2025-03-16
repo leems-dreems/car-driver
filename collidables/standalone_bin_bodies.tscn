@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://dc8sax4rbvaj4"]
 
-[ext_resource type="Script" path="res://collidables/standalone_prop_bodies.gd" id="1_htapq"]
+[ext_resource type="Script" uid="uid://dxx1mmla58uw3" path="res://collidables/standalone_prop_bodies.gd" id="1_htapq"]
 [ext_resource type="ArrayMesh" uid="uid://cgsmitsotxc04" path="res://assets/models/trashCanSquare.obj" id="2_rhkmq"]
-[ext_resource type="Script" path="res://collidables/collidable_container.gd" id="2_ylw4c"]
-[ext_resource type="Script" path="res://scripts/detachable_bin_interact_target.gd" id="4_c7o34"]
+[ext_resource type="Script" uid="uid://csm3r7ce6lot3" path="res://collidables/collidable_container.gd" id="2_ylw4c"]
+[ext_resource type="Script" uid="uid://c33wpgxumj8lm" path="res://scripts/detachable_bin_interact_target.gd" id="4_c7o34"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j5txw"]
 friction = 0.5
@@ -69,17 +69,11 @@ script = ExtResource("4_c7o34")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 shape = SubResource("BoxShape3D_pmvkc")
 
-[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="."]
-linear_limit_x/upper = 1.0
-linear_limit_x/lower = -1.0
-linear_limit_z/upper = 1.0
-linear_limit_z/lower = -1.0
-linear_spring_x/enabled = true
-linear_spring_x/frequency = 10.0
-linear_spring_z/enabled = true
-linear_spring_z/frequency = 10.0
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
 node_a = NodePath("../StaticBody3D")
 node_b = NodePath("../RigidBody3D")
+linear_spring_x/enabled = true
+linear_spring_z/enabled = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 0

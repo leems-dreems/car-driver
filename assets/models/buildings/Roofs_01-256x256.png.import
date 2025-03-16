@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxeh7vq5tlmoh"
+uid="uid://blmb60xfttyph"
 path.s3tc="res://.godot/imported/Roofs_01-256x256.png-2d075e53b086cc7e5b8afb5ee293f9bc.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
@@ -20,7 +20,7 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=2
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1

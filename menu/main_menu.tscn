@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://vjg2ea35fon3"]
 
-[ext_resource type="PackedScene" uid="uid://civapmbuqx1uv" path="res://cars/compact/compact.tscn" id="1_5lks4"]
-[ext_resource type="Script" path="res://menu/main_menu.gd" id="1_cu1he"]
+[ext_resource type="PackedScene" uid="uid://bjybpumswq7gl" path="res://cars/compact/compact.tscn" id="1_5lks4"]
+[ext_resource type="Script" uid="uid://tkmfltcr70b0" path="res://menu/main_menu.gd" id="1_cu1he"]
 [ext_resource type="PackedScene" uid="uid://dxnvsoi1pvfeu" path="res://addons/gevp/scenes/track.tscn" id="2_3t4wx"]
 [ext_resource type="PackedScene" uid="uid://df3ovqaugu3gp" path="res://city_scene.tscn" id="2_sm85u"]
 

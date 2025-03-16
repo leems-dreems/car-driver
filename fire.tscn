@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://drtqj75y7cwtf"]
 
-[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="1_vurgw"]
+[ext_resource type="Script" uid="uid://6xuvaw3wn6kx" path="res://effects/car_game_particles.gd" id="1_vurgw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ltdd8"]
 transparency = 1

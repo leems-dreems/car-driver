@@ -3,7 +3,7 @@ class_name CarDoor extends RigidBody3D
 @export var parent_car: DriveableVehicle
 @export var shut_door_mesh: MeshInstance3D
 @export var shut_door_colliders: Array[CollisionShape3D]
-@export var hinge_joint: JoltHingeJoint3D
+@export var hinge_joint: HingeJoint3D
 @export var door_open_SFX: AudioStreamPlayer3D
 @export var door_shut_SFX: AudioStreamPlayer3D
 @export var enter_car_collision_shape: CollisionShape3D
@@ -48,11 +48,11 @@ func _ready():
 	if not is_openable:
 		set_collision_layer_value(4, false)
 	shut_basis = Basis(transform.basis)
-	hinge_limit_upper = hinge_joint.limit_upper
-	hinge_limit_lower = hinge_joint.limit_lower
-	motor_target_velocity = hinge_joint.motor_target_velocity
-	hinge_joint.limit_upper = 0
-	hinge_joint.limit_lower = 0
+	hinge_limit_upper = hinge_joint.get("angular_limit/upper")
+	hinge_limit_lower = hinge_joint.get("angular_limit/lower")
+	motor_target_velocity = hinge_joint.get("motor/target_velocity")
+	hinge_joint.set("angular_limit/upper", 0)
+	hinge_joint.set("angular_limit/lower", 0)
 	#mass = 0.1
 	is_shut = true
 	visible = !hide_rigidbody_when_shut
@@ -86,24 +86,24 @@ func _physics_process (_delta: float) -> void:
 
 func pull_open() -> void:
 	enable_colliders()
-	hinge_joint.limit_upper = hinge_limit_upper
-	hinge_joint.limit_lower = hinge_limit_lower
+	hinge_limit_upper = hinge_joint.get("angular_limit/upper")
+	hinge_limit_lower = hinge_joint.get("angular_limit/lower")
 	is_shut = false
 	visible = true
 	#hinge_joint.enabled = true
 	
 	if hinge_open_motor_duration == 0:
-		hinge_joint.motor_enabled = false
+		hinge_joint.set("motor/enable", false)
 		set_latches_active(true)
 	else:
-		hinge_joint.motor_target_velocity = motor_target_velocity
-		hinge_joint.motor_enabled = true
+		hinge_joint.set("motor/target_velocity", motor_target_velocity)
+		hinge_joint.set("motor/enable", true)
 		if hinge_open_motor_duration != -1:
 			open_timer = get_tree().create_timer(hinge_open_motor_duration)
 			set_latches_active(false)
 			open_timer.timeout.connect(func():
 				set_latches_active(true)
-				hinge_joint.motor_enabled = false
+				hinge_joint.set("motor/enable", false)
 				open_timer = null
 			)
 		else:
@@ -126,24 +126,24 @@ func pull_open() -> void:
 
 func fall_open() -> void:
 	enable_colliders()
-	hinge_joint.limit_upper = hinge_limit_upper
-	hinge_joint.limit_lower = hinge_limit_lower
+	hinge_limit_upper = hinge_joint.get("angular_limit/upper")
+	hinge_limit_lower = hinge_joint.get("angular_limit/lower")
 	is_shut = false
 	visible = true
 	#hinge_joint.enabled = true
 	
 	if hinge_open_motor_duration == 0:
-		hinge_joint.motor_enabled = false
+		hinge_joint.set("motor/enable", false)
 		set_latches_active(true)
 	else:
-		hinge_joint.motor_target_velocity = motor_target_velocity
-		hinge_joint.motor_enabled = true
+		hinge_joint.set("motor/target_velocity", motor_target_velocity)
+		hinge_joint.set("motor/enable", true)
 		if hinge_open_motor_duration != -1:
 			open_timer = get_tree().create_timer(hinge_open_motor_duration)
 			set_latches_active(false)
 			open_timer.timeout.connect(func():
 				set_latches_active(true)
-				hinge_joint.motor_enabled = false
+				hinge_joint.set("motor/enable", false)
 				open_timer = null
 			)
 		else:
@@ -165,15 +165,15 @@ func fall_open() -> void:
 
 
 func shut() -> void:
-	hinge_joint.limit_upper = 0
-	hinge_joint.limit_lower = 0
+	hinge_joint.set("angular_limit/upper", 0)
+	hinge_joint.set("angular_limit/lower", 0)
 	#hinge_joint.enabled = false
-	hinge_joint.motor_enabled = false
+	hinge_joint.set("motor/enable", false)
 	is_shut = true
 	visible = !hide_rigidbody_when_shut
 	shut_door_mesh.visible = hide_rigidbody_when_shut
 	door_shut_SFX.play()
-	enter_car_collision_shape.disabled = true
+	enter_car_collision_shape.set_deferred("disabled", true)
 	for _shut_door_collider in shut_door_colliders:
 		_shut_door_collider.disabled = false
 	set_collision_layer_value(19, false)
@@ -188,16 +188,16 @@ func open_or_shut() -> void:
 		pull_open()
 	else:
 		if hinge_close_motor_duration == 0:
-			hinge_joint.motor_enabled = false
+			hinge_joint.set("motor/enable", false)
 			set_latches_active(true)
 		else:
-			hinge_joint.motor_target_velocity = -motor_target_velocity
-			hinge_joint.motor_enabled = true
+			hinge_joint.set("motor/target_velocity", -motor_target_velocity)
+			hinge_joint.set("motor/enable", true)
 			set_latches_active(true)
 			if hinge_close_motor_duration != -1:
 				shut_timer = get_tree().create_timer(hinge_close_motor_duration)
 				shut_timer.timeout.connect(func():
-					hinge_joint.motor_enabled = false
+					hinge_joint.set("motor/enable", false)
 					shut_timer = null
 				)
 	return
@@ -217,8 +217,8 @@ func set_latches_active(_active: bool) -> void:
 
 
 func detach() -> void:
-	hinge_joint.motor_enabled = false
-	hinge_joint.enabled = false
+	hinge_joint.set("motor/enable", false)
+	hinge_joint.set("angular_limit/enable", false)
 	mass = _initial_mass
 	is_detached = true
 	return
@@ -227,15 +227,19 @@ func detach() -> void:
 func enable_colliders() -> void:
 	transform = _initial_transform
 	linear_velocity = parent_car.linear_velocity
-	hinge_joint.enabled = true
-	_collider.disabled = false
+	hinge_joint.set("angular_limit/enable", true)
+	hinge_joint.node_a = parent_car.get_path()
+	hinge_joint.node_b = self.get_path()
+	_collider.set_deferred("disabled", false)
 	freeze = false
 	return
 
 
 func disable_colliders() -> void:
-	hinge_joint.enabled = false
-	_collider.disabled = true
+	hinge_joint.node_a = ""
+	hinge_joint.node_b = ""
+	hinge_joint.set("angular_limit/enable", false)
+	_collider.set_deferred("disabled", true)
 	freeze = true
 	return
 

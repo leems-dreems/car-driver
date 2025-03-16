@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=3 uid="uid://jpe0svqk76rk"]
 
-[ext_resource type="Script" path="res://collidables/standalone_gas_pump_bodies.gd" id="1_lxtwe"]
+[ext_resource type="Script" uid="uid://b6xy2m5etydh5" path="res://collidables/standalone_gas_pump_bodies.gd" id="1_lxtwe"]
 [ext_resource type="PackedScene" uid="uid://drtqj75y7cwtf" path="res://fire.tscn" id="2_67v7a"]
 [ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="2_t1f7j"]
 [ext_resource type="PackedScene" uid="uid://c0sm3m6mudm7u" path="res://fireFlat.tscn" id="3_h5uk1"]
-[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="4_hy7kp"]
+[ext_resource type="Script" uid="uid://6xuvaw3wn6kx" path="res://effects/car_game_particles.gd" id="4_hy7kp"]
 [ext_resource type="Material" uid="uid://crersspndigy4" path="res://effects/spark_emitter_material.tres" id="5_qhsfs"]
 [ext_resource type="RibbonTrailMesh" uid="uid://cya57d6ip8mv7" path="res://effects/spark_ribbon_mesh.tres" id="6_hydgb"]
 

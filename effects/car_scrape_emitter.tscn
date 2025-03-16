@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://msf4p72duq7l"]
 
-[ext_resource type="Script" path="res://effects/car_scrape_emitter.gd" id="1_7e4li"]
+[ext_resource type="Script" uid="uid://crtqepucbeeie" path="res://effects/car_scrape_emitter.gd" id="1_7e4li"]
 [ext_resource type="Material" uid="uid://crersspndigy4" path="res://effects/spark_emitter_material.tres" id="1_i5h02"]
 [ext_resource type="AudioStream" uid="uid://cdk4l0404vu4j" path="res://assets/audio/Sound effects package/Metal/Metal Slide 04-looping.wav" id="1_oamqh"]
 [ext_resource type="RibbonTrailMesh" uid="uid://cya57d6ip8mv7" path="res://effects/spark_ribbon_mesh.tres" id="2_woaul"]

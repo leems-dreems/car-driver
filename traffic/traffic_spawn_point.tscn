@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cd1dmkbg8abro"]
 
-[ext_resource type="Script" path="res://traffic/traffic_spawn_point.gd" id="1_qtxwn"]
+[ext_resource type="Script" uid="uid://1i1jxyk5iwh8" path="res://traffic/traffic_spawn_point.gd" id="1_qtxwn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_or18o"]
 size = Vector3(3, 3, 6)
@@ -44,8 +44,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o8qiq"]
 _data = {
-"RESET": SubResource("Animation_hlkea"),
-"highlight": SubResource("Animation_0yen5")
+&"RESET": SubResource("Animation_hlkea"),
+&"highlight": SubResource("Animation_0yen5")
 }
 
 [node name="TrafficSpawnPoint" type="PathFollow3D"]

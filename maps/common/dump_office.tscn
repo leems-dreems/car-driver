@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=4 uid="uid://cklcxewrfavka"]
 
 [ext_resource type="Texture2D" uid="uid://cdansqimgabqx" path="res://assets/models/buildings/Bricks_02-256x256.png" id="1_ejdn7"]
-[ext_resource type="Texture2D" uid="uid://dxeh7vq5tlmoh" path="res://assets/models/buildings/Roofs_01-256x256.png" id="2_hpgsk"]
+[ext_resource type="Texture2D" uid="uid://blmb60xfttyph" path="res://assets/models/buildings/Roofs_01-256x256.png" id="2_hpgsk"]
 [ext_resource type="Material" uid="uid://dxv03wko5033o" path="res://assets/materials/bricks.tres" id="3_mpc4l"]
 [ext_resource type="Material" uid="uid://bngy8qqgsri0d" path="res://assets/materials/roof_tiles.tres" id="4_fs5hq"]
 [ext_resource type="Material" uid="uid://ciqev7fmb50ob" path="res://assets/materials/paint/purple.tres" id="5_0m2b5"]

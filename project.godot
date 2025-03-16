@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Fast Traffic"
 run/main_scene="res://maps/BinRoninIsland/bin_ronin_island.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -30,7 +30,8 @@ file_logging/max_log_files=10
 
 [display]
 
-window/size/mode=2
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 
 [dotnet]
 
@@ -292,7 +293,6 @@ sprint={
 [physics]
 
 3d/physics_engine="JoltPhysics3D"
-common/physics_interpolation=true
 jolt_3d/collisions/areas_detect_static_bodies=true
 
 [rendering]
