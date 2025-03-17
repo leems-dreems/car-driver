@@ -24,7 +24,7 @@ var paintjobs := [
 ]
 
 var burnt_material: StandardMaterial3D
-@onready var bonnet: CarDoor = $ColliderBits/Bonnet/OpenBonnet
+#@onready var bonnet: CarDoor = $ColliderBits/Bonnet/OpenBonnet
 @onready var boot: CarDoor = $ColliderBits/Boot/OpenBoot
 @onready var bump_audio: AudioStreamPlayer3D = $AudioStreams/BumpAudio
 @onready var metal_impact_audio: AudioStreamPlayer3D = $AudioStreams/MetalImpactAudio
@@ -39,13 +39,13 @@ func _ready() -> void:
 	var _paintjob: Dictionary = paintjobs.pick_random()
 	contact_checker.vehicle = self
 	#burnt_material = _skin.burnt_material
-	$body.set_surface_override_material(0, _paintjob.material)
+	$Body.set_surface_override_material(0, _paintjob.material)
 	$ColliderBits/DoorLeft/ShutDoorLeft.set_surface_override_material(0, _paintjob.material)
 	$ColliderBits/DoorLeft/OpenDoorLeft/MeshInstance3D.set_surface_override_material(0, _paintjob.material)
 	$ColliderBits/DoorRight/ShutDoorRight.set_surface_override_material(0, _paintjob.material)
 	$ColliderBits/DoorRight/OpenDoorRight/MeshInstance3D.set_surface_override_material(0, _paintjob.material)
-	$ColliderBits/Bonnet/ShutBonnet.set_surface_override_material(0, _paintjob.material)
-	$ColliderBits/Bonnet/OpenBonnet/MeshInstance3D.set_surface_override_material(0, _paintjob.material)
+	#$ColliderBits/Bonnet/ShutBonnet.set_surface_override_material(0, _paintjob.material)
+	#$ColliderBits/Bonnet/OpenBonnet/MeshInstance3D.set_surface_override_material(0, _paintjob.material)
 	$ColliderBits/Boot/ShutBoot.set_surface_override_material(0, _paintjob.material)
 	$ColliderBits/Boot/OpenBoot/MeshInstance3D.set_surface_override_material(0, _paintjob.material)
 
@@ -54,13 +54,13 @@ func _ready() -> void:
 
 
 func apply_burnt_material() -> void:
-	$body.set_surface_override_material(0, burnt_material)
+	$Body.set_surface_override_material(0, burnt_material)
 	$ColliderBits/DoorLeft/ShutDoorLeft.set_surface_override_material(0, burnt_material)
 	$ColliderBits/DoorLeft/OpenDoorLeft/MeshInstance3D.set_surface_override_material(0, burnt_material)
 	$ColliderBits/DoorRight/ShutDoorRight.set_surface_override_material(0, burnt_material)
 	$ColliderBits/DoorRight/OpenDoorRight/MeshInstance3D.set_surface_override_material(0, burnt_material)
-	$ColliderBits/Bonnet/ShutBonnet.set_surface_override_material(0, burnt_material)
-	$ColliderBits/Bonnet/OpenBonnet/MeshInstance3D.set_surface_override_material(0, burnt_material)
+	#$ColliderBits/Bonnet/ShutBonnet.set_surface_override_material(0, burnt_material)
+	#$ColliderBits/Bonnet/OpenBonnet/MeshInstance3D.set_surface_override_material(0, burnt_material)
 	$ColliderBits/Boot/ShutBoot.set_surface_override_material(0, burnt_material)
 	$ColliderBits/Boot/OpenBoot/MeshInstance3D.set_surface_override_material(0, burnt_material)
 	return
@@ -92,8 +92,8 @@ func react_to_collision(velocity_change: Vector3) -> void:
 		door_left.fall_open()
 	var _dot_with_y := velocity_change.dot(global_transform.basis.y)
 	if _dot_with_y > 0.5:
-		if not bonnet.is_detached:
-			bonnet.fall_open()
+		#if not bonnet.is_detached:
+			#bonnet.fall_open()
 		if not boot.is_detached:
 			boot.fall_open()
 	var _dot_with_z := velocity_change.dot(global_transform.basis.z)
@@ -105,7 +105,7 @@ func react_to_collision(velocity_change: Vector3) -> void:
 func explode() -> void:
 	door_left.fall_open()
 	door_right.fall_open()
-	bonnet.fall_open()
+	#bonnet.fall_open()
 	boot.fall_open()
 	super()
 	return
@@ -118,8 +118,8 @@ func freeze_bodies() -> void:
 	door_left.freeze = true
 	door_right.top_level = false
 	door_right.freeze = true
-	bonnet.top_level = false
-	bonnet.freeze = true
+	#bonnet.top_level = false
+	#bonnet.freeze = true
 	boot.top_level = false
 	boot.freeze = true
 	return
