@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdansqimgabqx"
+uid="uid://b8asdxrm6jv8x"
 path.s3tc="res://.godot/imported/Bricks_02-256x256.png-ee5eae1f8a4c20bb2be031c2dd1ad586.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
@@ -20,7 +20,7 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=2
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1

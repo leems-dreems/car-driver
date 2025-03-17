@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=4 uid="uid://cd3qphnvh8fyv"]
 
-[ext_resource type="Script" uid="uid://c4xlw7ofjbvul" path="res://addons/gevp/scripts/vehicle.gd" id="1_ulp2h"]
-[ext_resource type="Script" uid="uid://k7wx5nv5cjf3" path="res://addons/gevp/scripts/wheel.gd" id="2_cgxu0"]
+[ext_resource type="Script" uid="uid://b1ofvk467gy5c" path="res://addons/gevp/scripts/vehicle.gd" id="1_ulp2h"]
+[ext_resource type="Script" uid="uid://dnmme0w2xf3sf" path="res://addons/gevp/scripts/wheel.gd" id="2_cgxu0"]
 
 [sub_resource type="Curve" id="Curve_bt7kc"]
 _data = [Vector2(0, 0.494505), 0.0, 2.04495, 0, 0, Vector2(0.767241, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.758242), -2.03956, 0.0, 0, 0]

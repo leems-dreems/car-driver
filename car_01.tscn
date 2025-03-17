@@ -1,7 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://duwq7plpdtih5"]
-
-[sub_resource type="Resource" id="Resource_leduh"]
-metadata/__load_path__ = "res://assets/PSX_Style_Cars_by_GGBot_(August2023)/Car 01/Car.blend"
+[gd_scene format=3 uid="uid://duwq7plpdtih5"]
 
 [node name="Car01" type="Node3D"]
 

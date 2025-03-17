@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=4 uid="uid://ds6xtk4wy22q"]
 
-[ext_resource type="Texture2D" uid="uid://cdansqimgabqx" path="res://assets/models/buildings/Bricks_02-256x256.png" id="1_4or5c"]
+[ext_resource type="Texture2D" uid="uid://b8asdxrm6jv8x" path="res://assets/models/buildings/Bricks_02-256x256.png" id="1_4or5c"]
 [ext_resource type="Material" uid="uid://dxv03wko5033o" path="res://assets/materials/bricks.tres" id="2_mrdx7"]
 [ext_resource type="Material" uid="uid://7ma5fuqvf1h7" path="res://assets/materials/paint/yellow.tres" id="3_1lngf"]
 

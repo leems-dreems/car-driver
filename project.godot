@@ -292,8 +292,9 @@ sprint={
 
 [physics]
 
-3d/physics_engine="JoltPhysics3D"
-jolt_3d/collisions/areas_detect_static_bodies=true
+3d/physics_engine="Jolt Physics (Extension)"
+jolt_physics_3d/simulation/areas_detect_static_bodies=true
+jolt_physics_extension_3d/collisions/areas_detect_static_bodies=true
 
 [rendering]
 

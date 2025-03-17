@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=4 uid="uid://dfcsj3jjvi65m"]
+[gd_scene load_steps=99 format=4 uid="uid://dfcsj3jjvi65m"]
 
 [ext_resource type="Script" uid="uid://ddwscibhc5v8e" path="res://cars/Van/van.gd" id="1_bpvqw"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_131uc"]
@@ -23,7 +23,6 @@
 [ext_resource type="ArrayMesh" uid="uid://b0qvn50fxmync" path="res://assets/models/vehicles/Van/van_brakelight_R.obj" id="19_l8fvl"]
 [ext_resource type="ArrayMesh" uid="uid://bd6q5r66dksys" path="res://assets/models/vehicles/Van/van_reverselight_R.obj" id="20_aa3gt"]
 [ext_resource type="Script" uid="uid://ce4rhbhmawe84" path="res://scripts/enter_vehicle_hitbox.gd" id="21_alnvw"]
-[ext_resource type="Script" uid="uid://k7wx5nv5cjf3" path="res://addons/gevp/scripts/wheel.gd" id="22_4fyyl"]
 [ext_resource type="AudioStream" uid="uid://d2gr5emhyehgo" path="res://assets/sfx/tires_squal_loop.wav" id="23_3658c"]
 [ext_resource type="AudioStream" uid="uid://x2riq63vqy7j" path="res://assets/sfx/skid-loop.wav" id="24_pqei1"]
 [ext_resource type="AudioStream" uid="uid://b6wjsd5udyqvt" path="res://assets/audio/Hanna-Barbera SFX/rumble_loop.wav" id="25_rgp4t"]
@@ -89,6 +88,9 @@ points = PackedVector3Array(-0.900422, 0.349139, -2.37043, -0.900422, 0.349139, 
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_100sx"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="Resource" id="Resource_qpyky"]
+metadata/__load_path__ = "res://addons/gevp_backup/scripts/wheel.gd"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4010s"]
 resource_name = "carTire"
@@ -179,6 +181,15 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7qo4e")
+
+[sub_resource type="Resource" id="Resource_lvwnm"]
+metadata/__load_path__ = "res://addons/gevp_backup/scripts/wheel.gd"
+
+[sub_resource type="Resource" id="Resource_8hwl6"]
+metadata/__load_path__ = "res://addons/gevp_backup/scripts/wheel.gd"
+
+[sub_resource type="Resource" id="Resource_qa1yq"]
+metadata/__load_path__ = "res://addons/gevp_backup/scripts/wheel.gd"
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sp4ri"]
 radius = 0.25
@@ -799,7 +810,7 @@ disabled = true
 
 [node name="WheelFrontLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15655, -0.1, -2.60287)
-script = ExtResource("22_4fyyl")
+script = SubResource("Resource_qpyky")
 wheel_node = NodePath("FrontLeftWheel")
 
 [node name="FrontLeftWheel" type="Node3D" parent="WheelFrontLeft"]
@@ -836,7 +847,7 @@ outline_size = 6
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.157, -0.1, -2.60287)
-script = ExtResource("22_4fyyl")
+script = SubResource("Resource_lvwnm")
 wheel_node = NodePath("FrontRightWheel")
 
 [node name="FrontRightWheel" type="Node3D" parent="WheelFrontRight"]
@@ -873,7 +884,7 @@ outline_size = 6
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15655, -0.1, 2.08371)
-script = ExtResource("22_4fyyl")
+script = SubResource("Resource_8hwl6")
 wheel_node = NodePath("RearLeftWheel")
 
 [node name="RearLeftWheel" type="Node3D" parent="WheelRearLeft"]
@@ -910,7 +921,7 @@ outline_size = 6
 
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.157, -0.1, 2.08371)
-script = ExtResource("22_4fyyl")
+script = SubResource("Resource_qa1yq")
 wheel_node = NodePath("RearRightWheel")
 
 [node name="RearRightWheel" type="Node3D" parent="WheelRearRight"]

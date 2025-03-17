@@ -96,7 +96,8 @@ func _process(delta):
 
 
 func initialize():
-	debug_label.visible = show_debug_label
+	if debug_label != null:
+		debug_label.visible = show_debug_label
 	wheel_node.rotation_order = EULER_ORDER_ZXY
 	wheel_moment = 0.5 * wheel_mass * pow(tire_radius, 2)
 	set_target_position(Vector3.DOWN * (spring_length + tire_radius))

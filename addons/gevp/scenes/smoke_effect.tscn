@@ -1,6 +1,6 @@
 [gd_scene load_steps=45 format=3 uid="uid://h6vdpba71kpr"]
 
-[ext_resource type="Script" uid="uid://dirlwcqce4fn" path="res://addons/gevp/scripts/wheel_smoke.gd" id="1_3e4qh"]
+[ext_resource type="Script" uid="uid://dxc7dvvkth084" path="res://addons/gevp/scripts/wheel_smoke.gd" id="1_3e4qh"]
 [ext_resource type="Shader" uid="uid://cntuwy6tbecnw" path="res://effects/ExplosionShader.tres" id="1_3wi3f"]
 [ext_resource type="Texture2D" uid="uid://b4cv780gfxetj" path="res://assets/textures/smokesprite.png" id="2_dqi3b"]
 [ext_resource type="Texture2D" uid="uid://dh0wvuemvp0cf" path="res://assets/textures/normal+.png" id="2_rjtqw"]

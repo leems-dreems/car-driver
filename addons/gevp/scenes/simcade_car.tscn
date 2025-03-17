@@ -1,8 +1,11 @@
 [gd_scene load_steps=23 format=4 uid="uid://ccs7xtede51mo"]
 
-[ext_resource type="Script" uid="uid://c4xlw7ofjbvul" path="res://addons/gevp/scripts/vehicle.gd" id="1_e1t6n"]
-[ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_cptx2"]
-[ext_resource type="Script" uid="uid://k7wx5nv5cjf3" path="res://addons/gevp/scripts/wheel.gd" id="2_e6c7c"]
+[ext_resource type="Script" uid="uid://b1ofvk467gy5c" path="res://addons/gevp/scripts/vehicle.gd" id="1_e1t6n"]
+[ext_resource type="Script" uid="uid://dnmme0w2xf3sf" path="res://addons/gevp/scripts/wheel.gd" id="2_e6c7c"]
+
+[sub_resource type="Curve" id="Curve_bt7kc"]
+_data = [Vector2(0, 0.494505), 0.0, 2.04495, 0, 0, Vector2(0.767241, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.758242), -2.03956, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pnknf"]
 resource_name = "body light yellow"
@@ -446,7 +449,7 @@ stability_yaw_ground_multiplier = 4.0
 max_torque = 569.0
 max_rpm = 6500.0
 idle_rpm = 700.0
-torque_curve = ExtResource("2_cptx2")
+torque_curve = SubResource("Curve_bt7kc")
 motor_moment = 0.3
 gear_ratios = Array[float]([3.01, 2.07, 1.43, 1.0, 0.84, 0.5])
 final_drive = 3.45
