@@ -23,7 +23,7 @@ func interact_short_press() -> void:
 	return
 
 ## Return true if this object is a valid target for a long-press of the interact button
-func can_interact_long_press() -> bool:
+func can_interact_long_press(_carried_item: CarryableItem = null) -> bool:
 	return false
 
 ## Handle a long-press of the interact button

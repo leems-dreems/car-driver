@@ -131,13 +131,13 @@ func _ready() -> void:
 	_pickup_collider.area_entered.connect(func(_area: Area3D):
 		if _area is InteractableArea and not interactables_in_range.has(_area):
 			interactables_in_range.push_back(_area)
+		if _area is DetachableBinArea and not drop_targets.has(_area):
+			if _carried_item != null and _area.can_deposit_item(_carried_item):
+				drop_targets.push_back(_area)
 	)
 	_pickup_collider.body_entered.connect(func(_body: Node3D):
 		if _body is CarryableItem and not pickups_in_range.has(_body):
 			pickups_in_range.push_back(_body)
-		elif _body is RigidBinContainer and not drop_targets.has(_body):
-			if _carried_item != null and _body.can_deposit_item(_carried_item):
-				drop_targets.push_back(_body)
 	)
 	_pickup_collider.area_exited.connect(func(_area: Area3D):
 		if _area == targeted_interactable:
@@ -146,9 +146,17 @@ func _ready() -> void:
 			var _index := interactables_in_range.find(_area)
 			if _index != -1:
 				interactables_in_range.remove_at(_index)
+			if _area is DetachableBinArea:
+				if _area == drop_target:
+					drop_target = null
+				var _drop_target_index := drop_targets.find(_area)
+				if _drop_target_index != -1:
+					drop_targets.remove_at(_drop_target_index)
 			if _area.is_highlighted:
 				short_press_interact_unhighlight.emit()
 				long_press_interact_unhighlight.emit()
+				if _area is DetachableBinArea and _carried_item != null:
+					short_press_drop_unhighlight.emit()
 				_area.unhighlight()
 	)
 	_pickup_collider.body_exited.connect(func(_body: Node3D):
@@ -162,15 +170,6 @@ func _ready() -> void:
 				pickups_in_range.remove_at(_index)
 			if _body.is_highlighted:
 				short_press_pickup_unhighlight.emit()
-				_body.unhighlight()
-		elif _body is RigidBinContainer or _body is VehicleItemContainer:
-			if _body == drop_target:
-				drop_target = null
-			var _index := drop_targets.find(_body)
-			if _index != -1:
-				drop_targets.remove_at(_index)
-			if _body.is_highlighted:
-				short_press_drop_unhighlight.emit()
 				_body.unhighlight()
 	)
 
@@ -596,7 +595,7 @@ func process_interact_button() -> void:
 		if targeted_interactable.can_interact_short_press():
 			short_press_interact_start.emit()
 			interact_short_press_timer.start(_interact_button_short_press_delay)
-		elif targeted_interactable.can_interact_long_press():
+		elif targeted_interactable.can_interact_long_press(_carried_item):
 			long_press_interact_start.emit()
 			interact_long_press_timer.start(_interact_button_long_press_delay)
 	
@@ -607,7 +606,7 @@ func process_interact_button() -> void:
 
 func interact_short_press_timeout() -> void:
 	interact_short_press_timer.stop()
-	if targeted_interactable != null and targeted_interactable.can_interact_long_press():
+	if targeted_interactable != null and targeted_interactable.can_interact_long_press(_carried_item):
 		short_press_interact_finish.emit()
 		long_press_interact_start.emit()
 		interact_long_press_timer.start(_interact_button_long_press_delay)
@@ -628,7 +627,7 @@ func interact_short_press_timeout() -> void:
 func interact_long_press_timeout() -> void:
 	interact_long_press_timer.stop()
 	long_press_interact_finish.emit()
-	if targeted_interactable != null and targeted_interactable.can_interact_long_press():
+	if targeted_interactable != null and targeted_interactable.can_interact_long_press(_carried_item):
 		if targeted_interactable is CarDoorInteractArea:
 			enterVehicle(targeted_interactable.car_door.parent_car)
 		else:
@@ -665,12 +664,12 @@ func update_interact_target(_force_update := false) -> void:
 		var i: int = 0
 		for _interactable in interactables_in_range:
 			if i == 0:
-				targeted_interactable = _interactable
-				if _force_update or not _interactable.is_highlighted:
+				if _force_update or targeted_interactable != _interactable:
+					targeted_interactable = _interactable
 					interact_target_timer.start()
 					if _interactable.can_interact_short_press():
 						short_press_interact_highlight.emit(_interactable)
-					if _interactable.can_interact_long_press():
+					if _interactable.can_interact_long_press(_carried_item):
 						long_press_interact_highlight.emit(_interactable)
 					_interactable.highlight()
 			elif _interactable.is_highlighted:
@@ -702,10 +701,10 @@ func process_drop_button() -> void:
 func update_drop_target(_force_update := false) -> void:
 	if _force_update:
 		drop_targets = []
-		for _body: Node3D in _pickup_collider.get_overlapping_bodies():
-			if _body is RigidBinContainer and not drop_targets.has(_body):
-				if _carried_item != null and _body.can_deposit_item(_carried_item):
-					drop_targets.push_back(_body)
+		for _area: Node3D in _pickup_collider.get_overlapping_areas():
+			if _area is DetachableBinArea and not drop_targets.has(_area):
+				if _carried_item != null and _area.can_deposit_item(_carried_item):
+					drop_targets.push_back(_area)
 
 	if not drop_target_timer.is_stopped():
 		return

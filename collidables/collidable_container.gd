@@ -27,40 +27,6 @@ func unhighlight() -> void:
 	return
 
 
-func can_interact_short_press() -> bool:
-	return true
-
-## Handle a short-press of the interact button
-func interact_short_press() -> void:
-	if label_show_timer != null:
-		label_show_timer.time_left = label_show_duration
-		return
-	label.transparency = 1
-	label.visible = true
-	label_show_timer = get_tree().create_timer(label_show_duration)
-	create_tween().tween_property(label, "transparency", 0, 0.2)
-	label_show_timer.timeout.connect(func():
-		create_tween().tween_property(label, "transparency", 1, 0.2)
-		label_show_timer = null
-	)
-	return
-
-
-func can_interact_long_press() -> bool:
-	return total_count > 0
-
-## Handle a long-press of the interact button
-func interact_long_press() -> void:
-	contained_items = {}
-	total_count = 0
-	label.text = ""
-	var _bin_bag := bin_bag_scene.instantiate()
-	Game.physics_item_container.add_child(_bin_bag)
-	_bin_bag.global_position = global_position
-	_bin_bag.global_position.y += 2
-	return
-
-
 func can_deposit_item(_item: CarryableItem) -> bool:
 	match _item.item_size:
 		CarryableItem.ITEM_SIZE.SMALL: return true

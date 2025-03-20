@@ -27,7 +27,7 @@ points = PackedVector3Array(0.0936065, 0.02736, 0.00539793, -0.0948951, -0.02732
 script = ExtResource("1_htapq")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
-collision_layer = 72
+collision_layer = 64
 collision_mask = 83
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -64,6 +64,7 @@ collision_layer = 8
 collision_mask = 0
 monitoring = false
 script = ExtResource("4_c7o34")
+container_name = "square bin"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/InteractableArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)

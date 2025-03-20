@@ -49,12 +49,12 @@ func interact_short_press() -> void:
 		block_short_press_timer = null
 	)
 	if car_door.is_shut:
-		short_press_text = "Shut " + door_name
+		set_deferred("short_press_text", "Shut " + door_name)
 	else:
-		short_press_text = "Open " + door_name
+		set_deferred("short_press_text", "Open " + door_name)
 	car_door.open_or_shut()
 	return
 
 
-func can_interact_long_press() -> bool:
+func can_interact_long_press(_carried_item: CarryableItem = null) -> bool:
 	return is_enterable

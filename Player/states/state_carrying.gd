@@ -7,6 +7,7 @@ func physics_update(_delta: float) -> void:
 		return
 
 	player.process_drop_button()
+	player.process_interact_button()
 	return
 
 

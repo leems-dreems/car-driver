@@ -1,5 +1,8 @@
-extends InteractableArea
+class_name DetachableBinArea extends InteractableArea
 
+@export var container_name := "bin"
+@export var short_press_verb := "kick"
+@export var long_press_verb := "empty"
 var bin_rigidbody: RigidBinContainer
 var block_short_press_timer: SceneTreeTimer = null
 const block_short_press_delay := 0.5
@@ -53,8 +56,8 @@ func interact_short_press() -> void:
 	return
 
 
-func can_interact_long_press() -> bool:
-	return bin_rigidbody.total_count > 0
+func can_interact_long_press(_carried_item: CarryableItem = null) -> bool:
+	return _carried_item == null and bin_rigidbody.total_count > 0
 
 ## Handle a long-press of the interact button
 func interact_long_press() -> void:
@@ -63,6 +66,19 @@ func interact_long_press() -> void:
 	bin_rigidbody.label.text = ""
 	var _bin_bag := bin_rigidbody.bin_bag_scene.instantiate()
 	Game.physics_item_container.add_child(_bin_bag)
-	_bin_bag.global_position = global_position
+	_bin_bag.global_position = bin_rigidbody.global_position
 	_bin_bag.global_position.y += 2
 	return
+
+
+func can_deposit_item(_item: CarryableItem) -> bool:
+	return bin_rigidbody.can_deposit_item(_item)
+
+
+func deposit_item(_item: CarryableItem) -> void:
+	bin_rigidbody.deposit_item(_item)
+	return
+
+## Checks if this container is a valid target for emptying
+func can_be_emptied() -> bool:
+	return bin_rigidbody.total_count > 0
