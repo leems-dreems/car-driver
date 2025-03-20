@@ -61,6 +61,12 @@ func interact_long_press() -> void:
 	return
 
 
+func can_deposit_item(_item: CarryableItem) -> bool:
+	match _item.item_size:
+		CarryableItem.ITEM_SIZE.SMALL: return true
+		_: return false
+
+
 func deposit_item(_item: CarryableItem) -> void:
 	if not contained_items.has(_item.item_name):
 		contained_items[_item.item_name] = 0

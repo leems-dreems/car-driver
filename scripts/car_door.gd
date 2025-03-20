@@ -6,7 +6,6 @@ class_name CarDoor extends RigidBody3D
 @export var hinge_joint: JoltHingeJoint3D
 @export var door_open_SFX: AudioStreamPlayer3D
 @export var door_shut_SFX: AudioStreamPlayer3D
-@export var enter_car_collision_shape: CollisionShape3D
 ## If the "latch" areas overlap, the door will shut (if moving fast enough)
 @export var door_latch: Area3D
 @export var body_latch: Area3D
@@ -23,7 +22,6 @@ class_name CarDoor extends RigidBody3D
 @export var hinge_close_motor_duration := 0.2 
 const outline_material := preload("res://assets/materials/outline_material_overlay.tres")
 @onready var open_door_mesh: MeshInstance3D = $MeshInstance3D
-@onready var interact_target: Marker3D = $InteractTarget
 @onready var _collider := $CollisionShape3D
 var shut_basis: Basis
 var hinge_limit_upper: float
@@ -116,7 +114,6 @@ func pull_open() -> void:
 
 	shut_door_mesh.visible = false
 	door_open_SFX.play()
-	enter_car_collision_shape.disabled = false
 	for _shut_door_collider in shut_door_colliders:
 		_shut_door_collider.disabled = true
 	_collider.disabled = false
@@ -156,7 +153,6 @@ func fall_open() -> void:
 
 	shut_door_mesh.visible = false
 	door_open_SFX.play()
-	enter_car_collision_shape.disabled = false
 	for _shut_door_collider in shut_door_colliders:
 		_shut_door_collider.disabled = true
 	set_collision_layer_value(19, true)
@@ -173,7 +169,6 @@ func shut() -> void:
 	visible = !hide_rigidbody_when_shut
 	shut_door_mesh.visible = hide_rigidbody_when_shut
 	door_shut_SFX.play()
-	enter_car_collision_shape.set_deferred("disabled", true)
 	for _shut_door_collider in shut_door_colliders:
 		_shut_door_collider.disabled = false
 	set_collision_layer_value(19, false)

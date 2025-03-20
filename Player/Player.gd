@@ -135,8 +135,9 @@ func _ready() -> void:
 	_pickup_collider.body_entered.connect(func(_body: Node3D):
 		if _body is CarryableItem and not pickups_in_range.has(_body):
 			pickups_in_range.push_back(_body)
-		elif (_body is RigidBinContainer or _body is VehicleItemContainer) and not drop_targets.has(_body):
-			drop_targets.push_back(_body)
+		elif _body is RigidBinContainer and not drop_targets.has(_body):
+			if _carried_item != null and _body.can_deposit_item(_carried_item):
+				drop_targets.push_back(_body)
 	)
 	_pickup_collider.area_exited.connect(func(_area: Area3D):
 		if _area == targeted_interactable:
@@ -528,6 +529,12 @@ func pickup_short_press_timeout() -> void:
 
 
 func update_pickup_target(_force_update := false) -> void:
+	if _force_update:
+		pickups_in_range = []
+		for _body in _pickup_collider.get_overlapping_bodies():
+			if _body is CarryableItem and not pickups_in_range.has(_body):
+				pickups_in_range.push_back(_body)
+
 	if not pickup_target_timer.is_stopped() or not pickup_short_press_timer.is_stopped():
 		return
 
@@ -632,6 +639,12 @@ func interact_long_press_timeout() -> void:
 
 
 func update_interact_target(_force_update := false) -> void:
+	if _force_update:
+		interactables_in_range = []
+		for _area: Area3D in _pickup_collider.get_overlapping_areas():
+			if _area is InteractableArea and not interactables_in_range.has(_area):
+				interactables_in_range.push_back(_area)
+
 	if not interact_target_timer.is_stopped() or not interact_short_press_timer.is_stopped() or not interact_long_press_timer.is_stopped():
 		return
 
@@ -687,12 +700,20 @@ func process_drop_button() -> void:
 
 
 func update_drop_target(_force_update := false) -> void:
+	if _force_update:
+		drop_targets = []
+		for _body: Node3D in _pickup_collider.get_overlapping_bodies():
+			if _body is RigidBinContainer and not drop_targets.has(_body):
+				if _carried_item != null and _body.can_deposit_item(_carried_item):
+					drop_targets.push_back(_body)
+
 	if not drop_target_timer.is_stopped():
 		return
 
 	var _drop_target_distances := {}
 	for _drop_target: Node3D in drop_targets:
-		_drop_target_distances[_drop_target.get_instance_id()] = _drop_target.global_position.distance_squared_to(_pickup_collider.global_position)
+		if _drop_target.can_deposit_item(_carried_item):
+			_drop_target_distances[_drop_target.get_instance_id()] = _drop_target.global_position.distance_squared_to(_pickup_collider.global_position)
 	drop_targets.sort_custom(func(a: Node3D, b: Node3D):
 		return _drop_target_distances[a.get_instance_id()] < _drop_target_distances[b.get_instance_id()]
 	)
