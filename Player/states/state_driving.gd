@@ -2,6 +2,7 @@ extends PlayerState
 
 
 func physics_update(_delta: float) -> void:
+	player.process_vehicle_controls(_delta)
 	if Input.is_action_just_pressed("interact"):
 		player.exitVehicle()
 		finished.emit(EMPTY_HANDED)
@@ -9,6 +10,7 @@ func physics_update(_delta: float) -> void:
 
 
 func enter(_previous_state_path: String, _data := {}) -> void:
+	player.set_throw_arc_visible(false)
 	if player.targeted_interactable != null:
 		player.short_press_interact_unhighlight.emit()
 		player.long_press_interact_unhighlight.emit()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=4 uid="uid://bjybpumswq7gl"]
+[gd_scene load_steps=119 format=4 uid="uid://bjybpumswq7gl"]
 
 [ext_resource type="Script" uid="uid://ds5dbovvdf20l" path="res://cars/compact/compact.gd" id="1_vk21t"]
 [ext_resource type="Curve" uid="uid://dxy3se1on0g30" path="res://cars/arcade_torque_curve.tres" id="2_urouj"]
@@ -749,38 +749,26 @@ shader_parameter/tex_frg_17 = SubResource("CompressedTexture2D_b5ted")
 font_names = PackedStringArray("Courier New")
 subpixel_positioning = 0
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cto0n"]
-points = PackedVector3Array(-4.03986, 1.18419, 0.340807, -4.20791, 0.894049, 0.654135, -4.02009, 3.93097, 1.12865, 4.03904, 1.18419, 0.340807, -4.18814, 1.25407, 3.60445, 4.20791, 0.894049, 0.654135, 0, 1.22927, 3.53575, 0, 1.27132, 3.7643, 0, 3.98483, 1.19634, 4.01926, 3.93097, 1.12865, 4.18732, 1.25407, 3.60445)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_u3qkt"]
+points = PackedVector3Array(-4.08804, -2.95903, -0.4235, 4.05008, 3.90751, 3.5184, 4.05008, -2.927, 3.5184, 4.08804, 3.93953, -0.4235, -4.05008, 3.90751, 3.5184, -4.08804, 3.93953, -0.4235, 4.08804, -2.95903, -0.4235, -4.05008, -2.927, 3.5184)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0xago"]
-points = PackedVector3Array(-4.12315, 1.2098, -4.17897, -4.13611, 1.18431, 3.49843, -4.12801, 3.89704, -0.413756, -4.11667, 3.89484, -4.16685, 0, 3.92609, -4.16685, 4.12234, 1.2098, -4.17897, -4.11667, 3.89512, 3.49237, 4.13611, 1.18431, 3.49843, 0, 3.90224, 3.56055, 0, 3.94912, 3.56055, -4.11667, 3.92582, -0.416028, 0, 3.98476, -0.416028, 4.11586, 3.89484, -4.16685, 4.1272, 3.89704, -0.413756, 4.11586, 3.89512, 3.49237, 4.11586, 3.92582, -0.416028)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_b1ail"]
+points = PackedVector3Array(3.86393, 4.08162, 3.48546, 0.848501, -3.11574, -3.94262, 1.62535, -3.20207, -4.03171, 3.86393, 4.08162, -4.10116, 4.50373, -2.80462, 3.36139, 0.216969, 3.68249, 3.43639, 0.216969, 3.68249, -4.05209, 0.848501, -3.11574, 3.32692, 4.50373, -2.80462, -3.97709, 4.0727, -2.97466, 3.42308, 1.62535, -3.20207, 3.41601, 4.0727, -2.97466, -4.03878, 0.576922, 3.78293, 3.41868, 0.576922, 3.78293, -4.03438, 3.14015, 4.02118, 3.42309, 3.14015, 4.02118, -4.03879)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pupww"]
-points = PackedVector3Array(0, 1.00795, -4.90546, -4.21948, 0.884891, -1.42985, -4.2137, 1.00674, -4.86996, -4.0964, 3.94226, -2.38247, 0, 3.9734, -2.38247, 4.09557, 3.94226, -2.38247, 4.21287, 1.00674, -4.86996, 4.21948, 0.884891, -1.42985, -4.10218, 1.23773, -1.08752, 4.10136, 1.23773, -1.08752)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rc3r8"]
+points = PackedVector3Array(-3.10149, 4.01759, 3.41938, -1.58719, -3.20563, -4.03538, -0.862848, -3.26911, -4.1009, -0.862848, -3.26911, 3.4852, -4.50987, -2.87075, 3.43697, -3.87817, 3.92832, -3.94295, -0.223081, 3.61672, -3.97692, -4.50987, -2.87075, -4.05267, -0.223081, 3.61672, 3.36122, -3.87817, 3.92832, 3.32725, -0.541325, 3.77962, -4.03073, -3.10149, 4.01759, -4.03508, -0.541325, 3.77962, 3.41503, -4.14799, -2.96767, 3.41536, -4.14799, -2.96767, -4.03106, -1.58719, -3.20563, 3.41968)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_msapc"]
-points = PackedVector3Array(0.3904, 4.0209, -2.37541, 0.397283, 4.0216, -0.426781, 4.05632, 4.0209, -2.37541, 0.50741, 0.892072, -2.85255, 0.545649, -3.10607, -2.71133, 4.06664, 4.0209, -0.427021, 0.481408, 0.938854, -0.424623, 0.612566, -3.11166, -0.420787, 0.517735, 0.769181, -0.423425, 4.29684, 0.940948, -0.415752, 4.21883, 0.771276, -2.86526, 4.17333, 0.892072, -2.85255, 4.18824, 0.771276, -2.86526, 4.21195, -3.10607, -2.71133, 4.28193, -3.11166, -0.420787, 4.29646, 0.770577, -0.415992)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1kiah"]
+points = PackedVector3Array(3.91866, 0.4983, 3.31537, -4.04042, -2.9838, -4.02192, -4.04042, -2.9838, 3.42762, 4.04042, -2.9838, -4.02192, -3.91866, 0.4983, -3.90966, 4.04042, -2.9838, 3.42762, -3.91866, 0.4983, 3.31537, 3.91866, 0.4983, -3.90966)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jbiuy"]
-points = PackedVector3Array(0.38714, 3.94814, 1.55243, 4.05807, 3.94746, -1.69902, 0.397461, 3.94746, -1.69902, 0.612679, -2.99977, -1.69326, 0.61115, -2.99909, 1.89239, 0.555338, 0.940735, 1.97927, 4.22398, 0.943455, 1.9818, 4.04775, 3.94746, 1.55243, 4.2924, 0.769349, 1.98396, 4.27329, -2.99977, -1.69326, 4.27214, -2.99909, 1.89239)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_s40mx"]
+points = PackedVector3Array(4.01403, 4.0793, 3.4888, -3.9668, 1.2111, -3.99346, -3.9668, 1.2111, 3.44427, -4.01429, 4.0793, -4.03799, 3.96653, 1.2111, -3.99346, -4.01429, 4.0793, 3.4888, 4.01403, 4.0793, -4.03799, 3.96653, 1.2111, 3.44427)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ygeue"]
-points = PackedVector3Array(0, 4.05236, 0.922023, 0, 3.91498, 4.05304, 4.14423, 3.90858, 4.02796, 4.15997, 4.03456, 0.76244, -4.1608, 4.03456, 0.76244, -4.14506, 3.90858, 4.02796, 0, 3.86872, 4.1313, 4.15666, 3.87014, 4.09369, -4.15748, 3.87014, 4.09369, 4.23205, 3.86231, 0.767522, 4.17985, 3.9883, 0.754308, -4.18068, 3.9883, 0.754308, -4.23205, 3.86231, 0.767522, 0, 0.482041, 4.11877, 4.14837, 0.483465, 4.08116, 4.23039, 0.499836, 0.689933, -4.23122, 0.499836, 0.689933, -4.1492, 0.483465, 4.08116, 0, -3.16799, 4.02288, 4.21714, -3.1623, 0.674347, 4.09535, -3.16372, 3.98256, 4.21382, -3.21426, 0.669943, -4.21465, -3.21426, 0.669943, -4.21797, -3.1623, 0.674347, -4.09617, -3.16372, 3.98256, 0, -3.21568, 3.99442, 4.08043, -3.21141, 3.95342, 0, -3.21924, 0.669943, -4.08126, -3.21141, 3.95342)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2cbhb"]
+points = PackedVector3Array(-3.99384, -3.12143, -1.76435, 3.99968, 3.995, -1.26361, -4.15919, 4.26436, -2.91275, 3.94836, -2.83369, -3.74353, -4.15919, 3.74498, -0.703497, 4.15919, -3.01152, -1.61364, -4.15919, -2.36228, -3.82258, 4.15919, 4.26436, -2.91275, 4.15919, 3.74498, -0.703497, 4.15919, -2.36228, -3.82258, -4.15919, -3.01152, -1.61364, -4.0053, -3.00676, -3.26417, 4.01649, -3.14194, -2.26304, -3.99968, 3.995, -1.26361, -3.94836, -2.83369, -3.74353, -4.15919, 2.70546, -0.833866, 4.0053, -3.00676, -3.26417, -4.01649, -3.14194, -2.26304, 4.15919, -2.10185, -1.48357, 3.99384, -3.12143, -1.76435, 4.15919, 2.70546, -0.833866, -4.15919, -2.10185, -1.48357)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_swyeb"]
-points = PackedVector3Array(4.11425, 0.351004, 4.00539, -4.11425, 0.351004, 4.00539, 0, -3.19576, 3.98084, 4.0764, -3.19054, 3.98084, 4.11022, -3.19019, 3.98084, 4.11425, 0.351004, -0.396852, 4.04418, 0.357613, -4.95166, -4.11103, -3.19019, 3.98084, -4.0772, -3.19054, 3.98084, -4.04498, 0.357613, -4.95166, -4.11425, 0.351004, -0.396852, 0, -3.19576, -0.389838, 4.0764, -3.19054, -0.389838, 4.11022, -3.19019, -0.389838, 4.04015, -3.17976, -4.83592, 4.00954, -3.1801, -4.8368, 0, -3.18323, -4.85784, -4.11103, -3.19019, -0.389838, -4.0772, -3.19054, -0.389838, -4.01035, -3.1801, -4.8368, -4.04096, -3.17976, -4.83592)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3qb2p"]
-points = PackedVector3Array(0, 1.04526, -5.00347, 4.04748, 1.03615, -1.4297, 4.04108, 1.04402, -4.96797, 0, 0.766007, -5.03047, -4.04188, 1.04402, -4.96797, -4.04829, 1.03615, -1.4297, 4.07952, -3.18747, -1.2644, 4.09073, 0.766007, -4.96316, 0, -3.18415, -1.25293, 4.08432, 0.769736, -4.98794, 4.07311, -3.18415, -4.80378, 0, -3.18581, -4.82745, -4.07391, -3.18415, -4.80378, -4.08513, 0.769736, -4.98794, -4.09073, 0.766007, -4.96316, -4.08032, -3.18747, -1.2644, 0, -3.18747, -1.46446)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_juipf"]
-points = PackedVector3Array(-4.2924, 0.769349, 1.98396, -4.27367, -2.99977, -1.69326, -4.27252, -2.99909, 1.89239, -0.611532, -2.99909, 1.89239, -0.555721, 0.940735, 1.97927, -4.22436, 0.943455, 1.9818, -4.04813, 3.94746, 1.55243, -4.05845, 3.94746, -1.69902, -0.613061, -2.99977, -1.69326, -0.38714, 3.94814, 1.55243, -0.397843, 3.94746, -1.69902)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_q05vc"]
-points = PackedVector3Array(-4.29684, 0.770577, -0.415992, -4.21922, 0.771276, -2.86526, -4.21233, -3.10607, -2.71133, -4.28231, -3.11166, -0.420787, -4.29684, 0.940948, -0.415752, -4.0567, 4.0209, -2.37541, -4.17371, 0.892072, -2.85255, -4.18862, 0.771276, -2.86526, -0.546031, -3.10607, -2.71133, -0.612948, -3.11166, -0.420787, -0.397666, 4.0216, -0.426781, -4.06703, 4.0209, -0.427021, -0.518117, 0.769181, -0.423425, -0.3904, 4.0209, -2.37541, -0.507792, 0.892072, -2.85255, -0.48179, 0.938854, -0.424623)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7jera"]
-points = PackedVector3Array(0.719932, 0.321715, 0.693931, 0.658481, 0.924167, 0.830593, 0, 0.921483, 0.830593, -0.719932, 0.321715, 0.693931, 0.621836, 0.310459, -1.49072, 0.646501, 0.839696, -1.59667, 0.493156, 1.33578, -1.17459, 0.463981, 1.30749, 0.388438, 0, 1.36542, 0.389889, -0.658622, 0.924167, 0.830593, -0.646642, 0.839696, -1.59667, -0.621977, 0.310459, -1.49072, 0, 0.331009, -1.5154, 0, 0.839696, -1.64021, -0.493297, 1.33578, -1.17459, -0.464122, 1.30749, 0.388438)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_es0q2"]
+points = PackedVector3Array(0.618284, 0.841092, -0.248825, 0.486227, 1.3393, -0.248825, 0.585239, 0.343076, -0.248825, 0.618284, 0.841092, -1.52545, 0.486227, 1.31093, -1.1132, -0.486348, 1.3393, -0.248825, -0.58536, 0.343076, -0.248825, 0.585239, 0.343076, -1.38174, -0.618284, 0.841092, -1.52545, -0.486348, 1.31093, -1.1132, -0.618284, 0.841092, -0.248825, -0.58536, 0.343076, -1.38174)
 
 [node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("brake_light_left_mesh", "brake_light_right_mesh", "reverse_light_left_mesh", "reverse_light_right_mesh", "front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
@@ -973,7 +961,7 @@ freeze = true
 script = ExtResource("9_653cp")
 parent_car = NodePath("../../..")
 shut_door_mesh = NodePath("../ShutDoorLeft")
-shut_door_colliders = [NodePath("../../../CollisionShape3DLeftDoor"), NodePath("../../../VehicleItemContainer/CollisionShape3DLeftDoor")]
+shut_door_colliders = [NodePath("../../../CollisionShape3DLeftDoor")]
 hinge_joint = NodePath("../HingeJointLeft")
 door_open_SFX = NodePath("DoorOpenSFX")
 door_shut_SFX = NodePath("DoorShutSFX")
@@ -1065,7 +1053,7 @@ freeze = true
 script = ExtResource("9_653cp")
 parent_car = NodePath("../../..")
 shut_door_mesh = NodePath("../ShutDoorRight")
-shut_door_colliders = [NodePath("../../../CollisionShape3DRightDoor"), NodePath("../../../VehicleItemContainer/CollisionShape3DRightDoor")]
+shut_door_colliders = [NodePath("../../../CollisionShape3DRightDoor")]
 hinge_joint = NodePath("../HingeJointRight")
 door_open_SFX = NodePath("DoorOpenSFX")
 door_shut_SFX = NodePath("DoorShutSFX")
@@ -1159,7 +1147,7 @@ freeze = true
 script = ExtResource("9_653cp")
 parent_car = NodePath("../../..")
 shut_door_mesh = NodePath("../ShutBoot")
-shut_door_colliders = [NodePath("../../../CollisionShape3DRearWindow"), NodePath("../../../CollisionShape3DBoot"), NodePath("../../../VehicleItemContainer/CollisionShape3DRearWindow"), NodePath("../../../VehicleItemContainer/CollisionShape3DBoot")]
+shut_door_colliders = [NodePath("../../../CollisionShape3DRearWindow"), NodePath("../../../CollisionShape3DBoot"), NodePath("../../../VehicleItemContainer/CollisionShape3DRear")]
 hinge_joint = NodePath("../HingeJointBoot")
 door_open_SFX = NodePath("DoorOpenSFX")
 door_shut_SFX = NodePath("DoorShutSFX")
@@ -1503,7 +1491,6 @@ script = ExtResource("53_aoxa3")
 
 [node name="DebugLabel3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-visible = false
 billboard = 1
 text = "Test"
 font = SubResource("SystemFont_ylexk")
@@ -1513,76 +1500,61 @@ font_size = 128
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.1)
 
 [node name="VehicleItemContainer" type="RigidBody3D" parent="."]
-top_level = true
 collision_layer = 524288
 collision_mask = 32768
-mass = 0.001
 gravity_scale = 0.0
 continuous_cd = true
 script = ExtResource("61_0es63")
 
-[node name="CollisionShape3DWindscreen" type="CollisionShape3D" parent="VehicleItemContainer"]
+[node name="CollisionShape3DFront" type="CollisionShape3D" parent="VehicleItemContainer"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_cto0n")
+shape = SubResource("ConvexPolygonShape3D_u3qkt")
 
-[node name="CollisionShape3DRoof" type="CollisionShape3D" parent="VehicleItemContainer"]
+[node name="CollisionShape3DLeft" type="CollisionShape3D" parent="VehicleItemContainer"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_0xago")
+shape = SubResource("ConvexPolygonShape3D_b1ail")
 
-[node name="CollisionShape3DRearWindow" type="CollisionShape3D" parent="VehicleItemContainer"]
+[node name="CollisionShape3DRight" type="CollisionShape3D" parent="VehicleItemContainer"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_pupww")
-
-[node name="CollisionShape3DRearLeft" type="CollisionShape3D" parent="VehicleItemContainer"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_msapc")
-
-[node name="CollisionShape3DLeftDoor" type="CollisionShape3D" parent="VehicleItemContainer"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_jbiuy")
-
-[node name="CollisionShape3DFrontBlock" type="CollisionShape3D" parent="VehicleItemContainer"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_ygeue")
+shape = SubResource("ConvexPolygonShape3D_rc3r8")
 
 [node name="CollisionShape3DFloor" type="CollisionShape3D" parent="VehicleItemContainer"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_swyeb")
+shape = SubResource("ConvexPolygonShape3D_1kiah")
 
-[node name="CollisionShape3DBoot" type="CollisionShape3D" parent="VehicleItemContainer"]
+[node name="CollisionShape3DRoof" type="CollisionShape3D" parent="VehicleItemContainer"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_3qb2p")
+shape = SubResource("ConvexPolygonShape3D_s40mx")
 
-[node name="CollisionShape3DRightDoor" type="CollisionShape3D" parent="VehicleItemContainer"]
+[node name="CollisionShape3DRear" type="CollisionShape3D" parent="VehicleItemContainer"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_juipf")
+shape = SubResource("ConvexPolygonShape3D_2cbhb")
 
-[node name="CollisionShape3DRearRight" type="CollisionShape3D" parent="VehicleItemContainer"]
+[node name="CaptureArea3D" type="Area3D" parent="VehicleItemContainer"]
+collision_layer = 0
+collision_mask = 65536
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleItemContainer/CaptureArea3D"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_q05vc")
+shape = SubResource("ConvexPolygonShape3D_es0q2")
+debug_color = Color(0.569633, 0.638287, 5.77569e-07, 0.42)
+
+[node name="EscapeArea3D" type="Area3D" parent="VehicleItemContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
+collision_layer = 0
+collision_mask = 32768
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleItemContainer/EscapeArea3D"]
+transform = Transform3D(-1.2, 0, -1.81195e-07, 0, 1.2, 0, 1.81195e-07, 0, -1.2, 0, 0.3, 0)
+shape = SubResource("ConvexPolygonShape3D_es0q2")
+debug_color = Color(0.569633, 0.638287, 5.77569e-07, 0.42)
 
 [node name="Generic6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="VehicleItemContainer"]
 node_a = NodePath("../..")
 node_b = NodePath("..")
-top_level = true
-
-[node name="CaptureArea3D" type="Area3D" parent="VehicleItemContainer"]
-collision_layer = 0
-collision_mask = 98304
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleItemContainer/CaptureArea3D"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_7jera")
-
-[node name="EscapeArea3D" type="Area3D" parent="VehicleItemContainer"]
-collision_layer = 0
-collision_mask = 98304
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleItemContainer/EscapeArea3D"]
-transform = Transform3D(-1.2, 0, -1.81195e-07, 0, 1.2, 0, 1.81195e-07, 0, -1.2, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_7jera")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0.5)
 
 [node name="Label3D" type="Label3D" parent="VehicleItemContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

@@ -63,7 +63,6 @@ var _last_strong_direction := Vector3.FORWARD
 var _ground_height: float = 0.0
 var _default_collision_layer := collision_layer
 var _is_on_floor_buffer := false
-var can_sprint := true
 
 var is_ragdolling := false
 var is_waiting_to_reset := false
@@ -224,7 +223,6 @@ func _process(_delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	_nav_agent.get_next_path_position()
-	var _is_on_ground := is_on_ground()
 	# Record current velocity, to refer to when processing collision signals
 	_previous_velocity = Vector3(linear_velocity)
 	# Calculate ground height for camera controller
@@ -236,28 +234,25 @@ func _physics_process(delta: float) -> void:
 	if global_position.y < _ground_height:
 		_ground_height = global_position.y
 
-	# Get input and movement state
+	# Respond to pause button
+	if not get_tree().paused and Input.is_action_just_pressed("Pause"):
+		get_tree().create_timer(.1).timeout.connect(func():
+			get_tree().paused = true
+		)
+		return
+
+
+func process_on_foot_controls(delta: float, can_sprint := true, speed_ratio: float = 1.0) -> void:
+	var _is_on_ground := is_on_ground()
 	var is_just_jumping := not is_ragdolling and Input.is_action_just_pressed("jump") and _is_on_ground
 	var is_just_on_floor := _is_on_ground and not _is_on_floor_buffer
 	if Input.is_action_just_pressed("Ragdoll"):
 		go_limp()
 
-	# Respond to pause button
-	var is_pausing := Input.is_action_just_pressed("Pause")
-	if not get_tree().paused and is_pausing:
-		get_tree().create_timer(.1).timeout.connect(func():
-			get_tree().paused = true
-		)
-
-	var is_in_vehicle := current_vehicle != null
-
 	_is_on_floor_buffer = _is_on_ground
 	_move_direction = _get_camera_oriented_input()
 
-	if _is_on_ground:
-		linear_damp = 2
-	else:
-		linear_damp = 0
+	linear_damp = 2 if _is_on_ground else 0
 
 	# To not orient quickly to the last input, we save a last strong direction,
 	# this also ensures a good normalized value for the rotation basis.
@@ -268,52 +263,52 @@ func _physics_process(delta: float) -> void:
 	else:
 		_orient_character_to_direction(camera_controller.global_transform.basis.z, delta)
 
-	if is_in_vehicle:
-		_animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", 0)
-		global_position = current_vehicle.global_position
-		current_vehicle.brake_input = Input.get_action_strength("Brake or Reverse")
-		current_vehicle.steering_input = Input.get_action_strength("Steer Left") - Input.get_action_strength("Steer Right")
-		current_vehicle.throttle_input = pow(Input.get_action_strength("Accelerate"), 2.0)
-		current_vehicle.handbrake_input = Input.get_action_strength("Handbrake")
+	if linear_velocity.length_squared() < move_speed * speed_ratio:
+		if can_sprint and Input.is_action_pressed("sprint"):
+			apply_central_force(_move_direction * (acceleration * 2) * mass)
+		else:
+			apply_central_force(_move_direction * acceleration * mass)
 
-		# Shift to neutral if we are stationary and braking
-		if current_vehicle.current_gear > 0 and current_vehicle.speed < 1:
-			if current_vehicle.handbrake_input >= 1 or current_vehicle.brake_input > 0.5:
-				current_vehicle.shift(-current_vehicle.current_gear)
+	if is_just_jumping:
+		apply_central_impulse(Vector3.UP * jump_initial_impulse * mass)
 
-		if current_vehicle.current_gear == -1:
-			current_vehicle.brake_input = Input.get_action_strength("Accelerate")
-			current_vehicle.throttle_input = Input.get_action_strength("Brake or Reverse")
-	else:
-		if linear_velocity.length_squared() < move_speed:
-			if Input.is_action_pressed("sprint"):
-				apply_central_force(_move_direction * (acceleration * 2) * mass)
-			else:
-				apply_central_force(_move_direction * acceleration * mass)
+	# Set character animation
+	if not _is_on_ground:
+		_playback.travel("MidairBlendSpace1D")
+		_animation_tree.set("parameters/MidairBlendSpace1D/blend_position", clampf(-linear_velocity.y, -1, 1))
+	elif _is_on_ground:
+		var xz_velocity: Vector3
+		if _move_direction.length_squared() > 0.2:
+			xz_velocity = Vector3(linear_velocity.x, 0, linear_velocity.z)
+		else:
+			xz_velocity = Vector3.ZERO
+		var _xz_speed := xz_velocity.length()
+		_playback.travel("Moving_BlendTree")
+		_animation_tree.set("parameters/Moving_BlendTree/BlendSpace1D/blend_position", clampf(_xz_speed, 0.0, 8.0))
+		if _xz_speed > stopping_speed:
+			_animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", clampf(_xz_speed, 0.0, 2.0))
+		else:
+			_animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", 1)
+	return
 
-		if is_just_jumping:
-			apply_central_impulse(Vector3.UP * jump_initial_impulse * mass)
 
-		# Set character animation
-		if not _is_on_ground:
-			_playback.travel("MidairBlendSpace1D")
-			_animation_tree.set("parameters/MidairBlendSpace1D/blend_position", clampf(-linear_velocity.y, -1, 1))
-		elif _is_on_ground:
-			var xz_velocity: Vector3
-			if _move_direction.length_squared() > 0.2:
-				xz_velocity = Vector3(linear_velocity.x, 0, linear_velocity.z)
-			else:
-				xz_velocity = Vector3.ZERO
-			var _xz_speed := xz_velocity.length()
-			_playback.travel("Moving_BlendTree")
-			_animation_tree.set("parameters/Moving_BlendTree/BlendSpace1D/blend_position", clampf(_xz_speed, 0.0, 8.0))
-			if _xz_speed > stopping_speed:
-				_animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", clampf(_xz_speed, 0.0, 2.0))
-			else:
-				_animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", 1)
+func process_vehicle_controls(_delta: float) -> void:
+	_animation_tree.set("parameters/Moving_BlendTree/TimeScale/scale", 0)
+	global_position = current_vehicle.global_position
+	current_vehicle.brake_input = Input.get_action_strength("Brake or Reverse")
+	current_vehicle.steering_input = Input.get_action_strength("Steer Left") - Input.get_action_strength("Steer Right")
+	current_vehicle.throttle_input = pow(Input.get_action_strength("Accelerate"), 2.0)
+	current_vehicle.handbrake_input = Input.get_action_strength("Handbrake")
 
-		if is_just_on_floor:
-			_landing_sound.play()
+	# Shift to neutral if we are stationary and braking
+	if current_vehicle.current_gear > 0 and current_vehicle.speed < 1:
+		if current_vehicle.handbrake_input >= 1 or current_vehicle.brake_input > 0.5:
+			current_vehicle.shift(-current_vehicle.current_gear)
+
+	if current_vehicle.current_gear == -1:
+		current_vehicle.brake_input = Input.get_action_strength("Accelerate")
+		current_vehicle.throttle_input = Input.get_action_strength("Brake or Reverse")
+	return
 
 
 func _get_camera_oriented_input() -> Vector3:
@@ -490,6 +485,11 @@ func throw_item() -> void:
 	_carried_item.apply_central_impulse(_throw_vector * 7 * _carried_item.mass)
 	_carried_mesh = null
 	_carried_item = null
+	return
+
+
+func set_throw_arc_visible(_visible: bool) -> void:
+	$CameraController/ThrowArc.visible = _visible
 	return
 
 

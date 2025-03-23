@@ -47,7 +47,7 @@ points = PackedVector3Array(-0.38256, -0.190835, -7.11977e-05, -0.293349, -0.221
 
 [node name="BinBag" type="RigidBody3D"]
 collision_layer = 65600
-collision_mask = 8274
+collision_mask = 8275
 mass = 10.0
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, -0.1, 0)

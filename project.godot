@@ -297,6 +297,9 @@ jolt_physics_3d/simulation/areas_detect_static_bodies=true
 jolt_physics_extension_3d/collisions/areas_detect_static_bodies=true
 jolt_physics_extension_3d/continuous_cd/movement_threshold=100.0
 jolt_physics_extension_3d/queries/use_enhanced_internal_edge_removal=true
+jolt_physics_extension_3d/solver/position_iterations=4
+jolt_physics_extension_3d/limits/max_linear_velocity=60.0
+jolt_physics_extension_3d/limits/max_angular_velocity=720.0
 
 [rendering]
 
