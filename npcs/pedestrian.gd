@@ -153,11 +153,6 @@ func is_on_ground() -> bool:
 	return len(ground_collider.get_overlapping_bodies()) > 0
 
 
-func start_dialogue() -> void:
-	Dialogic.start("junktender_dialogue")
-	return
-
-
 func despawn() -> void:
 	queue_free()
 	return

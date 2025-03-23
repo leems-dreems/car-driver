@@ -7,6 +7,7 @@ const AIMING_THROW = "Aiming"
 const THROWING = "Throwing"
 const OPENING_DOOR = "Opening"
 const DRIVING = "Driving"
+const IN_DIALOGUE = "InDialogue"
 
 var player: Player
 

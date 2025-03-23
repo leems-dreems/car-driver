@@ -172,6 +172,16 @@ func _ready() -> void:
 				_body.unhighlight()
 	)
 
+	Dialogic.timeline_started.connect(func():
+		state_machine.state.finished.emit(PlayerState.IN_DIALOGUE)
+	)
+	Dialogic.timeline_ended.connect(func():
+		if _carried_item != null:
+			state_machine.state.finished.emit(PlayerState.CARRYING)
+		else:
+			state_machine.state.finished.emit(PlayerState.EMPTY_HANDED)
+	)
+
 	interact_long_press_timer.timeout.connect(interact_long_press_timeout)
 	interact_short_press_timer.timeout.connect(interact_short_press_timeout)
 	interact_target_timer.timeout.connect(func(): interact_target_timer.stop())
