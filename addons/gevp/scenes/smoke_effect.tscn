@@ -1,13 +1,13 @@
 [gd_scene load_steps=45 format=3 uid="uid://h6vdpba71kpr"]
 
-[ext_resource type="Script" path="res://addons/gevp/scripts/wheel_smoke.gd" id="1_3e4qh"]
-[ext_resource type="Shader" uid="uid://d88xwj7fq8fu" path="res://effects/ExplosionShader.tres" id="1_3wi3f"]
+[ext_resource type="Script" uid="uid://dxc7dvvkth084" path="res://addons/gevp/scripts/wheel_smoke.gd" id="1_3e4qh"]
+[ext_resource type="Shader" uid="uid://cntuwy6tbecnw" path="res://effects/ExplosionShader.tres" id="1_3wi3f"]
 [ext_resource type="Texture2D" uid="uid://b4cv780gfxetj" path="res://assets/textures/smokesprite.png" id="2_dqi3b"]
 [ext_resource type="Texture2D" uid="uid://dh0wvuemvp0cf" path="res://assets/textures/normal+.png" id="2_rjtqw"]
 [ext_resource type="Texture2D" uid="uid://da1ve76f8ghho" path="res://assets/textures/normal-.png" id="3_11gr8"]
 [ext_resource type="Material" uid="uid://ci1rfkavqidwc" path="res://effects/smoke_white_particle_process_material.tres" id="5_m0acd"]
 [ext_resource type="Material" uid="uid://eejc46smc8ke" path="res://assets/materials/grass_standard_material_3d.tres" id="7_ijgg2"]
-[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="7_vd5f7"]
+[ext_resource type="Script" uid="uid://6xuvaw3wn6kx" path="res://effects/car_game_particles.gd" id="7_vd5f7"]
 
 [sub_resource type="Gradient" id="Gradient_kh7ib"]
 offsets = PackedFloat32Array(0, 0.615854)
@@ -41,12 +41,12 @@ shader_parameter/particle_h_frames = 8.0
 shader_parameter/particle_v_frames = 8.0
 shader_parameter/particles_anim_loop = false
 shader_parameter/still_frame = -1.0
-shader_parameter/Soft_limit = 0.001
-shader_parameter/blend_scale = 0.001
-shader_parameter/emission_falloff_multiplier = 0.1
 shader_parameter/tex_frg_2 = ExtResource("2_dqi3b")
 shader_parameter/tex_frg_27 = SubResource("GradientTexture1D_y3uby")
 shader_parameter/tex_frg_24 = SubResource("GradientTexture1D_rqfi2")
+shader_parameter/Soft_limit = 0.001
+shader_parameter/blend_scale = 0.001
+shader_parameter/emission_falloff_multiplier = 0.1
 shader_parameter/tex_frg_25 = SubResource("GradientTexture1D_pnvso")
 shader_parameter/tex_frg_26 = SubResource("GradientTexture1D_bwfvh")
 shader_parameter/tex_frg_16 = ExtResource("2_rjtqw")
@@ -68,7 +68,7 @@ point_count = 3
 curve = SubResource("Curve_ghbu2")
 
 [sub_resource type="Curve" id="Curve_sae76"]
-max_value = 50.0
+_limits = [0.0, 50.0, 0.0, 1.0]
 _data = [Vector2(0, 50), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -108,7 +108,7 @@ point_count = 3
 curve = SubResource("Curve_r24n2")
 
 [sub_resource type="Curve" id="Curve_d4woc"]
-max_value = 50.0
+_limits = [0.0, 50.0, 0.0, 1.0]
 _data = [Vector2(0, 50), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -152,7 +152,7 @@ point_count = 3
 curve = SubResource("Curve_36ddp")
 
 [sub_resource type="Curve" id="Curve_g3oy7"]
-max_value = 50.0
+_limits = [0.0, 50.0, 0.0, 1.0]
 _data = [Vector2(0, 50), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 

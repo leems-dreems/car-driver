@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://d3hjfli0tnow2"]
 
-[ext_resource type="Script" path="res://npcs/pedestrian_spawn_point.gd" id="1_7n5o8"]
+[ext_resource type="Script" uid="uid://c44n0mg1amxcj" path="res://npcs/pedestrian_spawn_point.gd" id="1_7n5o8"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_2a73p"]
 size = Vector3(2, 3, 2)
@@ -44,8 +44,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o8qiq"]
 _data = {
-"RESET": SubResource("Animation_hlkea"),
-"highlight": SubResource("Animation_0yen5")
+&"RESET": SubResource("Animation_hlkea"),
+&"highlight": SubResource("Animation_0yen5")
 }
 
 [node name="PedestrianSpawnPoint" type="PathFollow3D"]

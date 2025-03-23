@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://bol1qtccjchrx"]
 
-[ext_resource type="Script" path="res://collidables/springy_gas_pump.gd" id="1_vl6gh"]
+[ext_resource type="Script" uid="uid://dyydnqo8i20kr" path="res://collidables/springy_gas_pump.gd" id="1_vl6gh"]
 [ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="2_5obv0"]
 [ext_resource type="PackedScene" uid="uid://drtqj75y7cwtf" path="res://fire.tscn" id="3_nyhtx"]
 [ext_resource type="AudioStream" uid="uid://bvjtmoh4u8ueq" path="res://assets/audio/Hanna-Barbera SFX/crash_11.wav" id="4_h23ki"]

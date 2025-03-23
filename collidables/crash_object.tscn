@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://21febu6fhlg2"]
 
-[ext_resource type="Script" path="res://collidables/CrashObject.gd" id="1_4djd8"]
+[ext_resource type="Script" uid="uid://d2u7nyxm1n6fp" path="res://collidables/CrashObject.gd" id="1_4djd8"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_catmd"]
 

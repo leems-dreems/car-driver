@@ -75,339 +75,340 @@ var last_collision_surface_type: DriveableVehicle.SurfaceTypes
 
 
 func _process(delta):
-  if wheel_node:
-    wheel_node.position.y = min(0, -spring_current_length)
-    if not is_zero_approx(beam_axle):
-      var wheel_lookat_vector := (opposite_wheel.transform * opposite_wheel.wheel_node.position) - (transform * wheel_node.position)
-      wheel_node.rotation.z = wheel_lookat_vector.angle_to(Vector3.RIGHT * beam_axle) * signf(wheel_lookat_vector.y * beam_axle)
-    wheel_node.rotation.x -= (wrapf(spin * delta, 0, TAU))
-    if show_debug_label:
-      debug_label.text = ""
-      #debug_label.text = vector_format_string % slip_vector + "\n"
-      match surface_type:
-        DriveableVehicle.SurfaceTypes.GRASS: debug_label.text += "Grass"
-        DriveableVehicle.SurfaceTypes.ROAD: debug_label.text += "Road"
-        DriveableVehicle.SurfaceTypes.ROCK: debug_label.text += "Rock"
-        DriveableVehicle.SurfaceTypes.DIRT: debug_label.text += "Dirt"
-        DriveableVehicle.SurfaceTypes.SAND: debug_label.text += "Sand"
-        _: debug_label.text += "Undefined"
-      if last_collider is Terrain3D:
-        debug_label.text += "\n" + str(Game.active_terrain.data.get_texture_id(last_collision_point))
+	if wheel_node:
+		wheel_node.position.y = min(0, -spring_current_length)
+		if not is_zero_approx(beam_axle):
+			var wheel_lookat_vector := (opposite_wheel.transform * opposite_wheel.wheel_node.position) - (transform * wheel_node.position)
+			wheel_node.rotation.z = wheel_lookat_vector.angle_to(Vector3.RIGHT * beam_axle) * signf(wheel_lookat_vector.y * beam_axle)
+		wheel_node.rotation.x -= (wrapf(spin * delta, 0, TAU))
+		if show_debug_label:
+			debug_label.text = ""
+			#debug_label.text = vector_format_string % slip_vector + "\n"
+			match surface_type:
+				DriveableVehicle.SurfaceTypes.GRASS: debug_label.text += "Grass"
+				DriveableVehicle.SurfaceTypes.ROAD: debug_label.text += "Road"
+				DriveableVehicle.SurfaceTypes.ROCK: debug_label.text += "Rock"
+				DriveableVehicle.SurfaceTypes.DIRT: debug_label.text += "Dirt"
+				DriveableVehicle.SurfaceTypes.SAND: debug_label.text += "Sand"
+				_: debug_label.text += "Undefined"
+			if last_collider is Terrain3D:
+				debug_label.text += "\n" + str(Game.active_terrain.data.get_texture_id(last_collision_point))
 
 
 func initialize():
-  debug_label.visible = show_debug_label
-  wheel_node.rotation_order = EULER_ORDER_ZXY
-  wheel_moment = 0.5 * wheel_mass * pow(tire_radius, 2)
-  set_target_position(Vector3.DOWN * (spring_length + tire_radius))
-  vehicle = get_parent()
-  max_spring_length = spring_length
-  current_cof = get_surface_coefficient_of_friction(surface_type)
-  current_rolling_resistance = get_surface_rolling_resistance(surface_type)
-  current_lateral_grip_assist = get_surface_lateral_grip_assist(surface_type)
-  current_longitudinal_grip_ratio = get_surface_longitudinal_grip_ratio(surface_type)
-  current_tire_stiffness = 1000000.0 + 8000000.0 * get_surface_tire_stiffness(surface_type)
+	if debug_label != null:
+		debug_label.visible = show_debug_label
+	wheel_node.rotation_order = EULER_ORDER_ZXY
+	wheel_moment = 0.5 * wheel_mass * pow(tire_radius, 2)
+	set_target_position(Vector3.DOWN * (spring_length + tire_radius))
+	vehicle = get_parent()
+	max_spring_length = spring_length
+	current_cof = get_surface_coefficient_of_friction(surface_type)
+	current_rolling_resistance = get_surface_rolling_resistance(surface_type)
+	current_lateral_grip_assist = get_surface_lateral_grip_assist(surface_type)
+	current_longitudinal_grip_ratio = get_surface_longitudinal_grip_ratio(surface_type)
+	current_tire_stiffness = 1000000.0 + 8000000.0 * get_surface_tire_stiffness(surface_type)
 
 func steer(input : float, max_steering_angle : float):
-  input *= steering_ratio
-  rotation.y = (max_steering_angle * (input + (1 - cos(input * 0.5 * PI)) * ackermann)) + toe
+	input *= steering_ratio
+	rotation.y = (max_steering_angle * (input + (1 - cos(input * 0.5 * PI)) * ackermann)) + toe
 
 func process_torque(drive : float, drive_inertia : float, brake_torque : float, abs : bool, delta : float) -> float:
-  ## Add the torque the wheel produced last frame from surface friction
-  var net_torque = force_vector.y * tire_radius
-  var previous_spin := spin
-  net_torque += drive
-  
-  ## If antilock brakes are still active, don't apply brake torque
-  if abs_enable_time > vehicle.delta_time:
-    brake_torque = 0.0
-    abs = false
-  
-  ## If the wheel slip from braking is too great, enable the antilock brakes
-  if absf(spin) > 5.0 and spin_velocity_diff < abs_spin_difference_threshold:
-    if abs and brake_torque > 0.0:
-      brake_torque = 0.0
-      abs_enable_time = vehicle.delta_time + abs_pulse_time
-  
-  ## Applied torque is used to ensure the wheels don't apply more force
-  ## than the motor or brakes applied to the wheel
-  if is_zero_approx(spin):
-    applied_torque = absf(drive - brake_torque)
-  else:
-    applied_torque = absf(drive - (brake_torque * signf(spin)))
-  
-  ## If braking and nearly stopped, just stop the wheel completely.
-  if absf(spin) < 5.0 and brake_torque > absf(net_torque):
-    if abs and absf(local_velocity.z) > 2.0:
-      abs_enable_time = vehicle.delta_time + abs_pulse_time
-    else:
-      spin = 0.0
-  else:
-    ## Spin the wheel based on the provided torque. The tire forces will handle
-    ## applying that force to the vehicle.
-    net_torque -= brake_torque * signf(spin)
-    var new_spin : float = spin + ((net_torque / (wheel_moment + drive_inertia)) * delta)
-    if signf(spin) != signf(new_spin) and brake_torque > absf(drive):
-      new_spin = 0.0
-    spin = new_spin
-  
-  ## The returned value is used to track wheel speed difference
-  if is_zero_approx(drive * delta):
-    return 0.5
-  else:
-    return (spin - previous_spin) * (wheel_moment + drive_inertia) / (drive * delta)
+	## Add the torque the wheel produced last frame from surface friction
+	var net_torque = force_vector.y * tire_radius
+	var previous_spin := spin
+	net_torque += drive
+	
+	## If antilock brakes are still active, don't apply brake torque
+	if abs_enable_time > vehicle.delta_time:
+		brake_torque = 0.0
+		abs = false
+	
+	## If the wheel slip from braking is too great, enable the antilock brakes
+	if absf(spin) > 5.0 and spin_velocity_diff < abs_spin_difference_threshold:
+		if abs and brake_torque > 0.0:
+			brake_torque = 0.0
+			abs_enable_time = vehicle.delta_time + abs_pulse_time
+	
+	## Applied torque is used to ensure the wheels don't apply more force
+	## than the motor or brakes applied to the wheel
+	if is_zero_approx(spin):
+		applied_torque = absf(drive - brake_torque)
+	else:
+		applied_torque = absf(drive - (brake_torque * signf(spin)))
+	
+	## If braking and nearly stopped, just stop the wheel completely.
+	if absf(spin) < 5.0 and brake_torque > absf(net_torque):
+		if abs and absf(local_velocity.z) > 2.0:
+			abs_enable_time = vehicle.delta_time + abs_pulse_time
+		else:
+			spin = 0.0
+	else:
+		## Spin the wheel based on the provided torque. The tire forces will handle
+		## applying that force to the vehicle.
+		net_torque -= brake_torque * signf(spin)
+		var new_spin : float = spin + ((net_torque / (wheel_moment + drive_inertia)) * delta)
+		if signf(spin) != signf(new_spin) and brake_torque > absf(drive):
+			new_spin = 0.0
+		spin = new_spin
+	
+	## The returned value is used to track wheel speed difference
+	if is_zero_approx(drive * delta):
+		return 0.5
+	else:
+		return (spin - previous_spin) * (wheel_moment + drive_inertia) / (drive * delta)
 
 func process_forces(opposite_compression : float, braking : bool, delta : float) -> float:
-  force_raycast_update()
-  previous_velocity = local_velocity
-  local_velocity = (global_position - previous_global_position) / delta * global_transform.basis
-  previous_global_position = global_position
-  
-  ## Determine the surface the tire is on. Uses node groups
-  if is_colliding():
-    last_collider = get_collider()
-    last_collision_point = get_collision_point()
-    last_collision_normal = get_collision_normal()
-    if last_collider is Terrain3D:
-      if last_collider.data.get_control_auto(last_collision_point):
-        # This part of the terrain is autoshaded, so we look for the texture blend value
-        if Game.active_terrain.data.get_texture_id(last_collision_point)[2] < 0.5:
-          surface_type = DriveableVehicle.SurfaceTypes.ROCK
-        else:
-          surface_type = DriveableVehicle.SurfaceTypes.GRASS
-      else:
-        # This part of the terrain is manually shaded, so get the base texture id
-        match last_collider.data.get_control_base_id(last_collision_point):
-          0: surface_type = DriveableVehicle.SurfaceTypes.ROCK
-          1: surface_type = DriveableVehicle.SurfaceTypes.GRASS
-          2: surface_type = DriveableVehicle.SurfaceTypes.SAND
-          3: surface_type = DriveableVehicle.SurfaceTypes.DIRT
-          4: surface_type = DriveableVehicle.SurfaceTypes.GRASS
-          5: surface_type = DriveableVehicle.SurfaceTypes.ROAD
-    else:
-      for _group: StringName in last_collider.get_groups():
-        match _group:
-          "Road":
-            surface_type = DriveableVehicle.SurfaceTypes.ROAD
-            break
-          "Building":
-            surface_type = DriveableVehicle.SurfaceTypes.ROAD
-            break
-    last_collision_surface_type = surface_type
-    current_cof = get_surface_coefficient_of_friction(surface_type)
-    current_rolling_resistance = get_surface_rolling_resistance(surface_type)
-    current_lateral_grip_assist = get_surface_lateral_grip_assist(surface_type)
-    current_longitudinal_grip_ratio = get_surface_longitudinal_grip_ratio(surface_type)
-    current_tire_stiffness = 1000000.0 + 8000000.0 * get_surface_tire_stiffness(surface_type)
-  else:
-    last_collider = null
-  
-  var compression := process_suspension(opposite_compression, delta)
-  
-  if is_colliding() and last_collider:
-    process_tires(braking, delta)
-    var contact = last_collision_point - vehicle.global_position
-    if spring_force > 0.0:
-      vehicle.apply_force(last_collision_normal * spring_force, contact)
-    else:
-      ## Apply a small amount of downward force if there is no spring force
-      vehicle.apply_force(-global_transform.basis.y * vehicle.mass, global_position - vehicle.global_position)
-    
-    vehicle.apply_force(global_transform.basis.x * force_vector.x, contact)
-    vehicle.apply_force(global_transform.basis.z * force_vector.y, contact)
-    
-    ## Applies a torque on the vehicle body centered on the wheel. Gives the vehicle 
-    ## more weight transfer when the center of gravity is really low.
-    if braking:
-      wheel_to_body_torque_multiplier = 1.0 / (braking_grip_multiplier + 1.0)
-    vehicle.apply_force(-global_transform.basis.y * force_vector.y * 0.5 * wheel_to_body_torque_multiplier, to_global(Vector3.FORWARD * tire_radius))
-    vehicle.apply_force(global_transform.basis.y * force_vector.y * 0.5 * wheel_to_body_torque_multiplier, to_global(Vector3.BACK * tire_radius))
-    
-    return compression
-  
-  else:
-    force_vector = Vector2.ZERO
-    slip_vector = Vector2.ZERO
-    spin -= signf(spin) * delta * 2.0 / wheel_moment
-    return 0.0
+	force_raycast_update()
+	previous_velocity = local_velocity
+	local_velocity = (global_position - previous_global_position) / delta * global_transform.basis
+	previous_global_position = global_position
+	
+	## Determine the surface the tire is on. Uses node groups
+	if is_colliding():
+		last_collider = get_collider()
+		last_collision_point = get_collision_point()
+		last_collision_normal = get_collision_normal()
+		if last_collider is Terrain3D:
+			if last_collider.data.get_control_auto(last_collision_point):
+				# This part of the terrain is autoshaded, so we look for the texture blend value
+				if Game.active_terrain.data.get_texture_id(last_collision_point)[2] < 0.5:
+					surface_type = DriveableVehicle.SurfaceTypes.ROCK
+				else:
+					surface_type = DriveableVehicle.SurfaceTypes.GRASS
+			else:
+				# This part of the terrain is manually shaded, so get the base texture id
+				match last_collider.data.get_control_base_id(last_collision_point):
+					0: surface_type = DriveableVehicle.SurfaceTypes.ROCK
+					1: surface_type = DriveableVehicle.SurfaceTypes.GRASS
+					2: surface_type = DriveableVehicle.SurfaceTypes.SAND
+					3: surface_type = DriveableVehicle.SurfaceTypes.DIRT
+					4: surface_type = DriveableVehicle.SurfaceTypes.GRASS
+					5: surface_type = DriveableVehicle.SurfaceTypes.ROAD
+		else:
+			for _group: StringName in last_collider.get_groups():
+				match _group:
+					"Road":
+						surface_type = DriveableVehicle.SurfaceTypes.ROAD
+						break
+					"Building":
+						surface_type = DriveableVehicle.SurfaceTypes.ROAD
+						break
+		last_collision_surface_type = surface_type
+		current_cof = get_surface_coefficient_of_friction(surface_type)
+		current_rolling_resistance = get_surface_rolling_resistance(surface_type)
+		current_lateral_grip_assist = get_surface_lateral_grip_assist(surface_type)
+		current_longitudinal_grip_ratio = get_surface_longitudinal_grip_ratio(surface_type)
+		current_tire_stiffness = 1000000.0 + 8000000.0 * get_surface_tire_stiffness(surface_type)
+	else:
+		last_collider = null
+	
+	var compression := process_suspension(opposite_compression, delta)
+	
+	if is_colliding() and last_collider:
+		process_tires(braking, delta)
+		var contact = last_collision_point - vehicle.global_position
+		if spring_force > 0.0:
+			vehicle.apply_force(last_collision_normal * spring_force, contact)
+		else:
+			## Apply a small amount of downward force if there is no spring force
+			vehicle.apply_force(-global_transform.basis.y * vehicle.mass, global_position - vehicle.global_position)
+		
+		vehicle.apply_force(global_transform.basis.x * force_vector.x, contact)
+		vehicle.apply_force(global_transform.basis.z * force_vector.y, contact)
+		
+		## Applies a torque on the vehicle body centered on the wheel. Gives the vehicle 
+		## more weight transfer when the center of gravity is really low.
+		if braking:
+			wheel_to_body_torque_multiplier = 1.0 / (braking_grip_multiplier + 1.0)
+		vehicle.apply_force(-global_transform.basis.y * force_vector.y * 0.5 * wheel_to_body_torque_multiplier, to_global(Vector3.FORWARD * tire_radius))
+		vehicle.apply_force(global_transform.basis.y * force_vector.y * 0.5 * wheel_to_body_torque_multiplier, to_global(Vector3.BACK * tire_radius))
+		
+		return compression
+	
+	else:
+		force_vector = Vector2.ZERO
+		slip_vector = Vector2.ZERO
+		spin -= signf(spin) * delta * 2.0 / wheel_moment
+		return 0.0
 
 func process_suspension(opposite_compression : float, delta : float) -> float:
-  if is_colliding() and last_collider:
-    spring_current_length = last_collision_point.distance_to(global_position) - tire_radius
-  else:
-    spring_current_length = spring_length
-  
-  var no_contact := false
-  if spring_current_length > max_spring_length:
-    spring_current_length = max_spring_length
-    no_contact = true
-  
-  var bottom_out := false
-  if spring_current_length < 0.0:
-    spring_current_length = 0.0
-    bottom_out = true
-  
-  var compression := (spring_length - spring_current_length) * 1000.0
-  
-  var spring_speed_mm_per_seconds := (compression - previous_compression) / delta
-  previous_compression = compression
-  
-  spring_force = compression * spring_rate
-  antiroll_force = antiroll * (compression - opposite_compression)
-  spring_force += antiroll_force
-  
-  ## If the suspension is bottomed out, apply some additional forces to help keep the vehicle body
-  ## from colliding with the surface.
-  var bottom_out_damping := 0.0
-  var bottom_out_damping_fast := 0.0
-  var bottom_out_force := 0.0
-  if bottom_out:
-    var gravity_on_spring := clampf(global_transform.basis.y.dot(-vehicle.current_gravity.normalized()), 0.0, 1.0)
-    bottom_out_force = (((mass_over_wheel * clampf(spring_speed_mm_per_seconds * 0.001, 0.0, 5.0)) / delta) + (mass_over_wheel * vehicle.current_gravity.length() * gravity_on_spring)) * bump_stop_multiplier
-    bottom_out_damping = -slow_bump
-    bottom_out_damping_fast = -fast_bump
-  
-  if spring_speed_mm_per_seconds >= 0:
-    if spring_speed_mm_per_seconds > fast_damp_threshold:
-      damping_force = spring_speed_mm_per_seconds * (fast_bump + bottom_out_damping_fast)
-    else:
-      damping_force = spring_speed_mm_per_seconds * (slow_bump + bottom_out_damping)
-  else :
-    if spring_speed_mm_per_seconds < -fast_damp_threshold:
-      damping_force = spring_speed_mm_per_seconds * slow_rebound
-    else:
-      damping_force = spring_speed_mm_per_seconds * fast_rebound
-  
-  spring_force += damping_force
-  
-  spring_force = maxf(0, spring_force + bottom_out_force)
-  
-  max_spring_length = clampf((((spring_force / wheel_mass) - spring_speed_mm_per_seconds) * delta * 0.001) + spring_current_length, 0.0, spring_length)
+	if is_colliding() and last_collider:
+		spring_current_length = last_collision_point.distance_to(global_position) - tire_radius
+	else:
+		spring_current_length = spring_length
+	
+	var no_contact := false
+	if spring_current_length > max_spring_length:
+		spring_current_length = max_spring_length
+		no_contact = true
+	
+	var bottom_out := false
+	if spring_current_length < 0.0:
+		spring_current_length = 0.0
+		bottom_out = true
+	
+	var compression := (spring_length - spring_current_length) * 1000.0
+	
+	var spring_speed_mm_per_seconds := (compression - previous_compression) / delta
+	previous_compression = compression
+	
+	spring_force = compression * spring_rate
+	antiroll_force = antiroll * (compression - opposite_compression)
+	spring_force += antiroll_force
+	
+	## If the suspension is bottomed out, apply some additional forces to help keep the vehicle body
+	## from colliding with the surface.
+	var bottom_out_damping := 0.0
+	var bottom_out_damping_fast := 0.0
+	var bottom_out_force := 0.0
+	if bottom_out:
+		var gravity_on_spring := clampf(global_transform.basis.y.dot(-vehicle.current_gravity.normalized()), 0.0, 1.0)
+		bottom_out_force = (((mass_over_wheel * clampf(spring_speed_mm_per_seconds * 0.001, 0.0, 5.0)) / delta) + (mass_over_wheel * vehicle.current_gravity.length() * gravity_on_spring)) * bump_stop_multiplier
+		bottom_out_damping = -slow_bump
+		bottom_out_damping_fast = -fast_bump
+	
+	if spring_speed_mm_per_seconds >= 0:
+		if spring_speed_mm_per_seconds > fast_damp_threshold:
+			damping_force = spring_speed_mm_per_seconds * (fast_bump + bottom_out_damping_fast)
+		else:
+			damping_force = spring_speed_mm_per_seconds * (slow_bump + bottom_out_damping)
+	else :
+		if spring_speed_mm_per_seconds < -fast_damp_threshold:
+			damping_force = spring_speed_mm_per_seconds * slow_rebound
+		else:
+			damping_force = spring_speed_mm_per_seconds * fast_rebound
+	
+	spring_force += damping_force
+	
+	spring_force = maxf(0, spring_force + bottom_out_force)
+	
+	max_spring_length = clampf((((spring_force / wheel_mass) - spring_speed_mm_per_seconds) * delta * 0.001) + spring_current_length, 0.0, spring_length)
 
-  if no_contact:
-    spring_force = 0.0
-  
-  return compression
+	if no_contact:
+		spring_force = 0.0
+	
+	return compression
 
 func process_tires(braking : bool, delta : float):
-  ## This is a modified version of the brush tire model that removes the friction falloff beyond
-  ## the peak grip level.
-  var local_planar := Vector2(local_velocity.x, local_velocity.z).normalized() * clampf(local_velocity.length(), 0.0, 1.0)
-  slip_vector.x = asin(clampf(-local_planar.x, -1.0, 1.0))
-  slip_vector.y = 0.0
-  
-  var wheel_velocity := spin * tire_radius
-  spin_velocity_diff = wheel_velocity + local_velocity.z
-  var needed_rolling_force := ((spin_velocity_diff * wheel_moment) / tire_radius) / delta
-  var max_y_force := 0.0
-  
-  ## Because the amount of force the tire applies is based on the amount of slip,
-  ## a maximum force is calculated based on the applied engine torque to prevent
-  ## the tire from creating too much force.
-  if absf(applied_torque) > absf(needed_rolling_force):
-    max_y_force = absf(applied_torque / tire_radius)
-  else:
-    max_y_force = absf(needed_rolling_force / tire_radius)
-  
-  var max_x_force := 0.0
-  max_x_force = absf(mass_over_wheel * local_velocity.x) / delta
-  
-  var z_sign = signf(-local_velocity.z)
-  if local_velocity.z == 0.0:
-    z_sign = 1.0
-  
-  slip_vector.y = ((absf(local_velocity.z) - (wheel_velocity * z_sign)) / (1.0 + absf(local_velocity.z)))
-  
-  if slip_vector.is_zero_approx():
-    slip_vector = Vector2(0.0001, 0.0001)
-  
-  var cornering_stiffness = 0.5 * current_tire_stiffness * pow(contact_patch, 2.0)
-  var friction = current_cof * spring_force - (spring_force / (tire_width * contact_patch * 0.2))
-  var deflect = 1.0 / (sqrt(pow(cornering_stiffness * slip_vector.y, 2.0) + pow(cornering_stiffness * slip_vector.x, 2.0)))
-  
-  ## Adds in additional longitudinal grip when braking
-  var braking_help = 1
-  if slip_vector.y > 0.3 and braking:
-    braking_help = (1 + (braking_grip_multiplier * clampf(absf(slip_vector.y), 0.0, 1.0)))
-  
-  var crit_length = friction * (1.0 - slip_vector.y) * contact_patch * (0.5 * deflect)
-  if crit_length >= contact_patch:
-    force_vector.y = cornering_stiffness * slip_vector.y / (1.0 - slip_vector.y)
-    force_vector.x = cornering_stiffness * slip_vector.x / (1.0 - slip_vector.y)
-  else:
-    var brushx = (1.0 - friction * (1.0 - slip_vector.y) * (0.25 * deflect)) * deflect
-    force_vector.y = friction * current_longitudinal_grip_ratio * cornering_stiffness * slip_vector.y * brushx * braking_help * z_sign
-    force_vector.x = friction * cornering_stiffness * slip_vector.x * brushx * (abs(slip_vector.x * current_lateral_grip_assist) + 1.0)
-  
-  if absf(force_vector.y) > absf(max_y_force):
-    force_vector.y = max_y_force * sign(force_vector.y)
-    limit_spin = true
-  else:
-    limit_spin = false
-  
-  if absf(force_vector.x) > max_x_force:
-    force_vector.x = max_x_force * signf(force_vector.x)
-  
-  force_vector.y -= process_rolling_resistance() * signf(local_velocity.z)
+	## This is a modified version of the brush tire model that removes the friction falloff beyond
+	## the peak grip level.
+	var local_planar := Vector2(local_velocity.x, local_velocity.z).normalized() * clampf(local_velocity.length(), 0.0, 1.0)
+	slip_vector.x = asin(clampf(-local_planar.x, -1.0, 1.0))
+	slip_vector.y = 0.0
+	
+	var wheel_velocity := spin * tire_radius
+	spin_velocity_diff = wheel_velocity + local_velocity.z
+	var needed_rolling_force := ((spin_velocity_diff * wheel_moment) / tire_radius) / delta
+	var max_y_force := 0.0
+	
+	## Because the amount of force the tire applies is based on the amount of slip,
+	## a maximum force is calculated based on the applied engine torque to prevent
+	## the tire from creating too much force.
+	if absf(applied_torque) > absf(needed_rolling_force):
+		max_y_force = absf(applied_torque / tire_radius)
+	else:
+		max_y_force = absf(needed_rolling_force / tire_radius)
+	
+	var max_x_force := 0.0
+	max_x_force = absf(mass_over_wheel * local_velocity.x) / delta
+	
+	var z_sign = signf(-local_velocity.z)
+	if local_velocity.z == 0.0:
+		z_sign = 1.0
+	
+	slip_vector.y = ((absf(local_velocity.z) - (wheel_velocity * z_sign)) / (1.0 + absf(local_velocity.z)))
+	
+	if slip_vector.is_zero_approx():
+		slip_vector = Vector2(0.0001, 0.0001)
+	
+	var cornering_stiffness = 0.5 * current_tire_stiffness * pow(contact_patch, 2.0)
+	var friction = current_cof * spring_force - (spring_force / (tire_width * contact_patch * 0.2))
+	var deflect = 1.0 / (sqrt(pow(cornering_stiffness * slip_vector.y, 2.0) + pow(cornering_stiffness * slip_vector.x, 2.0)))
+	
+	## Adds in additional longitudinal grip when braking
+	var braking_help = 1
+	if slip_vector.y > 0.3 and braking:
+		braking_help = (1 + (braking_grip_multiplier * clampf(absf(slip_vector.y), 0.0, 1.0)))
+	
+	var crit_length = friction * (1.0 - slip_vector.y) * contact_patch * (0.5 * deflect)
+	if crit_length >= contact_patch:
+		force_vector.y = cornering_stiffness * slip_vector.y / (1.0 - slip_vector.y)
+		force_vector.x = cornering_stiffness * slip_vector.x / (1.0 - slip_vector.y)
+	else:
+		var brushx = (1.0 - friction * (1.0 - slip_vector.y) * (0.25 * deflect)) * deflect
+		force_vector.y = friction * current_longitudinal_grip_ratio * cornering_stiffness * slip_vector.y * brushx * braking_help * z_sign
+		force_vector.x = friction * cornering_stiffness * slip_vector.x * brushx * (abs(slip_vector.x * current_lateral_grip_assist) + 1.0)
+	
+	if absf(force_vector.y) > absf(max_y_force):
+		force_vector.y = max_y_force * sign(force_vector.y)
+		limit_spin = true
+	else:
+		limit_spin = false
+	
+	if absf(force_vector.x) > max_x_force:
+		force_vector.x = max_x_force * signf(force_vector.x)
+	
+	force_vector.y -= process_rolling_resistance() * signf(local_velocity.z)
 
 func process_rolling_resistance() -> float:
-  var rolling_resistance_coefficient = 0.005 + (0.5 * (0.01 + (0.0095 * pow(local_velocity.z * 0.036, 2))))
-  return rolling_resistance_coefficient * spring_force * current_rolling_resistance
+	var rolling_resistance_coefficient = 0.005 + (0.5 * (0.01 + (0.0095 * pow(local_velocity.z * 0.036, 2))))
+	return rolling_resistance_coefficient * spring_force * current_rolling_resistance
 
 func get_reaction_torque() -> float:
-  return force_vector.y * tire_radius
+	return force_vector.y * tire_radius
 
 func get_friction(normal_force: float, _surface_type: DriveableVehicle.SurfaceTypes) -> float:
-  var surface_cof = 1.0
-  if get_surface_coefficient_of_friction(_surface_type) != 0.0:
-    surface_cof = get_surface_coefficient_of_friction(_surface_type)
-  return surface_cof * normal_force - (normal_force / (tire_width * contact_patch * 0.2))
+	var surface_cof = 1.0
+	if get_surface_coefficient_of_friction(_surface_type) != 0.0:
+		surface_cof = get_surface_coefficient_of_friction(_surface_type)
+	return surface_cof * normal_force - (normal_force / (tire_width * contact_patch * 0.2))
 
 ## Lookup methods for terrain-specific handling
 func get_surface_tire_stiffness(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
-  match _surface_type:
-    DriveableVehicle.SurfaceTypes.GRASS: return 0.5
-    DriveableVehicle.SurfaceTypes.ROAD: return 5.0
-    DriveableVehicle.SurfaceTypes.ROCK: return 5.0
-    DriveableVehicle.SurfaceTypes.DIRT: return 0.5
-    DriveableVehicle.SurfaceTypes.SAND: return 0.5
-    _: return 0.0
+	match _surface_type:
+		DriveableVehicle.SurfaceTypes.GRASS: return 0.5
+		DriveableVehicle.SurfaceTypes.ROAD: return 5.0
+		DriveableVehicle.SurfaceTypes.ROCK: return 5.0
+		DriveableVehicle.SurfaceTypes.DIRT: return 0.5
+		DriveableVehicle.SurfaceTypes.SAND: return 0.5
+		_: return 0.0
 
 
 func get_surface_coefficient_of_friction(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
-  match _surface_type:
-    DriveableVehicle.SurfaceTypes.GRASS: return 2.0
-    DriveableVehicle.SurfaceTypes.ROAD: return 2.0
-    DriveableVehicle.SurfaceTypes.ROCK: return 2.0
-    DriveableVehicle.SurfaceTypes.DIRT: return 1.4
-    DriveableVehicle.SurfaceTypes.SAND: return 1.4
-    _: return 0.0
+	match _surface_type:
+		DriveableVehicle.SurfaceTypes.GRASS: return 2.0
+		DriveableVehicle.SurfaceTypes.ROAD: return 2.0
+		DriveableVehicle.SurfaceTypes.ROCK: return 2.0
+		DriveableVehicle.SurfaceTypes.DIRT: return 1.4
+		DriveableVehicle.SurfaceTypes.SAND: return 1.4
+		_: return 0.0
 
 
 func get_surface_rolling_resistance(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
-  match _surface_type:
-    DriveableVehicle.SurfaceTypes.GRASS: return 4.0
-    DriveableVehicle.SurfaceTypes.ROAD: return 1.0
-    DriveableVehicle.SurfaceTypes.ROCK: return 1.0
-    DriveableVehicle.SurfaceTypes.DIRT: return 3.0
-    DriveableVehicle.SurfaceTypes.SAND: return 3.0
-    _: return 0.0
+	match _surface_type:
+		DriveableVehicle.SurfaceTypes.GRASS: return 4.0
+		DriveableVehicle.SurfaceTypes.ROAD: return 1.0
+		DriveableVehicle.SurfaceTypes.ROCK: return 1.0
+		DriveableVehicle.SurfaceTypes.DIRT: return 3.0
+		DriveableVehicle.SurfaceTypes.SAND: return 3.0
+		_: return 0.0
 
 
 func get_surface_lateral_grip_assist(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
-  match _surface_type:
-    DriveableVehicle.SurfaceTypes.GRASS: return 0
-    DriveableVehicle.SurfaceTypes.ROAD: return 0.05
-    DriveableVehicle.SurfaceTypes.ROCK: return 0
-    DriveableVehicle.SurfaceTypes.DIRT: return 0
-    DriveableVehicle.SurfaceTypes.SAND: return 0.05
-    _: return 0
+	match _surface_type:
+		DriveableVehicle.SurfaceTypes.GRASS: return 0
+		DriveableVehicle.SurfaceTypes.ROAD: return 0.05
+		DriveableVehicle.SurfaceTypes.ROCK: return 0
+		DriveableVehicle.SurfaceTypes.DIRT: return 0
+		DriveableVehicle.SurfaceTypes.SAND: return 0.05
+		_: return 0
 
 
 func get_surface_longitudinal_grip_ratio(_surface_type: DriveableVehicle.SurfaceTypes) -> float:
-  match _surface_type:
-    DriveableVehicle.SurfaceTypes.GRASS: return 0.5
-    DriveableVehicle.SurfaceTypes.ROAD: return 0.5
-    DriveableVehicle.SurfaceTypes.ROCK: return 0.5
-    DriveableVehicle.SurfaceTypes.DIRT: return 0.5
-    _: return 0.5
+	match _surface_type:
+		DriveableVehicle.SurfaceTypes.GRASS: return 0.5
+		DriveableVehicle.SurfaceTypes.ROAD: return 0.5
+		DriveableVehicle.SurfaceTypes.ROCK: return 0.5
+		DriveableVehicle.SurfaceTypes.DIRT: return 0.5
+		_: return 0.5

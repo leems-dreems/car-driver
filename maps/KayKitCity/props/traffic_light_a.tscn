@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://ba0xtl41qmm3s"]
 
-[ext_resource type="Script" path="res://maps/KayKitCity/props/traffic_light_a.gd" id="1_seoio"]
-[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="2_fltr6"]
+[ext_resource type="Script" uid="uid://claw85jlqyub" path="res://maps/KayKitCity/props/traffic_light_a.gd" id="1_seoio"]
+[ext_resource type="Script" uid="uid://6xuvaw3wn6kx" path="res://effects/car_game_particles.gd" id="2_fltr6"]
 [ext_resource type="Material" uid="uid://crersspndigy4" path="res://effects/spark_emitter_material.tres" id="2_mt856"]
 [ext_resource type="AudioStream" uid="uid://du4mx5rpm2p0x" path="res://assets/audio/Hanna-Barbera SFX/metal_clunck_1.wav" id="3_nbwdu"]
 [ext_resource type="RibbonTrailMesh" uid="uid://cya57d6ip8mv7" path="res://effects/spark_ribbon_mesh.tres" id="3_se70n"]

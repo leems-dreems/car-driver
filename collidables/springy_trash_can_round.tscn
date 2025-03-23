@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://ds0e0h6kkjqxj"]
 
-[ext_resource type="Script" path="res://collidables/springy_trash_can_round.gd" id="1_chnk8"]
+[ext_resource type="Script" uid="uid://dkdr6bh6uvt2a" path="res://collidables/springy_trash_can_round.gd" id="1_chnk8"]
 [ext_resource type="ArrayMesh" uid="uid://duqmuekq6ubb5" path="res://assets/models/cityTrashCan.obj" id="2_arfsr"]
 [ext_resource type="AudioStream" uid="uid://clui70lbe0333" path="res://assets/audio/Hanna-Barbera SFX/hit_1.wav" id="3_g156r"]
 [ext_resource type="AudioStream" uid="uid://mqbnccxbgjdr" path="res://assets/audio/Hanna-Barbera SFX/hit_2.wav" id="4_ubaik"]

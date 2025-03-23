@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://3o0ghab2l4ev"]
 
-[ext_resource type="Script" path="res://collidables/gas_pump.gd" id="1_cqwxs"]
+[ext_resource type="Script" uid="uid://kv622va0s8cm" path="res://collidables/gas_pump.gd" id="1_cqwxs"]
 [ext_resource type="ArrayMesh" uid="uid://b86mrbh4a6ac8" path="res://assets/models/gasPump.obj" id="1_g40us"]
 [ext_resource type="PackedScene" uid="uid://drtqj75y7cwtf" path="res://fire.tscn" id="3_452q4"]
 

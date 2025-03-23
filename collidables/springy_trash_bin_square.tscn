@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://dnhe41455c4fi"]
 
-[ext_resource type="Script" path="res://collidables/springy_trash_bin_square.gd" id="1_qq57t"]
+[ext_resource type="Script" uid="uid://bhprq3nk3281g" path="res://collidables/springy_trash_bin_square.gd" id="1_qq57t"]
 [ext_resource type="ArrayMesh" uid="uid://cgsmitsotxc04" path="res://assets/models/trashCanSquare.obj" id="2_ynqp0"]
 [ext_resource type="AudioStream" uid="uid://clui70lbe0333" path="res://assets/audio/Hanna-Barbera SFX/hit_1.wav" id="3_hicbd"]
 [ext_resource type="AudioStream" uid="uid://mqbnccxbgjdr" path="res://assets/audio/Hanna-Barbera SFX/hit_2.wav" id="4_qycs8"]

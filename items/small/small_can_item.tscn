@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=3 uid="uid://0uwi576g6lao"]
+
+[ext_resource type="Script" uid="uid://baadb6i3uijy7" path="res://items/carryable_item.gd" id="1_kmt6j"]
+[ext_resource type="Material" uid="uid://cqeyb6iu2bkc3" path="res://assets/materials/paint/blue.tres" id="2_am7p4"]
+[ext_resource type="AudioStream" uid="uid://33u1gmdods12" path="res://assets/audio/Sound effects package/Arcade and Games/Ping Pong Ball on Table 01.wav" id="2_q6kb1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_umah5"]
+material = ExtResource("2_am7p4")
+size = Vector3(0.4, 0.5, 0.4)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_am7p4"]
+points = PackedVector3Array(0.197592, 0.25, 0.197631, -0.2, -0.248988, -0.2, 0.196825, -0.248988, -0.2, 0.197631, -0.25, 0.197631, -0.2, -0.248988, 0.196825, -0.2, 0.248988, -0.2, 0.196787, 0.248988, -0.2, -0.2, 0.248988, 0.196825, 0.2, 0.0632431, 0.2, 0.2, 0.0711175, -0.155738)
+
+[sub_resource type="Animation" id="Animation_0asyl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:surface_material_override/1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_36ue6"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="Animation" id="Animation_rxh4e"]
+resource_name = "highlight"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:surface_material_override/1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_36ue6")]
+}
+
+[sub_resource type="Animation" id="Animation_v6b8s"]
+resource_name = "un_highlight"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:surface_material_override/1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_73s5p"]
+_data = {
+&"RESET": SubResource("Animation_0asyl"),
+&"highlight": SubResource("Animation_rxh4e"),
+&"un_highlight": SubResource("Animation_v6b8s")
+}
+
+[node name="SmallCanItem" type="RigidBody3D"]
+collision_layer = 65600
+collision_mask = 12499
+continuous_cd = true
+script = ExtResource("1_kmt6j")
+item_name = "crisps box"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_umah5")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_am7p4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_73s5p")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_q6kb1")

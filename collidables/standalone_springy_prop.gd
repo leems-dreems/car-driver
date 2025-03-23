@@ -11,58 +11,58 @@ var respawn_weight := 0.0
 
 
 func _ready() -> void:
-  return
+	return
 
 
 func _physics_process(_delta: float) -> void:
-  if is_detached:
-    if _bodies == null:
-      respawn()
-    return
-  if _bodies and _bodies.rigid_body.global_position.distance_to(global_position) > linear_breaking_point:
-    detach()
+	if is_detached:
+		if _bodies == null:
+			respawn()
+		return
+	if _bodies and _bodies.rigid_body.global_position.distance_to(global_position) > linear_breaking_point:
+		detach()
 
 ## Detaches this prop from its anchor
 func detach() -> void:
-  is_detached = true
-  _bodies.is_detached_from_parent = true
-  _bodies.rigid_body.gravity_scale = 1
-  _bodies.rigid_body.axis_lock_angular_x = false
-  _bodies.rigid_body.axis_lock_angular_y = false
-  _bodies.rigid_body.axis_lock_angular_z = false
-  _bodies.joint.set_flag_x(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
-  _bodies.joint.set_flag_y(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
-  _bodies.joint.set_flag_z(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
-  _bodies.joint.set_flag_x(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_SPRING, false)
-  _bodies.joint.set_flag_y(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_SPRING, false)
-  _bodies.joint.set_flag_z(JoltGeneric6DOFJoint3D.FLAG_ENABLE_LINEAR_SPRING, false)
-  _bodies.joint.set_flag_x(JoltGeneric6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
-  _bodies.joint.set_flag_y(JoltGeneric6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
-  _bodies.joint.set_flag_z(JoltGeneric6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
-  play_effect()
-  PropRespawnManager.waiting_to_respawn.push_back(self)
-  return
+	is_detached = true
+	_bodies.is_detached_from_parent = true
+	_bodies.rigid_body.gravity_scale = 1
+	_bodies.rigid_body.axis_lock_angular_x = false
+	_bodies.rigid_body.axis_lock_angular_y = false
+	_bodies.rigid_body.axis_lock_angular_z = false
+	_bodies.joint.set_flag_x(Generic6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
+	_bodies.joint.set_flag_y(Generic6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
+	_bodies.joint.set_flag_z(Generic6DOFJoint3D.FLAG_ENABLE_LINEAR_LIMIT, false)
+	_bodies.joint.set_flag_x(Generic6DOFJoint3D.FLAG_ENABLE_LINEAR_SPRING, false)
+	_bodies.joint.set_flag_y(Generic6DOFJoint3D.FLAG_ENABLE_LINEAR_SPRING, false)
+	_bodies.joint.set_flag_z(Generic6DOFJoint3D.FLAG_ENABLE_LINEAR_SPRING, false)
+	_bodies.joint.set_flag_x(Generic6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
+	_bodies.joint.set_flag_y(Generic6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
+	_bodies.joint.set_flag_z(Generic6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, false)
+	play_effect()
+	PropRespawnManager.waiting_to_respawn.push_back(self)
+	return
 
 
 func despawn() -> void:
-  _bodies.queue_free()
-  _bodies = null
-  respawn_weight = 0.0
-  return
+	_bodies.queue_free()
+	_bodies = null
+	respawn_weight = 0.0
+	return
 
 
 func respawn() -> void:
-  _bodies = _bodies_scene.instantiate()
-  _bodies.position = Vector3.ZERO
-  _bodies.rotation = Vector3.ZERO
-  add_child(_bodies)
-  is_detached = false
-  return
+	_bodies = _bodies_scene.instantiate()
+	_bodies.position = Vector3.ZERO
+	_bodies.rotation = Vector3.ZERO
+	add_child(_bodies)
+	is_detached = false
+	return
 
 ## Can be overridden to play effects etc when something collides with [physics_body]
 func play_effect() -> void:
-  pass
+	pass
 
 
 func stop_effect() -> void:
-  pass
+	pass

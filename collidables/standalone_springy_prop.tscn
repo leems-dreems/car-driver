@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://5m6jbxnwo7ud"]
 
-[ext_resource type="Script" path="res://collidables/standalone_springy_prop.gd" id="1_2snuy"]
+[ext_resource type="Script" uid="uid://ckyv5ot7d418i" path="res://collidables/standalone_springy_prop.gd" id="1_2snuy"]
 [ext_resource type="PackedScene" uid="uid://di0h8fimsg84o" path="res://collidables/standalone_prop_bodies.tscn" id="2_yl3jm"]
 
 [node name="StandaloneSpringyProp" type="Node3D"]

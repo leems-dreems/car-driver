@@ -1,8 +1,8 @@
-[gd_scene load_steps=96 format=4 uid="uid://dfcsj3jjvi65m"]
+[gd_scene load_steps=99 format=4 uid="uid://dfcsj3jjvi65m"]
 
-[ext_resource type="Script" path="res://cars/Van/van.gd" id="1_bpvqw"]
+[ext_resource type="Script" uid="uid://ddwscibhc5v8e" path="res://cars/Van/van.gd" id="1_bpvqw"]
 [ext_resource type="Curve" uid="uid://cmsbyx73xyhm4" path="res://addons/gevp/simcade_car_torque_curve.tres" id="2_131uc"]
-[ext_resource type="Script" path="res://cars/contact_checker.gd" id="3_utofv"]
+[ext_resource type="Script" uid="uid://bxkajpukhihd5" path="res://cars/contact_checker.gd" id="3_utofv"]
 [ext_resource type="PackedScene" uid="uid://msf4p72duq7l" path="res://effects/car_scrape_emitter.tscn" id="4_0hf0b"]
 [ext_resource type="PackedScene" uid="uid://h6vdpba71kpr" path="res://addons/gevp/scenes/smoke_effect.tscn" id="5_qasjh"]
 [ext_resource type="PackedScene" uid="uid://b2hlchrj4h2b7" path="res://addons/gevp/scenes/engine_sound.tscn" id="6_5bhig"]
@@ -10,7 +10,7 @@
 [ext_resource type="ArrayMesh" uid="uid://dqj8aw4thurl0" path="res://assets/models/vehicles/Van/van_body.obj" id="8_6hngb"]
 [ext_resource type="ArrayMesh" uid="uid://65iyv2dnru7e" path="res://assets/models/vehicles/Van/van_frontdoor_L.obj" id="9_jew5r"]
 [ext_resource type="PhysicsMaterial" uid="uid://bgc5lkrsa84nb" path="res://cars/car_door_physics_material.tres" id="10_2ydly"]
-[ext_resource type="Script" path="res://scripts/car_door.gd" id="11_wu5de"]
+[ext_resource type="Script" uid="uid://citp3p3gcryim" path="res://scripts/car_door.gd" id="11_wu5de"]
 [ext_resource type="AudioStream" uid="uid://cphg4k5oq6gum" path="res://assets/sfx/car-door-open.wav" id="12_im2t8"]
 [ext_resource type="AudioStream" uid="uid://d02vhghagqdjw" path="res://assets/sfx/car-door-shut.wav" id="13_8325h"]
 [ext_resource type="ArrayMesh" uid="uid://eq4nfsb364fv" path="res://assets/models/vehicles/Van/van_frontdoor_R.obj" id="14_rj8bg"]
@@ -22,8 +22,7 @@
 [ext_resource type="Material" uid="uid://dmtu75kn4a1ac" path="res://assets/materials/reverse_light_emissive_material_3d.tres" id="19_256ip"]
 [ext_resource type="ArrayMesh" uid="uid://b0qvn50fxmync" path="res://assets/models/vehicles/Van/van_brakelight_R.obj" id="19_l8fvl"]
 [ext_resource type="ArrayMesh" uid="uid://bd6q5r66dksys" path="res://assets/models/vehicles/Van/van_reverselight_R.obj" id="20_aa3gt"]
-[ext_resource type="Script" path="res://scripts/enter_vehicle_hitbox.gd" id="21_alnvw"]
-[ext_resource type="Script" path="res://addons/gevp/scripts/wheel.gd" id="22_4fyyl"]
+[ext_resource type="Script" uid="uid://ce4rhbhmawe84" path="res://scripts/enter_vehicle_hitbox.gd" id="21_alnvw"]
 [ext_resource type="AudioStream" uid="uid://d2gr5emhyehgo" path="res://assets/sfx/tires_squal_loop.wav" id="23_3658c"]
 [ext_resource type="AudioStream" uid="uid://x2riq63vqy7j" path="res://assets/sfx/skid-loop.wav" id="24_pqei1"]
 [ext_resource type="AudioStream" uid="uid://b6wjsd5udyqvt" path="res://assets/audio/Hanna-Barbera SFX/rumble_loop.wav" id="25_rgp4t"]
@@ -53,9 +52,9 @@
 [ext_resource type="AudioStream" uid="uid://bsykmtu15bbyy" path="res://assets/audio/Sound effects package/Crashes/Glass Break 02.wav" id="49_lsa3n"]
 [ext_resource type="AudioStream" uid="uid://btwfyuao3yspq" path="res://assets/audio/Sound effects package/Crashes/Glass Break 03.wav" id="50_k5rjq"]
 [ext_resource type="Material" uid="uid://bclipohnbqlxm" path="res://effects/engine_black_smoke_material.tres" id="53_6yde1"]
-[ext_resource type="Script" path="res://effects/car_game_particles.gd" id="53_7nrmg"]
+[ext_resource type="Script" uid="uid://6xuvaw3wn6kx" path="res://effects/car_game_particles.gd" id="53_7nrmg"]
 [ext_resource type="Material" uid="uid://dslgu68amcstn" path="res://effects/engine_black_smoke_process_material.tres" id="54_d0vv0"]
-[ext_resource type="Shader" uid="uid://d88xwj7fq8fu" path="res://effects/ExplosionShader.tres" id="56_vmg6k"]
+[ext_resource type="Shader" uid="uid://cntuwy6tbecnw" path="res://effects/ExplosionShader.tres" id="56_vmg6k"]
 [ext_resource type="Material" uid="uid://dk6yd72g0kmj2" path="res://effects/engine_fire_process_material.tres" id="57_3ndmk"]
 [ext_resource type="Material" uid="uid://8vfe26o7lqwj" path="res://effects/engine_white_smoke_material.tres" id="58_u6flm"]
 [ext_resource type="Material" uid="uid://dlf645qtjmyle" path="res://effects/engine_white_smoke_process_material.tres" id="59_lw4yp"]
@@ -89,6 +88,9 @@ points = PackedVector3Array(-0.900422, 0.349139, -2.37043, -0.900422, 0.349139, 
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_100sx"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="Resource" id="Resource_qpyky"]
+metadata/__load_path__ = "res://addons/gevp_backup/scripts/wheel.gd"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4010s"]
 resource_name = "carTire"
@@ -180,6 +182,15 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7qo4e")
 
+[sub_resource type="Resource" id="Resource_lvwnm"]
+metadata/__load_path__ = "res://addons/gevp_backup/scripts/wheel.gd"
+
+[sub_resource type="Resource" id="Resource_8hwl6"]
+metadata/__load_path__ = "res://addons/gevp_backup/scripts/wheel.gd"
+
+[sub_resource type="Resource" id="Resource_qa1yq"]
+metadata/__load_path__ = "res://addons/gevp_backup/scripts/wheel.gd"
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_sp4ri"]
 radius = 0.25
 
@@ -267,12 +278,12 @@ shader_parameter/particle_h_frames = 8.0
 shader_parameter/particle_v_frames = 8.0
 shader_parameter/particles_anim_loop = false
 shader_parameter/still_frame = -1.0
-shader_parameter/Soft_limit = 0.001
-shader_parameter/blend_scale = 0.001
-shader_parameter/emission_falloff_multiplier = 0.1
 shader_parameter/tex_frg_2 = SubResource("CompressedTexture2D_brt1w")
 shader_parameter/tex_frg_27 = SubResource("GradientTexture1D_1jwor")
 shader_parameter/tex_frg_24 = SubResource("GradientTexture1D_ujgsu")
+shader_parameter/Soft_limit = 0.001
+shader_parameter/blend_scale = 0.001
+shader_parameter/emission_falloff_multiplier = 0.1
 shader_parameter/tex_frg_25 = SubResource("GradientTexture1D_yicit")
 shader_parameter/tex_frg_26 = SubResource("GradientTexture1D_8dmnf")
 shader_parameter/tex_frg_16 = SubResource("CompressedTexture2D_htdp7")
@@ -320,21 +331,6 @@ front_spring_length = 0.18
 rear_spring_length = 0.24
 contact_patch = 0.25
 braking_grip_multiplier = 3.0
-coefficient_of_friction = {
-"Dirt": 1.0,
-"Grass": 1.25,
-"Road": 1.5
-}
-lateral_grip_assist = {
-"Dirt": 0.0,
-"Grass": 0.2,
-"Road": 0.05
-}
-longitudinal_grip_ratio = {
-"Dirt": 1.0,
-"Grass": 1.0,
-"Road": 1.0
-}
 front_tire_radius = 0.5
 front_tire_width = 280.0
 front_wheel_mass = 18.0
@@ -814,7 +810,7 @@ disabled = true
 
 [node name="WheelFrontLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15655, -0.1, -2.60287)
-script = ExtResource("22_4fyyl")
+script = SubResource("Resource_qpyky")
 wheel_node = NodePath("FrontLeftWheel")
 
 [node name="FrontLeftWheel" type="Node3D" parent="WheelFrontLeft"]
@@ -851,7 +847,7 @@ outline_size = 6
 
 [node name="WheelFrontRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.157, -0.1, -2.60287)
-script = ExtResource("22_4fyyl")
+script = SubResource("Resource_lvwnm")
 wheel_node = NodePath("FrontRightWheel")
 
 [node name="FrontRightWheel" type="Node3D" parent="WheelFrontRight"]
@@ -888,7 +884,7 @@ outline_size = 6
 
 [node name="WheelRearLeft" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15655, -0.1, 2.08371)
-script = ExtResource("22_4fyyl")
+script = SubResource("Resource_8hwl6")
 wheel_node = NodePath("RearLeftWheel")
 
 [node name="RearLeftWheel" type="Node3D" parent="WheelRearLeft"]
@@ -925,7 +921,7 @@ outline_size = 6
 
 [node name="WheelRearRight" type="RayCast3D" parent="." node_paths=PackedStringArray("wheel_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.157, -0.1, 2.08371)
-script = ExtResource("22_4fyyl")
+script = SubResource("Resource_qa1yq")
 wheel_node = NodePath("RearRightWheel")
 
 [node name="RearRightWheel" type="Node3D" parent="WheelRearRight"]

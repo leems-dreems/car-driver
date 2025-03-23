@@ -1,6 +1,6 @@
 [gd_scene load_steps=49 format=4 uid="uid://ca3emwpdwnkxa"]
 
-[ext_resource type="Script" path="res://npcs/pedestrian.gd" id="1_xrfda"]
+[ext_resource type="Script" uid="uid://c141carjnyt6q" path="res://npcs/pedestrian.gd" id="1_xrfda"]
 [ext_resource type="AudioStream" uid="uid://bx0t7f2nuk2lr" path="res://Player/Sounds/03_Step_grass_03.wav" id="5_476gx"]
 [ext_resource type="AudioStream" uid="uid://cbcb2d63weegs" path="res://Player/Sounds/45_Landing_01.wav" id="6_0wtlt"]
 [ext_resource type="AudioStream" uid="uid://idxb057hxed3" path="res://assets/audio/Hanna-Barbera SFX/boink_1.wav" id="7_e17hn"]
@@ -1110,12 +1110,12 @@ tracks/20/keys = PackedFloat32Array(0, 1, -2.08133e-08, -0.961249, 0.275682, 7.2
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ywoxt"]
 _data = {
-"Falling": SubResource("Animation_qroau"),
-"Idle": SubResource("Animation_hn8la"),
-"Rising": SubResource("Animation_jl62e"),
-"Run": SubResource("Animation_t40kw"),
-"T-Pose": SubResource("Animation_ygl4e"),
-"Walk": SubResource("Animation_s0vpi")
+&"Falling": SubResource("Animation_qroau"),
+&"Idle": SubResource("Animation_hn8la"),
+&"Rising": SubResource("Animation_jl62e"),
+&"Run": SubResource("Animation_t40kw"),
+&"T-Pose": SubResource("Animation_ygl4e"),
+&"Walk": SubResource("Animation_s0vpi")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ncxaq"]
