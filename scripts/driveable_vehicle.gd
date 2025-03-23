@@ -127,10 +127,6 @@ func _physics_process(delta: float) -> void:
 		reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 0.0, delta * 10)
 		reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 0.0, delta * 10)
 	else:
-		#if is_being_driven:
-			#var _current_reverse_light_energy := lerpf(reverse_light_left.light_energy, 0.0, delta * 10)
-			#reverse_light_left.light_energy = _current_reverse_light_energy
-			#reverse_light_right.light_energy = _current_reverse_light_energy
 		reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 1.0, delta * 10)
 		reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 1.0, delta * 10)
 	var _target_headlight_energy := 0.0
