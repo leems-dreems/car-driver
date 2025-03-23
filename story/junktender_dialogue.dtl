@@ -1,0 +1,11 @@
+join junktender center
+if {has_met_junktender} == false:
+	junktender: Pleased to meet you. I look after the rubbish at this dump. I can also summon cars, if you need one.
+	set {has_met_junktender} = true
+junktender: What do you need?
+- What should I do?
+	junktender: It would be good if you could pick up any rubbish you see you around the island, and put it in this skip.
+	junktender: To make things easier, you can use bins to consolidate rubbish into binbags.
+- Please summon a car for me
+	junktender: Very well.
+	[end_timeline]

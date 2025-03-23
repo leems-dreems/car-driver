@@ -145,6 +145,7 @@ mouse_filter = 2
 theme = SubResource("Theme_id77h")
 
 [node name="MissionLabelContainer" type="VBoxContainer" parent="HUD"]
+visible = false
 layout_mode = 2
 
 [node name="MissionLabel" type="Label" parent="HUD/MissionLabelContainer"]
