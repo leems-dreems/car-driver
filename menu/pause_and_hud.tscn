@@ -39,6 +39,7 @@ format = 1
 
 [node name="PauseAndHUD" type="CanvasLayer"]
 process_mode = 3
+layer = 2
 script = ExtResource("1_jvxva")
 
 [node name="PausedUI" type="HBoxContainer" parent="."]

@@ -66,6 +66,12 @@ func _process(_delta: float) -> void:
 		if not paused_UI.visible:
 			animate_open()
 		$PausedUI.mouse_filter = Control.MOUSE_FILTER_STOP
+
+		var _focussed_control := get_viewport().gui_get_focus_owner()
+		if Input.is_action_just_pressed("ui_down") and _focussed_control == null:
+			$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton.grab_focus.call_deferred()
+		elif Input.is_action_just_pressed("ui_up") and _focussed_control == null:
+			$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton.grab_focus.call_deferred()
 	else:
 		options_menu.visible = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -74,11 +80,6 @@ func _process(_delta: float) -> void:
 		$PausedUI.visible = false
 		$PausedUI.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_update_hud()
-	var _focussed_control := get_viewport().gui_get_focus_owner()
-	if Input.is_action_just_pressed("ui_down") and _focussed_control == null:
-		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton.grab_focus.call_deferred()
-	elif Input.is_action_just_pressed("ui_up") and _focussed_control == null:
-		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton.grab_focus.call_deferred()
 
 	set_pickup_key_pressed(Input.is_action_pressed("pickup_drop"))
 	set_interact_key_pressed(Input.is_action_pressed("interact"))

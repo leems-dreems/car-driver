@@ -1,3 +1,4 @@
+[style name="npc_dialogue_tree"]
 join junktender center
 if {has_met_junktender} == false:
 	junktender: Pleased to meet you. I look after the rubbish at this dump. I can also summon cars, if you need one.
