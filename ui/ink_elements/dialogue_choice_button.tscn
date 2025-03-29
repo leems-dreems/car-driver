@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ddmen4ikpjrhv"]
+
+[node name="Button" type="Button"]
+text = " One choice that can be made"
+alignment = 0
+expand_icon = true

@@ -21,6 +21,11 @@ script = ExtResource("1_rrsaq")
 scene = ExtResource("2_yqakr")
 overrides = {}
 
+[sub_resource type="Resource" id="Resource_rrsaq"]
+script = ExtResource("1_rrsaq")
+scene = ExtResource("3_p5sm6")
+overrides = {}
+
 [sub_resource type="Resource" id="Resource_srelf"]
 script = ExtResource("1_rrsaq")
 scene = ExtResource("5_xae22")
@@ -57,11 +62,6 @@ overrides = {
 "box_panel": "\"res://ui/dialogic styles/npc_dialogue_panel.tres\"",
 "box_size": "Vector2(800, 200)"
 }
-
-[sub_resource type="Resource" id="Resource_rrsaq"]
-script = ExtResource("1_rrsaq")
-scene = ExtResource("3_p5sm6")
-overrides = {}
 
 [resource]
 script = ExtResource("9_a2cg0")

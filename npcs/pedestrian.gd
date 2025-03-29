@@ -20,6 +20,8 @@ class_name Pedestrian extends RigidBody3D
 ## Minimum time the character will ragdoll for after getting hit
 @export var min_ragdoll_time := 4.0
 
+@export var npc_name: String
+
 @onready var _rotation_root: Node3D = $square_guy
 #@onready var ragdoll_skeleton: Skeleton3D = $DummyRigPhysical/Rig/Skeleton3D
 #@onready var _ragdoll_tracker_bone: PhysicalBone3D = $"DummyRigPhysical/Rig/Skeleton3D/Physical Bone spine"

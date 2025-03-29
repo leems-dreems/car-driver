@@ -412,7 +412,7 @@ func get_skeleton_position() -> Vector3:
 	return _ragdoll_tracker_bone.global_position
 
 
-func enterVehicle (vehicle: DriveableVehicle) -> void:
+func enterVehicle(vehicle: DriveableVehicle) -> void:
 	current_vehicle = vehicle
 	_vehicle_controller.vehicle_node = vehicle
 	vehicle.is_being_driven = true
@@ -587,6 +587,8 @@ func process_interact_button() -> void:
 			interact_short_press_timer.stop()
 			short_press_interact_finish.emit()
 			targeted_interactable.interact_short_press()
+			if targeted_interactable is NPCInteractArea:
+				state_machine.state.finished.emit(PlayerState.IN_DIALOGUE)
 			if _pickup_collider.overlaps_area(targeted_interactable):
 				short_press_interact_highlight.emit(targeted_interactable)
 			else:
@@ -626,6 +628,8 @@ func interact_short_press_timeout() -> void:
 		short_press_interact_finish.emit()
 		if targeted_interactable != null:
 			targeted_interactable.interact_short_press()
+			if targeted_interactable is NPCInteractArea:
+				state_machine.state.finished.emit(PlayerState.IN_DIALOGUE)
 			if _pickup_collider.overlaps_area(targeted_interactable):
 				short_press_interact_highlight.emit(targeted_interactable)
 			else:

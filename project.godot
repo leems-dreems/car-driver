@@ -78,7 +78,7 @@ project/assembly_name="Fast Traffic"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogic/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogic/plugin.cfg", "res://addons/inkgd/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [global_group]
 
@@ -86,6 +86,10 @@ Road="Vehicles will treat this surface as a road"
 Grass="Vehicles will treat this surface as grass"
 ExplosionCatcher="Used to fine-tune how explosions push larger objects"
 Building=""
+
+[inkgd]
+
+register_templates=true
 
 [input]
 

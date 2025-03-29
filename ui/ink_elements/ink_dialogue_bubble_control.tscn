@@ -1,0 +1,90 @@
+[gd_scene load_steps=8 format=3 uid="uid://l0xjj1q10euv"]
+
+[ext_resource type="Theme" uid="uid://bkd3ixcbjp1l4" path="res://ui/ink_elements/ink_dialogue_bubble_theme.tres" id="1_5jtl0"]
+[ext_resource type="Script" uid="uid://b7a2x0hxffai6" path="res://ui/ink_elements/ink_dialogue_bubble_control.gd" id="1_ioq3t"]
+[ext_resource type="PackedScene" uid="uid://ddmen4ikpjrhv" path="res://ui/ink_elements/dialogue_choice_button.tscn" id="2_o22ls"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5jtl0"]
+font_size = 32
+font_color = Color(0.0298098, 0, 0.631582, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_5jtl0"]
+thickness = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o22ls"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t20hb"]
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -620.0
+offset_top = -145.0
+offset_right = 620.0
+offset_bottom = 145.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ioq3t")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+theme = ExtResource("1_5jtl0")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer_Name" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer_Name"]
+layout_mode = 2
+text = "NPC's Name"
+label_settings = SubResource("LabelSettings_5jtl0")
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer_Name"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_5jtl0")
+
+[node name="VBoxContainer_Dialogue" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer_Dialogue"]
+layout_mode = 2
+theme_override_constants/separation = 12
+theme_override_styles/separator = SubResource("StyleBoxEmpty_o22ls")
+
+[node name="DialogueLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer_Dialogue"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Some text being spoken that wraps onto several lines"
+label_settings = SubResource("LabelSettings_t20hb")
+autowrap_mode = 2
+
+[node name="VBoxContainer_Choices" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Button" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer_Choices" instance=ExtResource("2_o22ls")]
+layout_mode = 2
+text = "One choice that can be made"
+
+[node name="Button2" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer_Choices" instance=ExtResource("2_o22ls")]
+layout_mode = 2
+text = "Another choice"
+
+[node name="Button3" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer_Choices" instance=ExtResource("2_o22ls")]
+layout_mode = 2
+text = "A yet third choice"
