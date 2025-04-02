@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://ddmen4ikpjrhv"]
+[gd_scene load_steps=2 format=3 uid="uid://ddmen4ikpjrhv"]
+
+[ext_resource type="Script" uid="uid://dfijxmwdeqq61" path="res://ui/ink_elements/dialogue_choice_button.gd" id="1_vcwi3"]
 
 [node name="Button" type="Button"]
 text = " One choice that can be made"
 alignment = 0
 expand_icon = true
+script = ExtResource("1_vcwi3")

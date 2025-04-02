@@ -88,3 +88,8 @@ text = "Another choice"
 [node name="Button3" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer_Choices" instance=ExtResource("2_o22ls")]
 layout_mode = 2
 text = "A yet third choice"
+
+[node name="ContinueButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Continue >"
+alignment = 2

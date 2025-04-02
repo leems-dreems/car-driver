@@ -19,7 +19,7 @@ viewport_path = NodePath("SubViewport")
 npc_name = "The Junktender"
 
 [node name="Skeleton3D" parent="square_guy/metarig" index="0"]
-bones/0/position = Vector3(1.65603e-10, 0.704543, -0.0545889)
+bones/0/position = Vector3(2.33444e-09, 0.695976, -0.0465845)
 bones/0/rotation = Quaternion(0.068275, 1.18931e-07, 8.13902e-09, 0.997667)
 bones/1/rotation = Quaternion(-0.0276443, 3.79201e-14, -6.59091e-09, 0.999618)
 bones/4/rotation = Quaternion(-0.00326853, -1.19209e-07, -3.8964e-10, 0.999995)
@@ -30,13 +30,13 @@ bones/10/rotation = Quaternion(-0.246133, -0.781197, 0.430631, 0.379086)
 bones/11/rotation = Quaternion(0.153468, 0.216717, 0.161822, 0.950418)
 bones/12/rotation = Quaternion(-0.00566048, -0.760372, 0.0830567, 0.64413)
 bones/15/rotation = Quaternion(0.146202, 0.733983, 0.450436, -0.486828)
-bones/17/rotation = Quaternion(0.995369, -2.37299e-08, 2.39479e-07, 0.09613)
-bones/18/rotation = Quaternion(0.0663313, -1.20486e-07, -1.52358e-08, 0.997798)
-bones/19/rotation = Quaternion(-0.518033, 7.08798e-13, 5.20123e-13, 0.85536)
+bones/17/rotation = Quaternion(0.990377, -3.38975e-08, 2.38253e-07, 0.138393)
+bones/18/rotation = Quaternion(0.169575, -1.21416e-07, -2.64346e-09, 0.985517)
+bones/19/rotation = Quaternion(-0.56949, 6.74953e-13, 5.6324e-13, 0.821998)
 bones/20/rotation = Quaternion(2.08134e-08, 0.961249, -0.275682, -7.25723e-08)
-bones/22/rotation = Quaternion(0.995369, -2.37299e-08, 2.39479e-07, 0.09613)
-bones/23/rotation = Quaternion(0.0663313, -1.20486e-07, -1.52359e-08, 0.997798)
-bones/24/rotation = Quaternion(-0.518033, 7.36883e-13, 5.42324e-13, 0.85536)
+bones/22/rotation = Quaternion(0.990377, -3.38976e-08, 2.38253e-07, 0.138393)
+bones/23/rotation = Quaternion(0.169575, -1.21416e-07, -2.64349e-09, 0.985517)
+bones/24/rotation = Quaternion(-0.56949, 7.03327e-13, 5.8632e-13, 0.821998)
 bones/25/rotation = Quaternion(2.08133e-08, 0.961249, -0.275682, -7.25723e-08)
 
 [node name="Cube_001" parent="square_guy/metarig/Skeleton3D" index="0"]

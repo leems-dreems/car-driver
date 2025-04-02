@@ -172,15 +172,15 @@ func _ready() -> void:
 				_body.unhighlight()
 	)
 
-	Dialogic.timeline_started.connect(func():
-		state_machine.state.finished.emit(PlayerState.IN_DIALOGUE)
-	)
-	Dialogic.timeline_ended.connect(func():
-		if _carried_item != null:
-			state_machine.state.finished.emit(PlayerState.CARRYING)
-		else:
-			state_machine.state.finished.emit(PlayerState.EMPTY_HANDED)
-	)
+	#Dialogic.timeline_started.connect(func():
+		#state_machine.state.finished.emit(PlayerState.IN_DIALOGUE)
+	#)
+	#Dialogic.timeline_ended.connect(func():
+		#if _carried_item != null:
+			#state_machine.state.finished.emit(PlayerState.CARRYING)
+		#else:
+			#state_machine.state.finished.emit(PlayerState.EMPTY_HANDED)
+	#)
 
 	interact_long_press_timer.timeout.connect(interact_long_press_timeout)
 	interact_short_press_timer.timeout.connect(interact_short_press_timeout)
@@ -531,6 +531,17 @@ func process_pickup_button() -> void:
 	return
 
 
+func handle_pickup_button_pressed() -> void:
+	if not pickup_short_press_timer.is_stopped():
+		return
+	short_press_pickup_start.emit()
+	pickup_short_press_timer.start(_pickup_button_short_press_delay)
+	pickup_item(targeted_pickup)
+	targeted_pickup.unhighlight()
+	targeted_pickup = null
+	return
+
+
 func pickup_short_press_timeout() -> void:
 	pickup_short_press_timer.stop()
 	short_press_pickup_finish.emit()
@@ -613,6 +624,41 @@ func process_interact_button() -> void:
 	
 	else:
 		update_interact_target()
+	return
+
+
+func handle_interact_button_pressed() -> void:
+	if not interact_short_press_timer.is_stopped() or not interact_long_press_timer.is_stopped():
+		return
+	if targeted_interactable.can_interact_short_press():
+		short_press_interact_start.emit()
+		interact_short_press_timer.start(_interact_button_short_press_delay)
+	elif targeted_interactable.can_interact_long_press(_carried_item):
+		long_press_interact_start.emit()
+		interact_long_press_timer.start(_interact_button_long_press_delay)
+	return
+
+
+func handle_interact_button_released() -> void:
+	if not interact_short_press_timer.is_stopped():
+		interact_short_press_timer.stop()
+		short_press_interact_finish.emit()
+		targeted_interactable.interact_short_press()
+		if targeted_interactable is NPCInteractArea:
+			state_machine.state.finished.emit(PlayerState.IN_DIALOGUE)
+		if _pickup_collider.overlaps_area(targeted_interactable):
+			short_press_interact_highlight.emit(targeted_interactable)
+		else:
+			targeted_interactable.unhighlight()
+			targeted_interactable = null
+	if not interact_long_press_timer.is_stopped():
+		interact_long_press_timer.stop()
+		long_press_interact_cancel.emit()
+		if _pickup_collider.overlaps_area(targeted_interactable):
+			long_press_interact_highlight.emit(targeted_interactable)
+		else:
+			targeted_interactable.unhighlight()
+			targeted_interactable = null
 	return
 
 
@@ -709,6 +755,19 @@ func process_drop_button() -> void:
 		state_machine.state.finished.emit(PlayerState.EMPTY_HANDED)
 	else:
 		update_drop_target()
+	return
+
+
+func handle_drop_button_pressed() -> void:
+	short_press_drop_start.emit()
+	var _item := _carried_item
+	drop_item()
+	if len(drop_targets) > 0 and drop_targets[0].has_method("deposit_item"):
+		drop_targets[0].deposit_item(_item)
+		_item.queue_free()
+		drop_targets[0].unhighlight()
+	short_press_drop_finish.emit()
+	state_machine.state.finished.emit(PlayerState.EMPTY_HANDED)
 	return
 
 

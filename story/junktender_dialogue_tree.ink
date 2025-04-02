@@ -10,7 +10,7 @@ What do you need?
 * What should I do?
     It would be good if you could pick up any rubbish you see you around the island, and put it in this skip.
     To make things easier, you can use bins to consolidate rubbish into binbags.
+    -> END
 * Please summon a car for me
     Very well.
-
     -> END
