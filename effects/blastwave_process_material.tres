@@ -14,7 +14,7 @@ offsets = PackedFloat32Array(0.25, 1)
 gradient = SubResource("Gradient_p6ew1")
 
 [sub_resource type="Curve" id="Curve_sbah3"]
-max_value = 20.0
+_limits = [0.0, 20.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.497093, 20), 0.0, 0.0, 0, 0]
 point_count = 2
 

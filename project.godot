@@ -22,7 +22,6 @@ PropRespawnManager="*res://scripts/prop_respawn_manager.gd"
 TrafficManager="*res://traffic/traffic_manager.gd"
 PedestrianManager="*res://npcs/pedestrian_manager.gd"
 PauseAndHud="*res://menu/pause_and_hud.tscn"
-Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 [debug]
 
@@ -78,7 +77,7 @@ project/assembly_name="Fast Traffic"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogic/plugin.cfg", "res://addons/inkgd/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/inkgd/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [global_group]
 
