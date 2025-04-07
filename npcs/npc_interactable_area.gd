@@ -11,6 +11,7 @@ func _ready() -> void:
 	assert(npc != null, "Owner of NPC interact area needs to be a Pedestrian node")
 
 	dialogue_bubble.visible = false
+	dialogue_bubble.control.visible = false
 	dialogue_bubble.control.set_npc_name(npc.npc_name)
 	dialogue_bubble.control.choice_selected.connect(on_choice_selected)
 	dialogue_bubble.control.continue_dialogue.connect(continue_story)
@@ -21,6 +22,7 @@ func _ready() -> void:
 			return
 		print("Loaded Ink story")
 	)
+	ink_player.ended.connect(process_end)
 
 	ink_player.create_story()
 	return
@@ -35,6 +37,7 @@ func continue_story() -> void:
 	dialogue_bubble.control.show_choices(ink_player.current_choices)
 	if ink_player.has_choices:
 		prints("Ink story has", str(len(ink_player.current_choices)), "choices")
+	process_tags(ink_player.current_tags)
 	return
 
 
@@ -44,6 +47,7 @@ func can_interact_short_press() -> bool:
 
 func interact_short_press() -> void:
 	dialogue_bubble.visible = true
+	dialogue_bubble.control.visible = true
 	continue_story()
 	return
 
@@ -51,4 +55,12 @@ func interact_short_press() -> void:
 func on_choice_selected(_choice: InkChoice) -> void:
 	ink_player.choose_choice_index(_choice.index)
 	continue_story()
+	return
+
+## Override to react to specific tags per character
+func process_tags(_tags: Array) -> void:
+	return
+
+## Override to do things when conversation ends
+func process_end() -> void:
 	return

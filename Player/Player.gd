@@ -628,6 +628,9 @@ func process_interact_button() -> void:
 
 
 func handle_interact_button_pressed() -> void:
+	if targeted_interactable == null:
+		return
+
 	if not interact_short_press_timer.is_stopped() or not interact_long_press_timer.is_stopped():
 		return
 	if targeted_interactable.can_interact_short_press():
@@ -640,12 +643,16 @@ func handle_interact_button_pressed() -> void:
 
 
 func handle_interact_button_released() -> void:
+	if targeted_interactable == null:
+		return
+
 	if not interact_short_press_timer.is_stopped():
 		interact_short_press_timer.stop()
 		short_press_interact_finish.emit()
 		targeted_interactable.interact_short_press()
 		if targeted_interactable is NPCInteractArea:
 			state_machine.state.finished.emit(PlayerState.IN_DIALOGUE)
+			return
 		if _pickup_collider.overlaps_area(targeted_interactable):
 			short_press_interact_highlight.emit(targeted_interactable)
 		else:

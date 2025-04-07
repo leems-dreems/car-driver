@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://c52clb7bsba3r"]
 
 [ext_resource type="PackedScene" uid="uid://ca3emwpdwnkxa" path="res://npcs/pedestrian.tscn" id="1_n7cvo"]
-[ext_resource type="Script" uid="uid://cg0c87by1to57" path="res://npcs/npc_interactable_area.gd" id="2_a0yv2"]
 [ext_resource type="Material" uid="uid://dfdnm2ans1prd" path="res://assets/materials/paint/green.tres" id="2_wcy18"]
 [ext_resource type="Material" uid="uid://bg0yh4eilbpry" path="res://assets/materials/paint/red.tres" id="3_ybvhr"]
 [ext_resource type="Material" uid="uid://cqeyb6iu2bkc3" path="res://assets/materials/paint/blue.tres" id="4_ybvhr"]
+[ext_resource type="Script" uid="uid://cwck7qscejkf" path="res://npcs/characters/junktender_interactable_area.gd" id="5_3q5jn"]
 [ext_resource type="Script" uid="uid://dhevaeuigpl8p" path="res://addons/inkgd/ink_player.gd" id="6_kiq65"]
 [ext_resource type="Resource" uid="uid://b6c8g1um46sgj" path="res://story/junktender_dialogue_tree.ink.json" id="7_3q5jn"]
 [ext_resource type="PackedScene" uid="uid://bv5atqbsnl52k" path="res://ui/ink_elements/ink_dialogue_bubble.tscn" id="8_3q5jn"]
@@ -19,7 +19,7 @@ viewport_path = NodePath("SubViewport")
 npc_name = "The Junktender"
 
 [node name="Skeleton3D" parent="square_guy/metarig" index="0"]
-bones/0/position = Vector3(2.33444e-09, 0.695976, -0.0465845)
+bones/0/position = Vector3(-1.36354e-09, 0.705006, -0.0550213)
 bones/0/rotation = Quaternion(0.068275, 1.18931e-07, 8.13902e-09, 0.997667)
 bones/1/rotation = Quaternion(-0.0276443, 3.79201e-14, -6.59091e-09, 0.999618)
 bones/4/rotation = Quaternion(-0.00326853, -1.19209e-07, -3.8964e-10, 0.999995)
@@ -30,13 +30,13 @@ bones/10/rotation = Quaternion(-0.246133, -0.781197, 0.430631, 0.379086)
 bones/11/rotation = Quaternion(0.153468, 0.216717, 0.161822, 0.950418)
 bones/12/rotation = Quaternion(-0.00566048, -0.760372, 0.0830567, 0.64413)
 bones/15/rotation = Quaternion(0.146202, 0.733983, 0.450436, -0.486828)
-bones/17/rotation = Quaternion(0.990377, -3.38975e-08, 2.38253e-07, 0.138393)
-bones/18/rotation = Quaternion(0.169575, -1.21416e-07, -2.64346e-09, 0.985517)
-bones/19/rotation = Quaternion(-0.56949, 6.74953e-13, 5.6324e-13, 0.821998)
+bones/17/rotation = Quaternion(0.995567, -1.23345e-08, 2.39588e-07, 0.0940585)
+bones/18/rotation = Quaternion(0.0612014, -1.20406e-07, -1.58551e-08, 0.998125)
+bones/19/rotation = Quaternion(-0.515485, 6.99978e-13, 5.37523e-13, 0.856899)
 bones/20/rotation = Quaternion(2.08134e-08, 0.961249, -0.275682, -7.25723e-08)
-bones/22/rotation = Quaternion(0.990377, -3.38976e-08, 2.38253e-07, 0.138393)
-bones/23/rotation = Quaternion(0.169575, -1.21416e-07, -2.64349e-09, 0.985517)
-bones/24/rotation = Quaternion(-0.56949, 7.03327e-13, 5.8632e-13, 0.821998)
+bones/22/rotation = Quaternion(0.995567, -1.23346e-08, 2.39587e-07, 0.0940585)
+bones/23/rotation = Quaternion(0.0612014, -1.20406e-07, -1.58552e-08, 0.998125)
+bones/24/rotation = Quaternion(-0.515485, 7.2844e-13, 5.59537e-13, 0.856898)
 bones/25/rotation = Quaternion(2.08133e-08, 0.961249, -0.275682, -7.25723e-08)
 
 [node name="Cube_001" parent="square_guy/metarig/Skeleton3D" index="0"]
@@ -48,7 +48,7 @@ surface_material_override/2 = ExtResource("4_ybvhr")
 collision_layer = 8
 collision_mask = 0
 monitoring = false
-script = ExtResource("2_a0yv2")
+script = ExtResource("5_3q5jn")
 ink_player = NodePath("../InkPlayer")
 dialogue_bubble = NodePath("../InkDialogueBubble")
 interactable_noun = "NPC"
@@ -65,5 +65,5 @@ ink_file = ExtResource("7_3q5jn")
 metadata/_custom_type_script = "uid://dhevaeuigpl8p"
 
 [node name="InkDialogueBubble" parent="." index="9" instance=ExtResource("8_3q5jn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
 texture = SubResource("ViewportTexture_77juk")

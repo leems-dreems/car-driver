@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dfijxmwdeqq61" path="res://ui/ink_elements/dialogue_choice_button.gd" id="1_vcwi3"]
 
 [node name="Button" type="Button"]
+action_mode = 0
 text = " One choice that can be made"
 alignment = 0
 expand_icon = true

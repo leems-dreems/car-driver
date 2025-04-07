@@ -2,6 +2,7 @@ class_name DialogueBubbleControl extends CenterContainer
 
 @onready var choices_container := $PanelContainer/MarginContainer/VBoxContainer/VBoxContainer_Choices
 @onready var continue_button := $PanelContainer/MarginContainer/VBoxContainer/ContinueButton
+@onready var click_audio := $ClickAudio
 const choice_button_scene := preload("res://ui/ink_elements/dialogue_choice_button.tscn")
 signal choice_selected(InkChoice)
 signal continue_dialogue
@@ -12,7 +13,11 @@ func _ready() -> void:
 		if _child is Button:
 			_child.grab_focus.call_deferred()
 			break
-	continue_button.pressed.connect(func(): continue_dialogue.emit())
+	continue_button.pressed.connect(func():
+		click_audio.play()
+		continue_dialogue.emit()
+		accept_event()
+	)
 	return
 
 
@@ -33,7 +38,9 @@ func show_choices(_choices: Array) -> void:
 		_button.ink_choice = _choice
 		choices_container.add_child(_button)
 		_button.pressed.connect(func():
+			click_audio.play()
 			choice_selected.emit(_button.ink_choice)
+			accept_event()
 		)
 		if i == 0:
 			_button.grab_focus.call_deferred()

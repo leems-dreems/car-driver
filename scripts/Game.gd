@@ -10,3 +10,11 @@ func change_window_mode(toggle_on: bool) -> void:
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	return
+
+
+func summon_car(_global_position: Vector3 = Vector3.INF) -> void:
+	if get_tree().current_scene.has_method("summon_car"):
+		get_tree().current_scene.summon_car(_global_position)
+	else:
+		print("Current scene has no summon_car method")
+	return

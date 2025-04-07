@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://l0xjj1q10euv"]
+[gd_scene load_steps=9 format=3 uid="uid://l0xjj1q10euv"]
 
 [ext_resource type="Theme" uid="uid://bkd3ixcbjp1l4" path="res://ui/ink_elements/ink_dialogue_bubble_theme.tres" id="1_5jtl0"]
 [ext_resource type="Script" uid="uid://b7a2x0hxffai6" path="res://ui/ink_elements/ink_dialogue_bubble_control.gd" id="1_ioq3t"]
 [ext_resource type="PackedScene" uid="uid://ddmen4ikpjrhv" path="res://ui/ink_elements/dialogue_choice_button.tscn" id="2_o22ls"]
+[ext_resource type="AudioStream" uid="uid://bikj4t850e2h5" path="res://assets/audio/Sound effects package/Arcade and Games/Ping Pong Paddle 02.wav" id="4_urg4p"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5jtl0"]
 font_size = 32
@@ -91,5 +92,13 @@ text = "A yet third choice"
 
 [node name="ContinueButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_type_variation = &"FlatButton"
+action_mode = 0
 text = "Continue >"
+flat = true
 alignment = 2
+
+[node name="ClickAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_urg4p")
+volume_db = -20.0
+max_polyphony = 2
