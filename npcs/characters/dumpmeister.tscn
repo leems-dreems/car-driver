@@ -19,13 +19,25 @@ viewport_path = NodePath("SubViewport")
 npc_name = "The Dumpmeister"
 
 [node name="Skeleton3D" parent="square_guy/metarig" index="0"]
-bones/0/position = Vector3(2.09793e-10, 0.704368, -0.0544258)
-bones/17/rotation = Quaternion(0.995237, -2.40551e-08, 2.39447e-07, 0.0974817)
-bones/18/rotation = Quaternion(0.0696677, -1.20535e-07, -1.48328e-08, 0.99757)
-bones/19/rotation = Quaternion(-0.519722, 7.07791e-13, 5.2151e-13, 0.854336)
-bones/22/rotation = Quaternion(0.995237, -2.40551e-08, 2.39447e-07, 0.0974817)
-bones/23/rotation = Quaternion(0.0696677, -1.20535e-07, -1.48329e-08, 0.99757)
-bones/24/rotation = Quaternion(-0.519722, 7.35789e-13, 5.43793e-13, 0.854336)
+bones/0/position = Vector3(-1.09124e-09, 0.698165, -0.0486296)
+bones/0/rotation = Quaternion(0.068275, 1.18931e-07, 8.13902e-09, 0.997667)
+bones/1/rotation = Quaternion(-0.0276443, 3.79201e-14, -6.59091e-09, 0.999618)
+bones/4/rotation = Quaternion(-0.00326853, -1.19209e-07, -3.8964e-10, 0.999995)
+bones/6/rotation = Quaternion(-0.254262, 0.776858, -0.433157, 0.37976)
+bones/7/rotation = Quaternion(0.167954, -0.122009, -0.124575, 0.970251)
+bones/8/rotation = Quaternion(-0.0530571, 0.0619129, -0.067555, 0.994378)
+bones/10/rotation = Quaternion(-0.246133, -0.781197, 0.430631, 0.379086)
+bones/11/rotation = Quaternion(0.153468, 0.216717, 0.161822, 0.950418)
+bones/12/rotation = Quaternion(-0.00566048, -0.760372, 0.0830567, 0.64413)
+bones/15/rotation = Quaternion(0.146202, 0.733983, 0.450436, -0.486828)
+bones/17/rotation = Quaternion(0.991806, -1.80353e-08, 2.38675e-07, 0.127751)
+bones/18/rotation = Quaternion(0.143733, -1.21305e-07, -5.81925e-09, 0.989617)
+bones/19/rotation = Quaternion(-0.556706, 6.71311e-13, 5.76979e-13, 0.83071)
+bones/20/rotation = Quaternion(2.08134e-08, 0.961249, -0.275682, -7.25723e-08)
+bones/22/rotation = Quaternion(0.991806, -1.80354e-08, 2.38675e-07, 0.127751)
+bones/23/rotation = Quaternion(0.143733, -1.21305e-07, -5.81928e-09, 0.989617)
+bones/24/rotation = Quaternion(-0.556728, 6.98322e-13, 6.00284e-13, 0.830695)
+bones/25/rotation = Quaternion(2.08133e-08, 0.961249, -0.275682, -7.25723e-08)
 
 [node name="Cube_001" parent="square_guy/metarig/Skeleton3D" index="0"]
 surface_material_override/0 = ExtResource("2_wcy18")
@@ -54,4 +66,5 @@ metadata/_custom_type_script = "uid://dhevaeuigpl8p"
 
 [node name="InkDialogueBubble" parent="." index="9" instance=ExtResource("8_3q5jn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
+visible = false
 texture = SubResource("ViewportTexture_77juk")

@@ -13,15 +13,15 @@ extends Node3D
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-  return ["Intersections not yet implemented"]
+	return ["Intersections not yet implemented"]
 
-  var par = get_parent()
-  if par.has_method("is_road_container"):
-    return []
-  else:
-    return ["Intersection should be a direct child of a RoadContainer"]
+	var par = get_parent()
+	if par.has_method("is_road_container"):
+		return []
+	else:
+		return ["Intersection should be a direct child of a RoadContainer"]
 
 
 # Workaround for cyclic typing
 func is_road_intersection() -> bool:
-  return true
+	return true
