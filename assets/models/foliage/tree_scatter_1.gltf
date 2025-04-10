@@ -75,11 +75,11 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":208,
+			"count":370,
 			"max":[
-				0.4000000059604645,
-				6.886631965637207,
-				0.4000000059604645
+				1.7409037351608276,
+				5.42788028717041,
+				0.4895791709423065
 			],
 			"min":[
 				-0.4000000059604645,
@@ -91,33 +91,33 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":208,
+			"count":370,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":208,
+			"count":370,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":330,
+			"count":564,
 			"type":"SCALAR"
 		},
 		{
 			"bufferView":4,
 			"componentType":5126,
-			"count":118,
+			"count":181,
 			"max":[
 				2.4878997802734375,
-				9.820857048034668,
+				11.775955200195312,
 				2.4879000186920166
 			],
 			"min":[
 				-2.4879002571105957,
-				6.886631965637207,
+				3.9634487628936768,
 				-2.4879000186920166
 			],
 			"type":"VEC3"
@@ -125,75 +125,75 @@
 		{
 			"bufferView":5,
 			"componentType":5126,
-			"count":118,
+			"count":181,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":6,
 			"componentType":5126,
-			"count":118,
+			"count":181,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":7,
 			"componentType":5123,
-			"count":528,
+			"count":768,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":2496,
+			"byteLength":4440,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2496,
-			"byteOffset":2496,
+			"byteLength":4440,
+			"byteOffset":4440,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1664,
-			"byteOffset":4992,
+			"byteLength":2960,
+			"byteOffset":8880,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":660,
-			"byteOffset":6656,
+			"byteLength":1128,
+			"byteOffset":11840,
 			"target":34963
 		},
 		{
 			"buffer":0,
-			"byteLength":1416,
-			"byteOffset":7316,
+			"byteLength":2172,
+			"byteOffset":12968,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1416,
-			"byteOffset":8732,
+			"byteLength":2172,
+			"byteOffset":15140,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":944,
-			"byteOffset":10148,
+			"byteLength":1448,
+			"byteOffset":17312,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1056,
-			"byteOffset":11092,
+			"byteLength":1536,
+			"byteOffset":18760,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":12148,
+			"byteLength":20296,
 			"uri":"tree_scatter_1.bin"
 		}
 	]

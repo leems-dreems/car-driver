@@ -1,10 +1,10 @@
-# title: Junktender Dialogue Tree
+# title: Dumpmeister Dialogue Tree
 
-VAR has_met_junktender = false
+VAR has_met_dumpmeister = false
 
-{not has_met_junktender:
+{not has_met_dumpmeister:
     Pleased to meet you. I look after the rubbish at this dump. I can also summon cars, if you need one.
-    ~ has_met_junktender = true
+    ~ has_met_dumpmeister = true
 }
 
 What do you need?

@@ -1,8 +1,10 @@
+# Copyright © 2025 Cory Petkovsek, Roope Palmroos, and Contributors.
+# Channel Packer for Terrain3D
 extends RefCounted
 
-const WINDOW_SCENE: String = "res://addons/terrain_3d/src/channel_packer.tscn"
-const TEMPLATE_PATH: String = "res://addons/terrain_3d/src/channel_packer_import_template.txt"
-const DRAG_DROP_SCRIPT: String = "res://addons/terrain_3d/src/channel_packer_dragdrop.gd"
+const WINDOW_SCENE: String = "res://addons/terrain_3d/menu/channel_packer.tscn"
+const TEMPLATE_PATH: String = "res://addons/terrain_3d/menu/channel_packer_import_template.txt"
+const DRAG_DROP_SCRIPT: String = "res://addons/terrain_3d/menu/channel_packer_dragdrop.gd"
 enum { 
 	INFO,
 	WARN,
@@ -47,7 +49,7 @@ var normal_vector: Vector3
 func pack_textures_popup() -> void:
 	if window != null:
 		window.show()
-		window.move_to_foreground()
+		window.grab_focus()
 		window.move_to_center()
 		return
 	window = (load(WINDOW_SCENE) as PackedScene).instantiate()
@@ -108,9 +110,8 @@ func pack_textures_popup() -> void:
 	_init_texture_picker(window.find_child("HeightVBox"), IMAGE_HEIGHT)
 	_init_texture_picker(window.find_child("NormalVBox"), IMAGE_NORMAL)
 	_init_texture_picker(window.find_child("RoughnessVBox"), IMAGE_ROUGHNESS)
-	
-	var pack_button_path: String = "Panel/MarginContainer/VBoxContainer/PackButton" 
-	(window.get_node(pack_button_path) as Button).pressed.connect(_on_pack_button_pressed)
+
+	(window.find_child("PackButton") as Button).pressed.connect(_on_pack_button_pressed)
 
 
 func _on_close_requested() -> void:
@@ -370,7 +371,7 @@ func _on_save_file_selected(p_dst_path) -> void:
 		save_file_dialog.title = "Save Packed Normal/Roughness Texture"
 		
 		save_file_dialog.call_deferred("popup_centered_ratio")
-		save_file_dialog.call_deferred("move_to_foreground")
+		save_file_dialog.call_deferred("grab_focus")
 
 
 func _alignment_basis(normal: Vector3) -> Basis:
@@ -393,8 +394,8 @@ func _set_normal_vector(source: Image, quiet: bool = false) -> void:
 	# Calculate texture normal sum direction
 	var normal: Image = source
 	var sum: Color = Color(0.0, 0.0, 0.0, 0.0)
-	for x in normal.get_height():
-		for y in normal.get_width():
+	for x in normal.get_width():
+		for y in normal.get_height():
 			sum += normal.get_pixel(x, y)
 	var div: float = normal.get_height() * normal.get_width()
 	sum /= Color(div, div, div)
@@ -409,8 +410,8 @@ func _align_normals(source: Image, iteration: int = 0) -> void:
 	# generate matrix to re-align the normalmap
 	var mat3: Basis = _alignment_basis(normal_vector)
 	# re-align the normal map pixels
-	for x in source.get_height():
-		for y in source.get_width():
+	for x in source.get_width():
+		for y in source.get_height():
 			var old_pixel: Color = source.get_pixel(x, y)
 			var vector_pixel: Vector3 = Vector3(old_pixel.r, old_pixel.g, old_pixel.b)
 			vector_pixel *= 2.0
@@ -450,10 +451,9 @@ func _pack_textures(p_rgb_image: Image, p_a_image: Image, p_dst_path: String, p_
 		if not output_image:
 			_show_message(ERROR, "Failed to pack textures")
 			return FAILED
-		if output_image.detect_used_channels() != 5:
-			_show_message(ERROR, "Packing Error, Alpha Channel empty")
-			return FAILED
-	
+		if output_image.detect_alpha() != Image.ALPHA_BLEND:
+			_show_message(WARN, "Warning, Alpha channel empty")
+
 		output_image.save_png(p_dst_path)
 		_create_import_file(p_dst_path)
 		_show_message(INFO, "Packed to " + p_dst_path + ".")

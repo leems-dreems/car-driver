@@ -1062,7 +1062,7 @@ collision_mask = 8275
 mass = 1500.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, 0.45, -0.1)
+center_of_mass = Vector3(0, 0.6, -0.1)
 freeze = true
 freeze_mode = 1
 continuous_cd = true
@@ -1807,7 +1807,7 @@ font = SubResource("SystemFont_ylexk")
 font_size = 128
 
 [node name="DevMarker" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.1)
 
 [node name="VehicleItemContainer" type="RigidBody3D" parent="."]
 collision_layer = 524288

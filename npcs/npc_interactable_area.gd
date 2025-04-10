@@ -32,11 +32,8 @@ func continue_story() -> void:
 	var _new_text := ink_player.continue_story()
 	while _new_text == "\n":
 		_new_text = ink_player.continue_story()
-	print(_new_text.trim_suffix("\n"))
 	dialogue_bubble.control.show_dialogue(_new_text)
 	dialogue_bubble.control.show_choices(ink_player.current_choices)
-	if ink_player.has_choices:
-		prints("Ink story has", str(len(ink_player.current_choices)), "choices")
 	process_tags(ink_player.current_tags)
 	return
 

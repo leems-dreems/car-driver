@@ -12,7 +12,7 @@
 [sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_hg1jc"]
 name = "tree_scatter_1"
 height_offset = -0.5
-density = 0.0411268
+density = 0.0342987
 visibility_range = 720.0
 scene_file = ExtResource("1_8lhv5")
 

@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://dfdnm2ans1prd" path="res://assets/materials/paint/green.tres" id="2_wcy18"]
 [ext_resource type="Material" uid="uid://bg0yh4eilbpry" path="res://assets/materials/paint/red.tres" id="3_ybvhr"]
 [ext_resource type="Material" uid="uid://cqeyb6iu2bkc3" path="res://assets/materials/paint/blue.tres" id="4_ybvhr"]
-[ext_resource type="Script" uid="uid://cwck7qscejkf" path="res://npcs/characters/junktender_interactable_area.gd" id="5_3q5jn"]
+[ext_resource type="Script" uid="uid://cwck7qscejkf" path="res://npcs/characters/dumpmeister_interactable_area.gd" id="5_yiaex"]
 [ext_resource type="Script" uid="uid://dhevaeuigpl8p" path="res://addons/inkgd/ink_player.gd" id="6_kiq65"]
 [ext_resource type="Resource" uid="uid://b6c8g1um46sgj" path="res://story/junktender_dialogue_tree.ink.json" id="7_3q5jn"]
 [ext_resource type="PackedScene" uid="uid://bv5atqbsnl52k" path="res://ui/ink_elements/ink_dialogue_bubble.tscn" id="8_3q5jn"]
@@ -15,29 +15,17 @@ radius = 0.3
 [sub_resource type="ViewportTexture" id="ViewportTexture_77juk"]
 viewport_path = NodePath("SubViewport")
 
-[node name="The_Junktender" instance=ExtResource("1_n7cvo")]
-npc_name = "The Junktender"
+[node name="The_Dumpmeister" instance=ExtResource("1_n7cvo")]
+npc_name = "The Dumpmeister"
 
 [node name="Skeleton3D" parent="square_guy/metarig" index="0"]
-bones/0/position = Vector3(5.90355e-10, 0.702865, -0.0530212)
-bones/0/rotation = Quaternion(0.068275, 1.18931e-07, 8.13902e-09, 0.997667)
-bones/1/rotation = Quaternion(-0.0276443, 3.79201e-14, -6.59091e-09, 0.999618)
-bones/4/rotation = Quaternion(-0.00326853, -1.19209e-07, -3.8964e-10, 0.999995)
-bones/6/rotation = Quaternion(-0.254262, 0.776858, -0.433157, 0.37976)
-bones/7/rotation = Quaternion(0.167954, -0.122009, -0.124575, 0.970251)
-bones/8/rotation = Quaternion(-0.0530571, 0.0619129, -0.067555, 0.994378)
-bones/10/rotation = Quaternion(-0.246133, -0.781197, 0.430631, 0.379086)
-bones/11/rotation = Quaternion(0.153468, 0.216717, 0.161822, 0.950418)
-bones/12/rotation = Quaternion(-0.00566048, -0.760372, 0.0830567, 0.64413)
-bones/15/rotation = Quaternion(0.146202, 0.733983, 0.450436, -0.486828)
-bones/17/rotation = Quaternion(0.994497, -2.58074e-08, 2.39264e-07, 0.104766)
-bones/18/rotation = Quaternion(0.0874782, -1.20782e-07, -1.26771e-08, 0.996167)
-bones/19/rotation = Quaternion(-0.528701, 7.02255e-13, 5.28917e-13, 0.848808)
-bones/20/rotation = Quaternion(2.08134e-08, 0.961249, -0.275682, -7.25723e-08)
-bones/22/rotation = Quaternion(0.994497, -2.58075e-08, 2.39264e-07, 0.104766)
-bones/23/rotation = Quaternion(0.0874783, -1.20782e-07, -1.26771e-08, 0.996166)
-bones/24/rotation = Quaternion(-0.528702, 7.29987e-13, 5.5144e-13, 0.848808)
-bones/25/rotation = Quaternion(2.08133e-08, 0.961249, -0.275682, -7.25723e-08)
+bones/0/position = Vector3(2.09793e-10, 0.704368, -0.0544258)
+bones/17/rotation = Quaternion(0.995237, -2.40551e-08, 2.39447e-07, 0.0974817)
+bones/18/rotation = Quaternion(0.0696677, -1.20535e-07, -1.48328e-08, 0.99757)
+bones/19/rotation = Quaternion(-0.519722, 7.07791e-13, 5.2151e-13, 0.854336)
+bones/22/rotation = Quaternion(0.995237, -2.40551e-08, 2.39447e-07, 0.0974817)
+bones/23/rotation = Quaternion(0.0696677, -1.20535e-07, -1.48329e-08, 0.99757)
+bones/24/rotation = Quaternion(-0.519722, 7.35789e-13, 5.43793e-13, 0.854336)
 
 [node name="Cube_001" parent="square_guy/metarig/Skeleton3D" index="0"]
 surface_material_override/0 = ExtResource("2_wcy18")
@@ -48,7 +36,7 @@ surface_material_override/2 = ExtResource("4_ybvhr")
 collision_layer = 8
 collision_mask = 0
 monitoring = false
-script = ExtResource("5_3q5jn")
+script = ExtResource("5_yiaex")
 ink_player = NodePath("../InkPlayer")
 dialogue_bubble = NodePath("../InkDialogueBubble")
 interactable_noun = "NPC"
