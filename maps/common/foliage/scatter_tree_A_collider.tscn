@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwxea8ik0l45u"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w8534"]
+radius = 0.3737
+height = 11.2
+
+[node name="ScatterTreeACollider" type="StaticBody3D"]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1, 0)
+shape = SubResource("CapsuleShape3D_w8534")

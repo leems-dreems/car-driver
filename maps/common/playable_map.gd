@@ -3,6 +3,7 @@ extends Node3D
 @onready var road_manager: RoadManager = $RoadManager
 const road_physics_material := preload("res://assets/materials/road_physics_material.tres")
 const compact_car_scene := preload("res://cars/compact/compact.tscn")
+const scatter_tree_a_collider_scene := preload("res://maps/common/foliage/scatter_tree_A_collider.tscn")
 
 
 func _ready() -> void:
@@ -21,6 +22,14 @@ func _ready() -> void:
 	for _road_mesh: MeshInstance3D in find_children("road_mesh", "MeshInstance3D", true, false):
 		_road_mesh.set_layer_mask_value(11, true)
 		_road_mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+
+	for _multimesh_instance: Node in $ProtonScatter/ScatterOutput/ScatterItem.find_children("*", "MultiMeshInstance3D", true, false):
+		for i: int in _multimesh_instance.multimesh.instance_count:
+			var _mesh_transform: Transform3D = _multimesh_instance.multimesh.get_instance_transform(i)
+			var _collider := scatter_tree_a_collider_scene.instantiate()
+			_multimesh_instance.add_child(_collider)
+			_collider.transform = _mesh_transform
+
 	return
 
 

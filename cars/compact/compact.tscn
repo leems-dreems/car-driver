@@ -1058,7 +1058,7 @@ points = PackedVector3Array(0.618284, 0.841092, -0.248825, 0.486227, 1.3393, -0.
 
 [node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("brake_light_left_mesh", "brake_light_right_mesh", "reverse_light_left_mesh", "reverse_light_right_mesh", "front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
-collision_mask = 8275
+collision_mask = 8403
 mass = 1500.0
 physics_material_override = SubResource("PhysicsMaterial_12ddh")
 center_of_mass_mode = 1
@@ -1101,7 +1101,7 @@ rear_tire_radius = 0.27
 
 [node name="ContactChecker" type="RigidBody3D" parent="."]
 collision_layer = 0
-collision_mask = 19
+collision_mask = 147
 mass = 0.001
 gravity_scale = 0.0
 contact_monitor = true
@@ -1259,7 +1259,7 @@ shape = SubResource("BoxShape3D_hrlhf")
 [node name="OpenDoorLeft" type="RigidBody3D" parent="ColliderBits/DoorLeft" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "shut_door_colliders", "hinge_joint", "door_open_SFX", "door_shut_SFX", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 collision_layer = 262152
-collision_mask = 81
+collision_mask = 209
 mass = 50.0
 physics_material_override = ExtResource("8_rpaed")
 freeze = true
@@ -1351,7 +1351,7 @@ shape = SubResource("BoxShape3D_hrlhf")
 [node name="OpenDoorRight" type="RigidBody3D" parent="ColliderBits/DoorRight" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "shut_door_colliders", "hinge_joint", "door_open_SFX", "door_shut_SFX", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 collision_layer = 262152
-collision_mask = 81
+collision_mask = 209
 mass = 50.0
 physics_material_override = ExtResource("8_rpaed")
 freeze = true
@@ -1445,7 +1445,7 @@ shape = SubResource("BoxShape3D_uwv30")
 
 [node name="OpenBoot" type="RigidBody3D" parent="ColliderBits/Boot" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "shut_door_colliders", "hinge_joint", "door_open_SFX", "door_shut_SFX", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
 collision_layer = 262152
-collision_mask = 81
+collision_mask = 209
 mass = 30.0
 physics_material_override = ExtResource("8_rpaed")
 freeze = true
