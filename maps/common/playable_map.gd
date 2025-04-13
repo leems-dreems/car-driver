@@ -23,13 +23,6 @@ func _ready() -> void:
 		_road_mesh.set_layer_mask_value(11, true)
 		_road_mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 
-	for _multimesh_instance: Node in $ProtonScatter/ScatterOutput/ScatterItem.find_children("*", "MultiMeshInstance3D", true, false):
-		for i: int in _multimesh_instance.multimesh.instance_count:
-			var _mesh_transform: Transform3D = _multimesh_instance.multimesh.get_instance_transform(i)
-			var _collider := scatter_tree_a_collider_scene.instantiate()
-			_multimesh_instance.add_child(_collider)
-			_collider.transform = _mesh_transform
-
 	return
 
 

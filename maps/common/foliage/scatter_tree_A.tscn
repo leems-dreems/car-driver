@@ -68,8 +68,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_2jvwu")
 
-[node name="ScatterTreeA" type="Node3D"]
-
-[node name="Tree" type="MeshInstance3D" parent="."]
+[node name="Tree" type="MeshInstance3D"]
 mesh = SubResource("ArrayMesh_v7mkb")
 skeleton = NodePath("")
