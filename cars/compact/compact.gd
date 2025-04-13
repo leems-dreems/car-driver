@@ -31,6 +31,7 @@ var burnt_material: StandardMaterial3D
 @onready var crash_audio: AudioStreamPlayer3D = $AudioStreams/JunkCrashAudio
 @onready var glass_break_audio: AudioStreamPlayer3D = $AudioStreams/GlassBreakAudio
 @onready var contact_checker: CarContactChecker = $ContactChecker
+@onready var vehicle_item_container: VehicleItemContainer = $VehicleItemContainer
 
 
 func _ready() -> void:
@@ -48,6 +49,13 @@ func _ready() -> void:
 	#$ColliderBits/Bonnet/OpenBonnet/MeshInstance3D.set_surface_override_material(0, _paintjob.material)
 	$ColliderBits/Boot/ShutBoot.set_surface_override_material(0, _paintjob.material)
 	$ColliderBits/Boot/OpenBoot/MeshInstance3D.set_surface_override_material(0, _paintjob.material)
+
+	boot.door_open.connect(func():
+		vehicle_item_container.connect_item_listeners()
+	)
+	boot.door_shut.connect(func():
+		vehicle_item_container.disconnect_item_listeners()
+	)
 
 	super()
 	return

@@ -12,19 +12,34 @@ func _ready() -> void:
 	vehicle = owner as Vehicle
 	assert(vehicle != null, "The VehicleItemContainer node must be the child of a DriveableVehicle node")
 
-	capture_item_area.body_entered.connect(func(_body: Node3D):
-		if _body is CarryableItem:
-			_body.collision_layer = pow(2, 16-1)
-			_body.collision_mask = pow(2, 16-1) + pow(2, 20-1)
-			total_count += 1
-			_label.text = str(total_count)
-	)
-	escape_item_area.body_exited.connect(func(_body: Node3D):
-		if _body is CarryableItem:
-			_body.collision_layer = _body._default_collision_layer
-			_body.collision_mask = _body._default_collision_mask
-			total_count -= 1
-			_label.text = str(total_count)
-	)
+	return
 
+
+func connect_item_listeners() -> void:
+	capture_item_area.body_entered.connect(_handle_item_entered)
+	escape_item_area.body_exited.connect(_handle_item_exited)
+	return
+
+
+func disconnect_item_listeners() -> void:
+	capture_item_area.body_entered.disconnect(_handle_item_entered)
+	escape_item_area.body_exited.disconnect(_handle_item_exited)
+	return
+
+
+func _handle_item_entered(_body: Node3D) -> void:
+	if _body is CarryableItem:
+		_body.collision_layer = pow(2, 16-1)
+		_body.collision_mask = pow(2, 16-1) + pow(2, 20-1)
+		total_count += 1
+		_label.text = str(total_count)
+	return
+
+
+func _handle_item_exited(_body: Node3D) -> void:
+	if _body is CarryableItem:
+		_body.collision_layer = _body._default_collision_layer
+		_body.collision_mask = _body._default_collision_mask
+		total_count -= 1
+		_label.text = str(total_count)
 	return

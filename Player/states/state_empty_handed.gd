@@ -7,7 +7,7 @@ func handle_input(event: InputEvent) -> void:
 	elif event.is_action_released("interact"):
 		player.handle_interact_button_released()
 	elif event.is_action_pressed("pickup_drop"):
-		player.handle_drop_button_pressed()
+		player.handle_pickup_button_pressed()
 	return
 
 

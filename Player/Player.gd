@@ -534,6 +534,8 @@ func process_pickup_button() -> void:
 func handle_pickup_button_pressed() -> void:
 	if not pickup_short_press_timer.is_stopped():
 		return
+	if targeted_pickup == null:
+		return
 	short_press_pickup_start.emit()
 	pickup_short_press_timer.start(_pickup_button_short_press_delay)
 	pickup_item(targeted_pickup)
@@ -801,7 +803,7 @@ func update_drop_target(_force_update := false) -> void:
 		var i: int = 0
 		for _drop_target in drop_targets:
 			if i == 0:
-				if _drop_target.has_method("highlight") and (_force_update or not _drop_target.is_highlighted):
+				if _drop_target.has_method("highlight") and (_force_update or drop_target_timer.is_stopped()):
 					drop_target_timer.start()
 					short_press_drop_highlight.emit(_drop_target)
 					drop_target = _drop_target

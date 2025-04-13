@@ -23,6 +23,10 @@ class_name CarDoor extends RigidBody3D
 const outline_material := preload("res://assets/materials/outline_material_overlay.tres")
 @onready var open_door_mesh: MeshInstance3D = $MeshInstance3D
 @onready var _collider := $CollisionShape3D
+
+signal door_open
+signal door_shut
+
 var shut_basis: Basis
 var hinge_limit_upper: float
 var hinge_limit_lower: float
@@ -83,6 +87,7 @@ func _physics_process (_delta: float) -> void:
 	
 
 func pull_open() -> void:
+	door_open.emit()
 	enable_colliders()
 	hinge_joint.limit_upper = hinge_limit_upper
 	hinge_joint.limit_lower = hinge_limit_lower
@@ -122,6 +127,7 @@ func pull_open() -> void:
 
 
 func fall_open() -> void:
+	door_open.emit()
 	enable_colliders()
 	hinge_joint.limit_upper = hinge_limit_upper
 	hinge_joint.limit_lower = hinge_limit_lower
@@ -161,6 +167,7 @@ func fall_open() -> void:
 
 
 func shut() -> void:
+	door_shut.emit()
 	hinge_joint.limit_upper = 0
 	hinge_joint.limit_lower = 0
 	#hinge_joint.enabled = false
@@ -212,6 +219,7 @@ func set_latches_active(_active: bool) -> void:
 
 
 func detach() -> void:
+	door_open.emit()
 	hinge_joint.node_a = ""
 	hinge_joint.node_b = ""
 	hinge_joint.motor_enabled = false
