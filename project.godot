@@ -379,6 +379,7 @@ dialogic_default_action={
 
 3d/physics_engine="Jolt Physics (Extension)"
 jolt_physics_3d/simulation/areas_detect_static_bodies=true
+common/physics_interpolation=true
 jolt_physics_extension_3d/collisions/areas_detect_static_bodies=true
 jolt_physics_extension_3d/continuous_cd/movement_threshold=100.0
 jolt_physics_extension_3d/queries/use_enhanced_internal_edge_removal=true

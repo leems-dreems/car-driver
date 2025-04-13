@@ -423,14 +423,15 @@ func exitVehicle () -> void:
 	current_vehicle.clutch_input = 0
 	current_vehicle.brake_input = 0
 	_vehicle_controller.vehicle_node = null
-	global_position = current_vehicle.global_position
-	linear_velocity = current_vehicle.linear_velocity
-	global_position.y += 5
+
+	freeze = true
+	set_deferred("global_position", current_vehicle.global_transform.translated_local(Vector3(1.5, 0, 0)).origin)
+	set_deferred("freeze", false)
+	set_deferred("linear_velocity", current_vehicle.linear_velocity)
 	current_vehicle = null
-	await get_tree().create_timer(0.1).timeout
-	$CharacterCollisionShape.disabled = false
-	_pickup_collider.process_mode = Node.PROCESS_MODE_INHERIT
-	visible = true
+	$CharacterCollisionShape.set_deferred("disabled", false)
+	_pickup_collider.set_deferred("process_mode", Node.PROCESS_MODE_INHERIT)
+	set_deferred("visible", true)
 	vehicle_exited.emit()
 	return
 
