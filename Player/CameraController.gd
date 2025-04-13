@@ -198,24 +198,12 @@ func fade_multimeshes(delta: float) -> void:
 		if _screen_position.x < 0 or _screen_position.x > get_viewport().size.x:
 			continue
 		var _screen_width: float = get_viewport().size.x
-		#var _x_ratio := _screen_width - _screen_position.x
 		var _distance_from_center := absf(_screen_position.x - (_screen_width / 2))
 		_colliding_tree.transparency = lerpf(_colliding_tree.transparency, minf(0.85, 1 - (_distance_from_center / (_screen_width / 2))), delta * 10)
-		prints(_screen_width, _screen_position.x, _distance_from_center, _colliding_tree.transparency)
 
 	for _fadein_tree: MeshInstance3D in _fadein_trees:
 		_fadein_tree.transparency = lerpf(_fadein_tree.transparency, 0, delta * 10)
 		if _fadein_tree.transparency < 0.05:
 			_fadein_tree.transparency = 0
 			_fadein_trees.erase(_fadein_tree)
-
-	#for _multimesh_id in _multimesh_fadeouts:
-		#var _multimesh_instance: MultiMeshInstance3D = _multimesh_fadeouts[_multimesh_id].multimesh_instance
-		#for _instance: int in _multimesh_fadeouts[_multimesh_id].instances:
-			#var _position: Vector3 = (_multimesh_instance.global_transform * _multimesh_instance.multimesh.get_instance_transform(_instance)).origin
-			#var _screen_position := camera.unproject_position(_position)
-			#var _screen_width := DisplayServer.screen_get_size().x
-			#var _distance_from_center := absf(_screen_position.x - _screen_width)
-			#var _alpha_ratio := maxf(0.01, (_screen_width / 2) / _distance_from_center)
-			#_multimesh_instance.multimesh.set_instance_color(_instance, Color(Color.WHITE, _alpha_ratio))
 	return
