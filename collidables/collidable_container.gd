@@ -27,7 +27,24 @@ func unhighlight() -> void:
 	return
 
 
+func show_status() -> void:
+	if label_show_timer != null:
+		label_show_timer.time_left = label_show_duration
+		return
+	label.transparency = 1
+	label.visible = true
+	label_show_timer = get_tree().create_timer(label_show_duration)
+	create_tween().tween_property(label, "transparency", 0, 0.2)
+	label_show_timer.timeout.connect(func():
+		create_tween().tween_property(label, "transparency", 1, 0.2)
+		label_show_timer = null
+	)
+	return
+
+
 func can_deposit_item(_item: CarryableItem) -> bool:
+	if total_count >= 5:
+		return false
 	match _item.item_size:
 		CarryableItem.ITEM_SIZE.SMALL: return true
 		_: return false
@@ -37,19 +54,20 @@ func deposit_item(_item: CarryableItem) -> void:
 	if not contained_items.has(_item.item_name):
 		contained_items[_item.item_name] = 0
 	contained_items[_item.item_name] += 1
-	
+
 	total_count = 0
 	for _key in contained_items.keys():
 		total_count += contained_items[_key]
-	
-	label.text = ""
-	var i: int = 0
-	for _key in contained_items.keys():
-		if i > 0:
-			label.text += "\n"
-		label.text += _key + ": " + str(contained_items[_key])
-		i += 1
-	label.text += "\nTotal: " + str(total_count)
+
+	label.text = str(total_count) + "/5"
+	#label.text = ""
+	#var i: int = 0
+	#for _key in contained_items.keys():
+		#if i > 0:
+			#label.text += "\n"
+		#label.text += _key + ": " + str(contained_items[_key])
+		#i += 1
+	#label.text += "\nTotal: " + str(total_count)
 	return
 
 ## Checks if this container is a valid target for emptying

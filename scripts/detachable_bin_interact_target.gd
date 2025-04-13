@@ -42,17 +42,7 @@ func interact_short_press() -> void:
 		return
 	block_short_press_timer = get_tree().create_timer(block_short_press_delay)
 	block_short_press_timer.timeout.connect(func(): block_short_press_timer = null)
-	if bin_rigidbody.label_show_timer != null:
-		bin_rigidbody.label_show_timer.time_left = bin_rigidbody.label_show_duration
-		return
-	bin_rigidbody.label.transparency = 1
-	bin_rigidbody.label.visible = true
-	bin_rigidbody.label_show_timer = get_tree().create_timer(bin_rigidbody.label_show_duration)
-	create_tween().tween_property(bin_rigidbody.label, "transparency", 0, 0.2)
-	bin_rigidbody.label_show_timer.timeout.connect(func():
-		create_tween().tween_property(bin_rigidbody.label, "transparency", 1, 0.2)
-		bin_rigidbody.label_show_timer = null
-	)
+	bin_rigidbody.show_status()
 	return
 
 
@@ -61,13 +51,16 @@ func can_interact_long_press(_carried_item: CarryableItem = null) -> bool:
 
 ## Handle a long-press of the interact button
 func interact_long_press() -> void:
-	bin_rigidbody.contained_items = {}
-	bin_rigidbody.total_count = 0
-	bin_rigidbody.label.text = ""
 	var _bin_bag := bin_rigidbody.bin_bag_scene.instantiate()
+	_bin_bag.contained_items = bin_rigidbody.contained_items
+	_bin_bag.total_count = bin_rigidbody.total_count
 	Game.physics_item_container.add_child(_bin_bag)
 	_bin_bag.global_position = bin_rigidbody.global_position
 	_bin_bag.global_position.y += 2
+
+	bin_rigidbody.contained_items = {}
+	bin_rigidbody.total_count = 0
+	bin_rigidbody.label.text = ""
 	return
 
 
@@ -77,6 +70,7 @@ func can_deposit_item(_item: CarryableItem) -> bool:
 
 func deposit_item(_item: CarryableItem) -> void:
 	bin_rigidbody.deposit_item(_item)
+	bin_rigidbody.show_status()
 	return
 
 ## Checks if this container is a valid target for emptying
