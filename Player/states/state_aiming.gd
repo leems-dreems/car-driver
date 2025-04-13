@@ -5,22 +5,31 @@ var _hold_timer: SceneTreeTimer = null
 var _item_mass := 1.0
 
 
-func physics_update(_delta: float) -> void:
-	player.process_on_foot_controls(_delta, false, (1 / maxf(1.0, _item_mass)) * 0.75)
-	if _hold_timer != null:
-		return
-	player.process_interact_button()
-	player.process_drop_button()
-	if not Input.is_action_pressed("aim") or not player.is_on_ground():
-		player._last_strong_direction = player.camera_controller.global_transform.basis.z
-		finished.emit(CARRYING)
-	if Input.is_action_just_pressed("throw"):
+func handle_input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact"):
+		player.handle_interact_button_pressed()
+	elif event.is_action_released("interact"):
+		player.handle_interact_button_released()
+	elif event.is_action_pressed("pickup_drop"):
+		player.handle_drop_button_pressed()
+	elif event.is_action_pressed("throw") and _hold_timer == null:
 		player._last_strong_direction = player.camera_controller.global_transform.basis.z
 		player.throw_item()
 		_hold_timer = get_tree().create_timer(0.5)
 		await _hold_timer.timeout
 		_hold_timer = null
 		finished.emit(EMPTY_HANDED)
+	elif event.is_action_released("aim"):
+		player._last_strong_direction = player.camera_controller.global_transform.basis.z
+		if player._carried_item != null:
+			finished.emit(CARRYING)
+		else:
+			finished.emit(EMPTY_HANDED)
+	return
+
+
+func physics_update(_delta: float) -> void:
+	player.process_on_foot_controls(_delta, false, (1 / maxf(1.0, _item_mass)) * 0.75)
 	return
 
 

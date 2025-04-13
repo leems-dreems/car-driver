@@ -21,7 +21,6 @@ func physics_update(_delta: float) -> void:
 
 	if not Input.is_action_pressed("interact") and player.interact_short_press_timer.is_stopped() and player.interact_long_press_timer.is_stopped():
 		player.update_interact_target()
-	#if not Input.is_action_pressed("pickup_drop"):
 	player.update_drop_target()
 	return
 
