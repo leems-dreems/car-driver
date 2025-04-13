@@ -43,7 +43,6 @@ layer = 2
 script = ExtResource("1_jvxva")
 
 [node name="PausedUI" type="HBoxContainer" parent="."]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -88,13 +87,20 @@ text = "Resume"
 layout_mode = 2
 size_flags_vertical = 3
 focus_neighbor_top = NodePath("../ResumeButton")
-focus_neighbor_bottom = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../ResetButton")
 text = "Options"
+
+[node name="ResetButton" type="Button" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+text = "Reset Player"
 
 [node name="QuitButton" type="Button" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons"]
 layout_mode = 2
 size_flags_vertical = 3
-focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_top = NodePath("../ResetButton")
 text = "Quit"
 
 [node name="OptionsMenu" type="PanelContainer" parent="PausedUI"]
@@ -292,14 +298,17 @@ volume_db = -24.0
 
 [connection signal="mouse_entered" from="PausedUI/PauseMenu" to="." method="on_pause_menu_mouse_entered"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="handle_resume_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
+[connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_pressed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="handle_reset_button"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="handle_quit_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="handle_quit_button"]
 [connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="handle_options_back_button"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_pressed"]

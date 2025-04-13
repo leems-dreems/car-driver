@@ -199,6 +199,13 @@ func handle_options_button() -> void:
 	return
 
 
+func handle_reset_button() -> void:
+	player.freeze = true
+	player.set_deferred("transform", player._initial_transform)
+	player.set_deferred("freeze", false)
+	return
+
+
 func handle_quit_button() -> void:
 	if $ClickAudio.playing:
 		await $ClickAudio.finished
@@ -326,6 +333,7 @@ func connect_to_player(_player: Player) -> void:
 		reset_controls()
 		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = false
 		$HUD/VBoxContainer/Interact_LongPress_HBoxContainer.visible = false
+		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton.disabled = true
 		_interact_short_press_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		_interact_short_press_label.text = "Exit " + _vehicle.vehicle_category
 	)
@@ -333,5 +341,6 @@ func connect_to_player(_player: Player) -> void:
 		reset_controls()
 		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = true
 		$HUD/VBoxContainer/Interact_LongPress_HBoxContainer.visible = true
+		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton.disabled = false
 	)
 	return

@@ -64,6 +64,7 @@ var _ground_height: float = 0.0
 var _default_collision_layer := collision_layer
 var _is_on_floor_buffer := false
 
+var _initial_transform: Transform3D
 var is_ragdolling := false
 var is_waiting_to_reset := false
 ## Velocity as of the last physics tick
@@ -113,6 +114,7 @@ signal vehicle_exited
 
 
 func _ready() -> void:
+	_initial_transform = transform
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera_controller.setup(self)
 	PropRespawnManager.camera = camera_controller.camera
@@ -171,16 +173,6 @@ func _ready() -> void:
 				short_press_pickup_unhighlight.emit()
 				_body.unhighlight()
 	)
-
-	#Dialogic.timeline_started.connect(func():
-		#state_machine.state.finished.emit(PlayerState.IN_DIALOGUE)
-	#)
-	#Dialogic.timeline_ended.connect(func():
-		#if _carried_item != null:
-			#state_machine.state.finished.emit(PlayerState.CARRYING)
-		#else:
-			#state_machine.state.finished.emit(PlayerState.EMPTY_HANDED)
-	#)
 
 	interact_long_press_timer.timeout.connect(interact_long_press_timeout)
 	interact_short_press_timer.timeout.connect(interact_short_press_timeout)
