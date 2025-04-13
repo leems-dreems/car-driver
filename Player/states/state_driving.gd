@@ -1,11 +1,15 @@
 extends PlayerState
 
 
-func physics_update(_delta: float) -> void:
-	player.process_vehicle_controls(_delta)
-	if Input.is_action_just_pressed("interact"):
+func handle_input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact"):
 		player.exitVehicle()
 		finished.emit(EMPTY_HANDED)
+	return
+
+
+func physics_update(_delta: float) -> void:
+	player.process_vehicle_controls(_delta)
 	return
 
 

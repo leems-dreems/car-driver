@@ -4,11 +4,11 @@ var _item_mass := 1.0
 
 
 func handle_input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact"):
+	if event.is_action_pressed("interact") and not event.is_echo():
 		player.handle_interact_button_pressed()
 	elif event.is_action_released("interact"):
 		player.handle_interact_button_released()
-	elif event.is_action_pressed("pickup_drop"):
+	elif event.is_action_pressed("pickup_drop") and not event.is_echo():
 		player.handle_drop_button_pressed()
 	return
 
