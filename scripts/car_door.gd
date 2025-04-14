@@ -12,6 +12,7 @@ class_name CarDoor extends RigidBody3D
 ## Door will only shut if the `length_squared()` of the velocity difference between car and door is above this
 @export var latch_velocity_threshold: float = 1.5
 @export var is_openable: bool = true
+@export var is_detachable := false
 @export var hide_rigidbody_when_shut: bool = true
 ## If the hinge separation colliders move apart, the door will detach
 @export var hinge_separation_collider_A: Area3D
@@ -63,7 +64,7 @@ func _ready():
 
 	set_collision_layer_value(19, false)
 	set_latches_active(false)
-	if hinge_separation_collider_A:
+	if is_detachable and hinge_separation_collider_A:
 		hinge_separation_collider_A.area_exited.connect(func(_area: Area3D):
 			if not is_shut and _area == hinge_separation_collider_B:
 				detach()

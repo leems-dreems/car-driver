@@ -1272,6 +1272,7 @@ door_open_SFX = NodePath("DoorOpenSFX")
 door_shut_SFX = NodePath("DoorShutSFX")
 door_latch = NodePath("LeftDoorLatch")
 body_latch = NodePath("../LeftDoorBodyLatch")
+is_openable = false
 hinge_separation_collider_A = NodePath("../HingeJointLeft/LeftBodyHingeSeparationCollider")
 hinge_separation_collider_B = NodePath("LeftDoorHingeSeparationCollider")
 
@@ -1364,6 +1365,7 @@ door_open_SFX = NodePath("DoorOpenSFX")
 door_shut_SFX = NodePath("DoorShutSFX")
 door_latch = NodePath("RightDoorLatch")
 body_latch = NodePath("../RightDoorBodyLatch")
+is_openable = false
 hinge_separation_collider_A = NodePath("../HingeJointRight/RightBodyHingeSeparationCollider")
 hinge_separation_collider_B = NodePath("RightDoorHingeSeparationCollider")
 

@@ -277,10 +277,14 @@ func connect_to_player(_player: Player) -> void:
 		_interact_long_press_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
 		_interact_long_press_label.text = "(Hold)"
 	)
-	_player.long_press_interact_start.connect(func():
+	_player.long_press_interact_start.connect(func(start_ratio := 0.0):
 		_interact_long_press_label.modulate = Color(0.91, 0.94, 0.01, 1.0)
+		start_ratio = clampf(start_ratio, 0.0, 1.0)
+		if start_ratio > 0:
+			_interact_long_press_bar.custom_minimum_size = Vector2(0, _interact_long_press_bar.get_parent().size.y).lerp(_interact_long_press_bar.get_parent().size, start_ratio)
 		_long_press_bar_tween = get_tree().create_tween()
 		_long_press_bar_tween.tween_property(_interact_long_press_bar, "custom_minimum_size", _interact_long_press_bar.get_parent().size, _interact_long_press_time)
+		_long_press_bar_tween
 	)
 	_player.long_press_interact_cancel.connect(func():
 		_interact_long_press_label.modulate = Color(0.6, 0.6, 0.6, 1.0)

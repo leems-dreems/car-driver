@@ -52,7 +52,7 @@ class_name Player extends RigidBody3D
 @onready var pickup_target_timer: Timer = $TimerNodes/PickupTargetTimer
 @onready var drop_target_timer: Timer = $TimerNodes/DropTargetTimer
 const _interact_button_short_press_delay := 0.2
-const _interact_button_long_press_delay := 0.6
+const _interact_button_long_press_delay := 0.4
 const _interact_target_delay := 0.2 ## How long to wait after targeting an interactable before looking for a new target
 const _pickup_button_short_press_delay := 0.2
 const _pickup_target_delay := 0.2 ## How long to wait after targeting a pickup before looking for a new target
@@ -509,21 +509,6 @@ func set_pickup_marker_borders(_visible: bool) -> void:
 	return
 
 
-func process_pickup_button() -> void:
-	if targeted_pickup == null:
-		update_pickup_target()
-		return
-	if Input.is_action_just_pressed("pickup_drop") and pickup_short_press_timer.is_stopped():
-		short_press_pickup_start.emit()
-		pickup_short_press_timer.start(_pickup_button_short_press_delay)
-		pickup_item(targeted_pickup)
-		targeted_pickup.unhighlight()
-		targeted_pickup = null
-	else:
-		update_pickup_target()
-	return
-
-
 func handle_pickup_button_pressed() -> void:
 	if not pickup_short_press_timer.is_stopped():
 		return
@@ -583,45 +568,6 @@ func update_pickup_target(_force_update := false) -> void:
 	return
 
 
-func process_interact_button() -> void:
-	if targeted_interactable == null:
-		update_interact_target()
-		return
-
-	if Input.is_action_just_released("interact"):
-		if not interact_short_press_timer.is_stopped():
-			interact_short_press_timer.stop()
-			short_press_interact_finish.emit()
-			targeted_interactable.interact_short_press()
-			if targeted_interactable is NPCInteractArea:
-				state_machine.state.finished.emit(PlayerState.IN_DIALOGUE)
-			if _pickup_collider.overlaps_area(targeted_interactable):
-				short_press_interact_highlight.emit(targeted_interactable)
-			else:
-				targeted_interactable.unhighlight()
-				targeted_interactable = null
-		if not interact_long_press_timer.is_stopped():
-			interact_long_press_timer.stop()
-			long_press_interact_cancel.emit()
-			if _pickup_collider.overlaps_area(targeted_interactable):
-				long_press_interact_highlight.emit(targeted_interactable)
-			else:
-				targeted_interactable.unhighlight()
-				targeted_interactable = null
-
-	elif Input.is_action_just_pressed("interact") and interact_short_press_timer.is_stopped() and interact_long_press_timer.is_stopped():
-		if targeted_interactable.can_interact_short_press():
-			short_press_interact_start.emit()
-			interact_short_press_timer.start(_interact_button_short_press_delay)
-		elif targeted_interactable.can_interact_long_press(_carried_item):
-			long_press_interact_start.emit()
-			interact_long_press_timer.start(_interact_button_long_press_delay)
-	
-	else:
-		update_interact_target()
-	return
-
-
 func handle_interact_button_pressed() -> void:
 	if targeted_interactable == null:
 		return
@@ -653,6 +599,7 @@ func handle_interact_button_released() -> void:
 		else:
 			targeted_interactable.unhighlight()
 			targeted_interactable = null
+
 	if not interact_long_press_timer.is_stopped():
 		interact_long_press_timer.stop()
 		long_press_interact_cancel.emit()
@@ -668,7 +615,7 @@ func interact_short_press_timeout() -> void:
 	interact_short_press_timer.stop()
 	if targeted_interactable != null and targeted_interactable.can_interact_long_press(_carried_item):
 		short_press_interact_finish.emit()
-		long_press_interact_start.emit()
+		long_press_interact_start.emit(_interact_button_short_press_delay / _interact_button_long_press_delay)
 		interact_long_press_timer.start(_interact_button_long_press_delay)
 		if _pickup_collider.overlaps_area(targeted_interactable):
 			short_press_interact_highlight.emit(targeted_interactable)
@@ -727,6 +674,8 @@ func update_interact_target(_force_update := false) -> void:
 		for _interactable in interactables_in_range:
 			if i == 0:
 				if _force_update or targeted_interactable != _interactable:
+					short_press_interact_unhighlight.emit()
+					long_press_interact_unhighlight.emit()
 					targeted_interactable = _interactable
 					interact_target_timer.start()
 					if _interactable.can_interact_short_press():
@@ -741,22 +690,6 @@ func update_interact_target(_force_update := false) -> void:
 		targeted_interactable = null
 		short_press_interact_unhighlight.emit()
 		long_press_interact_unhighlight.emit()
-	return
-
-
-func process_drop_button() -> void:
-	if Input.is_action_just_pressed("pickup_drop"):
-		short_press_drop_start.emit()
-		var _item := _carried_item
-		drop_item()
-		if len(drop_targets) > 0 and drop_targets[0].has_method("deposit_item"):
-			drop_targets[0].deposit_item(_item)
-			_item.queue_free()
-			drop_targets[0].unhighlight()
-		short_press_drop_finish.emit()
-		state_machine.state.finished.emit(PlayerState.EMPTY_HANDED)
-	else:
-		update_drop_target()
 	return
 
 
