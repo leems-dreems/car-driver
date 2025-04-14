@@ -1,6 +1,7 @@
 ## An item container that is itself a physics object. May be a child of a StandalonePropBodies node.
 class_name RigidBinContainer extends RigidBody3D
 
+@export var max_small_items: int = 10
 @export var container_name := "container"
 @export var short_press_verb := "interact with"
 @export var long_press_verb := "interact with"
@@ -43,7 +44,7 @@ func show_status() -> void:
 
 
 func can_deposit_item(_item: CarryableItem) -> bool:
-	if total_count >= 5:
+	if total_count >= max_small_items:
 		return false
 	match _item.item_size:
 		CarryableItem.ITEM_SIZE.SMALL: return true
@@ -59,15 +60,7 @@ func deposit_item(_item: CarryableItem) -> void:
 	for _key in contained_items.keys():
 		total_count += contained_items[_key]
 
-	label.text = str(total_count) + "/5"
-	#label.text = ""
-	#var i: int = 0
-	#for _key in contained_items.keys():
-		#if i > 0:
-			#label.text += "\n"
-		#label.text += _key + ": " + str(contained_items[_key])
-		#i += 1
-	#label.text += "\nTotal: " + str(total_count)
+	label.text = str(total_count) + "/" + str(max_small_items)
 	return
 
 ## Checks if this container is a valid target for emptying
