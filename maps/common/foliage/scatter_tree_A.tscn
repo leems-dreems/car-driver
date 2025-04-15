@@ -72,10 +72,13 @@ shadow_mesh = SubResource("ArrayMesh_2jvwu")
 radius = 0.3737
 height = 11.2
 
-[node name="Node3D" type="Node3D"]
+[node name="ScatterTreeA" type="Node3D"]
 
 [node name="Tree" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visibility_range_end = 800.0
+visibility_range_end_margin = 200.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_v7mkb")
 skeleton = NodePath("")
 
