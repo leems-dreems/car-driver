@@ -22,6 +22,9 @@ func _ready() -> void:
 			return
 		print("Loaded Ink story")
 	)
+	ink_player.continued.connect(func(_text: String, _tags: Array): 
+		process_tags(_tags)
+	)
 	ink_player.ended.connect(process_end)
 
 	ink_player.create_story()
@@ -34,7 +37,8 @@ func continue_story() -> void:
 		_new_text = ink_player.continue_story()
 	dialogue_bubble.control.show_dialogue(_new_text)
 	dialogue_bubble.control.show_choices(ink_player.current_choices)
-	process_tags(ink_player.current_tags)
+	# TODO: This might be being re-run at the end of a conversation, causing dupe car spawns
+	#process_tags(ink_player.current_tags)
 	return
 
 
@@ -43,9 +47,9 @@ func can_interact_short_press() -> bool:
 
 
 func interact_short_press() -> void:
-	dialogue_bubble.visible = true
-	dialogue_bubble.control.visible = true
-	continue_story()
+	#dialogue_bubble.visible = true
+	#dialogue_bubble.control.visible = true
+	#continue_story()
 	return
 
 

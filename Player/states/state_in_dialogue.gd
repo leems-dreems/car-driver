@@ -23,7 +23,7 @@ func handle_dialogue_end() -> void:
 	get_viewport().gui_release_focus()
 	npc_interact_area.dialogue_bubble.visible = false
 	npc_interact_area.dialogue_bubble.control.visible = false
-	npc_interact_area.ink_player.reset()
+#	npc_interact_area.ink_player.reset()
 	if player._carried_item == null:
 		finished.emit(EMPTY_HANDED)
 	else:

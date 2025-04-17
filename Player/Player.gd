@@ -28,6 +28,7 @@ class_name Player extends RigidBody3D
 @onready var camera_controller: CameraController = $CameraController
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
 @onready var _pickup_collider: Area3D = $square_guy/PickupCollider
+@onready var _npc_awareness_area: Area3D = $NPCAwarenessArea
 @onready var ragdoll_skeleton: Skeleton3D = $square_guy/metarig/Skeleton3D
 @onready var _ragdoll_tracker_bone: PhysicalBone3D = $"square_guy/metarig/Skeleton3D/Physical Bone spine"
 #@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
@@ -40,17 +41,20 @@ class_name Player extends RigidBody3D
 @onready var _nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var _animation_tree: AnimationTree = $square_guy/AnimationTree
 @onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
+
 @onready var pickup_marker: Sprite3D = $PickupMarker
 @onready var long_press_marker: Sprite3D = $ContainerMarker
 @onready var long_press_anim: AnimationPlayer = $ContainerMarker/AnimationPlayer
 @onready var _carried_mesh_container := $CarriedItem
 @onready var state_machine: StateMachine = $StateMachine
+
 @onready var interact_short_press_timer: Timer = $TimerNodes/InteractShortPressTimer
 @onready var interact_long_press_timer: Timer = $TimerNodes/InteractLongPressTimer
 @onready var interact_target_timer: Timer = $TimerNodes/InteractTargetTimer
 @onready var pickup_short_press_timer: Timer = $TimerNodes/PickupShortPressTimer
 @onready var pickup_target_timer: Timer = $TimerNodes/PickupTargetTimer
 @onready var drop_target_timer: Timer = $TimerNodes/DropTargetTimer
+
 const _interact_button_short_press_delay := 0.2
 const _interact_button_long_press_delay := 0.4
 const _interact_target_delay := 0.2 ## How long to wait after targeting an interactable before looking for a new target
@@ -172,6 +176,15 @@ func _ready() -> void:
 			if _body.is_highlighted:
 				short_press_pickup_unhighlight.emit()
 				_body.unhighlight()
+	)
+
+	_npc_awareness_area.body_entered.connect(func(_body: Node3D):
+		if _body is Pedestrian and _body.face_player:
+			_body.look_target = self
+	)
+	_npc_awareness_area.body_exited.connect(func(_body: Node3D):
+		if _body is Pedestrian and _body.face_player:
+			_body.look_target = null
 	)
 
 	interact_long_press_timer.timeout.connect(interact_long_press_timeout)

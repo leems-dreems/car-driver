@@ -1,0 +1,75 @@
+[gd_scene load_steps=12 format=3 uid="uid://c52clb7bsba3r"]
+
+[ext_resource type="PackedScene" uid="uid://ca3emwpdwnkxa" path="res://npcs/pedestrian.tscn" id="1_n7cvo"]
+[ext_resource type="Material" uid="uid://dfdnm2ans1prd" path="res://assets/materials/paint/green.tres" id="2_wcy18"]
+[ext_resource type="Script" uid="uid://b17ggc8gfsgmq" path="res://npcs/characters/tipman.gd" id="2_y00ak"]
+[ext_resource type="Material" uid="uid://bg0yh4eilbpry" path="res://assets/materials/paint/red.tres" id="3_ybvhr"]
+[ext_resource type="Material" uid="uid://cqeyb6iu2bkc3" path="res://assets/materials/paint/blue.tres" id="4_ybvhr"]
+[ext_resource type="Script" uid="uid://cwck7qscejkf" path="res://npcs/characters/tipman_interactable_area.gd" id="5_yiaex"]
+[ext_resource type="Script" uid="uid://dhevaeuigpl8p" path="res://addons/inkgd/ink_player.gd" id="6_kiq65"]
+[ext_resource type="Resource" uid="uid://gogr87gunjnc" path="res://story/tipman_dialogue_tree.ink.json" id="7_yiaex"]
+[ext_resource type="PackedScene" uid="uid://bv5atqbsnl52k" path="res://ui/ink_elements/ink_dialogue_bubble.tscn" id="8_3q5jn"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ybvhr"]
+radius = 0.3
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_77juk"]
+viewport_path = NodePath("SubViewport")
+
+[node name="TipmanNPC" instance=ExtResource("1_n7cvo")]
+script = ExtResource("2_y00ak")
+npc_name = "Tipman"
+
+[node name="NavigationAgent3D" parent="." index="0"]
+avoidance_enabled = false
+
+[node name="Skeleton3D" parent="square_guy/metarig" index="0"]
+bones/0/position = Vector3(2.33079e-09, 0.695991, -0.046598)
+bones/0/rotation = Quaternion(0.068275, 1.18931e-07, 8.13902e-09, 0.997667)
+bones/1/rotation = Quaternion(-0.0276443, 3.79201e-14, -6.59091e-09, 0.999618)
+bones/4/rotation = Quaternion(-0.00326853, -1.19209e-07, -3.8964e-10, 0.999995)
+bones/6/rotation = Quaternion(-0.254262, 0.776858, -0.433157, 0.37976)
+bones/7/rotation = Quaternion(0.167954, -0.122009, -0.124575, 0.970251)
+bones/8/rotation = Quaternion(-0.0530571, 0.0619129, -0.067555, 0.994378)
+bones/10/rotation = Quaternion(-0.246133, -0.781197, 0.430631, 0.379086)
+bones/11/rotation = Quaternion(0.153468, 0.216717, 0.161822, 0.950418)
+bones/12/rotation = Quaternion(-0.00566048, -0.760372, 0.0830567, 0.64413)
+bones/15/rotation = Quaternion(0.146202, 0.733983, 0.450436, -0.486828)
+bones/17/rotation = Quaternion(0.990387, -3.38807e-08, 2.38255e-07, 0.138323)
+bones/18/rotation = Quaternion(0.169405, -1.21415e-07, -2.66443e-09, 0.985547)
+bones/19/rotation = Quaternion(-0.569406, 6.7504e-13, 5.63129e-13, 0.822056)
+bones/20/rotation = Quaternion(2.08134e-08, 0.961249, -0.275682, -7.25723e-08)
+bones/22/rotation = Quaternion(0.990387, -3.38808e-08, 2.38255e-07, 0.138323)
+bones/23/rotation = Quaternion(0.169405, -1.21415e-07, -2.66446e-09, 0.985547)
+bones/24/rotation = Quaternion(-0.569406, 7.03346e-13, 5.8626e-13, 0.822056)
+bones/25/rotation = Quaternion(2.08133e-08, 0.961249, -0.275682, -7.25723e-08)
+
+[node name="Cube_001" parent="square_guy/metarig/Skeleton3D" index="0"]
+surface_material_override/0 = ExtResource("2_wcy18")
+surface_material_override/1 = ExtResource("3_ybvhr")
+surface_material_override/2 = ExtResource("4_ybvhr")
+
+[node name="InteractableArea" type="Area3D" parent="." index="7" node_paths=PackedStringArray("ink_player", "dialogue_bubble")]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("5_yiaex")
+ink_player = NodePath("../InkPlayer")
+dialogue_bubble = NodePath("../InkDialogueBubble")
+interactable_noun = "NPC"
+short_press_text = "talk to"
+metadata/_custom_type_script = "uid://huco14p7yl41"
+
+[node name="CharacterCollisionShape" type="CollisionShape3D" parent="InteractableArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ybvhr")
+
+[node name="InkPlayer" type="Node" parent="." index="8"]
+script = ExtResource("6_kiq65")
+ink_file = ExtResource("7_yiaex")
+metadata/_custom_type_script = "uid://dhevaeuigpl8p"
+
+[node name="InkDialogueBubble" parent="." index="9" instance=ExtResource("8_3q5jn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
+visible = false
+texture = SubResource("ViewportTexture_77juk")

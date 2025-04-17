@@ -36,12 +36,12 @@ func _notification(what: int) -> void:
 
 
 func summon_car(_global_position: Vector3 = Vector3.INF) -> void:
-	var _old_car := $VehicleContainer.find_child("SummonedCar", false, false)
-	if _old_car:
-		_old_car.queue_free()
+	for _car: DriveableVehicle in $VehicleContainer.find_children("*", "DriveableVehicle", false, false):
+		if _car.owned_by_player:
+			_car.queue_free()
 
 	var _summoned_car := compact_car_scene.instantiate()
-	_summoned_car.name = "SummonedCar"
+	_summoned_car.owned_by_player = true
 	if _global_position != Vector3.INF:
 		_summoned_car.global_position = _global_position
 	else:
