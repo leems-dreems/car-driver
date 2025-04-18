@@ -15,7 +15,8 @@
 				4,
 				5,
 				6,
-				7
+				7,
+				8
 			]
 		}
 	],
@@ -99,6 +100,10 @@
 				0,
 				0.7071068286895752
 			]
+		},
+		{
+			"mesh":8,
+			"name":"Bin.ItemBlocker"
 		}
 	],
 	"materials":[
@@ -223,6 +228,19 @@
 					},
 					"indices":31,
 					"material":0
+				}
+			]
+		},
+		{
+			"name":"Cube.010",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":32,
+						"NORMAL":33,
+						"TEXCOORD_0":34
+					},
+					"indices":35
 				}
 			]
 		}
@@ -512,6 +530,40 @@
 			"componentType":5123,
 			"count":36,
 			"type":"SCALAR"
+		},
+		{
+			"bufferView":32,
+			"componentType":5126,
+			"count":24,
+			"max":[
+				0.45225924253463745,
+				1.1446270942687988,
+				0.45225924253463745
+			],
+			"min":[
+				-0.45225924253463745,
+				0.06799757480621338,
+				-0.45225924253463745
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":33,
+			"componentType":5126,
+			"count":24,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":34,
+			"componentType":5126,
+			"count":24,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":35,
+			"componentType":5123,
+			"count":36,
+			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
@@ -706,6 +758,30 @@
 			"byteLength":72,
 			"byteOffset":4748,
 			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":288,
+			"byteOffset":4820,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":288,
+			"byteOffset":5108,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":192,
+			"byteOffset":5396,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":72,
+			"byteOffset":5588,
+			"target":34963
 		}
 	],
 	"samplers":[
@@ -716,7 +792,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":4820,
+			"byteLength":5660,
 			"uri":"scott_bin_colliders.bin"
 		}
 	]

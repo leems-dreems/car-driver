@@ -61,6 +61,7 @@ func interact_long_press() -> void:
 	bin_rigidbody.contained_items = {}
 	bin_rigidbody.total_count = 0
 	bin_rigidbody.label.text = ""
+	bin_rigidbody.item_blocker_shape.disabled = true
 	return
 
 

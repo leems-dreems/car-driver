@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dc8sax4rbvaj4"]
+[gd_scene load_steps=20 format=3 uid="uid://dc8sax4rbvaj4"]
 
 [ext_resource type="Script" uid="uid://dxx1mmla58uw3" path="res://collidables/standalone_prop_bodies.gd" id="1_htapq"]
 [ext_resource type="ArrayMesh" uid="uid://cgsmitsotxc04" path="res://assets/models/trashCanSquare.obj" id="2_rhkmq"]
@@ -7,6 +7,9 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j5txw"]
 friction = 0.5
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_avo4x"]
+points = PackedVector3Array(-0.452259, 1.14463, -0.452259, -0.452259, 1.14463, 0.452259, 0.452259, 1.14463, -0.452259, -0.379834, 0.0679976, -0.379834, -0.379834, 0.0679976, 0.379745, 0.452259, 1.14463, 0.452259, 0.379745, 0.0679976, -0.379834, 0.379745, 0.0679976, 0.379745)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_utojs"]
 points = PackedVector3Array(0.50264, -0.504558, -1.05452, 0.24197, -0.300818, -0.197136, 0.426876, -0.428893, -0.000111699, -0.49736, -0.504558, -1.05452, 0.407397, -0.493609, -1.14169, 0.352973, -0.439204, -1.14169, -0.234733, -0.300818, -0.197136, -0.421694, -0.428893, -0.000111699, -0.345735, -0.439204, -1.14169, -0.40016, -0.493609, -1.14169)
@@ -73,6 +76,9 @@ long_press_verb = "empty"
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 mesh = ExtResource("2_rhkmq")
 skeleton = NodePath("../..")
+
+[node name="ItemBlockerCollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("ConvexPolygonShape3D_avo4x")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)

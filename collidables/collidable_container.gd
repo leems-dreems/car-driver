@@ -15,9 +15,11 @@ const label_show_duration := 3.0
 @onready var label: Label3D = $Label3D
 @onready var _mesh_instance: MeshInstance3D = $MeshInstance3D
 @onready var item_capture_area := $ItemCaptureArea
+@onready var item_blocker_shape := $ItemBlockerCollisionShape3D
 
 
 func _ready() -> void:
+	item_blocker_shape.disabled = true
 	item_capture_area.body_entered.connect(func(_body: Node3D):
 		if can_deposit_item(_body):
 			deposit_item(_body)
@@ -72,6 +74,8 @@ func deposit_item(_item: CarryableItem) -> void:
 		total_count += contained_items[_key]
 
 	label.text = str(total_count) + "/" + str(max_small_items)
+	if total_count >= max_small_items:
+		item_blocker_shape.disabled = false
 	return
 
 ## Checks if this container is a valid target for emptying
