@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Fast Traffic"
+config/name="Bin Day"
 run/main_scene="res://maps/BinRoninIsland/bin_ronin_island.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"

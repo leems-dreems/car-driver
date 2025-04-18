@@ -523,6 +523,7 @@ func throw_item() -> void:
 	_carried_item.visible = true
 	var _throw_vector: Vector3 = $CameraController/ThrowTarget.global_position - $CameraController/ThrowOrigin.global_position
 	_carried_item.apply_central_impulse(_throw_vector * 7 * _carried_item.mass)
+	_carried_item.apply_torque_impulse(_throw_vector.rotated(Vector3.UP, -PI / 2) * _carried_item.mass)
 	_carried_mesh = null
 	_carried_item = null
 	return
