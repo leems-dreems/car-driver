@@ -54,7 +54,9 @@ class_name Player extends RigidBody3D
 @onready var pickup_short_press_timer: Timer = $TimerNodes/PickupShortPressTimer
 @onready var pickup_target_timer: Timer = $TimerNodes/PickupTargetTimer
 @onready var drop_target_timer: Timer = $TimerNodes/DropTargetTimer
+@onready var push_vehicle_timer := $TimerNodes/PushVehicleTimer
 
+const _push_vehicle_button_delay := 1.0
 const _interact_button_short_press_delay := 0.2
 const _interact_button_long_press_delay := 0.4
 const _interact_target_delay := 0.2 ## How long to wait after targeting an interactable before looking for a new target
@@ -62,11 +64,13 @@ const _pickup_button_short_press_delay := 0.2
 const _pickup_target_delay := 0.2 ## How long to wait after targeting a pickup before looking for a new target
 const _drop_target_delay := 0.2 ## How long to wait after targeting a drop target before looking for a new target
 
+var should_jump := false
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
 var _ground_height: float = 0.0
 var _default_collision_layer := collision_layer
 var _is_on_floor_buffer := false
+const push_force := 3000
 
 var _initial_transform: Transform3D
 var is_ragdolling := false
@@ -79,6 +83,8 @@ var _ragdoll_reset_timer: SceneTreeTimer = null
 var pickups_in_range: Array[Node3D]
 ## Useable items in range
 var interactables_in_range: Array[Node3D]
+## Pushable/grabbable vehicles in range
+var vehicles_in_range: Array[DriveableVehicle]
 ## Item containers in range
 var drop_targets: Array[Node3D]
 ## Container being targeted by a long-press action
@@ -113,6 +119,10 @@ signal long_press_interact_unhighlight
 signal long_press_interact_start
 signal long_press_interact_cancel
 signal long_press_interact_finish
+signal push_vehicle_highlight(_vehicle: DriveableVehicle)
+signal push_vehicle_unhighlight
+signal push_vehicle_start
+signal push_vehicle_finish
 signal vehicle_entered(_vehicle: DriveableVehicle)
 signal vehicle_exited
 
@@ -143,6 +153,10 @@ func _ready() -> void:
 	_pickup_collider.body_entered.connect(func(_body: Node3D):
 		if _body is CarryableItem and not pickups_in_range.has(_body):
 			pickups_in_range.push_back(_body)
+		if _body is DriveableVehicle and not vehicles_in_range.has(_body):
+			vehicles_in_range.push_back(_body)
+			if len(vehicles_in_range) == 1:
+				push_vehicle_highlight.emit()
 	)
 	_pickup_collider.area_exited.connect(func(_area: Area3D):
 		if _area == targeted_interactable:
@@ -176,6 +190,10 @@ func _ready() -> void:
 			if _body.is_highlighted:
 				short_press_pickup_unhighlight.emit()
 				_body.unhighlight()
+		elif _body is DriveableVehicle and vehicles_in_range.has(_body):
+			vehicles_in_range.erase(_body)
+			if len(vehicles_in_range) == 0 and push_vehicle_timer.is_stopped():
+				push_vehicle_unhighlight.emit()
 	)
 
 	_npc_awareness_area.body_entered.connect(func(_body: Node3D):
@@ -193,6 +211,7 @@ func _ready() -> void:
 	pickup_short_press_timer.timeout.connect(pickup_short_press_timeout)
 	pickup_target_timer.timeout.connect(func(): pickup_target_timer.stop())
 	drop_target_timer.timeout.connect(func(): drop_target_timer.stop())
+	push_vehicle_timer.timeout.connect(func(): push_vehicle_timer.stop())
 
 	return
 
@@ -259,7 +278,8 @@ func _physics_process(delta: float) -> void:
 
 func process_on_foot_controls(delta: float, can_sprint := true, speed_ratio: float = 1.0) -> void:
 	var _is_on_ground := is_on_ground()
-	var is_just_jumping := not is_ragdolling and Input.is_action_just_pressed("jump") and _is_on_ground
+	var is_just_jumping := not is_ragdolling and should_jump and _is_on_ground
+	should_jump = false
 	var is_just_on_floor := _is_on_ground and not _is_on_floor_buffer
 	if Input.is_action_just_pressed("Ragdoll"):
 		go_limp()
@@ -523,6 +543,44 @@ func set_pickup_marker_borders(_visible: bool) -> void:
 		$PickupMarker/AnimationPlayer.play("show_borders")
 	else:
 		$PickupMarker/AnimationPlayer.play("hide_borders")
+	return
+
+
+func handle_push_vehicle_button_pressed() -> void:
+	if not push_vehicle_timer.is_stopped():
+		return
+	if len(vehicles_in_range) == 0:
+		return
+	push_vehicle_start.emit()
+	var _target_vehicle := vehicles_in_range[0]
+	var _push_target_position := _target_vehicle.global_transform.translated_local(_target_vehicle.center_of_mass).origin
+	_target_vehicle.apply_impulse((_push_target_position - global_position).normalized() * push_force, Vector3(0, 1, 0))
+	push_vehicle_timer.start(_push_vehicle_button_delay)
+	await push_vehicle_timer.timeout
+	push_vehicle_unhighlight.emit()
+	update_push_target(true)
+	if len(vehicles_in_range) > 0:
+		push_vehicle_highlight.emit.call_deferred()
+	return
+
+
+func update_push_target(_force_update := false) -> void:
+	if _force_update:
+		vehicles_in_range = []
+		for _body in _pickup_collider.get_overlapping_bodies():
+			if _body is DriveableVehicle and not vehicles_in_range.has(_body):
+				vehicles_in_range.push_back(_body)
+
+	if not push_vehicle_timer.is_stopped():
+		return
+
+	if len(vehicles_in_range) > 0:
+		var vehicle_distances := {}
+		for _vehicle: Node3D in vehicles_in_range:
+			vehicle_distances[_vehicle.get_instance_id()] = _vehicle.global_position.distance_squared_to(_pickup_collider.global_position)
+		vehicles_in_range.sort_custom(func(a: Node3D, b: Node3D):
+			return vehicle_distances[a.get_instance_id()] < vehicle_distances[b.get_instance_id()]
+		)
 	return
 
 

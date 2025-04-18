@@ -16,8 +16,9 @@ extends CanvasLayer
 @onready var _interact_short_press_label := $HUD/VBoxContainer/Interact_HBoxContainer/Label
 @onready var _interact_long_press_label := $HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Label
 @onready var _interact_long_press_bar := $HUD/VBoxContainer/Interact_LongPress_Bar_HBoxContainer/ColorRect
+@onready var _push_vehicle_label := $HUD/VBoxContainer/Push_HBoxContainer/Label
 @onready var _handbrake_prompt := $HUD/Right_VBoxContainer/Handbrake_HBoxContainer
-const _interact_long_press_time := 0.6 ## This should match the value in Player.gd
+const _interact_long_press_time := 0.4 ## This should match the value in Player.gd
 var _long_press_bar_tween: Tween
 var paused_timer: SceneTreeTimer = null
 var is_opening := false
@@ -82,6 +83,7 @@ func _process(_delta: float) -> void:
 		$PausedUI.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_update_hud()
 
+	set_push_key_pressed(Input.is_action_pressed("push_vehicle"))
 	set_pickup_key_pressed(Input.is_action_pressed("pickup_drop"))
 	set_interact_key_pressed(Input.is_action_pressed("interact"))
 	if player.current_vehicle != null:
@@ -139,6 +141,22 @@ func reset_controls() -> void:
 	_pickup_label.text = "Take"
 	_interact_long_press_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
 	_interact_long_press_label.text = "(Hold)"
+	_push_vehicle_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+	return
+
+
+func set_push_key_pressed(_pressed: bool) -> void:
+	match last_input_method:
+		INPUT_METHODS.GAMEPAD:
+			$HUD/VBoxContainer/Push_HBoxContainer/Gamepad_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Push_HBoxContainer/Gamepad_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Push_HBoxContainer/Keyboard_Unpressed.visible = false
+			$HUD/VBoxContainer/Push_HBoxContainer/Keyboard_Pressed.visible = false
+		INPUT_METHODS.KEYBOARD:
+			$HUD/VBoxContainer/Push_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Push_HBoxContainer/Keyboard_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Push_HBoxContainer/Gamepad_Unpressed.visible = false
+			$HUD/VBoxContainer/Push_HBoxContainer/Gamepad_Pressed.visible = false
 	return
 
 
@@ -339,6 +357,17 @@ func connect_to_player(_player: Player) -> void:
 	_player.short_press_drop_start.connect(func():
 		_pickup_label.modulate = Color(0.91, 0.94, 0.01, 1.0)
 	)
+
+	_player.push_vehicle_highlight.connect(func():
+		_push_vehicle_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	)
+	_player.push_vehicle_unhighlight.connect(func():
+		_push_vehicle_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+	)
+	_player.push_vehicle_start.connect(func():
+		_push_vehicle_label.modulate = Color(0.91, 0.94, 0.01, 1.0)
+	)
+	
 
 	_player.vehicle_entered.connect(func(_vehicle: DriveableVehicle):
 		reset_controls()

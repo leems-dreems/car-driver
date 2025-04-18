@@ -6,6 +6,8 @@ var _item_mass := 1.0
 
 
 func handle_input(event: InputEvent) -> void:
+	if event.is_action_pressed("jump") and not event.is_echo():
+		player.should_jump = true
 	if event.is_action_pressed("interact") and not event.is_echo():
 		player.handle_interact_button_pressed()
 	elif event.is_action_released("interact"):
@@ -34,9 +36,15 @@ func physics_update(_delta: float) -> void:
 
 
 func enter(_previous_state_path: String, _data := {}) -> void:
+	player.should_jump = false
 	_item_mass = player._carried_item.mass
 	player.set_throw_arc_visible(true)
 	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.OVER_SHOULDER)
 	player.update_interact_target(true)
 	player.update_drop_target(true)
+	return
+
+
+func exit() -> void:
+	player.should_jump = false
 	return

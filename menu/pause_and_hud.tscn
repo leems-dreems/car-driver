@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://cxtkay8p3i0n"]
+[gd_scene load_steps=27 format=4 uid="uid://cxtkay8p3i0n"]
 
 [ext_resource type="Script" uid="uid://cjkbf6wh7q5cw" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
@@ -11,9 +11,13 @@
 [ext_resource type="Texture2D" uid="uid://djf0p4j65waqb" path="res://assets/icons/SimpleFlatKeys/Light/E-Key.png" id="8_yn5h2"]
 [ext_resource type="LabelSettings" uid="uid://d1feibeuvvyf3" path="res://ui/controls_label_settings.tres" id="9_yc66f"]
 [ext_resource type="Texture2D" uid="uid://belhbl4mj8t2q" path="res://assets/icons/SimpleFlatKeys/Dark/E-Key.png" id="9_yv6c2"]
+[ext_resource type="Texture2D" uid="uid://cemprpjn3p7w2" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_b_7.png" id="11_x5t2s"]
+[ext_resource type="Texture2D" uid="uid://dp1ke6pxg0qf8" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_b_2.png" id="12_a4n08"]
 [ext_resource type="Texture2D" uid="uid://buvu8efb42j44" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_2.png" id="12_c7j8t"]
 [ext_resource type="Texture2D" uid="uid://clvs8wuf2j1nm" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_y_2.png" id="12_yhcyu"]
 [ext_resource type="Texture2D" uid="uid://ojl552x8gn5x" path="res://assets/icons/SimpleFlatKeys/Light/F-Key.png" id="13_1xd2t"]
+[ext_resource type="Texture2D" uid="uid://cqb1gsa1mpstu" path="res://assets/icons/SimpleFlatKeys/Light/Q-Key.png" id="13_r662i"]
+[ext_resource type="Texture2D" uid="uid://71aw4pbxwmvt" path="res://assets/icons/SimpleFlatKeys/Dark/Q-Key.png" id="14_f8j6o"]
 [ext_resource type="Texture2D" uid="uid://drrfesicqdgk4" path="res://assets/icons/SimpleFlatKeys/Dark/F-Key.png" id="14_riw73"]
 [ext_resource type="Texture2D" uid="uid://ddjm8y107i5f3" path="res://assets/icons/Buttons Pack/MOUSE/MOUSEWHEEL_UP_DOWN.png" id="15_2fjnf"]
 [ext_resource type="Texture2D" uid="uid://bhs0p5hobl16d" path="res://assets/icons/Buttons Pack/PS4/CONTROLPAD_UP_DOWN.png" id="15_rancm"]
@@ -179,6 +183,39 @@ size_flags_horizontal = 0
 size_flags_vertical = 8
 theme_override_constants/separation = 10
 alignment = 2
+
+[node name="Push_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Gamepad_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Push_HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("11_x5t2s")
+expand_mode = 3
+
+[node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Push_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("12_a4n08")
+expand_mode = 3
+
+[node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Push_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("13_r662i")
+expand_mode = 3
+
+[node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Push_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("14_f8j6o")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Push_HBoxContainer"]
+layout_mode = 2
+text = "Push"
+label_settings = ExtResource("9_yc66f")
+vertical_alignment = 1
 
 [node name="Pickup_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
 layout_mode = 2
