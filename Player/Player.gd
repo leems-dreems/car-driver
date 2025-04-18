@@ -313,7 +313,7 @@ func process_vehicle_controls(_delta: float) -> void:
 	current_vehicle.brake_input = Input.get_action_strength("Brake or Reverse")
 	current_vehicle.steering_input = Input.get_action_strength("Steer Left") - Input.get_action_strength("Steer Right")
 	current_vehicle.throttle_input = pow(Input.get_action_strength("Accelerate"), 2.0)
-	current_vehicle.handbrake_input = Input.get_action_strength("Handbrake")
+	#current_vehicle.handbrake_input = Input.get_action_strength("Handbrake")
 
 	# Shift to neutral if we are stationary and braking
 	if current_vehicle.current_gear > 0 and current_vehicle.speed < 1:
@@ -323,6 +323,10 @@ func process_vehicle_controls(_delta: float) -> void:
 	if current_vehicle.current_gear == -1:
 		current_vehicle.brake_input = Input.get_action_strength("Accelerate")
 		current_vehicle.throttle_input = Input.get_action_strength("Brake or Reverse")
+
+	if current_vehicle.ignition_on == false and current_vehicle.throttle_input > 0 and current_vehicle.current_hit_points > 0:
+		current_vehicle.ignition_on = true
+
 	return
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://cxtkay8p3i0n"]
+[gd_scene load_steps=23 format=4 uid="uid://cxtkay8p3i0n"]
 
 [ext_resource type="Script" uid="uid://cjkbf6wh7q5cw" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://clvs8wuf2j1nm" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_y_2.png" id="12_yhcyu"]
 [ext_resource type="Texture2D" uid="uid://ojl552x8gn5x" path="res://assets/icons/SimpleFlatKeys/Light/F-Key.png" id="13_1xd2t"]
 [ext_resource type="Texture2D" uid="uid://drrfesicqdgk4" path="res://assets/icons/SimpleFlatKeys/Dark/F-Key.png" id="14_riw73"]
+[ext_resource type="Texture2D" uid="uid://ddjm8y107i5f3" path="res://assets/icons/Buttons Pack/MOUSE/MOUSEWHEEL_UP_DOWN.png" id="15_2fjnf"]
+[ext_resource type="Texture2D" uid="uid://bhs0p5hobl16d" path="res://assets/icons/Buttons Pack/PS4/CONTROLPAD_UP_DOWN.png" id="15_rancm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ag0bj"]
 font = ExtResource("4_rrxj5")
@@ -286,6 +288,33 @@ alignment = 1
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
+[node name="Right_VBoxContainer" type="VBoxContainer" parent="HUD"]
+layout_mode = 2
+alignment = 2
+
+[node name="Handbrake_HBoxContainer" type="HBoxContainer" parent="HUD/Right_VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 2
+
+[node name="DPad_Sprite" type="TextureRect" parent="HUD/Right_VBoxContainer/Handbrake_HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("15_rancm")
+expand_mode = 3
+
+[node name="Mouse_Sprite" type="TextureRect" parent="HUD/Right_VBoxContainer/Handbrake_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("15_2fjnf")
+expand_mode = 3
+
+[node name="Button" type="Button" parent="HUD/Right_VBoxContainer/Handbrake_HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_ekyou")
+text = "Handbrake"
+flat = true
+
 [node name="ClickAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_v27v4")
 volume_db = -24.0
@@ -301,17 +330,17 @@ volume_db = -24.0
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="handle_resume_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="handle_reset_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="handle_quit_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="handle_options_back_button"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="on_button_pressed"]
 [connection signal="toggled" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="handle_fullscreen_toggle"]

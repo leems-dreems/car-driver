@@ -16,6 +16,7 @@ extends CanvasLayer
 @onready var _interact_short_press_label := $HUD/VBoxContainer/Interact_HBoxContainer/Label
 @onready var _interact_long_press_label := $HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Label
 @onready var _interact_long_press_bar := $HUD/VBoxContainer/Interact_LongPress_Bar_HBoxContainer/ColorRect
+@onready var _handbrake_prompt := $HUD/Right_VBoxContainer/Handbrake_HBoxContainer
 const _interact_long_press_time := 0.6 ## This should match the value in Player.gd
 var _long_press_bar_tween: Tween
 var paused_timer: SceneTreeTimer = null
@@ -83,6 +84,8 @@ func _process(_delta: float) -> void:
 
 	set_pickup_key_pressed(Input.is_action_pressed("pickup_drop"))
 	set_interact_key_pressed(Input.is_action_pressed("interact"))
+	if player.current_vehicle != null:
+		$HUD/Right_VBoxContainer/Handbrake_HBoxContainer/Button.modulate = Color(0.6, 0.6, 0.6, 1.0).lerp(Color.WHITE, player.current_vehicle.handbrake_input)
 	return
 
 
@@ -165,6 +168,8 @@ func set_interact_key_pressed(_pressed: bool) -> void:
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Pressed.visible = _pressed
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Unpressed.visible = false
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Pressed.visible = false
+			$HUD/Right_VBoxContainer/Handbrake_HBoxContainer/DPad_Sprite.visible = true
+			$HUD/Right_VBoxContainer/Handbrake_HBoxContainer/Mouse_Sprite.visible = false
 		INPUT_METHODS.KEYBOARD:
 			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
 			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Pressed.visible = _pressed
@@ -174,6 +179,8 @@ func set_interact_key_pressed(_pressed: bool) -> void:
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Pressed.visible = _pressed
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Unpressed.visible = false
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Pressed.visible = false
+			$HUD/Right_VBoxContainer/Handbrake_HBoxContainer/DPad_Sprite.visible = false
+			$HUD/Right_VBoxContainer/Handbrake_HBoxContainer/Mouse_Sprite.visible = true
 	return
 
 
@@ -338,6 +345,7 @@ func connect_to_player(_player: Player) -> void:
 		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = false
 		$HUD/VBoxContainer/Interact_LongPress_HBoxContainer.visible = false
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton.disabled = true
+		_handbrake_prompt.visible = true
 		_interact_short_press_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		_interact_short_press_label.text = "Exit " + _vehicle.vehicle_category
 	)
@@ -346,5 +354,6 @@ func connect_to_player(_player: Player) -> void:
 		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = true
 		$HUD/VBoxContainer/Interact_LongPress_HBoxContainer.visible = true
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton.disabled = false
+		_handbrake_prompt.visible = false
 	)
 	return

@@ -10,6 +10,7 @@ var vehicle_category := "[Vehicle Category]"
 var headlight_energy := 10.0
 var brake_light_energy := 5.0
 var reverse_light_energy := 1.0
+var _previous_handbrake_input := 0.0
 var is_being_driven := false
 var is_ai_on := false
 var waiting_to_respawn := false
@@ -79,6 +80,8 @@ var show_debug_label := false
 @onready var engine_black_smoke_emitter: GPUParticles3D = $EngineSmokeBlack
 @onready var engine_white_smoke_emitter: GPUParticles3D = $EngineSmokeWhite
 @onready var engine_fire_emitter: GPUParticles3D = $Fire
+@onready var handbrake_up_audio := $HandbrakeUpAudio
+@onready var handbrake_down_audio := $HandbrakeDownAudio
 # Explosion
 var explosion: Explosion = null
 const explosion_scene := preload("res://effects/explosion.tscn")
@@ -92,6 +95,7 @@ func _ready () -> void:
 	if lights_on:
 		headlight_left.light_energy = headlight_energy
 		headlight_right.light_energy = headlight_energy
+	_previous_handbrake_input = handbrake_input
 	current_hit_points = max_hit_points
 	await get_tree().create_timer(0.2).timeout
 	unfreeze_bodies()
@@ -153,6 +157,12 @@ func _physics_process(delta: float) -> void:
 			await get_tree().create_timer(5.0).timeout
 			engine_fire_emitter.emitting = false
 			explode()
+	
+	if handbrake_input > _previous_handbrake_input:
+		handbrake_up_audio.play()
+	elif handbrake_input < _previous_handbrake_input:
+		handbrake_down_audio.play()
+	_previous_handbrake_input = handbrake_input
 	return
 
 ## Connect the vehicle's `body_entered` signal to this method
