@@ -371,6 +371,7 @@ func connect_to_player(_player: Player) -> void:
 
 	_player.vehicle_entered.connect(func(_vehicle: DriveableVehicle):
 		reset_controls()
+		$HUD/VBoxContainer/Push_HBoxContainer.visible = false
 		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = false
 		$HUD/VBoxContainer/Interact_LongPress_HBoxContainer.visible = false
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton.disabled = true
@@ -380,6 +381,7 @@ func connect_to_player(_player: Player) -> void:
 	)
 	_player.vehicle_exited.connect(func():
 		reset_controls()
+		$HUD/VBoxContainer/Push_HBoxContainer.visible = true
 		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = true
 		$HUD/VBoxContainer/Interact_LongPress_HBoxContainer.visible = true
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton.disabled = false

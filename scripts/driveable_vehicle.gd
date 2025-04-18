@@ -95,6 +95,7 @@ func _ready () -> void:
 	if lights_on:
 		headlight_left.light_energy = headlight_energy
 		headlight_right.light_energy = headlight_energy
+	handbrake_input = 1.0
 	_previous_handbrake_input = handbrake_input
 	current_hit_points = max_hit_points
 	await get_tree().create_timer(0.2).timeout

@@ -1,6 +1,7 @@
 class_name StandaloneSpringyProp extends Node3D
 
 @export var reset_time := 5.0
+## Distance prop can move from base before detaching. Set to 0 to disable detach behaviour
 @export var linear_breaking_point := 0.1
 @onready var _bodies: StandalonePropBodies = $StandalonePropBodies
 var _bodies_scene := preload("res://collidables/standalone_prop_bodies.tscn")
@@ -19,7 +20,7 @@ func _physics_process(_delta: float) -> void:
 		if _bodies == null:
 			respawn()
 		return
-	if _bodies and _bodies.rigid_body.global_position.distance_to(global_position) > linear_breaking_point:
+	if linear_breaking_point > 0 and _bodies and _bodies.rigid_body.global_position.distance_to(global_position) > linear_breaking_point:
 		detach()
 
 ## Detaches this prop from its anchor

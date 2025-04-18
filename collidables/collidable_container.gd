@@ -14,6 +14,17 @@ var label_show_timer: SceneTreeTimer = null
 const label_show_duration := 3.0
 @onready var label: Label3D = $Label3D
 @onready var _mesh_instance: MeshInstance3D = $MeshInstance3D
+@onready var item_capture_area := $ItemCaptureArea
+
+
+func _ready() -> void:
+	item_capture_area.body_entered.connect(func(_body: Node3D):
+		if can_deposit_item(_body):
+			deposit_item(_body)
+			show_status()
+			_body.queue_free()
+	)
+	return
 
 
 func highlight() -> void:
