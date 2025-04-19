@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bcctf2eb0h5f2"
 path.s3tc="res://.godot/imported/stillFlame.png-b5e9ecd26b88bda65c80458ee3a59ecc.s3tc.ctex"
+path.etc2="res://.godot/imported/stillFlame.png-b5e9ecd26b88bda65c80458ee3a59ecc.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/stillFlame.png"
-dest_files=["res://.godot/imported/stillFlame.png-b5e9ecd26b88bda65c80458ee3a59ecc.s3tc.ctex"]
+dest_files=["res://.godot/imported/stillFlame.png-b5e9ecd26b88bda65c80458ee3a59ecc.s3tc.ctex", "res://.godot/imported/stillFlame.png-b5e9ecd26b88bda65c80458ee3a59ecc.etc2.ctex"]
 
 [params]
 
