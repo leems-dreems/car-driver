@@ -2,6 +2,9 @@ extends PlayerState
 
 
 func handle_input(event: InputEvent) -> void:
+	if event.is_action_pressed("Pause") and not event.is_echo():
+		player.handle_pause_button_pressed()
+		return
 	if event.is_action_pressed("jump") and not event.is_echo():
 		player.should_jump = true
 	if event.is_action_pressed("push_vehicle") and not event.is_echo():

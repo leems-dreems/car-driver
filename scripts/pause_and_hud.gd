@@ -45,10 +45,14 @@ func _ready() -> void:
 	return
 
 
-func _process(_delta: float) -> void:
-	# Respond to pause button
-	if get_tree().paused and Input.is_action_just_pressed("Pause") and not (is_closing or is_opening):
+func _unhandled_input(event: InputEvent) -> void:
+	if get_tree().paused and event.is_action_pressed("Pause") and not event.is_echo() and not (is_closing or is_opening):
 		animate_closed()
+		return
+	return
+
+
+func _process(_delta: float) -> void:
 	if input_switch_timer == null:
 		match last_input_method:
 			INPUT_METHODS.GAMEPAD:

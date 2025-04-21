@@ -268,12 +268,7 @@ func _physics_process(delta: float) -> void:
 	if global_position.y < _ground_height:
 		_ground_height = global_position.y
 
-	# Respond to pause button
-	if not get_tree().paused and Input.is_action_just_pressed("Pause"):
-		get_tree().create_timer(.1).timeout.connect(func():
-			get_tree().paused = true
-		)
-		return
+	return
 
 
 func process_on_foot_controls(delta: float, can_sprint := true, speed_ratio: float = 1.0) -> void:
@@ -817,4 +812,11 @@ func update_drop_target(_force_update := false) -> void:
 		if drop_target != null:
 			short_press_drop_unhighlight.emit()
 		drop_target = null
+	return
+
+
+func handle_pause_button_pressed() -> void:
+	get_tree().create_timer(.1).timeout.connect(func():
+		get_tree().paused = true
+	)
 	return

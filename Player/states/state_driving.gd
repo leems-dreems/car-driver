@@ -5,6 +5,10 @@ const handbrake_dpad_multiplier := 0.5
 
 
 func handle_input(event: InputEvent) -> void:
+	if event.is_action_pressed("Pause") and not event.is_echo():
+		player.handle_pause_button_pressed()
+		return
+
 	var _vehicle := player.current_vehicle as DriveableVehicle
 	if _vehicle == null:
 		return
