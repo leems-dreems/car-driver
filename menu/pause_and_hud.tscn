@@ -19,8 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://cqb1gsa1mpstu" path="res://assets/icons/SimpleFlatKeys/Light/Q-Key.png" id="13_r662i"]
 [ext_resource type="Texture2D" uid="uid://71aw4pbxwmvt" path="res://assets/icons/SimpleFlatKeys/Dark/Q-Key.png" id="14_f8j6o"]
 [ext_resource type="Texture2D" uid="uid://drrfesicqdgk4" path="res://assets/icons/SimpleFlatKeys/Dark/F-Key.png" id="14_riw73"]
-[ext_resource type="Texture2D" uid="uid://ddjm8y107i5f3" path="res://assets/icons/Buttons Pack/MOUSE/MOUSEWHEEL_UP_DOWN.png" id="15_2fjnf"]
-[ext_resource type="Texture2D" uid="uid://bhs0p5hobl16d" path="res://assets/icons/Buttons Pack/PS4/CONTROLPAD_UP_DOWN.png" id="15_rancm"]
+[ext_resource type="Texture2D" uid="uid://cshv2edjhe64f" path="res://assets/icons/Buttons Pack/PS4/CONTROLPADUP.png" id="21_r662i"]
+[ext_resource type="Texture2D" uid="uid://di5lbxoaymlx5" path="res://assets/icons/Buttons Pack/MOUSE/MOUSEBUTTONMIDDLE.png" id="22_f8j6o"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ag0bj"]
 font = ExtResource("4_rrxj5")
@@ -325,29 +325,42 @@ alignment = 1
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Right_VBoxContainer" type="VBoxContainer" parent="HUD"]
-layout_mode = 2
-alignment = 2
+[node name="Handbrake_MarginContainer" type="MarginContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -331.0
+offset_top = -185.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset = Vector2(271, 125)
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 60
 
-[node name="Handbrake_HBoxContainer" type="HBoxContainer" parent="HUD/Right_VBoxContainer"]
-visible = false
+[node name="HBoxContainer" type="HBoxContainer" parent="Handbrake_MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
-alignment = 2
 
-[node name="DPad_Sprite" type="TextureRect" parent="HUD/Right_VBoxContainer/Handbrake_HBoxContainer"]
+[node name="DpadSprite" type="TextureRect" parent="Handbrake_MarginContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("15_rancm")
+texture = ExtResource("21_r662i")
 expand_mode = 3
 
-[node name="Mouse_Sprite" type="TextureRect" parent="HUD/Right_VBoxContainer/Handbrake_HBoxContainer"]
+[node name="MouseSprite" type="TextureRect" parent="Handbrake_MarginContainer/HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("15_2fjnf")
+texture = ExtResource("22_f8j6o")
 expand_mode = 3
 
-[node name="Button" type="Button" parent="HUD/Right_VBoxContainer/Handbrake_HBoxContainer"]
+[node name="Button" type="Button" parent="Handbrake_MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
 theme = ExtResource("5_ekyou")
 text = "Handbrake"
 flat = true
