@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://cxtkay8p3i0n"]
+[gd_scene load_steps=33 format=4 uid="uid://cxtkay8p3i0n"]
 
 [ext_resource type="Script" uid="uid://cjkbf6wh7q5cw" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
@@ -6,11 +6,17 @@
 [ext_resource type="SystemFont" uid="uid://bfrqonkrt6mpy" path="res://ui/ui_font.tres" id="4_rrxj5"]
 [ext_resource type="Theme" uid="uid://djel5wi5nvl5d" path="res://ui/hud_theme.tres" id="5_ekyou"]
 [ext_resource type="Texture2D" uid="uid://dbvjb2liknhp4" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_y_7.png" id="6_1h24m"]
+[ext_resource type="Texture2D" uid="uid://chu6xlyv51tk3" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_dark_1.png" id="6_6xb7f"]
 [ext_resource type="AudioStream" uid="uid://dkj1253vpd2oh" path="res://assets/audio/Sound effects package/Tools/Wood 2x4 01.wav" id="6_v27v4"]
+[ext_resource type="Texture2D" uid="uid://31crq2ath5u8" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_light_1.png" id="7_dnxf5"]
 [ext_resource type="Texture2D" uid="uid://0ldt4dv2bgsc" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_7.png" id="8_mg6v0"]
+[ext_resource type="Texture2D" uid="uid://68qjrvtkppqi" path="res://assets/icons/Buttons Pack/MOUSE/MOUSEBUTTONRIGHT.png" id="8_w6irr"]
 [ext_resource type="Texture2D" uid="uid://djf0p4j65waqb" path="res://assets/icons/SimpleFlatKeys/Light/E-Key.png" id="8_yn5h2"]
+[ext_resource type="Texture2D" uid="uid://cb0s4hwl8k3x0" path="res://assets/icons/Buttons Pack/MOUSE/MOUSEBUTTONLEFT.png" id="9_0hmt5"]
 [ext_resource type="LabelSettings" uid="uid://d1feibeuvvyf3" path="res://ui/controls_label_settings.tres" id="9_yc66f"]
 [ext_resource type="Texture2D" uid="uid://belhbl4mj8t2q" path="res://assets/icons/SimpleFlatKeys/Dark/E-Key.png" id="9_yv6c2"]
+[ext_resource type="Texture2D" uid="uid://c4wm67df10noq" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_dark_2.png" id="10_w6irr"]
+[ext_resource type="Texture2D" uid="uid://bxtra2w5v618x" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_light_2.png" id="11_0hmt5"]
 [ext_resource type="Texture2D" uid="uid://cemprpjn3p7w2" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_b_7.png" id="11_x5t2s"]
 [ext_resource type="Texture2D" uid="uid://dp1ke6pxg0qf8" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_b_2.png" id="12_a4n08"]
 [ext_resource type="Texture2D" uid="uid://buvu8efb42j44" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_2.png" id="12_c7j8t"]
@@ -183,6 +189,72 @@ size_flags_horizontal = 0
 size_flags_vertical = 8
 theme_override_constants/separation = 10
 alignment = 2
+
+[node name="Aim_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Gamepad_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Aim_HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_6xb7f")
+expand_mode = 3
+
+[node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Aim_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("7_dnxf5")
+expand_mode = 3
+
+[node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Aim_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("8_w6irr")
+expand_mode = 3
+
+[node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Aim_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("8_w6irr")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Aim_HBoxContainer"]
+layout_mode = 2
+text = "Aim"
+label_settings = ExtResource("9_yc66f")
+vertical_alignment = 1
+
+[node name="Throw_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Gamepad_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Throw_HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("10_w6irr")
+expand_mode = 3
+
+[node name="Gamepad_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Throw_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("11_0hmt5")
+expand_mode = 3
+
+[node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Throw_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("9_0hmt5")
+expand_mode = 3
+
+[node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Throw_HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("9_0hmt5")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Throw_HBoxContainer"]
+layout_mode = 2
+text = "Throw"
+label_settings = ExtResource("9_yc66f")
+vertical_alignment = 1
 
 [node name="Push_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
 layout_mode = 2

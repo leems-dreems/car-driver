@@ -125,6 +125,7 @@ signal push_vehicle_start
 signal push_vehicle_finish
 signal vehicle_entered(_vehicle: DriveableVehicle)
 signal vehicle_exited
+signal state_changed(_state: String)
 
 
 func _ready() -> void:
