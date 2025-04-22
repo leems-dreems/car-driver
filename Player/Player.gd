@@ -122,7 +122,6 @@ signal long_press_interact_finish
 signal push_vehicle_highlight(_vehicle: DriveableVehicle)
 signal push_vehicle_unhighlight
 signal push_vehicle_start
-signal push_vehicle_finish
 signal vehicle_entered(_vehicle: DriveableVehicle)
 signal vehicle_exited
 signal state_changed(_state: String)
@@ -256,7 +255,7 @@ func _process(_delta: float) -> void:
 	return
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	_nav_agent.get_next_path_position()
 	# Record current velocity, to refer to when processing collision signals
 	_previous_velocity = Vector3(linear_velocity)
