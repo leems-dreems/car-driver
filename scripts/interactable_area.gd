@@ -8,10 +8,12 @@ var is_highlighted := false
 
 ## Visually highlight this object, because it is being targeted for an interact
 func highlight() -> void:
+	is_highlighted = true
 	return
 
 ## Remove visual highlight
 func unhighlight() -> void:
+	is_highlighted = false
 	return
 
 ## Return true if this object is a valid target for a short-press of the interact button

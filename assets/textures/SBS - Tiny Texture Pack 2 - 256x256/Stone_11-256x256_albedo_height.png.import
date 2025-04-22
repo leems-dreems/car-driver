@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cjqnrosnu7s23"
 path.s3tc="res://.godot/imported/Stone_11-256x256_albedo_height.png-7aad0545bcf3a2228b4d922703e08fd9.s3tc.ctex"
+path.etc2="res://.godot/imported/Stone_11-256x256_albedo_height.png-7aad0545bcf3a2228b4d922703e08fd9.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/SBS - Tiny Texture Pack 2 - 256x256/Stone_11-256x256_albedo_height.png"
-dest_files=["res://.godot/imported/Stone_11-256x256_albedo_height.png-7aad0545bcf3a2228b4d922703e08fd9.s3tc.ctex"]
+dest_files=["res://.godot/imported/Stone_11-256x256_albedo_height.png-7aad0545bcf3a2228b4d922703e08fd9.s3tc.ctex", "res://.godot/imported/Stone_11-256x256_albedo_height.png-7aad0545bcf3a2228b4d922703e08fd9.etc2.ctex"]
 
 [params]
 

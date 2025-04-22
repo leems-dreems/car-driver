@@ -5,6 +5,7 @@ extends CanvasLayer
 	set(_player):
 		player = _player
 		connect_to_player(_player)
+		show_prompts_for_state(_player.state_machine.state.name)
 @onready var vehicle_hud_label := $HUD/VehicleInfoLabel
 @onready var mission_label := $HUD/MissionLabelContainer/MissionLabel
 @onready var paused_UI := $PausedUI
@@ -16,7 +17,15 @@ extends CanvasLayer
 @onready var _interact_short_press_label := $HUD/VBoxContainer/Interact_HBoxContainer/Label
 @onready var _interact_long_press_label := $HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Label
 @onready var _interact_long_press_bar := $HUD/VBoxContainer/Interact_LongPress_Bar_HBoxContainer/ColorRect
-const _interact_long_press_time := 0.6 ## This should match the value in Player.gd
+@onready var _push_vehicle_label := $HUD/VBoxContainer/Push_HBoxContainer/Label
+@onready var _push_prompt: HBoxContainer = $HUD/VBoxContainer/Push_HBoxContainer
+@onready var _pickup_prompt: HBoxContainer = $HUD/VBoxContainer/Pickup_HBoxContainer
+@onready var _interact_prompt: HBoxContainer = $HUD/VBoxContainer/Interact_HBoxContainer
+@onready var _interact_longpress_prompt: HBoxContainer = $HUD/VBoxContainer/Interact_LongPress_HBoxContainer
+@onready var _handbrake_prompt: MarginContainer = $Handbrake_MarginContainer
+@onready var _aim_prompt := $HUD/VBoxContainer/Aim_HBoxContainer
+@onready var _throw_prompt := $HUD/VBoxContainer/Throw_HBoxContainer
+const _interact_long_press_time := 0.4 ## This should match the value in Player.gd
 var _long_press_bar_tween: Tween
 var paused_timer: SceneTreeTimer = null
 var is_opening := false
@@ -43,10 +52,14 @@ func _ready() -> void:
 	return
 
 
-func _process(_delta: float) -> void:
-	# Respond to pause button
-	if get_tree().paused and Input.is_action_just_pressed("Pause") and not (is_closing or is_opening):
+func _unhandled_input(event: InputEvent) -> void:
+	if get_tree().paused and event.is_action_pressed("Pause") and not event.is_echo() and not (is_closing or is_opening):
 		animate_closed()
+		return
+	return
+
+
+func _process(_delta: float) -> void:
 	if input_switch_timer == null:
 		match last_input_method:
 			INPUT_METHODS.GAMEPAD:
@@ -62,10 +75,17 @@ func _process(_delta: float) -> void:
 	if get_tree().paused:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		$HUD.visible = false
+		_handbrake_prompt.visible = false
 		$HUD.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		if not paused_UI.visible:
 			animate_open()
 		$PausedUI.mouse_filter = Control.MOUSE_FILTER_STOP
+
+		var _focussed_control := get_viewport().gui_get_focus_owner()
+		if Input.is_action_just_pressed("ui_down") and _focussed_control == null:
+			$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton.grab_focus.call_deferred()
+		elif Input.is_action_just_pressed("ui_up") and _focussed_control == null:
+			$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton.grab_focus.call_deferred()
 	else:
 		options_menu.visible = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -73,13 +93,13 @@ func _process(_delta: float) -> void:
 		$HUD.mouse_filter = Control.MOUSE_FILTER_PASS
 		$PausedUI.visible = false
 		$PausedUI.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		if player.current_vehicle != null:
+			_handbrake_prompt.rotation = lerpf(0, PI / 4, player.current_vehicle.handbrake_input)
 		_update_hud()
-	var _focussed_control := get_viewport().gui_get_focus_owner()
-	if Input.is_action_just_pressed("ui_down") and _focussed_control == null:
-		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton.grab_focus.call_deferred()
-	elif Input.is_action_just_pressed("ui_up") and _focussed_control == null:
-		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton.grab_focus.call_deferred()
 
+	set_aim_key_pressed(Input.is_action_pressed("aim"))
+	set_throw_key_pressed(Input.is_action_pressed("throw"))
+	set_push_key_pressed(Input.is_action_pressed("push_vehicle"))
 	set_pickup_key_pressed(Input.is_action_pressed("pickup_drop"))
 	set_interact_key_pressed(Input.is_action_pressed("interact"))
 	return
@@ -135,6 +155,53 @@ func reset_controls() -> void:
 	_pickup_label.text = "Take"
 	_interact_long_press_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
 	_interact_long_press_label.text = "(Hold)"
+	_push_vehicle_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+	_handbrake_prompt.pivot_offset = _handbrake_prompt.size - Vector2(_handbrake_prompt.get_theme_constant("margin_right"), _handbrake_prompt.get_theme_constant("margin_bottom"))
+	return
+
+
+func set_aim_key_pressed(_pressed: bool) -> void:
+	match last_input_method:
+		INPUT_METHODS.GAMEPAD:
+			$HUD/VBoxContainer/Aim_HBoxContainer/Gamepad_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Aim_HBoxContainer/Gamepad_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Aim_HBoxContainer/Keyboard_Unpressed.visible = false
+			$HUD/VBoxContainer/Aim_HBoxContainer/Keyboard_Pressed.visible = false
+		INPUT_METHODS.KEYBOARD:
+			$HUD/VBoxContainer/Aim_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Aim_HBoxContainer/Keyboard_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Aim_HBoxContainer/Gamepad_Unpressed.visible = false
+			$HUD/VBoxContainer/Aim_HBoxContainer/Gamepad_Pressed.visible = false
+	return
+
+
+func set_throw_key_pressed(_pressed: bool) -> void:
+	match last_input_method:
+		INPUT_METHODS.GAMEPAD:
+			$HUD/VBoxContainer/Throw_HBoxContainer/Gamepad_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Throw_HBoxContainer/Gamepad_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Throw_HBoxContainer/Keyboard_Unpressed.visible = false
+			$HUD/VBoxContainer/Throw_HBoxContainer/Keyboard_Pressed.visible = false
+		INPUT_METHODS.KEYBOARD:
+			$HUD/VBoxContainer/Throw_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Throw_HBoxContainer/Keyboard_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Throw_HBoxContainer/Gamepad_Unpressed.visible = false
+			$HUD/VBoxContainer/Throw_HBoxContainer/Gamepad_Pressed.visible = false
+	return
+
+
+func set_push_key_pressed(_pressed: bool) -> void:
+	match last_input_method:
+		INPUT_METHODS.GAMEPAD:
+			$HUD/VBoxContainer/Push_HBoxContainer/Gamepad_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Push_HBoxContainer/Gamepad_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Push_HBoxContainer/Keyboard_Unpressed.visible = false
+			$HUD/VBoxContainer/Push_HBoxContainer/Keyboard_Pressed.visible = false
+		INPUT_METHODS.KEYBOARD:
+			$HUD/VBoxContainer/Push_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
+			$HUD/VBoxContainer/Push_HBoxContainer/Keyboard_Pressed.visible = _pressed
+			$HUD/VBoxContainer/Push_HBoxContainer/Gamepad_Unpressed.visible = false
+			$HUD/VBoxContainer/Push_HBoxContainer/Gamepad_Pressed.visible = false
 	return
 
 
@@ -164,6 +231,8 @@ func set_interact_key_pressed(_pressed: bool) -> void:
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Pressed.visible = _pressed
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Unpressed.visible = false
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Pressed.visible = false
+			$Handbrake_MarginContainer/HBoxContainer/DpadSprite.visible = true
+			$Handbrake_MarginContainer/HBoxContainer/MouseSprite.visible = false
 		INPUT_METHODS.KEYBOARD:
 			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Unpressed.visible = not _pressed
 			$HUD/VBoxContainer/Interact_HBoxContainer/Keyboard_Pressed.visible = _pressed
@@ -173,6 +242,8 @@ func set_interact_key_pressed(_pressed: bool) -> void:
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Keyboard_Pressed.visible = _pressed
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Unpressed.visible = false
 			$HUD/VBoxContainer/Interact_LongPress_HBoxContainer/Gamepad_Pressed.visible = false
+			$Handbrake_MarginContainer/HBoxContainer/DpadSprite.visible = false
+			$Handbrake_MarginContainer/HBoxContainer/MouseSprite.visible = true
 	return
 
 
@@ -195,6 +266,13 @@ func handle_options_button() -> void:
 		options_menu.focus_mode = Control.FOCUS_ALL
 		$PausedUI/OptionsMenu/VBoxContainer/BackButton.grab_focus.call_deferred()
 	)
+	return
+
+
+func handle_reset_button() -> void:
+	player.freeze = true
+	player.set_deferred("transform", player._initial_transform)
+	player.set_deferred("freeze", false)
 	return
 
 
@@ -245,6 +323,8 @@ func on_pause_menu_mouse_entered() -> void:
 
 # TODO: Move each block into its own function, then connect those functions to new player signals e.g. interact, pickup etc
 func connect_to_player(_player: Player) -> void:
+	_player.state_changed.connect(show_prompts_for_state)
+
 	_player.short_press_interact_highlight.connect(func(_target: InteractableArea):
 		_interact_short_press_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		_interact_short_press_label.text = _target.short_press_text.capitalize()
@@ -269,10 +349,14 @@ func connect_to_player(_player: Player) -> void:
 		_interact_long_press_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
 		_interact_long_press_label.text = "(Hold)"
 	)
-	_player.long_press_interact_start.connect(func():
+	_player.long_press_interact_start.connect(func(start_ratio := 0.0):
 		_interact_long_press_label.modulate = Color(0.91, 0.94, 0.01, 1.0)
+		start_ratio = clampf(start_ratio, 0.0, 1.0)
+		if start_ratio > 0:
+			_interact_long_press_bar.custom_minimum_size = Vector2(0, _interact_long_press_bar.get_parent().size.y).lerp(_interact_long_press_bar.get_parent().size, start_ratio)
 		_long_press_bar_tween = get_tree().create_tween()
 		_long_press_bar_tween.tween_property(_interact_long_press_bar, "custom_minimum_size", _interact_long_press_bar.get_parent().size, _interact_long_press_time)
+#		_long_press_bar_tween
 	)
 	_player.long_press_interact_cancel.connect(func():
 		_interact_long_press_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
@@ -321,16 +405,111 @@ func connect_to_player(_player: Player) -> void:
 		_pickup_label.modulate = Color(0.91, 0.94, 0.01, 1.0)
 	)
 
+	_player.push_vehicle_highlight.connect(func():
+		_push_vehicle_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	)
+	_player.push_vehicle_unhighlight.connect(func():
+		_push_vehicle_label.modulate = Color(0.6, 0.6, 0.6, 1.0)
+	)
+	_player.push_vehicle_start.connect(func():
+		_push_vehicle_label.modulate = Color(0.91, 0.94, 0.01, 1.0)
+	)
+
 	_player.vehicle_entered.connect(func(_vehicle: DriveableVehicle):
 		reset_controls()
-		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = false
-		$HUD/VBoxContainer/Interact_LongPress_HBoxContainer.visible = false
+		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton.disabled = true
 		_interact_short_press_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		_interact_short_press_label.text = "Exit " + _vehicle.vehicle_category
+		set_handbrake_prompt_visible(true)
 	)
 	_player.vehicle_exited.connect(func():
 		reset_controls()
+		$HUD/VBoxContainer/Push_HBoxContainer.visible = true
 		$HUD/VBoxContainer/Pickup_HBoxContainer.visible = true
 		$HUD/VBoxContainer/Interact_LongPress_HBoxContainer.visible = true
+		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton.disabled = false
+		set_handbrake_prompt_visible(false)
 	)
+	return
+
+
+func show_prompts_for_state(_state_name: String) -> void:
+	match _state_name:
+		"EmptyHanded":
+			set_push_prompt_visible(true)
+			set_pickup_prompt_visible(true)
+			set_interact_prompt_visible(true)
+			set_interact_longpress_prompt_visible(true)
+			set_handbrake_prompt_visible(false)
+			set_aim_prompt_visible(false)
+			set_throw_prompt_visible(false)
+		"Carrying":
+			set_push_prompt_visible(true)
+			set_pickup_prompt_visible(true)
+			set_interact_prompt_visible(true)
+			set_interact_longpress_prompt_visible(false)
+			set_handbrake_prompt_visible(false)
+			set_aim_prompt_visible(true)
+			set_throw_prompt_visible(false)
+		"Aiming":
+			set_push_prompt_visible(true)
+			set_pickup_prompt_visible(true)
+			set_interact_prompt_visible(true)
+			set_interact_longpress_prompt_visible(false)
+			set_handbrake_prompt_visible(false)
+			set_aim_prompt_visible(false)
+			set_throw_prompt_visible(true)
+		"Driving":
+			set_push_prompt_visible(false)
+			set_pickup_prompt_visible(false)
+			set_interact_prompt_visible(true)
+			set_interact_longpress_prompt_visible(false)
+			set_handbrake_prompt_visible(true)
+			set_aim_prompt_visible(false)
+			set_throw_prompt_visible(false)
+		"InDialogue":
+			set_push_prompt_visible(false)
+			set_pickup_prompt_visible(false)
+			set_interact_prompt_visible(false)
+			set_interact_longpress_prompt_visible(false)
+			set_handbrake_prompt_visible(false)
+			set_aim_prompt_visible(false)
+			set_throw_prompt_visible(false)
+		_:
+			prints("HUD doesn't know which prompts to show for player state:", _state_name)
+	return
+
+
+func set_push_prompt_visible(_visible: bool) -> void:
+	_push_prompt.visible = true if _visible else false
+	return
+
+
+func set_pickup_prompt_visible(_visible: bool) -> void:
+	_pickup_prompt.visible = true if _visible else false
+	return
+
+
+func set_interact_prompt_visible(_visible: bool) -> void:
+	_interact_prompt.visible = true if _visible else false
+	return
+
+
+func set_interact_longpress_prompt_visible(_visible: bool) -> void:
+	_interact_longpress_prompt.visible = true if _visible else false
+	return
+
+
+func set_handbrake_prompt_visible(_visible: bool) -> void:
+	_handbrake_prompt.modulate = Color.WHITE if _visible else Color(1.0, 1.0, 1.0, 0.0)
+	return
+
+
+func set_aim_prompt_visible(_visible: bool) -> void:
+	_aim_prompt.visible = true if _visible else false
+	return
+
+
+func set_throw_prompt_visible(_visible: bool) -> void:
+	_throw_prompt.visible = true if _visible else false
 	return

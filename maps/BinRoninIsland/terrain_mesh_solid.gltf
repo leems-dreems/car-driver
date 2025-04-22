@@ -20,21 +20,12 @@
 	],
 	"materials":[
 		{
-			"name":"Material_0.002",
-			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.9999998807907104,
-					0.9999998807907104,
-					0.9999998807907104,
-					1
-				],
-				"metallicFactor":0
-			}
+			"name":"Material_0"
 		}
 	],
 	"meshes":[
 		{
-			"name":"Mesh_0",
+			"name":"Mesh_0.001",
 			"primitives":[
 				{
 					"attributes":{
@@ -52,15 +43,15 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":242053,
+			"count":243099,
 			"max":[
-				508.0140380859375,
+				512.0367431640625,
 				68.9023208618164,
-				508.0099792480469
+				512.0218505859375
 			],
 			"min":[
 				-1024,
-				-16.02828598022461,
+				-42.035621643066406,
 				-1024
 			],
 			"type":"VEC3"
@@ -68,51 +59,51 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":242053,
+			"count":243099,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":242053,
+			"count":243099,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5125,
-			"count":1376244,
+			"count":1385472,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":2904636,
+			"byteLength":2917188,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2904636,
-			"byteOffset":2904636,
+			"byteLength":2917188,
+			"byteOffset":2917188,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1936424,
-			"byteOffset":5809272,
+			"byteLength":1944792,
+			"byteOffset":5834376,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":5504976,
-			"byteOffset":7745696,
+			"byteLength":5541888,
+			"byteOffset":7779168,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":13250672,
+			"byteLength":13321056,
 			"uri":"terrain_mesh_solid.bin"
 		}
 	]

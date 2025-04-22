@@ -1,0 +1,228 @@
+[gd_scene load_steps=18 format=4 uid="uid://dls0h451b0724"]
+
+[ext_resource type="Material" uid="uid://7ma5fuqvf1h7" path="res://assets/materials/paint/yellow.tres" id="1_1r8ls"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rsdlb"]
+resource_name = "Material"
+cull_mode = 2
+albedo_color = Color(0.906332, 0.906332, 0.906332, 1)
+roughness = 0.5
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_a1dhh"]
+_surfaces = [{
+"aabb": AABB(-1.08549, -1, -1.55586, 2.17098, 0.2, 3.11172),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAwACAAEAAAAEAAEAAwAFAAIABQAAAAIABgAEAAAABQAGAAAABwABAAQABwADAAEABgAHAAQABQADAAcABQAHAAYA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("/////wAAAAAAAP////8AAAAA//8AAAAAAAAAAE74AAD///////8AAAAAAACwBwAA//8AALAHAAD//wAATvgAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qpcd2"]
+resource_name = "skip_Cube"
+_surfaces = [{
+"aabb": AABB(-1.08549, -1, -1.55586, 2.17098, 0.2, 3.11172),
+"attribute_data": PackedByteArray("/5//f//f/z//3/9//5//P/9f/z//nwAA/5//P/9fAAD/X////5//v/+f////X/+//x//f/9f/z//X/9//x//P/9f/3//n/8//5//f/9f/z//X/+//5//f/+f/7//X/9/"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_rsdlb"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////wAA//8AAP///////wAA//8AAP///////////////wAATvjpwQAA/////+nB////////6cEAAAAATvjpwQAAAABO+GjMAAD//wAAEN8AAP/////pywAAAACwB0LgAAAAALAH/7///wAATvj/v///AACwB/+/AAAAAE74/7///wAAsAdozP///////xDf/////wAA6cv//wAATvhC4AAAAACwB3Pz/////wAAc/MAAP//AABz8///AACwB3Pz/3//v/9//7//f/+//3//v7ATTuywE07ssBNO7LATTuyQyLbb6d8K0K7HJ9wY4XLPAAD/fwAA/38AAP9/AAD/f243SCQVIPQvUDjXI+YejDBlRmVGZUZlRmVGZUZlRmVG")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_a1dhh")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_plr4y"]
+points = PackedVector3Array(1.08528, -0.80002, 1.55586, -1.08549, -0.80002, 1.55586, 1.08528, -1, 1.46235, 1.08528, -0.80002, -1.55586, -1.08549, -0.80002, -1.55586, -1.08549, -1, 1.46235, 1.08528, -1, -1.46266, -1.08549, -1, -1.46266)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_7ixjl"]
+_surfaces = [{
+"aabb": AABB(-1.08549, -0.8, 1.40412, 2.17098, 1.39852, 0.701308),
+"format": 34359742465,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAACAAMAAAAEAAEAAgAFAAMAAgABAAUAAAADAAYABAAAAAYABgADAAUAAQAEAAcABAAGAAcAAQAHAAUABgAFAAcA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("XvGKv83MTL91Jsc/XvGKP0w4GT9GvwZAXvGKP83MTL91Jsc/XvGKP83MTL8TurM/XvGKv0w4GT9GvwZAXvGKP0w4GT8pEvo/XvGKv83MTL8TurM/XvGKv0w4GT8pEvo/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_8l14a"]
+resource_name = "skip_Cube_001"
+_surfaces = [{
+"aabb": AABB(-1.08549, -0.8, 1.40412, 2.17098, 1.39852, 0.701308),
+"attribute_data": PackedByteArray("AABgPwAAgD4AACA/AACAPgAAID8AAIA+AABgPwAAgD4AAGA/AACAPgAAYD8AAIA+AABgPwAAgD4AAGA/AACAPgAAID8AAIA+AABgPwAAgD4AACA/AACAPgAAYD8AAIA+AAAgPwAAgD4AACA/AACAPgAAID8AAIA+AAAgPwAAgD4AAGA/AACAPgAAID8AAIA+AABgPwAAgD4AACA/AACAPgAAYD8AAIA+AAAgPwAAgD4AAGA/AACAPgAAID8AAIA+"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_rsdlb"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("XvGKv83MTL91Jsc/XvGKP0w4GT9GvwZAXvGKP83MTL91Jsc/XvGKv0w4GT9GvwZAXvGKv0w4GT9GvwZAXvGKv83MTL8TurM/XvGKv0w4GT8pEvo/XvGKv83MTL91Jsc/XvGKP0w4GT9GvwZAXvGKv0w4GT8pEvo/XvGKP0w4GT8pEvo/XvGKv0w4GT9GvwZAXvGKP83MTL91Jsc/XvGKP0w4GT8pEvo/XvGKP83MTL8TurM/XvGKP0w4GT9GvwZAXvGKv83MTL91Jsc/XvGKP83MTL8TurM/XvGKv83MTL8TurM/XvGKP83MTL91Jsc/XvGKv83MTL8TurM/XvGKP0w4GT8pEvo/XvGKv0w4GT8pEvo/XvGKP83MTL8TurM//3/kW////z//f+Rb////P/9/5Fv///8//3/kW////z8AAP9/////vwAA/3////+/AAD/f////78AAP9/////v/9///////+//3///////7//f///////v/9///////+/////f////7////9/////v////3////+/////f////7//fwAA////v/9/AAD///+//38AAP///7//fwAA////v+Pb//////+/49v//////7/j2///////v+Pb//////+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_7ixjl")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wkadf"]
+points = PackedVector3Array(1.08528, 0.598515, 2.10536, 1.08528, 0.598515, 1.95364, -1.08549, 0.598515, 2.10536, 1.08528, -0.8, 1.55583, 1.08528, -0.8, 1.40412, -1.08549, 0.598515, 1.95364, -1.08549, -0.8, 1.55583, -1.08549, -0.8, 1.40412)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_fnogq"]
+_surfaces = [{
+"aabb": AABB(0.905534, -0.8, -1.95368, 0.179957, 1.65, 3.90736),
+"format": 34359742465,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAAAAIAAwAAAAQABQAEAAIAAwAEAAYAAwAGAAEABgAEAAUABwACAAEABQACAAcACAABAAYABwABAAgABgAFAAkACAAGAAkABQAHAAoACgAHAAgACwAFAAoACwAJAAUACgAIAAsACwAIAAkA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray("XvGKP0w4GT8pEvo/D9FnP5qZWT+1W7E/XvGKP5qZWT+1W7E/D9FnP0w4GT8pEvo/XvGKP83MTL8TurM/XvGKP83MTL8TurO/D9FnP83MTL8TurM/XvGKP5qZWT+1W7G/D9FnP5qZWT+1W7G/D9FnP83MTL8TurO/XvGKP0w4GT8pEvq/D9FnP0w4GT8pEvq/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_cbwf6"]
+resource_name = "skip_Cube_002"
+_surfaces = [{
+"aabb": AABB(0.905534, -0.8, -1.95368, 0.179957, 1.65, 3.90736),
+"attribute_data": PackedByteArray("AAAgPwAAgD4AAGA/AACAPgAAID8AAIA+AABgPwAAgD4AAGA/AACAPgAAYD8AAIA+AABgPwAAgD4AAGA/AACAPgAAYD8AAIA+AABgPwAAgD4AACA/AACAPgAAID8AAIA+AAAgPwAAgD4AACA/AACAPgAAID8AAIA+AAAgPwAAgD4AAGA/AACAPgAAID8AAIA+AABgPwAAgD4AACA/AACAPgAAID8AAIA+AABgPwAAgD4AAGA/AACAPgAAID8AAIA+AAAgPwAAgD4AAGA/AACAPgAAYD8AAIA+AAAgPwAAgD4AAGA/AACAPgAAID8AAIA+AAAgPwAAgD4AAGA/AACAPgAAYD8AAIA+AAAgPwAAgD4AAGA/AACAPgAAID8AAIA+"),
+"format": 34359742487,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABwAGAAUABwAFAAgACQAHAAgACgALAAwADQAKAAwADQAMAA4ADQAOAA8AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEA"),
+"material": SubResource("StandardMaterial3D_rsdlb"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("XvGKP0w4GT8pEvo/D9FnP5qZWT+1W7E/XvGKP5qZWT+1W7E/D9FnP0w4GT8pEvo/D9FnP0w4GT8pEvo/D9FnP83MTL8TurM/D9FnP5qZWT+1W7E/D9FnP5qZWT+1W7G/D9FnP83MTL8TurO/D9FnP0w4GT8pEvq/XvGKP83MTL8TurM/XvGKP0w4GT8pEvo/XvGKP5qZWT+1W7E/XvGKP83MTL8TurO/XvGKP5qZWT+1W7G/XvGKP0w4GT8pEvq/D9FnP0w4GT8pEvo/XvGKP83MTL8TurM/D9FnP83MTL8TurM/XvGKP0w4GT8pEvo/XvGKP5qZWT+1W7G/D9FnP5qZWT+1W7E/D9FnP5qZWT+1W7G/XvGKP5qZWT+1W7E/XvGKP0w4GT8pEvq/D9FnP5qZWT+1W7G/D9FnP0w4GT8pEvq/XvGKP5qZWT+1W7G/D9FnP0w4GT8pEvq/XvGKP83MTL8TurO/XvGKP0w4GT8pEvq/D9FnP83MTL8TurO/D9FnP83MTL8TurM/XvGKP83MTL8TurO/D9FnP83MTL8TurO/XvGKP83MTL8TurM//3+42P///z//f7jY////P/9/uNj///8//3+42P///z8AAP9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////7////9/////v////3////+/////f////7////9/////v////3////+/////f////7//f+Rb////P/9/5Fv///8//3/kW////z//f+Rb////P/9///////+//3///////7//f///////v/9///////+/Rqf//////79Gp///////v0an//////+/Rqf//////7/j2wAA////v+PbAAD///+/49sAAP///7/j2wAA////v/9/AAD///+//38AAP///7//fwAA////v/9/AAD///+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_fnogq")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vhmw0"]
+points = PackedVector3Array(0.905534, -0.8, -1.40445, 0.905534, 0.598365, -1.95368, 1.08549, -0.8, -1.40445, 0.905534, -0.8, 1.40406, 1.08549, 0.598365, -1.95368, 0.905534, 0.85, -1.3857, 1.08549, -0.8, 1.40406, 0.905534, 0.598365, 1.95368, 1.08549, 0.85, -1.3857, 0.905534, 0.85, 1.38532, 1.08549, 0.598365, 1.95368, 1.08549, 0.85, 1.38532)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_tae10"]
+_surfaces = [{
+"aabb": AABB(-1.08549, -0.8, -1.95368, 0.179957, 1.65, 3.90736),
+"format": 34359742465,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAQADAAIAAgAEAAAAAgADAAQAAAAFAAEAAAAEAAUABgADAAEABQAGAAEABwAEAAMABgAHAAMACAAFAAQABwAIAAQABQAJAAYACAAJAAUABgAKAAcACgAIAAcACwAGAAkACwAKAAYACwAJAAgACgALAAgA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray("D9Fnv0w4GT8pEvo/XvGKv83MTL8TurM/XvGKv0w4GT8pEvo/XvGKv5qZWT+1W7E/D9Fnv5qZWT+1W7E/D9Fnv83MTL8TurM/XvGKv83MTL8TurO/XvGKv5qZWT+1W7G/D9Fnv5qZWT+1W7G/D9Fnv83MTL8TurO/XvGKv0w4GT8pEvq/D9Fnv0w4GT8pEvq/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_mryv6"]
+resource_name = "skip_Cube_003"
+_surfaces = [{
+"aabb": AABB(-1.08549, -0.8, -1.95368, 0.179957, 1.65, 3.90736),
+"attribute_data": PackedByteArray("AABgPwAAgD4AACA/AACAPgAAID8AAIA+AABgPwAAgD4AACA/AACAPgAAID8AAIA+AAAgPwAAgD4AACA/AACAPgAAID8AAIA+AAAgPwAAgD4AAGA/AACAPgAAID8AAIA+AAAgPwAAgD4AAGA/AACAPgAAID8AAIA+AABgPwAAgD4AAGA/AACAPgAAID8AAIA+AAAgPwAAgD4AAGA/AACAPgAAID8AAIA+AABgPwAAgD4AACA/AACAPgAAYD8AAIA+AAAgPwAAgD4AAGA/AACAPgAAYD8AAIA+AABgPwAAgD4AAGA/AACAPgAAYD8AAIA+AABgPwAAgD4AAGA/AACAPgAAYD8AAIA+AAAgPwAAgD4AAGA/AACAPgAAID8AAIA+"),
+"format": 34359742487,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABwAFAAQABwAIAAUABwAJAAgACgALAAwACgANAAsADgAPABAADgARAA8AEgATABQAEgAVABMAFgAXABgAFgAZABcAGgAbABwAHQAcABsAGgAeABsAHwAeABoAIAAhACIAIAAjACEA"),
+"material": SubResource("StandardMaterial3D_rsdlb"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("D9Fnv0w4GT8pEvo/XvGKv83MTL8TurM/XvGKv0w4GT8pEvo/D9Fnv83MTL8TurM/XvGKv83MTL8TurM/XvGKv5qZWT+1W7E/XvGKv0w4GT8pEvo/XvGKv83MTL8TurO/XvGKv5qZWT+1W7G/XvGKv0w4GT8pEvq/D9Fnv83MTL8TurM/XvGKv83MTL8TurO/XvGKv83MTL8TurM/D9Fnv83MTL8TurO/XvGKv0w4GT8pEvo/D9Fnv5qZWT+1W7E/D9Fnv0w4GT8pEvo/XvGKv5qZWT+1W7E/XvGKv5qZWT+1W7G/D9Fnv5qZWT+1W7E/XvGKv5qZWT+1W7E/D9Fnv5qZWT+1W7G/XvGKv0w4GT8pEvq/D9Fnv5qZWT+1W7G/XvGKv5qZWT+1W7G/D9Fnv0w4GT8pEvq/D9Fnv5qZWT+1W7G/D9Fnv83MTL8TurM/D9Fnv5qZWT+1W7E/D9Fnv0w4GT8pEvo/D9Fnv83MTL8TurO/D9Fnv0w4GT8pEvq/D9Fnv0w4GT8pEvq/XvGKv83MTL8TurO/D9Fnv83MTL8TurO/XvGKv0w4GT8pEvq//3/kW////z//f+Rb////P/9/5Fv///8//3/kW////z8AAP9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////7//fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9/uNj///8//3+42P///z//f7jY////P/9/uNj///8//3///////7//f///////v/9///////+//3///////79Gp///////v0an//////+/Rqf//////79Gp///////v////3////+/////f////7////9/////v////3////+/////f////7////9/////v+PbAAD///+/49sAAP///7/j2wAA////v+PbAAD///+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_tae10")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bf22u"]
+points = PackedVector3Array(-1.08549, -0.8, -1.40445, -1.08549, 0.598365, -1.95368, -0.905534, -0.8, -1.40445, -1.08549, -0.8, 1.40406, -0.905534, 0.598365, -1.95368, -1.08549, 0.85, -1.3857, -0.905534, -0.8, 1.40406, -1.08549, 0.598365, 1.95368, -0.905534, 0.85, -1.3857, -1.08549, 0.85, 1.38532, -0.905534, 0.598365, 1.95368, -0.905534, 0.85, 1.38532)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_kkcnn"]
+_surfaces = [{
+"aabb": AABB(-1.08549, -0.8, -2.10542, 2.17098, 1.39852, 0.701308),
+"format": 34359742465,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgABAAMAAAAEAAEABAADAAEAAAACAAUAAgADAAUABgAEAAAAAAAFAAYABAAHAAMABQADAAcABgAHAAQABQAHAAYA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("XvGKv83MTL91Jse/XvGKP83MTL8TurO/XvGKP83MTL91Jse/XvGKP0w4GT8pEvq/XvGKv83MTL8TurO/XvGKP0w4GT9GvwbAXvGKv0w4GT9GvwbAXvGKv0w4GT8pEvq/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_fj5q0"]
+resource_name = "skip_Cube_004"
+_surfaces = [{
+"aabb": AABB(-1.08549, -0.8, -2.10542, 2.17098, 1.39852, 0.701308),
+"attribute_data": PackedByteArray("AABgPwAAgD4AACA/AACAPgAAID8AAIA+AABgPwAAgD4AAGA/AACAPgAAID8AAIA+AABgPwAAgD4AACA/AACAPgAAID8AAIA+AAAgPwAAgD4AACA/AACAPgAAID8AAIA+AABgPwAAgD4AACA/AACAPgAAID8AAIA+AABgPwAAgD4AACA/AACAPgAAYD8AAIA+AABgPwAAgD4AACA/AACAPgAAYD8AAIA+AABgPwAAgD4AAGA/AACAPgAAYD8AAIA+"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_rsdlb"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("XvGKv83MTL91Jse/XvGKP83MTL8TurO/XvGKP83MTL91Jse/XvGKv83MTL8TurO/XvGKv83MTL91Jse/XvGKP0w4GT9GvwbAXvGKv0w4GT9GvwbAXvGKP83MTL91Jse/XvGKP83MTL91Jse/XvGKP0w4GT8pEvq/XvGKP0w4GT9GvwbAXvGKP83MTL8TurO/XvGKv83MTL8TurO/XvGKP0w4GT8pEvq/XvGKP83MTL8TurO/XvGKv0w4GT8pEvq/XvGKP0w4GT9GvwbAXvGKv0w4GT8pEvq/XvGKv0w4GT9GvwbAXvGKP0w4GT8pEvq/XvGKv0w4GT9GvwbAXvGKv83MTL8TurO/XvGKv83MTL91Jse/XvGKv0w4GT8pEvq//38AAP///7//fwAA////v/9/AAD///+//38AAP///7/j2wAA////v+PbAAD///+/49sAAP///7/j2wAA////v////3////+/////f////7////9/////v////3////+//38apP///z//fxqk////P/9/GqT///8//38apP///z//f///////v/9///////+//3///////7//f///////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_kkcnn")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nsv4v"]
+points = PackedVector3Array(1.08528, 0.598515, -1.95371, 1.08528, 0.598515, -2.10542, -1.08549, 0.598515, -1.95371, 1.08528, -0.8, -1.40418, 1.08528, -0.8, -1.5559, -1.08549, 0.598515, -2.10542, -1.08549, -0.8, -1.40418, -1.08549, -0.8, -1.5559)
+
+[node name="skip" type="StaticBody3D"]
+collision_layer = 8193
+collision_mask = 0
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_qpcd2")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("1_1r8ls")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_plr4y")
+
+[node name="End" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_8l14a")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("1_1r8ls")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_wkadf")
+
+[node name="Side" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_cbwf6")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("1_1r8ls")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_vhmw0")
+
+[node name="Side_001" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_mryv6")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("1_1r8ls")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_bf22u")
+
+[node name="End_001" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_fj5q0")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("1_1r8ls")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_nsv4v")

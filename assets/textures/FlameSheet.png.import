@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d1jy3bqnsbkwu"
 path.s3tc="res://.godot/imported/FlameSheet.png-8ac63a21528777d4c57e2c2f68946738.s3tc.ctex"
+path.etc2="res://.godot/imported/FlameSheet.png-8ac63a21528777d4c57e2c2f68946738.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/FlameSheet.png"
-dest_files=["res://.godot/imported/FlameSheet.png-8ac63a21528777d4c57e2c2f68946738.s3tc.ctex"]
+dest_files=["res://.godot/imported/FlameSheet.png-8ac63a21528777d4c57e2c2f68946738.s3tc.ctex", "res://.godot/imported/FlameSheet.png-8ac63a21528777d4c57e2c2f68946738.etc2.ctex"]
 
 [params]
 

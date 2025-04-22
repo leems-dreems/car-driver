@@ -31,6 +31,7 @@ var burnt_material: StandardMaterial3D
 @onready var crash_audio: AudioStreamPlayer3D = $AudioStreams/JunkCrashAudio
 @onready var glass_break_audio: AudioStreamPlayer3D = $AudioStreams/GlassBreakAudio
 @onready var contact_checker: CarContactChecker = $ContactChecker
+@onready var vehicle_item_container: VehicleItemContainer = $VehicleItemContainer
 
 
 func _ready() -> void:
@@ -48,6 +49,13 @@ func _ready() -> void:
 	#$ColliderBits/Bonnet/OpenBonnet/MeshInstance3D.set_surface_override_material(0, _paintjob.material)
 	$ColliderBits/Boot/ShutBoot.set_surface_override_material(0, _paintjob.material)
 	$ColliderBits/Boot/OpenBoot/MeshInstance3D.set_surface_override_material(0, _paintjob.material)
+
+	boot.door_open.connect(func():
+		vehicle_item_container.connect_item_listeners()
+	)
+	boot.door_shut.connect(func():
+		vehicle_item_container.disconnect_item_listeners()
+	)
 
 	super()
 	return
@@ -72,7 +80,7 @@ func _on_body_entered(_body: Node) -> void:
 		var _velocity_change := _previous_velocity - linear_velocity
 		var _impact_force := _velocity_change.length() * 0.1
 		if _impact_force > impact_force_threshold_1:
-			react_to_collision(_velocity_change)
+			#react_to_collision(_velocity_change)
 			bump_audio.volume_db = linear_to_db(clampf(_impact_force, 0.0, 1.0))
 			bump_audio.play()
 			current_hit_points -= _impact_force
@@ -84,21 +92,21 @@ func _on_body_entered(_body: Node) -> void:
 
 
 func react_to_collision(velocity_change: Vector3) -> void:
-	#velocity_change = velocity_change.normalized()
-	#var _dot_with_x := velocity_change.dot(global_transform.basis.x)
-	#if not door_right.is_detached and _dot_with_x > 0.5:
-		#door_right.fall_open()
-	#elif not door_left.is_detached and _dot_with_x < -0.5:
-		#door_left.fall_open()
-	#var _dot_with_y := velocity_change.dot(global_transform.basis.y)
-	#if _dot_with_y > 0.5:
-		##if not bonnet.is_detached:
-			##bonnet.fall_open()
-		#if not boot.is_detached:
-			#boot.fall_open()
-	#var _dot_with_z := velocity_change.dot(global_transform.basis.z)
-	#if not boot.is_detached and _dot_with_z > 0.5:
-		#boot.fall_open()
+	velocity_change = velocity_change.normalized()
+	var _dot_with_x := velocity_change.dot(global_transform.basis.x)
+	if not door_right.is_detached and _dot_with_x > 0.5:
+		door_right.fall_open()
+	elif not door_left.is_detached and _dot_with_x < -0.5:
+		door_left.fall_open()
+	var _dot_with_y := velocity_change.dot(global_transform.basis.y)
+	if _dot_with_y > 0.5:
+		#if not bonnet.is_detached:
+			#bonnet.fall_open()
+		if not boot.is_detached:
+			boot.fall_open()
+	var _dot_with_z := velocity_change.dot(global_transform.basis.z)
+	if not boot.is_detached and _dot_with_z > 0.5:
+		boot.fall_open()
 	return
 
 

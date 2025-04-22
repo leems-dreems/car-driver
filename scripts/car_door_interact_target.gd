@@ -36,7 +36,7 @@ func unhighlight() -> void:
 
 
 func can_interact_short_press() -> bool:
-	return block_short_press_timer == null
+	return car_door.is_openable and block_short_press_timer == null
 
 
 func interact_short_press() -> void:

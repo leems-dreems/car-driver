@@ -1,11 +1,36 @@
 extends PlayerState
 
+const handbrake_scroll_multiplier := 0.2
+const handbrake_dpad_multiplier := 0.5
+
+
+func handle_input(event: InputEvent) -> void:
+	if event.is_action_pressed("Pause") and not event.is_echo():
+		player.handle_pause_button_pressed()
+		return
+
+	var _vehicle := player.current_vehicle as DriveableVehicle
+	if _vehicle == null:
+		return
+
+	if event.is_action_pressed("handbrake_up"):
+		if event is InputEventMouseButton:
+			_vehicle.handbrake_input = minf(_vehicle.handbrake_input + (event.factor * handbrake_scroll_multiplier), 1.0)
+		else:
+			_vehicle.handbrake_input = minf(_vehicle.handbrake_input + handbrake_dpad_multiplier, 1.0)
+	elif event.is_action_pressed("handbrake_down"):
+		if event is InputEventMouseButton:
+			_vehicle.handbrake_input = maxf(0, _vehicle.handbrake_input - (event.factor * handbrake_scroll_multiplier))
+		else:
+			_vehicle.handbrake_input = maxf(0, _vehicle.handbrake_input - handbrake_dpad_multiplier)
+	elif event.is_action_pressed("interact"):
+		player.exitVehicle()
+		finished.emit(EMPTY_HANDED)
+	return
+
 
 func physics_update(_delta: float) -> void:
 	player.process_vehicle_controls(_delta)
-	if Input.is_action_just_pressed("interact"):
-		player.exitVehicle()
-		finished.emit(EMPTY_HANDED)
 	return
 
 

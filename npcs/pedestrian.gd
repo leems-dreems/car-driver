@@ -1,5 +1,10 @@
 class_name Pedestrian extends RigidBody3D
 
+@export_group("Social")
+@export var npc_name: String
+@export var face_player := true
+
+@export_group("Movement")
 ## Character maximum run speed on the ground.
 @export var move_speed := 8.0
 ## Movement acceleration (how fast character achieve maximum speed)
@@ -34,6 +39,7 @@ class_name Pedestrian extends RigidBody3D
 var _move_direction := Vector3.ZERO
 var _is_on_floor_buffer := false
 
+var look_target: Node3D = null
 var is_ragdolling := false
 var is_waiting_to_reset := false
 ## Target position to move towards, in global coordinates
@@ -93,8 +99,11 @@ func _physics_process(delta: float) -> void:
 
 	_target_position = _nav_agent.get_next_path_position()
 	var _position_difference := _target_position - global_position
-	_move_direction = _position_difference.normalized() * clampf(_position_difference.length(), 0, 1)
-	_move_direction.y = 0
+	if _position_difference != Vector3.ZERO:
+		_move_direction = _position_difference.normalized() * clampf(_position_difference.length(), 0, 1)
+		_move_direction.y = 0
+	elif look_target != null:
+		_orient_character_to_direction(look_target.global_position - global_position, delta)
 
 	if _position_difference.length_squared() > 0:
 		_orient_character_to_direction(_move_direction, delta)
@@ -124,18 +133,10 @@ func play_foot_step_sound() -> void:
 
 
 func _orient_character_to_direction(_direction: Vector3, delta: float) -> void:
-	#var _target_basis := _rotation_root.global_transform.looking_at(_target_position, Vector3.UP, true).basis
-	#_rotation_root.global_transform.basis = _rotation_root.global_transform.basis.slerp(_target_basis, delta * rotation_speed)
-	if linear_velocity == Vector3.ZERO:
-		return
-	var _look_direction := linear_velocity.normalized()
-	_look_direction.y = 0
-	var left_axis := Vector3.UP.cross(_look_direction)
-	var rotation_basis := Basis(left_axis, Vector3.UP, _look_direction).get_rotation_quaternion()
-	var model_scale := _rotation_root.transform.basis.get_scale()
-	_rotation_root.transform.basis = Basis(_rotation_root.transform.basis.get_rotation_quaternion().slerp(rotation_basis, delta * rotation_speed)).scaled(
-		model_scale
-	)
+	var left_axis := Vector3.UP.cross(_direction)
+	var rotation_basis: Basis = Basis(left_axis, Vector3.UP, _direction).get_rotation_quaternion()
+	_rotation_root.global_transform.basis = _rotation_root.global_transform.basis.slerp(rotation_basis.rotated(Vector3.UP, PI * 2), delta * rotation_speed)
+	return
 
 
 func go_limp() -> void:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b7r8ejy8iua8t"]
 
-[ext_resource type="Script" uid="uid://c145yv1r5kx0w" path="res://addons/road-generator/ui/road_toolbar.gd" id="1"]
-[ext_resource type="Script" uid="uid://m1tsib5qnk1l" path="res://addons/road-generator/ui/road_toolbar_create_menu.gd" id="2"]
+[ext_resource type="Script" path="res://addons/road-generator/ui/road_toolbar.gd" id="1"]
+[ext_resource type="Script" path="res://addons/road-generator/ui/road_toolbar_create_menu.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://44gbdq5cb18e" path="res://addons/road-generator/ui/gizmo_blue_handle.png" id="6"]
 
 [node name="RoadToolbar" type="HBoxContainer"]
@@ -46,6 +46,8 @@ icon = ExtResource("6")
 layout_mode = 2
 text = "Roads"
 script = ExtResource("2")
+
+[node name="rc items (?)" type="PopupMenu" parent="."]
 
 [connection signal="pressed" from="select_mode" to="." method="_on_select_mode_pressed"]
 [connection signal="pressed" from="add_mode" to="." method="_on_add_mode_pressed"]

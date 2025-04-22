@@ -1,7 +1,9 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://1yia8uxvgpx4"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://1yia8uxvgpx4"]
 
 [ext_resource type="SystemFont" uid="uid://bfrqonkrt6mpy" path="res://ui/ui_font.tres" id="1_biv2h"]
 [ext_resource type="StyleBox" uid="uid://c2h0kicvt5j6m" path="res://ui/pause_panel.tres" id="1_ns23y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_50434"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_31guc"]
 bg_color = Color(0.912289, 0.912289, 0.912289, 1)
@@ -41,6 +43,7 @@ Button/colors/font_pressed_color = Color(0.875, 0.875, 0.875, 1)
 Button/constants/outline_size = 5
 Button/font_sizes/font_size = 48
 Button/fonts/font = ExtResource("1_biv2h")
+Button/styles/disabled = SubResource("StyleBoxEmpty_50434")
 Button/styles/focus = SubResource("StyleBoxFlat_31guc")
 Button/styles/hover = SubResource("StyleBoxFlat_31guc")
 Button/styles/hover_pressed = SubResource("StyleBoxFlat_u7p3v")

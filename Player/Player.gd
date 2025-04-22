@@ -28,6 +28,7 @@ class_name Player extends RigidBody3D
 @onready var camera_controller: CameraController = $CameraController
 @onready var _ground_shapecast: ShapeCast3D = $GroundShapeCast
 @onready var _pickup_collider: Area3D = $square_guy/PickupCollider
+@onready var _npc_awareness_area: Area3D = $NPCAwarenessArea
 @onready var ragdoll_skeleton: Skeleton3D = $square_guy/metarig/Skeleton3D
 @onready var _ragdoll_tracker_bone: PhysicalBone3D = $"square_guy/metarig/Skeleton3D/Physical Bone spine"
 #@onready var _bone_simulator: PhysicalBoneSimulator3D = $CharacterRotationRoot/DummySkin_Physical/Rig/Skeleton3D/PhysicalBoneSimulator3D
@@ -40,30 +41,38 @@ class_name Player extends RigidBody3D
 @onready var _nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var _animation_tree: AnimationTree = $square_guy/AnimationTree
 @onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
+
 @onready var pickup_marker: Sprite3D = $PickupMarker
 @onready var long_press_marker: Sprite3D = $ContainerMarker
 @onready var long_press_anim: AnimationPlayer = $ContainerMarker/AnimationPlayer
 @onready var _carried_mesh_container := $CarriedItem
 @onready var state_machine: StateMachine = $StateMachine
+
 @onready var interact_short_press_timer: Timer = $TimerNodes/InteractShortPressTimer
 @onready var interact_long_press_timer: Timer = $TimerNodes/InteractLongPressTimer
 @onready var interact_target_timer: Timer = $TimerNodes/InteractTargetTimer
 @onready var pickup_short_press_timer: Timer = $TimerNodes/PickupShortPressTimer
 @onready var pickup_target_timer: Timer = $TimerNodes/PickupTargetTimer
 @onready var drop_target_timer: Timer = $TimerNodes/DropTargetTimer
+@onready var push_vehicle_timer := $TimerNodes/PushVehicleTimer
+
+const _push_vehicle_button_delay := 1.0
 const _interact_button_short_press_delay := 0.2
-const _interact_button_long_press_delay := 0.6
+const _interact_button_long_press_delay := 0.4
 const _interact_target_delay := 0.2 ## How long to wait after targeting an interactable before looking for a new target
 const _pickup_button_short_press_delay := 0.2
 const _pickup_target_delay := 0.2 ## How long to wait after targeting a pickup before looking for a new target
 const _drop_target_delay := 0.2 ## How long to wait after targeting a drop target before looking for a new target
 
+var should_jump := false
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
 var _ground_height: float = 0.0
 var _default_collision_layer := collision_layer
 var _is_on_floor_buffer := false
+const push_force := 3000
 
+var _initial_transform: Transform3D
 var is_ragdolling := false
 var is_waiting_to_reset := false
 ## Velocity as of the last physics tick
@@ -74,6 +83,8 @@ var _ragdoll_reset_timer: SceneTreeTimer = null
 var pickups_in_range: Array[Node3D]
 ## Useable items in range
 var interactables_in_range: Array[Node3D]
+## Pushable/grabbable vehicles in range
+var vehicles_in_range: Array[DriveableVehicle]
 ## Item containers in range
 var drop_targets: Array[Node3D]
 ## Container being targeted by a long-press action
@@ -108,11 +119,16 @@ signal long_press_interact_unhighlight
 signal long_press_interact_start
 signal long_press_interact_cancel
 signal long_press_interact_finish
+signal push_vehicle_highlight(_vehicle: DriveableVehicle)
+signal push_vehicle_unhighlight
+signal push_vehicle_start
 signal vehicle_entered(_vehicle: DriveableVehicle)
 signal vehicle_exited
+signal state_changed(_state: String)
 
 
 func _ready() -> void:
+	_initial_transform = transform
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera_controller.setup(self)
 	PropRespawnManager.camera = camera_controller.camera
@@ -137,6 +153,10 @@ func _ready() -> void:
 	_pickup_collider.body_entered.connect(func(_body: Node3D):
 		if _body is CarryableItem and not pickups_in_range.has(_body):
 			pickups_in_range.push_back(_body)
+		if _body is DriveableVehicle and not vehicles_in_range.has(_body):
+			vehicles_in_range.push_back(_body)
+			if len(vehicles_in_range) == 1:
+				push_vehicle_highlight.emit()
 	)
 	_pickup_collider.area_exited.connect(func(_area: Area3D):
 		if _area == targeted_interactable:
@@ -170,6 +190,19 @@ func _ready() -> void:
 			if _body.is_highlighted:
 				short_press_pickup_unhighlight.emit()
 				_body.unhighlight()
+		elif _body is DriveableVehicle and vehicles_in_range.has(_body):
+			vehicles_in_range.erase(_body)
+			if len(vehicles_in_range) == 0 and push_vehicle_timer.is_stopped():
+				push_vehicle_unhighlight.emit()
+	)
+
+	_npc_awareness_area.body_entered.connect(func(_body: Node3D):
+		if _body is Pedestrian and _body.face_player:
+			_body.look_target = self
+	)
+	_npc_awareness_area.body_exited.connect(func(_body: Node3D):
+		if _body is Pedestrian and _body.face_player:
+			_body.look_target = null
 	)
 
 	interact_long_press_timer.timeout.connect(interact_long_press_timeout)
@@ -178,6 +211,7 @@ func _ready() -> void:
 	pickup_short_press_timer.timeout.connect(pickup_short_press_timeout)
 	pickup_target_timer.timeout.connect(func(): pickup_target_timer.stop())
 	drop_target_timer.timeout.connect(func(): drop_target_timer.stop())
+	push_vehicle_timer.timeout.connect(func(): push_vehicle_timer.stop())
 
 	return
 
@@ -221,7 +255,7 @@ func _process(_delta: float) -> void:
 	return
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	_nav_agent.get_next_path_position()
 	# Record current velocity, to refer to when processing collision signals
 	_previous_velocity = Vector3(linear_velocity)
@@ -234,17 +268,13 @@ func _physics_process(delta: float) -> void:
 	if global_position.y < _ground_height:
 		_ground_height = global_position.y
 
-	# Respond to pause button
-	if not get_tree().paused and Input.is_action_just_pressed("Pause"):
-		get_tree().create_timer(.1).timeout.connect(func():
-			get_tree().paused = true
-		)
-		return
+	return
 
 
 func process_on_foot_controls(delta: float, can_sprint := true, speed_ratio: float = 1.0) -> void:
 	var _is_on_ground := is_on_ground()
-	var is_just_jumping := not is_ragdolling and Input.is_action_just_pressed("jump") and _is_on_ground
+	var is_just_jumping := not is_ragdolling and should_jump and _is_on_ground
+	should_jump = false
 	var is_just_on_floor := _is_on_ground and not _is_on_floor_buffer
 	if Input.is_action_just_pressed("Ragdoll"):
 		go_limp()
@@ -298,7 +328,7 @@ func process_vehicle_controls(_delta: float) -> void:
 	current_vehicle.brake_input = Input.get_action_strength("Brake or Reverse")
 	current_vehicle.steering_input = Input.get_action_strength("Steer Left") - Input.get_action_strength("Steer Right")
 	current_vehicle.throttle_input = pow(Input.get_action_strength("Accelerate"), 2.0)
-	current_vehicle.handbrake_input = Input.get_action_strength("Handbrake")
+	#current_vehicle.handbrake_input = Input.get_action_strength("Handbrake")
 
 	# Shift to neutral if we are stationary and braking
 	if current_vehicle.current_gear > 0 and current_vehicle.speed < 1:
@@ -308,6 +338,10 @@ func process_vehicle_controls(_delta: float) -> void:
 	if current_vehicle.current_gear == -1:
 		current_vehicle.brake_input = Input.get_action_strength("Accelerate")
 		current_vehicle.throttle_input = Input.get_action_strength("Brake or Reverse")
+
+	if current_vehicle.ignition_on == false and current_vehicle.throttle_input > 0 and current_vehicle.current_hit_points > 0:
+		current_vehicle.ignition_on = true
+
 	return
 
 
@@ -402,7 +436,7 @@ func get_skeleton_position() -> Vector3:
 	return _ragdoll_tracker_bone.global_position
 
 
-func enterVehicle (vehicle: DriveableVehicle) -> void:
+func enterVehicle(vehicle: DriveableVehicle) -> void:
 	current_vehicle = vehicle
 	_vehicle_controller.vehicle_node = vehicle
 	vehicle.is_being_driven = true
@@ -421,14 +455,15 @@ func exitVehicle () -> void:
 	current_vehicle.clutch_input = 0
 	current_vehicle.brake_input = 0
 	_vehicle_controller.vehicle_node = null
-	global_position = current_vehicle.global_position
-	linear_velocity = current_vehicle.linear_velocity
-	global_position.y += 5
+
+	freeze = true
+	set_deferred("global_position", current_vehicle.global_transform.translated_local(Vector3(1.5, 0, 0)).origin)
+	set_deferred("freeze", false)
+	set_deferred("linear_velocity", current_vehicle.linear_velocity)
 	current_vehicle = null
-	await get_tree().create_timer(0.1).timeout
-	$CharacterCollisionShape.disabled = false
-	_pickup_collider.process_mode = Node.PROCESS_MODE_INHERIT
-	visible = true
+	$CharacterCollisionShape.set_deferred("disabled", false)
+	_pickup_collider.set_deferred("process_mode", Node.PROCESS_MODE_INHERIT)
+	set_deferred("visible", true)
 	vehicle_exited.emit()
 	return
 
@@ -483,6 +518,7 @@ func throw_item() -> void:
 	_carried_item.visible = true
 	var _throw_vector: Vector3 = $CameraController/ThrowTarget.global_position - $CameraController/ThrowOrigin.global_position
 	_carried_item.apply_central_impulse(_throw_vector * 7 * _carried_item.mass)
+	_carried_item.apply_torque_impulse(_throw_vector.rotated(Vector3.UP, -PI / 2) * _carried_item.mass)
 	_carried_mesh = null
 	_carried_item = null
 	return
@@ -506,18 +542,54 @@ func set_pickup_marker_borders(_visible: bool) -> void:
 	return
 
 
-func process_pickup_button() -> void:
-	if targeted_pickup == null:
-		update_pickup_target()
+func handle_push_vehicle_button_pressed() -> void:
+	if not push_vehicle_timer.is_stopped():
 		return
-	if Input.is_action_just_pressed("pickup_drop") and pickup_short_press_timer.is_stopped():
-		short_press_pickup_start.emit()
-		pickup_short_press_timer.start(_pickup_button_short_press_delay)
-		pickup_item(targeted_pickup)
-		targeted_pickup.unhighlight()
-		targeted_pickup = null
-	else:
-		update_pickup_target()
+	if len(vehicles_in_range) == 0:
+		return
+	push_vehicle_start.emit()
+	var _target_vehicle := vehicles_in_range[0]
+	var _push_target_position := _target_vehicle.global_transform.translated_local(_target_vehicle.center_of_mass).origin
+	_target_vehicle.apply_impulse((_push_target_position - global_position).normalized() * push_force, Vector3(0, 1, 0))
+	push_vehicle_timer.start(_push_vehicle_button_delay)
+	await push_vehicle_timer.timeout
+	push_vehicle_unhighlight.emit()
+	update_push_target(true)
+	if len(vehicles_in_range) > 0:
+		push_vehicle_highlight.emit.call_deferred()
+	return
+
+
+func update_push_target(_force_update := false) -> void:
+	if _force_update:
+		vehicles_in_range = []
+		for _body in _pickup_collider.get_overlapping_bodies():
+			if _body is DriveableVehicle and not vehicles_in_range.has(_body):
+				vehicles_in_range.push_back(_body)
+
+	if not push_vehicle_timer.is_stopped():
+		return
+
+	if len(vehicles_in_range) > 0:
+		var vehicle_distances := {}
+		for _vehicle: Node3D in vehicles_in_range:
+			vehicle_distances[_vehicle.get_instance_id()] = _vehicle.global_position.distance_squared_to(_pickup_collider.global_position)
+		vehicles_in_range.sort_custom(func(a: Node3D, b: Node3D):
+			return vehicle_distances[a.get_instance_id()] < vehicle_distances[b.get_instance_id()]
+		)
+	return
+
+
+func handle_pickup_button_pressed() -> void:
+	if not pickup_short_press_timer.is_stopped():
+		return
+	if targeted_pickup == null:
+		return
+	short_press_pickup_start.emit()
+	pickup_short_press_timer.start(_pickup_button_short_press_delay)
+	pickup_item(targeted_pickup)
+	targeted_pickup.unhighlight()
+	targeted_pickup = null
 	return
 
 
@@ -567,40 +639,46 @@ func update_pickup_target(_force_update := false) -> void:
 	return
 
 
-func process_interact_button() -> void:
+func handle_interact_button_pressed() -> void:
 	if targeted_interactable == null:
-		update_interact_target()
 		return
 
-	if Input.is_action_just_released("interact"):
-		if not interact_short_press_timer.is_stopped():
-			interact_short_press_timer.stop()
-			short_press_interact_finish.emit()
-			targeted_interactable.interact_short_press()
-			if _pickup_collider.overlaps_area(targeted_interactable):
-				short_press_interact_highlight.emit(targeted_interactable)
-			else:
-				targeted_interactable.unhighlight()
-				targeted_interactable = null
-		if not interact_long_press_timer.is_stopped():
-			interact_long_press_timer.stop()
-			long_press_interact_cancel.emit()
-			if _pickup_collider.overlaps_area(targeted_interactable):
-				long_press_interact_highlight.emit(targeted_interactable)
-			else:
-				targeted_interactable.unhighlight()
-				targeted_interactable = null
+	if not interact_short_press_timer.is_stopped() or not interact_long_press_timer.is_stopped():
+		return
+	if targeted_interactable.can_interact_short_press():
+		short_press_interact_start.emit()
+		interact_short_press_timer.start(_interact_button_short_press_delay)
+	elif targeted_interactable.can_interact_long_press(_carried_item):
+		long_press_interact_start.emit()
+		interact_long_press_timer.start(_interact_button_long_press_delay)
+	return
 
-	elif Input.is_action_just_pressed("interact") and interact_short_press_timer.is_stopped() and interact_long_press_timer.is_stopped():
-		if targeted_interactable.can_interact_short_press():
-			short_press_interact_start.emit()
-			interact_short_press_timer.start(_interact_button_short_press_delay)
-		elif targeted_interactable.can_interact_long_press(_carried_item):
-			long_press_interact_start.emit()
-			interact_long_press_timer.start(_interact_button_long_press_delay)
-	
-	else:
-		update_interact_target()
+
+func handle_interact_button_released() -> void:
+	if targeted_interactable == null:
+		return
+
+	if not interact_short_press_timer.is_stopped():
+		interact_short_press_timer.stop()
+		short_press_interact_finish.emit()
+		targeted_interactable.interact_short_press()
+		if targeted_interactable is NPCInteractArea:
+			state_machine.state.finished.emit(PlayerState.IN_DIALOGUE)
+			return
+		if _pickup_collider.overlaps_area(targeted_interactable):
+			short_press_interact_highlight.emit(targeted_interactable)
+		else:
+			targeted_interactable.unhighlight()
+			targeted_interactable = null
+
+	if not interact_long_press_timer.is_stopped():
+		interact_long_press_timer.stop()
+		long_press_interact_cancel.emit()
+		if _pickup_collider.overlaps_area(targeted_interactable):
+			long_press_interact_highlight.emit(targeted_interactable)
+		else:
+			targeted_interactable.unhighlight()
+			targeted_interactable = null
 	return
 
 
@@ -608,7 +686,7 @@ func interact_short_press_timeout() -> void:
 	interact_short_press_timer.stop()
 	if targeted_interactable != null and targeted_interactable.can_interact_long_press(_carried_item):
 		short_press_interact_finish.emit()
-		long_press_interact_start.emit()
+		long_press_interact_start.emit(_interact_button_short_press_delay / _interact_button_long_press_delay)
 		interact_long_press_timer.start(_interact_button_long_press_delay)
 		if _pickup_collider.overlaps_area(targeted_interactable):
 			short_press_interact_highlight.emit(targeted_interactable)
@@ -616,6 +694,8 @@ func interact_short_press_timeout() -> void:
 		short_press_interact_finish.emit()
 		if targeted_interactable != null:
 			targeted_interactable.interact_short_press()
+			if targeted_interactable is NPCInteractArea:
+				state_machine.state.finished.emit(PlayerState.IN_DIALOGUE)
 			if _pickup_collider.overlaps_area(targeted_interactable):
 				short_press_interact_highlight.emit(targeted_interactable)
 			else:
@@ -665,6 +745,8 @@ func update_interact_target(_force_update := false) -> void:
 		for _interactable in interactables_in_range:
 			if i == 0:
 				if _force_update or targeted_interactable != _interactable:
+					short_press_interact_unhighlight.emit()
+					long_press_interact_unhighlight.emit()
 					targeted_interactable = _interactable
 					interact_target_timer.start()
 					if _interactable.can_interact_short_press():
@@ -682,19 +764,16 @@ func update_interact_target(_force_update := false) -> void:
 	return
 
 
-func process_drop_button() -> void:
-	if Input.is_action_just_pressed("pickup_drop"):
-		short_press_drop_start.emit()
-		var _item := _carried_item
-		drop_item()
-		if len(drop_targets) > 0 and drop_targets[0].has_method("deposit_item"):
-			drop_targets[0].deposit_item(_item)
-			_item.queue_free()
-			drop_targets[0].unhighlight()
-		short_press_drop_finish.emit()
-		state_machine.state.finished.emit(PlayerState.EMPTY_HANDED)
-	else:
-		update_drop_target()
+func handle_drop_button_pressed() -> void:
+	short_press_drop_start.emit()
+	var _item := _carried_item
+	drop_item()
+	if len(drop_targets) > 0 and drop_targets[0].has_method("deposit_item"):
+		drop_targets[0].deposit_item(_item)
+		_item.queue_free()
+		drop_targets[0].unhighlight()
+	short_press_drop_finish.emit()
+	state_machine.state.finished.emit(PlayerState.EMPTY_HANDED)
 	return
 
 
@@ -721,7 +800,7 @@ func update_drop_target(_force_update := false) -> void:
 		var i: int = 0
 		for _drop_target in drop_targets:
 			if i == 0:
-				if _drop_target.has_method("highlight") and (_force_update or not _drop_target.is_highlighted):
+				if _drop_target.has_method("highlight") and (_force_update or drop_target_timer.is_stopped()):
 					drop_target_timer.start()
 					short_press_drop_highlight.emit(_drop_target)
 					drop_target = _drop_target
@@ -733,4 +812,11 @@ func update_drop_target(_force_update := false) -> void:
 		if drop_target != null:
 			short_press_drop_unhighlight.emit()
 		drop_target = null
+	return
+
+
+func handle_pause_button_pressed() -> void:
+	get_tree().create_timer(.1).timeout.connect(func():
+		get_tree().paused = true
+	)
 	return

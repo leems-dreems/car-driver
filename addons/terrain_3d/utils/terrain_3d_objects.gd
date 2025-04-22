@@ -1,3 +1,6 @@
+# Copyright © 2025 Cory Petkovsek, Roope Palmroos, and Contributors.
+# Objects parent for Terrain3D
+# Children nodes get transform updates on sculpting
 @tool
 extends Node3D
 class_name Terrain3DObjects
@@ -97,7 +100,8 @@ func _on_child_exiting_tree(p_node: Node) -> void:
 	
 	var helper: TransformChangedNotifier = p_node.get_node_or_null(CHILD_HELPER_PATH)
 	if helper:
-		helper.transform_changed.disconnect(_on_child_transform_changed)
+		if helper.transform_changed.is_connected(_on_child_transform_changed):
+			helper.transform_changed.disconnect(_on_child_transform_changed)
 		p_node.remove_child(helper)
 		helper.queue_free()
 	

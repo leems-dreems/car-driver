@@ -21,7 +21,11 @@ enum CAMERA_PIVOT { OVER_SHOULDER, THIRD_PERSON }
 @onready var _over_shoulder_pivot: Node3D = $CameraOverShoulderPivot
 @onready var _camera_spring_arm: SpringArm3D = $CameraSpringArm
 @onready var _third_person_pivot: Node3D = $CameraSpringArm/CameraThirdPersonPivot
-@onready var _camera_raycast: RayCast3D = $PlayerCamera/CameraRayCast
+@onready var _interact_raycast: RayCast3D = $PlayerCamera/InteractRayCast
+@onready var _foliage_fade_area: Area3D = $PlayerCamera/FoliageFadeArea
+@onready var _foliage_fade_collider: CollisionShape3D = $PlayerCamera/FoliageFadeArea/CollisionShape3D
+var _colliding_trees: Array[MeshInstance3D] = []
+var _fadein_trees: Array[MeshInstance3D] = []
 
 var _aim_target : Vector3
 var _aim_collider: Node
@@ -34,6 +38,35 @@ var _offset: Vector3
 var _anchor: Player
 var _euler_rotation : Vector3
 var input_timer : SceneTreeTimer = null
+
+
+func _ready() -> void:
+	_foliage_fade_area.body_entered.connect(func(_body: Node3D):
+		var _mesh := _body.get_parent() as MeshInstance3D
+		if _mesh == null:
+			return
+		if not _colliding_trees.has(_mesh):
+			_colliding_trees.push_back(_mesh)
+		if _fadein_trees.has(_mesh):
+			_fadein_trees.erase(_mesh)
+	)
+	_foliage_fade_area.body_exited.connect(func(_body: Node3D):
+		var _mesh := _body.get_parent() as MeshInstance3D
+		if _mesh == null:
+			return
+		if _colliding_trees.has(_mesh):
+			_colliding_trees.erase(_mesh)
+		if not _fadein_trees.has(_mesh):
+			_fadein_trees.push_back(_mesh)
+		#var _multimesh := _body.get_parent() as MultiMeshInstance3D
+		#if _multimesh == null:
+			#return
+		#if _multimesh_tweens.has(_multimesh.get_instance_id()) and _multimesh_tweens[_multimesh.get_instance_id()].is_running():
+			#_multimesh_tweens[_multimesh.get_instance_id()].kill()
+		#_multimesh_tweens[_multimesh.get_instance_id()] = get_tree().create_tween()
+		#_multimesh_tweens[_multimesh.get_instance_id()].tween_property(_multimesh, "transparency", 0, 0.1)
+	)
+	return
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -53,11 +86,18 @@ func _process(delta: float) -> void:
 	if invert_mouse_y:
 		_tilt_input *= -1
 
-	if _camera_raycast.is_colliding():
-		_aim_target = _camera_raycast.get_collision_point()
-		_aim_collider = _camera_raycast.get_collider()
+	fade_multimeshes(delta)
+
+	var _camera_distance := camera.global_position.distance_to(_anchor.global_position)
+	_foliage_fade_collider.shape.height = _camera_distance * 0.8
+	_foliage_fade_collider.shape.radius = minf(5.0, _foliage_fade_collider.shape.height / 2)
+	_foliage_fade_area.global_position = camera.global_position.lerp(_anchor.global_position, 0.35)
+
+	if _interact_raycast.is_colliding():
+		_aim_target = _interact_raycast.get_collision_point()
+		_aim_collider = _interact_raycast.get_collider()
 	else:
-		_aim_target = _camera_raycast.global_transform * _camera_raycast.target_position
+		_aim_target = _interact_raycast.global_transform * _interact_raycast.target_position
 		_aim_collider = null
 
 	if _anchor.current_vehicle != null:
@@ -124,7 +164,7 @@ func setup(anchor: Player) -> void:
 	set_pivot(CAMERA_PIVOT.THIRD_PERSON)
 	camera.global_transform = camera.global_transform.interpolate_with(_pivot.global_transform, 0.1)
 	_camera_spring_arm.add_excluded_object(_anchor.get_rid())
-	_camera_raycast.add_exception_rid(_anchor.get_rid())
+	_interact_raycast.add_exception_rid(_anchor.get_rid())
 
 
 func set_pivot(pivot_type: CAMERA_PIVOT) -> void:
@@ -150,3 +190,20 @@ func get_aim_collider() -> Node:
 		return _aim_collider
 	else:
 		return null
+
+
+func fade_multimeshes(delta: float) -> void:
+	for _colliding_tree in _colliding_trees:
+		var _screen_position := camera.unproject_position(_colliding_tree.global_position)
+		if _screen_position.x < 0 or _screen_position.x > get_viewport().size.x:
+			continue
+		var _screen_width: float = get_viewport().size.x
+		var _distance_from_center := absf(_screen_position.x - (_screen_width / 2))
+		_colliding_tree.transparency = lerpf(_colliding_tree.transparency, minf(0.85, 1 - (_distance_from_center / (_screen_width / 2))), delta * 10)
+
+	for _fadein_tree: MeshInstance3D in _fadein_trees:
+		_fadein_tree.transparency = lerpf(_fadein_tree.transparency, 0, delta * 10)
+		if _fadein_tree.transparency < 0.05:
+			_fadein_tree.transparency = 0
+			_fadein_trees.erase(_fadein_tree)
+	return

@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://y0u6jr6gqgro"
+path="res://.godot/imported/cricket_mk2_wheel_left.obj-da7b2ba905e99f4257ba71e32f9035a2.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cricket_mk2_wheel_left.obj-da7b2ba905e99f4257ba71e32f9035a2.mesh"]
+
+source_file="res://assets/models/vehicles/Cricket/cricket_mk2_wheel_left.obj"
+dest_files=["res://.godot/imported/cricket_mk2_wheel_left.obj-da7b2ba905e99f4257ba71e32f9035a2.mesh", "res://.godot/imported/cricket_mk2_wheel_left.obj-da7b2ba905e99f4257ba71e32f9035a2.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dxew15buodcqj"
 path.s3tc="res://.godot/imported/trashBin1Tex64.png-4f301689c42e27ffd6fc91c2f0588d79.s3tc.ctex"
+path.etc2="res://.godot/imported/trashBin1Tex64.png-4f301689c42e27ffd6fc91c2f0588d79.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/trashBin1Tex64.png"
-dest_files=["res://.godot/imported/trashBin1Tex64.png-4f301689c42e27ffd6fc91c2f0588d79.s3tc.ctex"]
+dest_files=["res://.godot/imported/trashBin1Tex64.png-4f301689c42e27ffd6fc91c2f0588d79.s3tc.ctex", "res://.godot/imported/trashBin1Tex64.png-4f301689c42e27ffd6fc91c2f0588d79.etc2.ctex"]
 
 [params]
 
