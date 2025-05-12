@@ -4,6 +4,13 @@ class_name Pedestrian extends RigidBody3D
 @export var npc_name: String
 @export var face_player := true
 
+@export_group("Mesh Surface Material Overrides")
+@export var material_0: Material
+@export var material_1: Material
+@export var material_2: Material
+@export var material_3: Material
+@onready var _mesh: MeshInstance3D = $square_guy/metarig/Skeleton3D/Cube_001
+
 @export_group("Movement")
 ## Character maximum run speed on the ground.
 @export var move_speed := 8.0
@@ -46,6 +53,14 @@ var is_waiting_to_reset := false
 var _target_position: Vector3
 ## Velocity as of the last physics tick
 var _previous_velocity: Vector3 = Vector3.ZERO
+
+
+func _ready() -> void:
+	_mesh.set_surface_override_material(0, material_0)
+	_mesh.set_surface_override_material(1, material_1)
+	_mesh.set_surface_override_material(2, material_2)
+	_mesh.set_surface_override_material(3, material_3)
+	return
 
 
 func _on_body_entered(_body: Node) -> void:

@@ -20,6 +20,16 @@ Friendly guy who lives at the dump. He'll sometimes find useful things for the p
 Sole employee of the local bakery, which is owned by an app or an AI or something. Amateur economist who's unknowingly rewritten Marx's critique of capital by working things out from first principles.
 ### Greg
 Has a work-from-home job training an AI to tell people to piss off, by sitting at his desk telling his computer to piss off in different ways.
+### Penny
+Mixes paint, can produce different colour cans of paint that the player can use to decorate things. Has a repeat task for the player to put cans of paint in their car and do specific stunts, so as to mix the paint perfectly.
 
 ## Gameplay
-Rubbish will be produced in different ways around the island, and needs to be collected and taken to the dump. NPCs will pick up litter and take binbags to the dump, but this slows their progress on whatever they're working on. By driving round the island cleaning up rubbish, the player can free up NPCs to work on various improvements around the island, some of which might provide the player with new services, equipment and vehicles.
+Trash will be produced in different ways around the island, and needs to be collected and taken to the dump. Sources of trash include:
+- Trash produced when player eats food or consumes items
+- Pieces falling off moving vehicles
+- Gulls can rip open binbags and spread trash about
+- Trash dropped from overhead dumping flights
+	- (Running bit where player can make a joke about calling it "flytipping" to different NPCs, who don't appreciate the joke)
+
+NPCs will pick up litter and take binbags to the dump, but this slows their progress on whatever they're working on. By driving round the island cleaning up trash, the player can free up NPCs to work on various improvements around the island, some of which might provide the player with new services, equipment and vehicles.
+

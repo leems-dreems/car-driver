@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://twpommlwhnms"]
+
+[ext_resource type="PackedScene" uid="uid://ca3emwpdwnkxa" path="res://npcs/pedestrian.tscn" id="1_7jcm1"]
+[ext_resource type="Script" uid="uid://cg0c87by1to57" path="res://npcs/npc_interactable_area.gd" id="2_k84ja"]
+[ext_resource type="Script" uid="uid://dhevaeuigpl8p" path="res://addons/inkgd/ink_player.gd" id="3_qrma4"]
+[ext_resource type="PackedScene" uid="uid://bv5atqbsnl52k" path="res://ui/ink_elements/ink_dialogue_bubble.tscn" id="4_ch1fq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f6xx5"]
+radius = 0.3
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4o1i3"]
+viewport_path = NodePath("SubViewport")
+
+[node name="KayNPC" instance=ExtResource("1_7jcm1")]
+
+[node name="Skeleton3D" parent="square_guy/metarig" index="0"]
+bones/0/position = Vector3(-1.44584e-09, 0.704994, -0.0550105)
+bones/17/rotation = Quaternion(0.995563, -1.16851e-08, 2.3959e-07, 0.0940933)
+bones/18/rotation = Quaternion(0.0613144, -1.20407e-07, -1.58415e-08, 0.998119)
+bones/19/rotation = Quaternion(-0.515528, 6.99328e-13, 5.38738e-13, 0.856873)
+bones/22/rotation = Quaternion(0.995563, -1.16852e-08, 2.3959e-07, 0.0940933)
+bones/23/rotation = Quaternion(0.0613144, -1.20407e-07, -1.58415e-08, 0.998119)
+bones/24/rotation = Quaternion(-0.515529, 7.27808e-13, 5.60747e-13, 0.856872)
+
+[node name="InteractableArea" type="Area3D" parent="." index="7"]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_k84ja")
+metadata/_custom_type_script = "uid://huco14p7yl41"
+
+[node name="CharacterCollisionShape" type="CollisionShape3D" parent="InteractableArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_f6xx5")
+
+[node name="InkPlayer" type="Node" parent="." index="8"]
+script = ExtResource("3_qrma4")
+metadata/_custom_type_script = "uid://dhevaeuigpl8p"
+
+[node name="InkDialogueBubble" parent="." index="9" instance=ExtResource("4_ch1fq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
+visible = false
+texture = SubResource("ViewportTexture_4o1i3")

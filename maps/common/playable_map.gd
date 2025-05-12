@@ -3,7 +3,6 @@ extends Node3D
 @onready var road_manager: RoadManager = $RoadManager
 const road_physics_material := preload("res://assets/materials/road_physics_material.tres")
 const compact_car_scene := preload("res://cars/compact/compact.tscn")
-const scatter_tree_a_collider_scene := preload("res://maps/common/foliage/scatter_tree_A.tscn")
 
 
 func _ready() -> void:

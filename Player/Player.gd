@@ -54,7 +54,8 @@ class_name Player extends RigidBody3D
 @onready var pickup_short_press_timer: Timer = $TimerNodes/PickupShortPressTimer
 @onready var pickup_target_timer: Timer = $TimerNodes/PickupTargetTimer
 @onready var drop_target_timer: Timer = $TimerNodes/DropTargetTimer
-@onready var push_vehicle_timer := $TimerNodes/PushVehicleTimer
+@onready var push_vehicle_timer: Timer = $TimerNodes/PushVehicleTimer
+@onready var transition_timer: Timer = $TimerNodes/TransitionTimer
 
 const _push_vehicle_button_delay := 1.0
 const _interact_button_short_press_delay := 0.2
