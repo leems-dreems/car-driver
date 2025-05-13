@@ -55,7 +55,7 @@
 [ext_resource type="Script" uid="uid://c6m7b8bhhxjyj" path="res://cars/vehicle_item_container.gd" id="61_0es63"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_12ddh"]
-friction = 0.4
+friction = 0.6
 rough = true
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wt16q"]

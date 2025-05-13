@@ -166,6 +166,83 @@ func _physics_process(delta: float) -> void:
 	_previous_handbrake_input = handbrake_input
 	return
 
+
+func process_transmission(delta : float):
+	if is_shifting:
+		if delta_time > complete_shift_delta_time:
+			complete_shift()
+		return
+	
+	## For automatic transmissions to determine when to shift the current wheel speed and 
+	## what the wheel speed would be without slip are used. This allows vehicles to spin the
+	## tires without immidiately shifting to the next gear.
+	
+	if automatic_transmission:
+		var reversing := false
+		var ideal_wheel_spin := speed / average_drive_wheel_radius
+		var drivetrain_spin := get_drivetrain_spin()
+		var real_wheel_spin := drivetrain_spin * get_gear_ratio(current_gear)
+		var current_ideal_gear_rpm := gear_ratios[current_gear - 1] * final_drive * ideal_wheel_spin * ANGULAR_VELOCITY_TO_RPM
+		var current_real_gear_rpm = real_wheel_spin * ANGULAR_VELOCITY_TO_RPM
+		
+		if current_gear == -1:
+			reversing = true
+		
+		if not reversing:
+			var next_gear_rpm := 0.0
+			if current_gear < gear_ratios.size():
+				next_gear_rpm = get_gear_ratio(current_gear + 1) * ideal_wheel_spin * ANGULAR_VELOCITY_TO_RPM
+			var previous_gear_rpm := 0.0
+			if current_gear - 1 > 0:
+				previous_gear_rpm = get_gear_ratio(current_gear - 1) * maxf(drivetrain_spin, ideal_wheel_spin) * ANGULAR_VELOCITY_TO_RPM
+			
+			
+			if current_gear < gear_ratios.size():
+				if current_gear > 0:
+					if current_ideal_gear_rpm > max_rpm:
+						if delta_time - last_shift_delta_time > shift_time:
+							shift(1)
+					if current_ideal_gear_rpm > max_rpm * 0.8 and current_real_gear_rpm > max_rpm:
+						if delta_time - last_shift_delta_time > shift_time:
+							shift(1)
+				elif current_gear == 0 and motor_rpm > clutch_out_rpm:
+					shift(1)
+			if current_gear - 1 > 0:
+				if current_gear > 1 and previous_gear_rpm < 0.75 * max_rpm:
+					if delta_time - last_shift_delta_time > shift_time:
+						shift(-1)
+
+		if brake_input > 0.75:
+			if not reversing:
+				if current_gear == 0 or local_velocity.z > 0.0:
+					if delta_time - last_shift_delta_time > shift_time:
+						if current_gear == 0:
+							shift(-1)
+						else:
+							shift(-current_gear - 1)
+			else:
+				if current_gear == 0 or local_velocity.z < 0.0:
+					if delta_time - last_shift_delta_time > shift_time:
+						shift(1)
+
+
+func shift(count : int):
+	if is_shifting and current_gear + count >= 0:
+		return
+	
+	## Handles gear change requests and timings
+	requested_gear = current_gear + count
+	
+	if requested_gear <= gear_ratios.size() and requested_gear >= -1:
+		if current_gear == 0:
+			complete_shift()
+		else:
+			complete_shift_delta_time = delta_time + shift_time
+			clutch_amount = 1.0
+			is_shifting = true
+			if count > 0:
+				is_up_shifting = true
+
 ## Connect the vehicle's `body_entered` signal to this method
 func _on_body_entered(_body: Node) -> void:
 	if _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D or _body is Terrain3D:
