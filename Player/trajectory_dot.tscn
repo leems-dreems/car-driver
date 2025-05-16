@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://byp3huxxtfslt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_61e67"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.286275)
+
+[sub_resource type="SphereMesh" id="SphereMesh_llc7i"]
+material = SubResource("StandardMaterial3D_61e67")
+radius = 0.05
+height = 0.1
+
+[node name="TrajectoryDot" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_llc7i")

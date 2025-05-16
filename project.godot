@@ -77,7 +77,7 @@ project/assembly_name="Fast Traffic"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/boujie_water_shader/plugin.cfg", "res://addons/inkgd/plugin.cfg", "res://addons/proton_scatter/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/boujie_water_shader/plugin.cfg", "res://addons/curvemesh3d/plugin.cfg", "res://addons/inkgd/plugin.cfg", "res://addons/proton_scatter/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [global_group]
 

@@ -35,7 +35,6 @@ func physics_update(_delta: float) -> void:
 
 
 func enter(_previous_state_path: String, _data := {}) -> void:
-	player.set_throw_arc_visible(false)
 	player.transition_timer.start()
 	if player.targeted_interactable != null:
 		player.short_press_interact_unhighlight.emit()

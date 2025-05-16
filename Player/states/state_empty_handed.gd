@@ -33,7 +33,6 @@ func physics_update(_delta: float) -> void:
 func enter(_previous_state_path: String, _data := {}) -> void:
 	#set_process_unhandled_input(true)
 	player.should_jump = false
-	player.set_throw_arc_visible(false)
 	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.THIRD_PERSON)
 	player.update_interact_target(true)
 	return

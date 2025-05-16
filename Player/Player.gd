@@ -65,6 +65,9 @@ const _pickup_button_short_press_delay := 0.2
 const _pickup_target_delay := 0.2 ## How long to wait after targeting a pickup before looking for a new target
 const _drop_target_delay := 0.2 ## How long to wait after targeting a drop target before looking for a new target
 
+const _trajectory_sample_size: int = 20
+const _trajectory_dot_scene := preload("res://Player/trajectory_dot.tscn")
+
 var should_jump := false
 var _move_direction := Vector3.ZERO
 var _last_strong_direction := Vector3.FORWARD
@@ -517,16 +520,45 @@ func throw_item() -> void:
 	_carried_item.get_collider().disabled = false
 	_carried_item.freeze = false
 	_carried_item.visible = true
-	var _throw_vector: Vector3 = $CameraController/ThrowTarget.global_position - $CameraController/ThrowOrigin.global_position
-	_carried_item.apply_central_impulse(_throw_vector * 7 * _carried_item.mass)
+	var _throw_vector := get_throw_vector()
+	_carried_item.apply_central_impulse(_throw_vector)
 	_carried_item.apply_torque_impulse(_throw_vector.rotated(Vector3.UP, -PI / 2) * _carried_item.mass)
 	_carried_mesh = null
 	_carried_item = null
 	return
 
 
-func set_throw_arc_visible(_visible: bool) -> void:
-	$CameraController/ThrowArc.visible = _visible
+func get_throw_vector() -> Vector3:
+	if _carried_item == null:
+		return Vector3.ZERO
+	var _throw_vector: Vector3 = $CameraController/ThrowTarget.global_position - $CameraController/ThrowOrigin.global_position
+	_throw_vector *= 7 * _carried_item.mass
+	return _throw_vector
+
+## Draws the trajectory of the carried item if it was thrown
+func draw_throw_arc() -> void:
+	var _throw_vector := get_throw_vector()
+	if _throw_vector == Vector3.ZERO:
+		$CameraController/TrajectoryDots.visible = false
+		return
+	$CameraController/TrajectoryDots.visible = true
+	var _trajectory_samples := TrajectoryLib.samples($CameraController/ThrowOrigin.global_position, _throw_vector, get_gravity(), 1.0, _trajectory_sample_size)
+	var _dots := $CameraController/TrajectoryDots.get_children()
+	if len(_dots) != _trajectory_sample_size:
+		for _dot: Node in _dots:
+			_dot.queue_free()
+		for i in _trajectory_sample_size:
+			$CameraController/TrajectoryDots.add_child(_trajectory_dot_scene.instantiate())
+		_dots = $CameraController/TrajectoryDots.get_children()
+	var j: int = 0
+	for _dot: MeshInstance3D in _dots:
+		_dot.global_position = _trajectory_samples[j].position
+		j += 1
+	return
+
+
+func hide_throw_arc() -> void:
+	$CameraController/TrajectoryDots.visible = false
 	return
 
 

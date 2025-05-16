@@ -174,7 +174,7 @@ func set_pivot(pivot_type: CAMERA_PIVOT) -> void:
 
 	match(pivot_type):
 		CAMERA_PIVOT.OVER_SHOULDER:
-			_over_shoulder_pivot.look_at(_aim_target)
+			#_over_shoulder_pivot.look_at(_aim_target)
 			_pivot = _over_shoulder_pivot
 		CAMERA_PIVOT.THIRD_PERSON:
 			_pivot = _third_person_pivot
