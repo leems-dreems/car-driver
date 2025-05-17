@@ -800,7 +800,7 @@ static func ray_collision(space_state : PhysicsDirectSpaceState3D, samples : Arr
 ## collide_with_areas [bool]: Flag to indicate whether to test against physics areas
 ##
 ## Returns the collision point as a [Vector3], or null if no collision.
-static func shape_collision(space_state : PhysicsDirectSpaceState3D, shape : Shape3D, transform : Transform3D, velocity : Vector3, gravity : Vector3, collider_radius : float = 0.0, max_time : float = 10.0, time_step : float = 1.0 / ProjectSettings.get_setting("physics/common/physics_fps"), exclude : Array = [], collision_mask: int = 0x7FFFFFFF, collide_with_bodies : bool = true, collide_with_areas : bool = false, num_collisions : int = 1):
+static func shape_collision(space_state : PhysicsDirectSpaceState3D, shape : Shape3D, transform : Transform3D, velocity : Vector3, gravity : Vector3, collider_radius : float = 0.0, max_time : float = 10.0, time_step : float = 1.0 / ProjectSettings.get_setting("physics/common/physics_ticks_per_second"), exclude : Array = [], collision_mask: int = 0x7FFFFFFF, collide_with_bodies : bool = true, collide_with_areas : bool = false, num_collisions : int = 1):
 	assert(max_time > 0.0, "trajectory_shape_collision max_time must be a positive value.")
 
 	var params : PhysicsShapeQueryParameters3D = PhysicsShapeQueryParameters3D.new()
@@ -825,5 +825,6 @@ static func shape_collision(space_state : PhysicsDirectSpaceState3D, shape : Sha
 		
 		velocity += gravity * time_step
 		origin += velocity * time_step
+		current += time_step
 	
 	return null

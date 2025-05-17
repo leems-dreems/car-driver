@@ -42,6 +42,8 @@ class_name Player extends RigidBody3D
 @onready var _animation_tree: AnimationTree = $square_guy/AnimationTree
 @onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
 
+@onready var _space_state := get_tree().get_root().get_world_3d().get_direct_space_state()
+
 @onready var pickup_marker: Sprite3D = $PickupMarker
 @onready var long_press_marker: Sprite3D = $ContainerMarker
 @onready var long_press_anim: AnimationPlayer = $ContainerMarker/AnimationPlayer
@@ -550,9 +552,29 @@ func draw_throw_arc() -> void:
 		for i in _trajectory_sample_size:
 			$CameraController/TrajectoryDots.add_child(_trajectory_dot_scene.instantiate())
 		_dots = $CameraController/TrajectoryDots.get_children()
+
+	var _has_hit := false
+	var _hit_sphere := SphereShape3D.new()
+	_hit_sphere.radius = 0.2
+	
+	var _ray_collision_info := TrajectoryLib.ray_collision(_space_state, _trajectory_samples, 0.04, [], _carried_item.collision_mask, true, false)
+	var _ray_hit_index: int = _ray_collision_info["sample_index"] if _ray_collision_info.has("sample_index") else -INF
+
 	var j: int = 0
 	for _dot: MeshInstance3D in _dots:
-		_dot.global_position = _trajectory_samples[j].position
+		if _has_hit:
+			_dot.visible = false
+			j += 1
+			continue
+		_dot.visible = true
+		if j == _ray_hit_index + 1:
+			_has_hit = true
+			prints(j, get_physics_process_delta_time())
+			var _collision_point = TrajectoryLib.shape_collision(_space_state, _hit_sphere, Transform3D(Basis.IDENTITY, _trajectory_samples[j].position), _trajectory_samples[j].velocity, get_gravity(), _hit_sphere.radius, 2.0 / _trajectory_sample_size, get_physics_process_delta_time(), [], _carried_item.collision_mask, true, false)
+			if _collision_point != null:
+				_dot.global_position = _collision_point
+		else:
+			_dot.global_position = _trajectory_samples[j].position
 		j += 1
 	return
 
