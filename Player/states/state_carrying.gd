@@ -22,7 +22,7 @@ func handle_input(event: InputEvent) -> void:
 
 func physics_update(_delta: float) -> void:
 	player.process_on_foot_controls(_delta, true, 0.25 + (1 / maxf(1.0, _item_mass)) * 0.75)
-	if player.is_on_ground() and Input.is_action_pressed("aim"):
+	if Input.is_action_pressed("aim"):
 		finished.emit(AIMING_THROW)
 		return
 
