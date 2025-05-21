@@ -769,6 +769,7 @@ static func ray_collision(space_state : PhysicsDirectSpaceState3D, samples : Arr
 		n += dir * collision_margin
 		
 		var query_params := PhysicsRayQueryParameters3D.create(p, n, collision_mask)
+		query_params.exclude = exclude
 		query_params.collide_with_bodies = collide_with_bodies
 		query_params.collide_with_areas = collide_with_areas
 		col = space_state.intersect_ray(query_params)
@@ -822,7 +823,7 @@ static func shape_collision(space_state : PhysicsDirectSpaceState3D, shape : Sha
 
 		if motion[1] < 1.0:
 			return transform.origin + (velocity * time_step * motion[1]) + (velocity.normalized() * collider_radius)
-		
+
 		velocity += gravity * time_step
 		origin += velocity * time_step
 		current += time_step

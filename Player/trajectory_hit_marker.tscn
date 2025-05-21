@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c75tq3o04mjsn"]
+
+[ext_resource type="Material" uid="uid://iv5gmbyhs3r" path="res://Player/trajectory_dot_hit_material.tres" id="1_x8hdi"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_llc7i"]
+material = ExtResource("1_x8hdi")
+radius = 0.1
+height = 0.2
+
+[node name="TrajectoryHitMarker" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_llc7i")
