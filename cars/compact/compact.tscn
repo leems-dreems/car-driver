@@ -1181,16 +1181,19 @@ vehicle = NodePath("..")
 stream = ExtResource("5_vu53n")
 unit_size = 2.0
 autoplay = false
+bus = &"Engine"
 vehicle = NodePath("..")
 sample_rpm = 5000.0
 
 [node name="HandbrakeUpAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("9_o84yu")
 max_polyphony = 8
+bus = &"SFX"
 
 [node name="HandbrakeDownAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("8_l7f0s")
 max_polyphony = 8
+bus = &"SFX"
 
 [node name="cricket_mk2_interior" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
@@ -1643,15 +1646,18 @@ skeleton = NodePath("")
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
 stream = ExtResource("15_68n7x")
 unit_size = 1.0
+bus = &"SFX"
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
 stream = ExtResource("16_wwqhn")
 unit_size = 3.0
+bus = &"SFX"
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelFrontLeft"]
 stream = ExtResource("27_0t8da")
 unit_size = 5.0
+bus = &"SFX"
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelFrontLeft"]
@@ -1678,15 +1684,18 @@ skeleton = NodePath("")
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
 stream = ExtResource("15_68n7x")
 unit_size = 1.0
+bus = &"SFX"
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
 stream = ExtResource("16_wwqhn")
 unit_size = 3.0
+bus = &"SFX"
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelFrontRight"]
 stream = ExtResource("27_0t8da")
 unit_size = 5.0
+bus = &"SFX"
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelFrontRight"]
@@ -1714,15 +1723,18 @@ skeleton = NodePath("")
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
 stream = ExtResource("15_68n7x")
 unit_size = 1.0
+bus = &"SFX"
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
 stream = ExtResource("16_wwqhn")
 unit_size = 3.0
+bus = &"SFX"
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelRearLeft"]
 stream = ExtResource("27_0t8da")
 unit_size = 5.0
+bus = &"SFX"
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelRearLeft"]
@@ -1749,15 +1761,18 @@ skeleton = NodePath("")
 [node name="SquealAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
 stream = ExtResource("15_68n7x")
 unit_size = 1.0
+bus = &"SFX"
 doppler_tracking = 2
 
 [node name="SkidAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
 stream = ExtResource("16_wwqhn")
 unit_size = 3.0
+bus = &"SFX"
 
 [node name="RumbleAudio" type="AudioStreamPlayer3D" parent="WheelRearRight"]
 stream = ExtResource("27_0t8da")
 unit_size = 5.0
+bus = &"SFX"
 doppler_tracking = 2
 
 [node name="Label3D" type="Label3D" parent="WheelRearRight"]
@@ -1804,23 +1819,29 @@ mesh = ExtResource("19_j0ugs")
 [node name="CollisionAudio1" type="AudioStreamPlayer3D" parent="AudioStreams"]
 stream = ExtResource("17_7w5y2")
 max_polyphony = 16
+bus = &"SFX"
 
 [node name="BumpAudio" type="AudioStreamPlayer3D" parent="AudioStreams"]
 stream = SubResource("AudioStreamRandomizer_1bhxb")
 max_polyphony = 3
+bus = &"SFX"
 
 [node name="MetalImpactAudio" type="AudioStreamPlayer3D" parent="AudioStreams"]
 stream = SubResource("AudioStreamRandomizer_kl85c")
+bus = &"SFX"
 
 [node name="JunkCrashAudio" type="AudioStreamPlayer3D" parent="AudioStreams"]
 stream = SubResource("AudioStreamRandomizer_fh3l5")
+bus = &"SFX"
 
 [node name="MetalCrashAudio" type="AudioStreamPlayer3D" parent="AudioStreams"]
 stream = SubResource("AudioStreamRandomizer_3paql")
+bus = &"SFX"
 
 [node name="GlassBreakAudio" type="AudioStreamPlayer3D" parent="AudioStreams"]
 stream = SubResource("AudioStreamRandomizer_wqjhd")
 max_polyphony = 3
+bus = &"SFX"
 
 [node name="EngineSmokeBlack" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2.3)

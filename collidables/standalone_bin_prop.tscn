@@ -40,4 +40,5 @@ script = ExtResource("1_l6t2o")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_7nua6")
+bus = &"SFX"
 doppler_tracking = 2

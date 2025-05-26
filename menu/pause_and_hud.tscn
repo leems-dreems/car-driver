@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://cxtkay8p3i0n"]
+[gd_scene load_steps=35 format=4 uid="uid://cxtkay8p3i0n"]
 
 [ext_resource type="Script" uid="uid://cjkbf6wh7q5cw" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
@@ -10,23 +10,25 @@
 [ext_resource type="AudioStream" uid="uid://dkj1253vpd2oh" path="res://assets/audio/Sound effects package/Tools/Wood 2x4 01.wav" id="6_v27v4"]
 [ext_resource type="Texture2D" uid="uid://31crq2ath5u8" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_light_1.png" id="7_dnxf5"]
 [ext_resource type="Texture2D" uid="uid://0ldt4dv2bgsc" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_7.png" id="8_mg6v0"]
-[ext_resource type="Texture2D" uid="uid://68qjrvtkppqi" path="res://assets/icons/Buttons Pack/MOUSE/MOUSEBUTTONRIGHT.png" id="8_w6irr"]
-[ext_resource type="Texture2D" uid="uid://djf0p4j65waqb" path="res://assets/icons/SimpleFlatKeys/Light/E-Key.png" id="8_yn5h2"]
-[ext_resource type="Texture2D" uid="uid://cb0s4hwl8k3x0" path="res://assets/icons/Buttons Pack/MOUSE/MOUSEBUTTONLEFT.png" id="9_0hmt5"]
+[ext_resource type="Texture2D" uid="uid://d0m4xvra21j82" path="res://assets/icons/Liam icons/unpressed_mouse_right.png" id="8_xpxq0"]
+[ext_resource type="Texture2D" uid="uid://c4ocgnej335w0" path="res://assets/icons/Liam icons/pressed_mouse_right.png" id="9_1ene2"]
 [ext_resource type="LabelSettings" uid="uid://d1feibeuvvyf3" path="res://ui/controls_label_settings.tres" id="9_yc66f"]
-[ext_resource type="Texture2D" uid="uid://belhbl4mj8t2q" path="res://assets/icons/SimpleFlatKeys/Dark/E-Key.png" id="9_yv6c2"]
 [ext_resource type="Texture2D" uid="uid://c4wm67df10noq" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_dark_2.png" id="10_w6irr"]
 [ext_resource type="Texture2D" uid="uid://bxtra2w5v618x" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_light_2.png" id="11_0hmt5"]
 [ext_resource type="Texture2D" uid="uid://cemprpjn3p7w2" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_b_7.png" id="11_x5t2s"]
 [ext_resource type="Texture2D" uid="uid://dp1ke6pxg0qf8" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_b_2.png" id="12_a4n08"]
 [ext_resource type="Texture2D" uid="uid://buvu8efb42j44" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_2.png" id="12_c7j8t"]
 [ext_resource type="Texture2D" uid="uid://clvs8wuf2j1nm" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_y_2.png" id="12_yhcyu"]
-[ext_resource type="Texture2D" uid="uid://ojl552x8gn5x" path="res://assets/icons/SimpleFlatKeys/Light/F-Key.png" id="13_1xd2t"]
-[ext_resource type="Texture2D" uid="uid://cqb1gsa1mpstu" path="res://assets/icons/SimpleFlatKeys/Light/Q-Key.png" id="13_r662i"]
-[ext_resource type="Texture2D" uid="uid://71aw4pbxwmvt" path="res://assets/icons/SimpleFlatKeys/Dark/Q-Key.png" id="14_f8j6o"]
-[ext_resource type="Texture2D" uid="uid://drrfesicqdgk4" path="res://assets/icons/SimpleFlatKeys/Dark/F-Key.png" id="14_riw73"]
-[ext_resource type="Texture2D" uid="uid://cshv2edjhe64f" path="res://assets/icons/Buttons Pack/PS4/CONTROLPADUP.png" id="21_r662i"]
-[ext_resource type="Texture2D" uid="uid://di5lbxoaymlx5" path="res://assets/icons/Buttons Pack/MOUSE/MOUSEBUTTONMIDDLE.png" id="22_f8j6o"]
+[ext_resource type="Texture2D" uid="uid://cwol6fifveftk" path="res://assets/icons/Liam icons/unpressed_mouse_left.png" id="13_jh6ul"]
+[ext_resource type="Texture2D" uid="uid://dixau36sl2h0f" path="res://assets/icons/Liam icons/pressed_mouse_left.png" id="14_8k5hb"]
+[ext_resource type="Texture2D" uid="uid://ddho26qgkavfl" path="res://assets/icons/Liam icons/unpressed_Q_key.png" id="17_xpxq0"]
+[ext_resource type="Texture2D" uid="uid://m8klrbtlyu3i" path="res://assets/icons/Liam icons/pressed_Q_key.png" id="18_1ene2"]
+[ext_resource type="Texture2D" uid="uid://xr4q28n0lqjc" path="res://assets/icons/Liam icons/unpressed_E_key.png" id="21_jh6ul"]
+[ext_resource type="Texture2D" uid="uid://d2ueao3bryqmr" path="res://assets/icons/Liam icons/pressed_E_key.png" id="22_8k5hb"]
+[ext_resource type="Texture2D" uid="uid://2syc8rrln0bj" path="res://assets/icons/Liam icons/unpressed_F_key.png" id="25_s3utf"]
+[ext_resource type="Texture2D" uid="uid://dwpx88gjxxx5a" path="res://assets/icons/Liam icons/pressed_F_key.png" id="26_ju1jd"]
+[ext_resource type="Texture2D" uid="uid://jcwxe0qyrgwi" path="res://assets/icons/Liam icons/unpressed_dpad_up_down.png" id="27_xpxq0"]
+[ext_resource type="Texture2D" uid="uid://cio25su7pgkql" path="res://assets/icons/Liam icons/mouse_scroll.png" id="28_1ene2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ag0bj"]
 font = ExtResource("4_rrxj5")
@@ -208,13 +210,13 @@ expand_mode = 3
 [node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Aim_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("8_w6irr")
+texture = ExtResource("8_xpxq0")
 expand_mode = 3
 
 [node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Aim_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("8_w6irr")
+texture = ExtResource("9_1ene2")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Aim_HBoxContainer"]
@@ -241,13 +243,13 @@ expand_mode = 3
 [node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Throw_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("9_0hmt5")
+texture = ExtResource("13_jh6ul")
 expand_mode = 3
 
 [node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Throw_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("9_0hmt5")
+texture = ExtResource("14_8k5hb")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Throw_HBoxContainer"]
@@ -274,13 +276,13 @@ expand_mode = 3
 [node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Push_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("13_r662i")
+texture = ExtResource("17_xpxq0")
 expand_mode = 3
 
 [node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Push_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("14_f8j6o")
+texture = ExtResource("18_1ene2")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Push_HBoxContainer"]
@@ -307,13 +309,13 @@ expand_mode = 3
 [node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Pickup_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("8_yn5h2")
+texture = ExtResource("21_jh6ul")
 expand_mode = 3
 
 [node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Pickup_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("9_yv6c2")
+texture = ExtResource("22_8k5hb")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Pickup_HBoxContainer"]
@@ -340,13 +342,13 @@ expand_mode = 3
 [node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("13_1xd2t")
+texture = ExtResource("25_s3utf")
 expand_mode = 3
 
 [node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("14_riw73")
+texture = ExtResource("26_ju1jd")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
@@ -373,13 +375,13 @@ expand_mode = 3
 [node name="Keyboard_Unpressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("13_1xd2t")
+texture = ExtResource("25_s3utf")
 expand_mode = 3
 
 [node name="Keyboard_Pressed" type="TextureRect" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("14_riw73")
+texture = ExtResource("26_ju1jd")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
@@ -420,13 +422,13 @@ theme_override_constants/separation = 20
 
 [node name="DpadSprite" type="TextureRect" parent="Handbrake_MarginContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("21_r662i")
+texture = ExtResource("27_xpxq0")
 expand_mode = 3
 
 [node name="MouseSprite" type="TextureRect" parent="Handbrake_MarginContainer/HBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("22_f8j6o")
+texture = ExtResource("28_1ene2")
 expand_mode = 3
 
 [node name="Button" type="Button" parent="Handbrake_MarginContainer/HBoxContainer"]
@@ -440,20 +442,23 @@ flat = true
 [node name="ClickAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_v27v4")
 volume_db = -24.0
+bus = &"UI"
 
 [node name="OpenAudio" type="AudioStreamPlayer" parent="."]
+bus = &"UI"
 
 [node name="FocusAudio" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamWAV_3vu0d")
 volume_db = -24.0
+bus = &"UI"
 
 [connection signal="mouse_entered" from="PausedUI/PauseMenu" to="." method="on_pause_menu_mouse_entered"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="handle_resume_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="handle_reset_button"]
@@ -461,8 +466,8 @@ volume_db = -24.0
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="handle_quit_button"]
 [connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="handle_options_back_button"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="on_button_pressed"]
 [connection signal="toggled" from="PausedUI/OptionsMenu/VBoxContainer/CheckButton" to="." method="handle_fullscreen_toggle"]
