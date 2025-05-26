@@ -90,6 +90,7 @@ func _process(_delta: float) -> void:
 		options_menu.visible = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		$HUD.visible = true
+		_handbrake_prompt.visible = true
 		$HUD.mouse_filter = Control.MOUSE_FILTER_PASS
 		$PausedUI.visible = false
 		$PausedUI.mouse_filter = Control.MOUSE_FILTER_IGNORE

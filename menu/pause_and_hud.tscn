@@ -1,10 +1,11 @@
-[gd_scene load_steps=35 format=4 uid="uid://cxtkay8p3i0n"]
+[gd_scene load_steps=36 format=4 uid="uid://cxtkay8p3i0n"]
 
 [ext_resource type="Script" uid="uid://cjkbf6wh7q5cw" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
 [ext_resource type="StyleBox" uid="uid://b4phqf84dag0" path="res://ui/options_panel.tres" id="4_phyb6"]
 [ext_resource type="SystemFont" uid="uid://bfrqonkrt6mpy" path="res://ui/ui_font.tres" id="4_rrxj5"]
 [ext_resource type="Theme" uid="uid://djel5wi5nvl5d" path="res://ui/hud_theme.tres" id="5_ekyou"]
+[ext_resource type="PackedScene" uid="uid://282lanppwmod" path="res://ui/volume_slider.tscn" id="6_1ene2"]
 [ext_resource type="Texture2D" uid="uid://dbvjb2liknhp4" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_y_7.png" id="6_1h24m"]
 [ext_resource type="Texture2D" uid="uid://chu6xlyv51tk3" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_dark_1.png" id="6_6xb7f"]
 [ext_resource type="AudioStream" uid="uid://dkj1253vpd2oh" path="res://assets/audio/Sound effects package/Tools/Wood 2x4 01.wav" id="6_v27v4"]
@@ -62,6 +63,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("5_ekyou")
 theme_override_constants/separation = 0
 
 [node name="PauseMenu" type="PanelContainer" parent="PausedUI"]
@@ -83,6 +85,7 @@ size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/CenterContainer"]
 layout_mode = 2
+theme = ExtResource("5_ekyou")
 text = "Bin Day"
 label_settings = SubResource("LabelSettings_ag0bj")
 horizontal_alignment = 1
@@ -95,6 +98,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 3
 focus_neighbor_bottom = NodePath("../OptionsButton")
+theme = ExtResource("5_ekyou")
 text = "Resume"
 
 [node name="OptionsButton" type="Button" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons"]
@@ -102,6 +106,7 @@ layout_mode = 2
 size_flags_vertical = 3
 focus_neighbor_top = NodePath("../ResumeButton")
 focus_neighbor_bottom = NodePath("../ResetButton")
+theme = ExtResource("5_ekyou")
 text = "Options"
 
 [node name="ResetButton" type="Button" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons"]
@@ -109,12 +114,14 @@ layout_mode = 2
 size_flags_vertical = 3
 focus_neighbor_top = NodePath("../OptionsButton")
 focus_neighbor_bottom = NodePath("../QuitButton")
+theme = ExtResource("5_ekyou")
 text = "Reset Player"
 
 [node name="QuitButton" type="Button" parent="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons"]
 layout_mode = 2
 size_flags_vertical = 3
 focus_neighbor_top = NodePath("../ResetButton")
+theme = ExtResource("5_ekyou")
 text = "Quit"
 
 [node name="OptionsMenu" type="PanelContainer" parent="PausedUI"]
@@ -128,15 +135,66 @@ theme_override_constants/separation = 24
 
 [node name="BackButton" type="Button" parent="PausedUI/OptionsMenu/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_ekyou")
 text = "< Back"
 alignment = 0
 
 [node name="HSeparator" type="HSeparator" parent="PausedUI/OptionsMenu/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_ekyou")
 
 [node name="CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_ekyou")
 text = "Fullscreen"
+
+[node name="HSeparator2" type="HSeparator" parent="PausedUI/OptionsMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_ekyou")
+
+[node name="Volume_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_ekyou")
+text = "Volume levels"
+
+[node name="Master_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_ekyou")
+theme_override_font_sizes/font_size = 32
+text = "Master"
+
+[node name="Volume_HSlider" parent="PausedUI/OptionsMenu/VBoxContainer" instance=ExtResource("6_1ene2")]
+layout_mode = 2
+
+[node name="UI_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_ekyou")
+theme_override_font_sizes/font_size = 32
+text = "Menus & interface"
+
+[node name="Volume_HSlider2" parent="PausedUI/OptionsMenu/VBoxContainer" instance=ExtResource("6_1ene2")]
+layout_mode = 2
+bus_name = "UI"
+
+[node name="SFX_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_ekyou")
+theme_override_font_sizes/font_size = 32
+text = "Sound effects"
+
+[node name="Volume_HSlider3" parent="PausedUI/OptionsMenu/VBoxContainer" instance=ExtResource("6_1ene2")]
+layout_mode = 2
+bus_name = "SFX"
+
+[node name="Engine_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_ekyou")
+theme_override_font_sizes/font_size = 32
+text = "Engine sound"
+
+[node name="Volume_HSlider4" parent="PausedUI/OptionsMenu/VBoxContainer" instance=ExtResource("6_1ene2")]
+layout_mode = 2
+bus_name = "Engine"
 
 [node name="Container" type="CenterContainer" parent="PausedUI"]
 layout_mode = 2
@@ -454,17 +512,17 @@ bus = &"UI"
 
 [connection signal="mouse_entered" from="PausedUI/PauseMenu" to="." method="on_pause_menu_mouse_entered"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="handle_resume_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="handle_resume_button"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="handle_reset_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="handle_quit_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="handle_options_back_button"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_pressed"]
