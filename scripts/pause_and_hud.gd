@@ -284,11 +284,6 @@ func handle_quit_button() -> void:
 	return
 
 
-func handle_fullscreen_toggle(toggle_on: bool) -> void:
-	Game.change_window_mode(toggle_on)
-	return
-
-
 func handle_options_back_button() -> void:
 	var _slider_tween := create_tween()
 	_slider_tween.tween_property(pause_menu_slider, "theme_override_constants/margin_left", 0, 0.15)
