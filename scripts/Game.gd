@@ -2,6 +2,8 @@ extends Node
 
 var active_terrain: Terrain3D = null
 var physics_item_container: Node3D = null
+var current_environment: WorldEnvironment = null
+var current_sun: DirectionalLight3D = null
 
 
 func summon_car(_global_position: Vector3 = Vector3.INF) -> void:
