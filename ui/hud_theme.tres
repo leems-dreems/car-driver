@@ -1,13 +1,12 @@
-[gd_resource type="Theme" load_steps=16 format=3 uid="uid://djel5wi5nvl5d"]
+[gd_resource type="Theme" load_steps=22 format=3 uid="uid://djel5wi5nvl5d"]
 
+[ext_resource type="FontFile" uid="uid://civ7qtq6hhi4x" path="res://assets/fonts/Kaph-Regular.otf" id="1_pwjpm"]
 [ext_resource type="Texture2D" uid="uid://cf4r0eprhxbav" path="res://assets/icons/Liam icons/unpressed_filled_checkbox.png" id="1_yl8sm"]
 [ext_resource type="Texture2D" uid="uid://c78sjggc43cgw" path="res://assets/icons/Liam icons/unpressed_empty_checkbox.png" id="2_o5who"]
 [ext_resource type="Texture2D" uid="uid://d10aidqo8hr4g" path="res://assets/icons/Liam icons/hslider_grabber.png" id="3_3aif0"]
 [ext_resource type="Texture2D" uid="uid://clempjwpqy1et" path="res://assets/icons/Liam icons/hslider_grabber_highlight.png" id="4_7m738"]
 [ext_resource type="Texture2D" uid="uid://cg7gd6m03xc04" path="res://assets/icons/Liam icons/hslider_tick.png" id="5_7m738"]
-
-[sub_resource type="SystemFont" id="SystemFont_7dn08"]
-font_names = PackedStringArray("Kaph")
+[ext_resource type="Texture2D" uid="uid://bwtuaraefmftt" path="res://assets/icons/Liam icons/menubutton_down_arrow_72.png" id="7_m8y1l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yl8sm"]
 content_margin_left = 0.0
@@ -120,6 +119,40 @@ corner_radius_bottom_left = 2
 expand_margin_top = 4.0
 expand_margin_bottom = 4.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gy5r2"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.980392, 0.980392, 0.980392, 1)
+expand_margin_left = 8.0
+expand_margin_top = 8.0
+expand_margin_right = 8.0
+expand_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydo0b"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 0)
+border_width_bottom = 8
+border_color = Color(0.980392, 0.980392, 0.980392, 1)
+expand_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xdm10"]
+bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lyqeq"]
+bg_color = Color(0.980392, 0.980392, 0.980392, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_7dn08"]
+
 [resource]
 default_font = SubResource("SystemFont_7dn08")
 Button/colors/font_color = Color(0.980392, 0.980392, 0.980392, 1)
@@ -131,7 +164,7 @@ Button/constants/h_separation = 20
 Button/constants/icon_max_width = 42
 Button/constants/outline_size = 8
 Button/font_sizes/font_size = 72
-Button/fonts/font = SubResource("SystemFont_7dn08")
+Button/fonts/font = ExtResource("1_pwjpm")
 Button/styles/focus = SubResource("StyleBoxFlat_yl8sm")
 Button/styles/hover = SubResource("StyleBoxFlat_o5who")
 Button/styles/hover_pressed = SubResource("StyleBoxFlat_3aif0")
@@ -145,6 +178,7 @@ CheckButton/colors/font_pressed_color = Color(0.980392, 0.980392, 0.980392, 1)
 CheckButton/constants/check_v_offset = -4
 CheckButton/constants/h_separation = 64
 CheckButton/constants/icon_max_width = 72
+CheckButton/fonts/font = ExtResource("1_pwjpm")
 CheckButton/icons/checked = ExtResource("1_yl8sm")
 CheckButton/icons/unchecked = ExtResource("2_o5who")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_pwjpm")
@@ -157,3 +191,26 @@ HSlider/icons/tick = ExtResource("5_7m738")
 HSlider/styles/slider = SubResource("StyleBoxFlat_m8y1l")
 Label/constants/outline_size = 8
 Label/font_sizes/font_size = 72
+Label/fonts/font = ExtResource("1_pwjpm")
+LineEdit/colors/font_color = Color(0.980392, 0.980392, 0.980392, 1)
+LineEdit/colors/selection_color = Color(0.980392, 0.980392, 0.980392, 1)
+LineEdit/constants/caret_width = 2
+LineEdit/constants/outline_size = 8
+LineEdit/font_sizes/font_size = 72
+LineEdit/fonts/font = ExtResource("1_pwjpm")
+LineEdit/styles/focus = SubResource("StyleBoxFlat_gy5r2")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_ydo0b")
+MenuButton/constants/icon_max_width = 72
+MenuButton/fonts/font = ExtResource("1_pwjpm")
+OptionButton/fonts/font = ExtResource("1_pwjpm")
+OptionButton/icons/arrow = ExtResource("7_m8y1l")
+PopupMenu/colors/font_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+PopupMenu/colors/font_hover_color = Color(0.980392, 0.980392, 0.980392, 1)
+PopupMenu/constants/h_separation = 16
+PopupMenu/constants/v_separation = 8
+PopupMenu/font_sizes/font_size = 48
+PopupMenu/fonts/font = ExtResource("1_pwjpm")
+PopupMenu/icons/radio_checked = ExtResource("4_7m738")
+PopupMenu/icons/radio_unchecked = ExtResource("3_3aif0")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_xdm10")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_lyqeq")

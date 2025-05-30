@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://cxtkay8p3i0n"]
+[gd_scene load_steps=43 format=4 uid="uid://cxtkay8p3i0n"]
 
 [ext_resource type="Script" uid="uid://cjkbf6wh7q5cw" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
@@ -13,10 +13,13 @@
 [ext_resource type="AudioStream" uid="uid://dkj1253vpd2oh" path="res://assets/audio/Sound effects package/Tools/Wood 2x4 01.wav" id="6_v27v4"]
 [ext_resource type="Texture2D" uid="uid://31crq2ath5u8" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_light_1.png" id="7_dnxf5"]
 [ext_resource type="Texture2D" uid="uid://0ldt4dv2bgsc" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Digital Buttons/ABXY/button_xbox_digital_x_7.png" id="8_mg6v0"]
+[ext_resource type="PackedScene" uid="uid://dq7cylvkbvss0" path="res://ui/fps_limit_option_button.tscn" id="8_o0cti"]
+[ext_resource type="Script" uid="uid://brm2yaybnc21l" path="res://menu/fog_check_button.gd" id="8_q00o3"]
 [ext_resource type="PackedScene" uid="uid://bgqojdl366ijt" path="res://ui/shadow_quality_slider.tscn" id="8_s3utf"]
 [ext_resource type="Texture2D" uid="uid://d0m4xvra21j82" path="res://assets/icons/Liam icons/unpressed_mouse_right.png" id="8_xpxq0"]
 [ext_resource type="Texture2D" uid="uid://c4ocgnej335w0" path="res://assets/icons/Liam icons/pressed_mouse_right.png" id="9_1ene2"]
 [ext_resource type="PackedScene" uid="uid://dh7cnq3bhxqj" path="res://ui/shadow_distance_slider.tscn" id="9_ju1jd"]
+[ext_resource type="Script" uid="uid://doik5m1ugjsup" path="res://menu/ssao_check_button.gd" id="9_v761e"]
 [ext_resource type="LabelSettings" uid="uid://d1feibeuvvyf3" path="res://ui/controls_label_settings.tres" id="9_yc66f"]
 [ext_resource type="Texture2D" uid="uid://c4wm67df10noq" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_dark_2.png" id="10_w6irr"]
 [ext_resource type="Texture2D" uid="uid://bxtra2w5v618x" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_light_2.png" id="11_0hmt5"]
@@ -154,7 +157,7 @@ size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer"]
-custom_minimum_size = Vector2(1000, 0)
+custom_minimum_size = Vector2(1200, 0)
 layout_mode = 2
 theme_override_constants/separation = 24
 
@@ -169,6 +172,30 @@ layout_mode = 2
 theme = ExtResource("5_ekyou")
 text = "Vsync"
 script = ExtResource("6_jh6ul")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FPSLimit_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ekyou")
+text = "FPS limit:"
+
+[node name="FPSLimit_OptionButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("8_o0cti")]
+layout_mode = 2
+
+[node name="Fog_CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_ekyou")
+text = "Fog"
+script = ExtResource("8_q00o3")
+
+[node name="SSAO_CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_ekyou")
+text = "SSAO"
+script = ExtResource("9_v761e")
 
 [node name="ShadowQuality_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -550,17 +577,17 @@ bus = &"UI"
 
 [connection signal="mouse_entered" from="PausedUI/PauseMenu" to="." method="on_pause_menu_mouse_entered"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="handle_resume_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="handle_reset_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="handle_quit_button"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="handle_options_back_button"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_pressed"]
@@ -568,3 +595,7 @@ bus = &"UI"
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/Fullscreen_CheckButton" to="." method="on_button_pressed"]
 [connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/Vsync_CheckButton" to="." method="on_button_focussed"]
 [connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/Vsync_CheckButton" to="." method="on_button_pressed"]
+[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/Fog_CheckButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/Fog_CheckButton" to="." method="on_button_pressed"]
+[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/SSAO_CheckButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/SSAO_CheckButton" to="." method="on_button_pressed"]
