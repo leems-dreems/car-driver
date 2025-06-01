@@ -98,7 +98,7 @@ expand_margin_bottom = 4.0
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m8y1l"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_7m738"]
-color = Color(0.917647, 0.94902, 0.0196078, 1)
+color = Color(1, 0.6, 0.2, 1)
 thickness = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m8y1l"]

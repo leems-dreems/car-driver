@@ -289,7 +289,6 @@ func handle_options_back_button() -> void:
 	_slider_tween.tween_property(pause_menu_slider, "theme_override_constants/margin_left", 0, 0.15)
 	_slider_tween.parallel().tween_property(pause_menu_slider, "modulate", modulate_opaque, 0.15)
 	_slider_tween.parallel().tween_property(options_menu, "modulate", modulate_transparent, 0.15)
-	options_menu.visible = false
 	options_menu.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_slider_tween.tween_callback(func():
 		options_menu.visible = false

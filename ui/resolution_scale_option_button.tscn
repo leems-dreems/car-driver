@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dt1fvvwtxm5oi"]
+
+[ext_resource type="PackedScene" uid="uid://b6xudp3iexis5" path="res://ui/setting_option_button.tscn" id="1_trhwf"]
+[ext_resource type="Script" uid="uid://ce25s2owm2yfp" path="res://ui/resolution_scale_option_button.gd" id="2_fwdy1"]
+
+[node name="ResolutionScale_OptionButton" instance=ExtResource("1_trhwf")]
+selected = 4
+item_count = 5
+popup/item_0/text = "0.5"
+popup/item_0/id = 0
+popup/item_1/text = "0.67"
+popup/item_1/id = 1
+popup/item_2/text = "0.75"
+popup/item_2/id = 2
+popup/item_3/text = "0.85"
+popup/item_3/id = 3
+popup/item_4/text = "1.0"
+popup/item_4/id = 4
+script = ExtResource("2_fwdy1")
