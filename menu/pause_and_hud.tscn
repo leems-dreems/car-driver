@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://cxtkay8p3i0n"]
+[gd_scene load_steps=44 format=4 uid="uid://cxtkay8p3i0n"]
 
 [ext_resource type="Script" uid="uid://cjkbf6wh7q5cw" path="res://scripts/pause_and_hud.gd" id="1_jvxva"]
 [ext_resource type="Theme" uid="uid://1yia8uxvgpx4" path="res://ui/pause_menu.tres" id="2_oe57f"]
@@ -21,7 +21,6 @@
 [ext_resource type="PackedScene" uid="uid://dh7cnq3bhxqj" path="res://ui/shadow_distance_slider.tscn" id="9_ju1jd"]
 [ext_resource type="Script" uid="uid://doik5m1ugjsup" path="res://ui/ssao_check_button.gd" id="9_v761e"]
 [ext_resource type="PackedScene" uid="uid://dt1fvvwtxm5oi" path="res://ui/resolution_scale_option_button.tscn" id="9_wy0om"]
-[ext_resource type="LabelSettings" uid="uid://d1feibeuvvyf3" path="res://ui/controls_label_settings.tres" id="9_yc66f"]
 [ext_resource type="PackedScene" uid="uid://bu2xk28hb7fkp" path="res://ui/resolution_scaling_mode_option_button.tscn" id="10_h0qu4"]
 [ext_resource type="Texture2D" uid="uid://c4wm67df10noq" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_dark_2.png" id="10_w6irr"]
 [ext_resource type="Texture2D" uid="uid://bxtra2w5v618x" path="res://assets/icons/XBOX BUTTONS - Premium Assets/Analog Triggers/button_xbox_analog_trigger_light_2.png" id="11_0hmt5"]
@@ -142,167 +141,171 @@ theme_override_styles/panel = ExtResource("4_phyb6")
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="BackButton" type="Button" parent="PausedUI/OptionsMenu/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PausedUI/OptionsMenu/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer"]
+custom_minimum_size = Vector2(1200, 0)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 text = "< Back"
 alignment = 0
 
-[node name="HSeparator" type="HSeparator" parent="PausedUI/OptionsMenu/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PausedUI/OptionsMenu/VBoxContainer"]
-clip_contents = false
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer"]
-custom_minimum_size = Vector2(1200, 0)
-layout_mode = 2
-theme_override_constants/separation = 24
-
-[node name="Display_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Display_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 text = "Display"
 
-[node name="Fullscreen_CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Fullscreen_CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "Fullscreen"
 script = ExtResource("6_8k5hb")
 
-[node name="Vsync_CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Vsync_CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "Vsync"
 script = ExtResource("6_jh6ul")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="FPSLimit_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="FPSLimit_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "FPS limit:"
 
-[node name="FPSLimit_OptionButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("8_o0cti")]
+[node name="FPSLimit_OptionButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("8_o0cti")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 selected = 0
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ResolutionScale_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2"]
+[node name="ResolutionScale_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "Resolution scale: "
 
-[node name="ResolutionScale_OptionButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("9_wy0om")]
+[node name="ResolutionScale_OptionButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("9_wy0om")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ResolutionScalingMode_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3"]
+[node name="ResolutionScalingMode_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "Scaling mode: "
 
-[node name="ResolutionScalingMode_OptionButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("10_h0qu4")]
+[node name="ResolutionScalingMode_OptionButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("10_h0qu4")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 
-[node name="Graphics_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Graphics_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 text = "Graphics"
 
-[node name="Fog_CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Fog_CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "Fog"
 script = ExtResource("8_q00o3")
 
-[node name="SSAO_CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="SSAO_CheckButton" type="CheckButton" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
-text = "SSAO"
+text = "Ambient occlusion"
 script = ExtResource("9_v761e")
 
-[node name="ShadowQuality_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="ShadowQuality_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "Shadow quality"
 
-[node name="ShadowQuality_HSlider" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("8_s3utf")]
+[node name="ShadowQuality_HSlider" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("8_s3utf")]
 layout_mode = 2
 
-[node name="ShadowDistance_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="ShadowDistance_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "Shadow distance"
 
-[node name="ShadowDistance_HSlider" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("9_ju1jd")]
+[node name="ShadowDistance_HSlider" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("9_ju1jd")]
 layout_mode = 2
 
-[node name="Volume_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Volume_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 text = "Volume levels"
 
-[node name="Master_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Master_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "Master"
 
-[node name="Volume_HSlider" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("6_1ene2")]
+[node name="Volume_HSlider" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("6_1ene2")]
 layout_mode = 2
 
-[node name="UI_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="UI_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "Menus & interface"
 
-[node name="Volume_HSlider2" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("6_1ene2")]
+[node name="Volume_HSlider2" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("6_1ene2")]
 layout_mode = 2
 bus_name = "UI"
 
-[node name="SFX_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="SFX_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "Sound effects"
 
-[node name="Volume_HSlider3" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("6_1ene2")]
+[node name="Volume_HSlider3" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("6_1ene2")]
 layout_mode = 2
 bus_name = "SFX"
 
-[node name="Engine_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Engine_Label" type="Label" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_ekyou")
 theme_override_font_sizes/font_size = 48
 text = "Engine sound"
 
-[node name="Volume_HSlider4" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("6_1ene2")]
+[node name="Volume_HSlider4" parent="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("6_1ene2")]
 layout_mode = 2
 bus_name = "Engine"
 
@@ -390,7 +393,6 @@ expand_mode = 3
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Aim_HBoxContainer"]
 layout_mode = 2
 text = "Aim"
-label_settings = ExtResource("9_yc66f")
 vertical_alignment = 1
 
 [node name="Throw_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
@@ -422,8 +424,8 @@ expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Throw_HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_ekyou")
 text = "Throw"
-label_settings = ExtResource("9_yc66f")
 vertical_alignment = 1
 
 [node name="Push_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
@@ -455,8 +457,8 @@ expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Push_HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_ekyou")
 text = "Push"
-label_settings = ExtResource("9_yc66f")
 vertical_alignment = 1
 
 [node name="Pickup_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
@@ -488,8 +490,8 @@ expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Pickup_HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_ekyou")
 text = "Pickup"
-label_settings = ExtResource("9_yc66f")
 vertical_alignment = 1
 
 [node name="Interact_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
@@ -521,8 +523,8 @@ expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Interact_HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_ekyou")
 text = "Interact"
-label_settings = ExtResource("9_yc66f")
 vertical_alignment = 1
 
 [node name="Interact_LongPress_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
@@ -554,8 +556,8 @@ expand_mode = 3
 
 [node name="Label" type="Label" parent="HUD/VBoxContainer/Interact_LongPress_HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_ekyou")
 text = "(Hold)"
-label_settings = ExtResource("9_yc66f")
 vertical_alignment = 1
 
 [node name="Interact_LongPress_Bar_HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer"]
@@ -622,25 +624,25 @@ bus = &"UI"
 
 [connection signal="mouse_entered" from="PausedUI/PauseMenu" to="." method="on_pause_menu_mouse_entered"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="handle_resume_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="on_button_pressed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResumeButton" to="." method="handle_resume_button"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="on_button_pressed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/OptionsButton" to="." method="handle_options_button"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="handle_reset_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="on_button_pressed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton" to="." method="handle_reset_button"]
 [connection signal="focus_entered" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="handle_quit_button"]
 [connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="on_button_pressed"]
-[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="handle_options_back_button"]
-[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/BackButton" to="." method="on_button_pressed"]
-[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/Fullscreen_CheckButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/Fullscreen_CheckButton" to="." method="on_button_pressed"]
-[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/Vsync_CheckButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/Vsync_CheckButton" to="." method="on_button_pressed"]
-[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/Fog_CheckButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/Fog_CheckButton" to="." method="on_button_pressed"]
-[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/SSAO_CheckButton" to="." method="on_button_focussed"]
-[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/VBoxContainer/SSAO_CheckButton" to="." method="on_button_pressed"]
+[connection signal="pressed" from="PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/QuitButton" to="." method="handle_quit_button"]
+[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/BackButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/BackButton" to="." method="on_button_pressed"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/BackButton" to="." method="handle_options_back_button"]
+[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Fullscreen_CheckButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Fullscreen_CheckButton" to="." method="on_button_pressed"]
+[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Vsync_CheckButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Vsync_CheckButton" to="." method="on_button_pressed"]
+[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Fog_CheckButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Fog_CheckButton" to="." method="on_button_pressed"]
+[connection signal="focus_entered" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/SSAO_CheckButton" to="." method="on_button_focussed"]
+[connection signal="pressed" from="PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/SSAO_CheckButton" to="." method="on_button_pressed"]

@@ -53,9 +53,13 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if get_tree().paused and event.is_action_pressed("Pause") and not event.is_echo() and not (is_closing or is_opening):
-		animate_closed()
-		return
+	if get_tree().paused and (event.is_action_pressed("Pause") or event.is_action_pressed("ui_cancel")) and not event.is_echo():
+		if options_menu.visible:
+			handle_options_back_button()
+			return
+		if not (is_closing or is_opening):
+			animate_closed()
+			return
 	return
 
 
@@ -265,7 +269,7 @@ func handle_options_button() -> void:
 	_slider_tween.tween_callback(func():
 		options_menu.mouse_filter = Control.MOUSE_FILTER_STOP
 		options_menu.focus_mode = Control.FOCUS_ALL
-		$PausedUI/OptionsMenu/VBoxContainer/BackButton.grab_focus.call_deferred()
+		$PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/BackButton.grab_focus.call_deferred()
 	)
 	return
 

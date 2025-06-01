@@ -8,8 +8,8 @@ func _ready() -> void:
 	super()
 	bus_index = AudioServer.get_bus_index(bus_name)
 	assert(bus_index > -1, "Bus name not found: " + bus_name)
-	$ClickAudio.bus = bus_name
-	$StepAudio.bus = bus_name
+	click_audio.bus = bus_name
+	step_audio.bus = bus_name
 	return
 
 

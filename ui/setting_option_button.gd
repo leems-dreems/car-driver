@@ -15,6 +15,9 @@ func _ready() -> void:
 	pressed.connect(func():
 		click_audio.play()
 	)
+	focus_entered.connect(func():
+		step_audio.play()
+	)
 
 	return
 
