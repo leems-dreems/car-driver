@@ -15,6 +15,7 @@ signal create_roadpoint
 signal create_lane
 signal create_lane_agent
 signal create_2x2_road
+signal export_mesh
 
 # ripple up from children
 signal pressed_add_custom_roadcontainer(path)
@@ -28,6 +29,7 @@ enum CreateMenu {
 	LANE,
 	LANEAGENT,
 	TWO_X_TWO,
+	EXPORT_MESH
 }
 
 enum MenuMode {
@@ -71,22 +73,34 @@ func on_toolbar_show(primary_sel: Node) -> void:
 	pup.set_item_tooltip(idx, "Select this RoadPoint's parent RoadContainer")
 	idx += 1
 
-	if menu_mode == MenuMode.SAVED_SUBSCENE:
-		# Don't offer to modify subscenes
-		return
+	#if menu_mode == MenuMode.SAVED_SUBSCENE:
+	#	# Don't offer to modify subscenes
+	#	return
+	
+	# Set icon width so that it's scaled for the UI properly
+	# Though it would seem like DisplayServer.screen_get_scale() would be good to
+	# use, it seems that the icon scale is already correctly handled on mac OSX
+	# even when setting a single size on 1x vs 2x monitors, and the function
+	# is itself not implemented on windows. Thus, we'll just assign values based
+	# on OS, since 32x looks too large on windows.
+	var width := 32 if OS.get_name() == "macOS" else 16
 
 	pup.add_separator()
 	idx += 1
 	pup.add_icon_item(ICN_CT, "RoadContainer", CreateMenu.CONTAINER)
+	pup.set_item_icon_max_width(idx, width)
 	pup.set_item_tooltip(idx, "Adds a RoadContianer child to RoadManager")
 	idx += 1
 	pup.add_icon_item(ICN_RP, "RoadPoint", CreateMenu.POINT)
+	pup.set_item_icon_max_width(idx, width)
 	pup.set_item_tooltip(idx, "Adds a new RoadPoint")
 	idx += 1
 	pup.add_icon_item(ICN_LN, "RoadLane (AI path)", CreateMenu.LANE)
+	pup.set_item_icon_max_width(idx, width)
 	pup.set_item_tooltip(idx, "Adds a RoadLane which can be used for AI paths")
 	idx += 1
 	pup.add_icon_item(ICN_AG, "RoadLaneAgent (AI)", CreateMenu.LANEAGENT)
+	pup.set_item_icon_max_width(idx, width)
 	pup.set_item_tooltip(idx, "Adds a RoadLaneAgent to follow RoadLane paths")
 	idx += 1
 	pup.add_separator()
@@ -100,6 +114,13 @@ func on_toolbar_show(primary_sel: Node) -> void:
 	rc_submenu.name = "rc_items"
 	pup.add_submenu_item("RoadContainer presets", "rc_items", idx)
 	idx += 1
+	
+	pup.add_separator()
+	pup.add_item("Export RoadContainer", CreateMenu.EXPORT_MESH)
+	idx += 1
+	if not primary_sel is RoadContainer:
+		pup.set_item_disabled(idx, true)
+		
 
 
 func _exit_tree() -> void:
@@ -122,6 +143,9 @@ func _create_menu_item_clicked(id: int) -> void:
 			emit_signal("create_lane_agent")
 		CreateMenu.TWO_X_TWO:
 			emit_signal("create_2x2_road")
+		CreateMenu.EXPORT_MESH:
+			emit_signal("export_mesh")
+
 
 func _on_pressed_add_custom_roadcontainer(path:String) -> void:
 	pressed_add_custom_roadcontainer.emit(path)

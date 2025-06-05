@@ -7,10 +7,7 @@ class_name SettingSlider extends HSlider
 
 
 func _ready() -> void:
-	_update_timer.timeout.connect(func():
-		apply_value()
-	)
-
+	_update_timer.timeout.connect(func(): apply_value())
 	drag_started.connect(func(): click_audio.play())
 	focus_entered.connect(func(): step_audio.play())
 
@@ -31,7 +28,6 @@ func _ready() -> void:
 			step_audio.play()
 			_update_timer.start()
 		)
-
 	return
 
 ## Apply this setting using the current value of this slider

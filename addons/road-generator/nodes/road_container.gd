@@ -1,73 +1,177 @@
 @tool
 @icon("res://addons/road-generator/resources/road_container.png")
-## Manager used to generate the actual road segments when needed.
+
 class_name RoadContainer
 extends Node3D
+## The parent node for [RoadPoint]'s and controller of actual geo creation.
+##
+## A Road is defined by a [RoadContainer] with two or more [RoadPoint] children
+## who are connected together.
+##
+## Can be saved as the root of a scene for reuse, otherwise should be placed as
+## the child of a [RoadManager] node.
+##
+## @tutorial(Getting started): https://github.com/TheDuckCow/godot-road-generator/wiki/A-getting-started-tutorial
+## @tutorial(Custom Materials Tutorial): https://github.com/TheDuckCow/godot-road-generator/wiki/Creating-custom-materials
+## @tutorial(Custom Mesh Tutorial): https://github.com/TheDuckCow/godot-road-generator/wiki/User-guide:-Custom-road-meshes
+
 
 ## Emitted when a road segment has been (re)generated, returning the list
 ## of updated segments of type Array. Will also trigger on segments deleted,
 ## which will contain a list of nothing.
 signal on_road_updated(updated_segments)
-signal on_transform(node)  # for internal purposes, to handle drags
 
-const RoadMaterial = preload("res://addons/road-generator/resources/road_texture.material")
+## For internal purposes, to handle drag events in the editor.
+signal on_transform(node)
+
 const RoadSegment = preload("res://addons/road-generator/nodes/road_segment.gd")
+const RoadMaterial = preload("res://addons/road-generator/resources/road_texture.material")
 
-## Material applied to the generated meshes, expects specific trimsheet UV layout
-@export var material_resource: Material: set = _set_material
+# ------------------------------------------------------------------------------
+# How road meshes are generated
+@export_group("Road Generation")
+# ------------------------------------------------------------------------------
 
-## Mesh density of generated segments. -1 implies to use the parent RoadManager's value, higher
-## values like 10 mean higher spacing between loop cuts (ie a lower density; this terminology and
-## meaning is unintuitive, but matches the term used within the built in 3D curve property name)
-@export var density: float = -1.0: set = _set_density
 
-## Generate procedural road geometry
+## Generate procedural road geometry.[br][br]
+##
 ## If off, it indicates the developer will load in their own custom mesh + collision.
 @export var create_geo := true: set = _set_create_geo
-# If create_geo is true, then whether to reduce geo mid transform.
-@export var use_lowpoly_preview: bool = false
-## Whether to create approximated curves to fit along the forward, reverse, and center of the road.
-## Visible in the editor, useful for adding procedural generation along road edges or center lane.
-@export var create_edge_curves := false: set = _set_create_edge_curves
 
-## Whether to auto create RoadLanes for AI agents to follow, which are extensions of the native
-## 3D Curve, added to the runtime game as a child of RoadPoints when connections exist.
-@export var generate_ai_lanes := false: set = _set_gen_ai_lanes
-## Group name to assign to generated RoadLane nodes
-@export var ai_lane_group := "road_lanes": set = _set_ai_lane_group
-## Pass through to each RoadLane on whether to auto free all registered vehicles on _exit_tree.
-## Useful to let the raod generator handle any vehicles on a road segment to be cleaned up but
-## is not a direct child (which would require re-parenting as vehicles travel between segments)
-@export var auto_free_vehicles := true: set = _set_auto_free_vehicles
-## Group name to assign to the staic bodies created within a RoadSegment
+## Material applied to the generated meshes, expects specific trimsheet UV layout[br][br]
+##
+## If cleared, will utilize the default specificed by the [RoadManager].
+@export var material_resource: Material: set = _set_material
+
+## Defines the distance in meters between road loop cuts.[br][br]
+##
+## This mirrors the same term used in native Curve3D objects where a higher
+## density means a larger spacing between loops and fewer overall verticies.[br][br]
+##
+## A value of -1 indicates the density of the RoadManager will be used, or the
+## internal default of 4.0 if no manager is present.
+@export var density: float = -1.0: set = _set_density
+
+## Use fewer loop cuts for performance during transform.
+@export var use_lowpoly_preview: bool = false
+
+
+# ------------------------------------------------------------------------------
+# Properties defining how to set up the road's StaticBody3D
+@export_group("Collision")
+# ------------------------------------------------------------------------------
+
+
+## The PhysicsMaterial to apply to static bodies.[br][br]
+##
+## An override for any present on the parent [member RoadManager.physics_material] .
+@export var physics_material: PhysicsMaterial:
+	set(value):
+		physics_material = value
+		_defer_refresh_on_change()
+
+## Group name to assign to the staic bodies created within a RoadSegment.
 @export var collider_group_name := "": set = _set_collider_group
-## Meta property name to assign to the static bodies created within a RoadSegment, value will always be true
+## Meta property name to assign to the static bodies created within a RoadSegment.
 @export var collider_meta_name := "": set = _set_collider_meta
 
-@export var debug := false
+## If enabled, use collision_layer and collision_mask defined on this RoadContainer instead of the [RoadManager].
+@export var override_collision_layers:bool = false
+## Collision layer to assign to the generated [StaticBody3D]'s own collision_layer.
+@export_flags_3d_physics var collision_layer: int = 1:
+	set(value):
+		collision_layer = value
+		_defer_refresh_on_change()
+## Collision mask to assign to the generated [StaticBody3D]'s own collision_mask.
+@export_flags_3d_physics var collision_mask: int = 1:
+	set(value):
+		collision_mask = value
+		_defer_refresh_on_change()
+
+
+# ------------------------------------------------------------------------------
+# Properties relating to how RoadLanes and AI tooling is set up
+@export_group("Lanes and AI")
+# ------------------------------------------------------------------------------
+
+
+## Whether to auto-generate [RoadLane]'s for AI agents to follow.[br][br]
+##
+## These are extensions of the native 3D Curve, added to the runtime game as a
+## child of RoadPoints when connections exist.
+@export var generate_ai_lanes := false: set = _set_gen_ai_lanes
+
+## The group name to assign to any procedurally generated [RoadLane]'s.
+@export var ai_lane_group := "": set = _set_ai_lane_group
+
+## Setter applied to [RoadLane] on whether to auto-free registered vehicles on _exit_tree.[br][br]
+##
+## This lets the road generator handle the cleanup of any vehicles listed as
+## following a road segment about to be deleted anyways, even when the vehicle
+## is not a direct child of the segments being removed.
+@export var auto_free_vehicles := true: set = _set_auto_free_vehicles
+
+## Visualize [RoadLane]'s and their directions in the editor directly.
 @export var draw_lanes_editor := false: get = _get_draw_lanes_editor, set = _set_draw_lanes_editor
+## Visualize [RoadLane]'s and their directions during the game runtime.
 @export var draw_lanes_game := false: get = _get_draw_lanes_game, set = _set_draw_lanes_game
 
-## Auto generated exposed variables used to connect this RoadContainer to
-## another RoadContainer.
-## These should *never* be manually adjusted, they are only export vars to
-## facilitate the connection of RoadContainers needing to connect to points in
-## different scenes, where said connection needs to be established in the editor
+
+# ------------------------------------------------------------------------------
+# Properties which assist with further decorating of roads, such as sidewalks
+# and railings
+@export_group("Decoration")
+# ------------------------------------------------------------------------------
+
+
+## Create approximated curves along the left, right, and center of the road.[br][br]
 ##
+## Exposed in the editor, useful for adding procedural generation along road
+## edges or center lane.
+@export var create_edge_curves := false: set = _set_create_edge_curves
+
+
+# ------------------------------------------------------------------------------
+# Auto generated exposed variables used to connect this RoadContainer to
+# another RoadContainer.
+# These should *never* be manually adjusted, they are only export vars to
+# facilitate the connection of RoadContainers needing to connect to points in
+# different scenes, where said connection needs to be established in the editor.
 # TODO: In Godot 4.3ish, these should be @export_storage, hidden to users
 # https://github.com/godotengine/godot/pull/82122
+@export_group("Internal data")
+# ------------------------------------------------------------------------------
 
-# Paths to other containers, relative to this container (self)
+## Output additional debug information, does not change functionality.
+@export var debug := false
+
+## Considered private, not meant for editor or script interaction.[br][br]
+##
+## Paths to other containers, relative to this container (self)
 @export var edge_containers: Array[NodePath]
-# Node paths within other containers, relative to the *target* container (not self here)
+## Considered private, not meant for editor or script interaction.[br][br]
+##
+## Node paths within other containers, relative to the *target* container (not self here)
 @export var edge_rp_targets: Array[NodePath]
-# Direction of which RP we are connecting to, used to make unique key along with
-# the edge_rp_targets path above. Enum value of RoadPoint.PointInit
+## Considered private, not meant for editor or script interaction.[br][br]
+##
+## Direction of which RP we are connecting to, used to make unique key along with
+## the edge_rp_targets path above. Enum value of RoadPoint.PointInit
 @export var edge_rp_target_dirs: Array[int]
-# Node paths within this container, relative to this container
+## Considered private, not meant for editor or script interaction.[br][br]
+##
+## Node paths within this container, relative to this container
 @export var edge_rp_locals: Array[NodePath]
-# Local RP directions, enum value of RoadPoint.PointInit
+## Considered private, not meant for editor or script interaction.[br][br]
+##
+## Local RP directions, enum value of RoadPoint.PointInit
 @export var edge_rp_local_dirs: Array[int]
+
+
+# ------------------------------------------------------------------------------
+# Runtime variables
+# ------------------------------------------------------------------------------
+
 
 # Mapping maintained of individual segments and their corresponding resources.
 var segid_map = {}
@@ -113,7 +217,7 @@ var _is_ready := false
 
 func _ready():
 	# setup_road_container won't work in _ready unless call_deferred is used
-	call_deferred("setup_road_container")
+	setup_road_container.call_deferred()
 
 	set_notify_transform(true) # TOOD: check if both of these are necessary
 	set_notify_local_transform(true)
@@ -863,7 +967,11 @@ func _process_seg(pt1:RoadPoint, pt2:RoadPoint, low_poly:bool=false) -> Array:
 		else:
 			new_seg._end_flip = false
 		segid_map[sid] = new_seg
-		new_seg.material = material_resource
+		
+		if material_resource:
+			new_seg.material = material_resource
+		elif is_instance_valid(_manager) and _manager.material_resource:
+			new_seg.material = _manager.material_resource
 		new_seg.check_rebuild()
 
 		return [true, new_seg]
@@ -898,25 +1006,19 @@ func update_lane_seg_connections():
 		var next_seg_lanes = pt.next_seg.get_lanes()
 
 		# Check lanes attributed to the *prior* segment
-		for ln in prior_seg_lanes:
+		for prior_ln in prior_seg_lanes:
 			# prior lane be set to track to a next lane
 			for next_ln in next_seg_lanes:
-				if next_ln.lane_prior_tag == ln.lane_next_tag:
-					if ln.reverse_direction:
-						# if reverse, then a "next" lane becomes the "prior"
-						ln.lane_prior = ln.get_path_to(next_ln)
+				if prior_ln.lane_next_tag == next_ln.lane_prior_tag:
+					# TODO: When directionality is made consistent, we should no longer
+					# need to invert the direction assignment here.
+					if prior_ln.lane_next_tag[0] == "F":
+						prior_ln.lane_prior = prior_ln.get_path_to(next_ln)
+						next_ln.lane_next = next_ln.get_path_to(prior_ln)
 					else:
-						ln.lane_next = ln.get_path_to(next_ln)
-		# Check lanes attributed to the *next* segment
-		for ln in next_seg_lanes:
-			# next lane be set to track to a prior lane
-			for prior_ln in prior_seg_lanes:
-				if prior_ln.lane_next_tag == ln.lane_prior_tag:
-					if ln.reverse_direction:
-						# if reverse, then a "prior" lane becomes the "next"
-						ln.lane_next = ln.get_path_to(prior_ln)
-					else:
-						ln.lane_prior = ln.get_path_to(prior_ln)
+						assert(prior_ln.lane_next_tag[0] == "R")
+						prior_ln.lane_next = prior_ln.get_path_to(next_ln)
+						next_ln.lane_prior = next_ln.get_path_to(prior_ln)
 
 
 # Triggered by adjusting RoadPoint transform in editor via signal connection.
@@ -995,11 +1097,10 @@ func setup_road_container():
 	else:
 		own = self
 
-	if not material_resource:
-		material_resource = RoadMaterial
-		print("Added material to ", name)
-
 	_check_migrate_points()
+	if not is_instance_valid(get_manager()):
+		# Assign a road material by default if there's no parent RoadManager
+		material_resource = RoadMaterial
 
 
 ## Detect and move legacy node hierharcy layout.
