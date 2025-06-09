@@ -22,7 +22,6 @@ var paintjobs := [
 		"material": preload("res://assets/materials/paint/yellow.tres")
 	}
 ]
-
 var burnt_material: StandardMaterial3D
 #@onready var bonnet: CarDoor = $ColliderBits/Bonnet/OpenBonnet
 @onready var boot: CarDoor = $ColliderBits/Boot/OpenBoot
@@ -72,7 +71,6 @@ func apply_burnt_material() -> void:
 	$ColliderBits/Boot/ShutBoot.set_surface_override_material(0, burnt_material)
 	$ColliderBits/Boot/OpenBoot/MeshInstance3D.set_surface_override_material(0, burnt_material)
 	return
-
 
 ## Connect the vehicle's `body_entered` signal to this method
 func _on_body_entered(_body: Node) -> void:

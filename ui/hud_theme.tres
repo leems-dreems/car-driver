@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=27 format=3 uid="uid://djel5wi5nvl5d"]
+[gd_resource type="Theme" load_steps=25 format=3 uid="uid://djel5wi5nvl5d"]
 
 [ext_resource type="FontFile" uid="uid://civ7qtq6hhi4x" path="res://assets/fonts/Kaph-Regular.otf" id="1_pwjpm"]
 [ext_resource type="Texture2D" uid="uid://cf4r0eprhxbav" path="res://assets/icons/Liam icons/unpressed_filled_checkbox.png" id="1_yl8sm"]
@@ -63,39 +63,11 @@ content_margin_top = 16.0
 content_margin_right = 16.0
 content_margin_bottom = 16.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m738"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(1, 1, 1, 0)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.980392, 0.980392, 0.980392, 1)
-expand_margin_left = 4.0
-expand_margin_top = 4.0
-expand_margin_right = 4.0
-expand_margin_bottom = 4.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pwjpm"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(1, 1, 1, 0)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.980392, 0.980392, 0.980392, 1)
-expand_margin_left = 4.0
-expand_margin_top = 4.0
-expand_margin_right = 4.0
-expand_margin_bottom = 4.0
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m8y1l"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_7m738"]
 color = Color(1, 0.6, 0.2, 1)
@@ -227,7 +199,7 @@ Button/styles/focus = SubResource("StyleBoxFlat_yl8sm")
 Button/styles/hover = SubResource("StyleBoxFlat_o5who")
 Button/styles/hover_pressed = SubResource("StyleBoxFlat_3aif0")
 Button/styles/normal = SubResource("StyleBoxEmpty_yl8sm")
-Button/styles/pressed = SubResource("StyleBoxFlat_7m738")
+Button/styles/pressed = SubResource("StyleBoxEmpty_m8y1l")
 CheckButton/colors/font_color = Color(0.980392, 0.980392, 0.980392, 1)
 CheckButton/colors/font_focus_color = Color(0.980392, 0.980392, 0.980392, 1)
 CheckButton/colors/font_hover_color = Color(0.980392, 0.980392, 0.980392, 1)
@@ -239,8 +211,6 @@ CheckButton/constants/icon_max_width = 72
 CheckButton/fonts/font = ExtResource("1_pwjpm")
 CheckButton/icons/checked = ExtResource("1_yl8sm")
 CheckButton/icons/unchecked = ExtResource("2_o5who")
-CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_pwjpm")
-CheckButton/styles/pressed = SubResource("StyleBoxEmpty_m8y1l")
 HSeparator/constants/separation = 16
 HSeparator/styles/separator = SubResource("StyleBoxLine_7m738")
 HSlider/icons/grabber = ExtResource("3_3aif0")
