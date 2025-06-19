@@ -20,9 +20,6 @@ func handle_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("throw") and _hold_timer == null:
 		player._last_strong_direction = player.camera_controller.global_transform.basis.z
 		player.throw_item()
-		#_hold_timer = get_tree().create_timer(0.5)
-		#await _hold_timer.timeout
-		#_hold_timer = null
 		finished.emit(EMPTY_HANDED)
 	elif event.is_action_released("aim"):
 		player._last_strong_direction = player.camera_controller.global_transform.basis.z
