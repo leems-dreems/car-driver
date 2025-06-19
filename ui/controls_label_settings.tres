@@ -1,6 +1,10 @@
-[gd_resource type="LabelSettings" format=3 uid="uid://d1feibeuvvyf3"]
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://d1feibeuvvyf3"]
+
+[sub_resource type="SystemFont" id="SystemFont_33ck6"]
+font_names = PackedStringArray("Kaph")
 
 [resource]
-font_size = 42
+font = SubResource("SystemFont_33ck6")
+font_size = 72
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)

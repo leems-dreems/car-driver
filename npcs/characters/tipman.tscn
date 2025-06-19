@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ca3emwpdwnkxa" path="res://npcs/pedestrian.tscn" id="1_n7cvo"]
 [ext_resource type="Material" uid="uid://dfdnm2ans1prd" path="res://assets/materials/paint/green.tres" id="2_wcy18"]
 [ext_resource type="Script" uid="uid://b17ggc8gfsgmq" path="res://npcs/characters/tipman.gd" id="2_y00ak"]
-[ext_resource type="Material" uid="uid://bg0yh4eilbpry" path="res://assets/materials/paint/red.tres" id="3_ybvhr"]
+[ext_resource type="Material" uid="uid://ciqev7fmb50ob" path="res://assets/materials/paint/purple.tres" id="4_y00ak"]
 [ext_resource type="Material" uid="uid://cqeyb6iu2bkc3" path="res://assets/materials/paint/blue.tres" id="4_ybvhr"]
 [ext_resource type="Script" uid="uid://cwck7qscejkf" path="res://npcs/characters/tipman_interactable_area.gd" id="5_yiaex"]
 [ext_resource type="Script" uid="uid://dhevaeuigpl8p" path="res://addons/inkgd/ink_player.gd" id="6_kiq65"]
@@ -19,23 +19,21 @@ viewport_path = NodePath("SubViewport")
 [node name="TipmanNPC" instance=ExtResource("1_n7cvo")]
 script = ExtResource("2_y00ak")
 npc_name = "Tipman"
+material_0 = ExtResource("2_wcy18")
+material_1 = ExtResource("4_y00ak")
+material_2 = ExtResource("4_ybvhr")
 
 [node name="NavigationAgent3D" parent="." index="0"]
 avoidance_enabled = false
 
 [node name="Skeleton3D" parent="square_guy/metarig" index="0"]
-bones/0/position = Vector3(2.33079e-09, 0.695991, -0.046598)
-bones/17/rotation = Quaternion(0.990387, -3.38807e-08, 2.38255e-07, 0.138323)
-bones/18/rotation = Quaternion(0.169405, -1.21415e-07, -2.66443e-09, 0.985547)
-bones/19/rotation = Quaternion(-0.569406, 6.7504e-13, 5.63129e-13, 0.822056)
-bones/22/rotation = Quaternion(0.990387, -3.38808e-08, 2.38255e-07, 0.138323)
-bones/23/rotation = Quaternion(0.169405, -1.21415e-07, -2.66446e-09, 0.985547)
-bones/24/rotation = Quaternion(-0.569406, 7.03346e-13, 5.8626e-13, 0.822056)
-
-[node name="Cube_001" parent="square_guy/metarig/Skeleton3D" index="0"]
-surface_material_override/0 = ExtResource("2_wcy18")
-surface_material_override/1 = ExtResource("3_ybvhr")
-surface_material_override/2 = ExtResource("4_ybvhr")
+bones/0/position = Vector3(-1.66579e-09, 0.700434, -0.0507501)
+bones/17/rotation = Quaternion(0.993173, -1.5364e-08, 2.39011e-07, 0.116648)
+bones/18/rotation = Quaternion(0.116523, -1.211e-07, -9.14574e-09, 0.993188)
+bones/19/rotation = Quaternion(-0.543252, 6.79961e-13, 5.65735e-13, 0.83957)
+bones/22/rotation = Quaternion(0.993173, -1.5364e-08, 2.39011e-07, 0.116648)
+bones/23/rotation = Quaternion(0.116523, -1.211e-07, -9.14576e-09, 0.993188)
+bones/24/rotation = Quaternion(-0.543234, 7.08021e-13, 5.88591e-13, 0.839581)
 
 [node name="InteractableArea" type="Area3D" parent="." index="7" node_paths=PackedStringArray("ink_player", "dialogue_bubble")]
 collision_layer = 8

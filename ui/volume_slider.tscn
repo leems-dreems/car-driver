@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://282lanppwmod"]
+
+[ext_resource type="PackedScene" uid="uid://dci5bs0ma6l73" path="res://ui/setting_slider.tscn" id="1_dmp5s"]
+[ext_resource type="Script" uid="uid://b4wl5wjh6a67h" path="res://ui/volume_slider.gd" id="2_2ouuc"]
+
+[node name="Volume_HSlider" instance=ExtResource("1_dmp5s")]
+max_value = 1.0
+step = 0.1
+value = 1.0
+rounded = false
+tick_count = 11
+script = ExtResource("2_2ouuc")
+bus_name = "Master"
+update_immediately = true

@@ -12,7 +12,9 @@ enum SnapState {
 
 const RoadPointGizmo = preload("res://addons/road-generator/ui/road_point_gizmo.gd")
 const RoadPointEdit = preload("res://addons/road-generator/ui/road_point_edit.gd")
+const RoadContainerEdit = preload("res://addons/road-generator/ui/road_container_edit.gd")
 const RoadToolbar = preload("res://addons/road-generator/ui/road_toolbar.tscn")
+const RoadToolbarClass = preload("res://addons/road-generator/ui/road_toolbar.gd")
 
 const RoadSegment = preload("res://addons/road-generator/nodes/road_segment.gd")
 
@@ -27,7 +29,8 @@ var tool_mode # Will be a value of: RoadToolbar.InputMode.SELECT
 
 var road_point_gizmo = RoadPointGizmo.new(self)
 var road_point_editor = RoadPointEdit.new(self)
-var _road_toolbar
+var road_container_editor = RoadContainerEdit.new(self)
+var _road_toolbar: RoadToolbarClass
 var _edi = get_editor_interface()
 var _eds = get_editor_interface().get_selection()
 var _last_point: Node
@@ -42,6 +45,7 @@ var _overlay_hint_delete := false
 var _snapping = SnapState.IDLE
 var _nearest_edges: Array # [Selected RP, Target RP]
 var _edge_positions: Array # [edge_from_pos, edge_to_pos]
+var _export_file_dialog: FileDialog
 
 var _press_init_pos: Vector2
 
@@ -57,6 +61,8 @@ func _enter_tree():
 	add_node_3d_gizmo_plugin(road_point_gizmo)
 	add_inspector_plugin(road_point_editor)
 	road_point_editor.call("set_edi", _edi)
+	add_inspector_plugin(road_container_editor)
+	road_container_editor.call("set_edi", _edi)
 	_eds.connect("selection_changed", Callable(self, "_on_selection_changed"))
 	_eds.connect("selection_changed", Callable(road_point_gizmo, "on_selection_changed"))
 	connect("scene_changed", Callable(self, "_on_scene_changed"))
@@ -86,6 +92,7 @@ func _exit_tree():
 	disconnect("scene_closed", Callable(self, "_on_scene_closed"))
 	_road_toolbar.queue_free()
 	remove_node_3d_gizmo_plugin(road_point_gizmo)
+	remove_inspector_plugin(road_container_editor)
 	remove_inspector_plugin(road_point_editor)
 
 	# Don't add the following, as they would result in repeast in the UI.
@@ -934,6 +941,9 @@ func _show_road_toolbar() -> void:
 
 		# Specials / prefabs
 		_road_toolbar.create_menu.create_2x2_road.connect(_create_2x2_road_pressed)
+		
+		# Aditional tools
+		_road_toolbar.create_menu.export_mesh.connect(_export_mesh_modal)
 
 
 func _hide_road_toolbar() -> void:
@@ -953,6 +963,9 @@ func _hide_road_toolbar() -> void:
 
 		# Specials / prefabs
 		_road_toolbar.create_menu.create_2x2_road.disconnect(_create_2x2_road_pressed)
+		
+		# Aditional tools
+		_road_toolbar.create_menu.export_mesh.disconnect(_export_mesh_modal)
 
 
 func _on_regenerate_pressed() -> void:
@@ -1310,7 +1323,7 @@ func _connect_rp_on_click(rp_a, rp_b):
 		target_dir = RoadPoint.PointInit.PRIOR # only prior open
 	else:
 		var rel_vec = rp_a.global_transform.origin - rp_b.global_transform.origin
-		if rp_b.global_transform.basis.z.dor(rel_vec) > 0:
+		if rp_b.global_transform.basis.z.dot(rel_vec) > 0:
 			target_dir = RoadPoint.PointInit.NEXT
 		else:
 			target_dir = RoadPoint.PointInit.PRIOR
@@ -1623,6 +1636,94 @@ func _snap_to_road_point(selected:RoadContainer, sel_rp:RoadPoint, tgt_rp:RoadPo
 	undo_redo.commit_action()
 
 
+
+## Utility to call within an undo/redo transaction to flip around a RoadPoint
+## including handling of connections
+func subaction_flip_roadpoint(rp: RoadPoint, undo_redo:EditorUndoRedoManager) -> void:
+	# TODO: see if we can reuse?
+	#var undo_redo = get_undo_redo()
+	var flipped_transform = rp.transform
+	flipped_transform = flipped_transform.rotated_local(Vector3.UP, PI)
+	
+	# Flip all assymetric roadpoint properties
+	undo_redo.add_do_method(rp, "set_internal_updating", true)
+	undo_redo.add_undo_method(rp, "set_internal_updating", true)
+	
+	undo_redo.add_do_property(rp, "prior_pt_init", rp.next_pt_init)
+	undo_redo.add_undo_property(rp, "prior_pt_init", rp.prior_pt_init)
+	undo_redo.add_do_property(rp, "next_pt_init", rp.prior_pt_init)
+	undo_redo.add_undo_property(rp, "next_pt_init", rp.next_pt_init)
+	
+	undo_redo.add_do_property(rp, "shoulder_width_l", rp.shoulder_width_r)
+	undo_redo.add_undo_property(rp, "shoulder_width_l", rp.shoulder_width_l)
+	undo_redo.add_do_property(rp, "shoulder_width_r", rp.shoulder_width_l)
+	undo_redo.add_undo_property(rp, "shoulder_width_r", rp.shoulder_width_r)
+	
+	# Flip lanes around. e.g. we want to go from [-1, 1, 1] to [-1, -1, 1]
+	var _tmp_dirs:Array[RoadPoint.LaneDir] = rp.traffic_dir.duplicate(true)
+	_tmp_dirs.reverse()
+	var _new_traffic_dirs:Array[RoadPoint.LaneDir] = []
+	var _initial_dirs:Array[RoadPoint.LaneDir] = rp.traffic_dir.duplicate(true)
+	for _dir in _tmp_dirs:
+		match _dir:
+			RoadPoint.LaneDir.FORWARD:
+				_new_traffic_dirs.append(RoadPoint.LaneDir.REVERSE)
+			RoadPoint.LaneDir.REVERSE:
+				_new_traffic_dirs.append(RoadPoint.LaneDir.FORWARD)
+			RoadPoint.LaneDir.BOTH:
+				_new_traffic_dirs.append(RoadPoint.LaneDir.BOTH)
+			RoadPoint.LaneDir.NONE:
+				_new_traffic_dirs.append(RoadPoint.LaneDir.NONE)
+
+	undo_redo.add_do_property(rp, "traffic_dir", _new_traffic_dirs)
+	undo_redo.add_undo_property(rp, "traffic_dir", _initial_dirs)
+	
+	undo_redo.add_do_property(rp, "prior_mag", rp.next_mag)
+	undo_redo.add_undo_property(rp, "prior_mag", rp.prior_mag)
+	undo_redo.add_do_property(rp, "next_mag", rp.prior_mag)
+	undo_redo.add_undo_property(rp, "next_mag", rp.next_mag)
+	
+	undo_redo.add_do_property(rp, "transform", flipped_transform)
+	undo_redo.add_undo_property(rp, "transform", rp.transform)
+	
+	# Update direction references within this and connected RoadContainers
+	if rp.is_on_edge() and is_instance_valid(rp.container):
+		var edge_rp_local_dirs_old:Array[int] = rp.container.edge_rp_local_dirs.duplicate(true)
+		var edge_rp_local_dirs_new:Array[int] = edge_rp_local_dirs_old.duplicate(true)
+		for _idx in range(len(rp.container.edge_rp_locals)):
+			if rp.container.get_node(rp.container.edge_rp_locals[_idx]) == rp:
+				edge_rp_local_dirs_new[_idx] = 0 if edge_rp_local_dirs_new[_idx] == 1 else 1
+		undo_redo.add_do_property(rp.container, "edge_rp_local_dirs", edge_rp_local_dirs_new)
+		undo_redo.add_undo_property(rp.container, "edge_rp_local_dirs", edge_rp_local_dirs_old)
+		
+		# Check if cross-container connected at this RP and grab container if so
+		var _pr = rp.get_prior_rp()
+		var _nt = rp.get_next_rp()
+		var other_cont:RoadContainer
+		if is_instance_valid(_pr) and _pr.container != rp.container:
+			other_cont = _pr.container
+		elif is_instance_valid(_nt) and _nt.container != rp.container:
+			other_cont = _nt.container
+		
+		# Now update the other direction too
+		if is_instance_valid(other_cont):
+			var edge_rp_target_dirs_old:Array[int] = other_cont.edge_rp_target_dirs.duplicate(true)
+			var edge_rp_target_dirs_new:Array[int] = edge_rp_target_dirs_old.duplicate(true)
+			for _idx in range(len(other_cont.edge_rp_target_dirs)):
+				if other_cont.get_node(other_cont.edge_containers[_idx]) != rp.container:
+					continue
+				if rp.container.get_node(other_cont.edge_rp_targets[_idx]) == rp:
+					edge_rp_target_dirs_new[_idx] = 0 if edge_rp_target_dirs_new[_idx] == 1 else 1
+			undo_redo.add_do_property(other_cont, "edge_rp_target_dirs", edge_rp_target_dirs_new)
+			undo_redo.add_undo_property(other_cont, "edge_rp_target_dirs", edge_rp_target_dirs_old)
+	
+	undo_redo.add_do_method(rp, "set_internal_updating", false)
+	undo_redo.add_undo_method(rp, "set_internal_updating", false)
+	
+	undo_redo.add_do_method(rp.container, "rebuild_segments", true)
+	undo_redo.add_undo_method(rp.container, "rebuild_segments", true)
+
+
 ## Adds a single RoadPoint to the scene
 func _create_roadpoint_pressed() -> void:
 	var undo_redo = get_undo_redo()
@@ -1761,6 +1862,120 @@ func _create_2x2_road_undo(selected_node: RoadContainer, single_point: bool) -> 
 			return
 	if initial_children[-2] is RoadPoint:
 		initial_children[-2].queue_free()
+
+
+func _export_mesh_modal() -> void:
+	var selected := get_selected_node()
+	if not selected is RoadContainer:
+		push_error("Must have RoadContainer selected to export to gLTF")
+		return
+	
+	var basepath: String
+	if selected.get_owner() and selected.get_owner().scene_file_path:
+		var subpath := selected.get_owner().scene_file_path
+		basepath = subpath.get_basename() + "_"
+	else:
+		basepath = "res://"
+
+	var path := "%s%s_geo.glb" % [basepath, selected.name]
+	var abspath := ProjectSettings.globalize_path(path)
+
+	var editorViewport = Engine.get_singleton(&"EditorInterface").get_editor_viewport_3d()
+	_export_file_dialog = FileDialog.new()
+	
+	_export_file_dialog.file_selected.connect(_export_gltf)
+	_export_file_dialog.current_dir = abspath.get_base_dir()
+	_export_file_dialog.current_path = abspath
+	_export_file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+	_export_file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+	_export_file_dialog.title = "Export RoadContainer to gLTF"
+	
+	_export_file_dialog.set_option_count(1)
+	_export_file_dialog.set_option_name(0, "Instance after export")
+	_export_file_dialog.set_option_values(0, ["Yes", "No"])
+	_export_file_dialog.set_option_default(0, 1)
+	
+	editorViewport.add_child(_export_file_dialog, true)
+	_export_file_dialog.popup_centered_ratio()
+
+
+func _export_gltf(path: String) -> void:
+	var container:RoadContainer = get_selected_node()
+	
+	if not path.get_extension() in ["glb", "gltf"]:
+		path = "%s.%s" % [path, "glb"]
+		print("Resolved path to: ", path)
+	
+	# Identify options selected
+	var _option_values := _export_file_dialog.get_selected_options()
+	var option_index:int = _option_values[_export_file_dialog.get_option_name(0)]
+	var instance_after_export:bool = option_index == 0
+	
+	var meshes: Array[Mesh] = []
+	var unset_owners:Array[Array] = []
+	for _seg in container.get_segments():
+		_seg as RoadSegment
+		var seg := _seg as RoadSegment 
+		unset_owners.append([_seg, _seg.owner])
+		_seg.owner = container.get_owner()
+		if is_instance_valid(seg.road_mesh):
+			meshes.append(seg.road_mesh.mesh)
+			unset_owners.append([seg.road_mesh, seg.road_mesh.owner])
+			seg.road_mesh.owner = container.get_owner()
+	
+	var gltf_document_save := GLTFDocument.new()
+	var gltf_state_save := GLTFState.new()
+
+	# This works, but export *everything* contained, not just the road segment
+	# meshes. Potential improvement or execution option: temporarily instance
+	# another branch of the node tree with just the meshes placed as needed.
+	gltf_document_save.append_from_scene(container, gltf_state_save)
+	gltf_document_save.write_to_filesystem(gltf_state_save, path)
+	
+	# Undo the owner overrides
+	for unsetter in unset_owners:
+		unsetter[0].owner = unsetter[1]
+
+	if instance_after_export:
+		_instance_gltf_post_export(container, path)
+	else:
+		Engine.get_singleton(&"EditorInterface").get_resource_filesystem().scan_sources()
+
+	_export_file_dialog.queue_free()
+
+
+func _instance_gltf_post_export(container:RoadContainer, export_file: String) -> void:
+	var local_path := ProjectSettings.localize_path(export_file)
+	if export_file == local_path and not export_file.begins_with("res://"):
+		push_error("Failed to localize the path, ensure gltf was saved within project folder to instance after")
+		return
+	
+	Engine.get_singleton(&"EditorInterface").get_resource_filesystem().update_file(local_path)
+	Engine.get_singleton(&"EditorInterface").get_resource_filesystem().reimport_files([local_path])
+	
+	var glb_scene:PackedScene = load(export_file)
+	if not glb_scene:
+		push_error("Failed load gltf/glb export, check output path and try again")
+		return
+	
+	var glb_model:Node3D = glb_scene.instantiate()
+	glb_model.name = export_file.get_file().get_basename()
+	
+	# Undo/redoable part of action
+	# TODO: Revisit this, the "do" action works, but undo is unstable/can crash godot.
+	#var undo_redo = get_undo_redo()
+	#undo_redo.create_action("Replace road geo with instance")
+	#undo_redo.add_do_method(container, "add_child", glb_model, true)
+	#undo_redo.add_do_method(glb_model, "set_owner", get_tree().get_edited_scene_root())
+	#undo_redo.add_do_property(container, "create_geo", false)
+	#undo_redo.add_do_reference(glb_model)
+	#undo_redo.add_undo_property(container, "create_geo", container.create_geo)
+	#undo_redo.add_undo_method(container, "remove_child", glb_model)
+	#undo_redo.commit_action()
+	
+	container.add_child(glb_model)
+	glb_model.owner = container.get_owner()
+	container.create_geo = false
 
 
 ## Adds a single RoadLane to the scene.

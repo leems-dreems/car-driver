@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://dh7cnq3bhxqj"]
+
+[ext_resource type="PackedScene" uid="uid://dci5bs0ma6l73" path="res://ui/setting_slider.tscn" id="1_eg8tj"]
+[ext_resource type="Script" uid="uid://cuuvdxk43c1cn" path="res://ui/shadow_distance_slider.gd" id="2_jp3po"]
+
+[node name="ShadowDistanceSetting_HSlider" instance=ExtResource("1_eg8tj")]
+script = ExtResource("2_jp3po")

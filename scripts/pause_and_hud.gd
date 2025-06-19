@@ -53,9 +53,13 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if get_tree().paused and event.is_action_pressed("Pause") and not event.is_echo() and not (is_closing or is_opening):
-		animate_closed()
-		return
+	if get_tree().paused and (event.is_action_pressed("Pause") or event.is_action_pressed("ui_cancel")) and not event.is_echo():
+		if options_menu.visible:
+			handle_options_back_button()
+			return
+		if not (is_closing or is_opening):
+			animate_closed()
+			return
 	return
 
 
@@ -90,6 +94,7 @@ func _process(_delta: float) -> void:
 		options_menu.visible = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		$HUD.visible = true
+		_handbrake_prompt.visible = true
 		$HUD.mouse_filter = Control.MOUSE_FILTER_PASS
 		$PausedUI.visible = false
 		$PausedUI.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -264,7 +269,7 @@ func handle_options_button() -> void:
 	_slider_tween.tween_callback(func():
 		options_menu.mouse_filter = Control.MOUSE_FILTER_STOP
 		options_menu.focus_mode = Control.FOCUS_ALL
-		$PausedUI/OptionsMenu/VBoxContainer/BackButton.grab_focus.call_deferred()
+		$PausedUI/OptionsMenu/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/BackButton.grab_focus.call_deferred()
 	)
 	return
 
@@ -283,17 +288,11 @@ func handle_quit_button() -> void:
 	return
 
 
-func handle_fullscreen_toggle(toggle_on: bool) -> void:
-	Game.change_window_mode(toggle_on)
-	return
-
-
 func handle_options_back_button() -> void:
 	var _slider_tween := create_tween()
 	_slider_tween.tween_property(pause_menu_slider, "theme_override_constants/margin_left", 0, 0.15)
 	_slider_tween.parallel().tween_property(pause_menu_slider, "modulate", modulate_opaque, 0.15)
 	_slider_tween.parallel().tween_property(options_menu, "modulate", modulate_transparent, 0.15)
-	options_menu.visible = false
 	options_menu.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_slider_tween.tween_callback(func():
 		options_menu.visible = false

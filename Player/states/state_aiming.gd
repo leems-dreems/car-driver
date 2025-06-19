@@ -20,9 +20,9 @@ func handle_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("throw") and _hold_timer == null:
 		player._last_strong_direction = player.camera_controller.global_transform.basis.z
 		player.throw_item()
-		_hold_timer = get_tree().create_timer(0.5)
-		await _hold_timer.timeout
-		_hold_timer = null
+		#_hold_timer = get_tree().create_timer(0.5)
+		#await _hold_timer.timeout
+		#_hold_timer = null
 		finished.emit(EMPTY_HANDED)
 	elif event.is_action_released("aim"):
 		player._last_strong_direction = player.camera_controller.global_transform.basis.z
@@ -35,13 +35,14 @@ func handle_input(event: InputEvent) -> void:
 
 func physics_update(_delta: float) -> void:
 	player.process_on_foot_controls(_delta, false, (1 / maxf(1.0, _item_mass)) * 0.75)
+	player.draw_throw_arc()
 	return
 
 
 func enter(_previous_state_path: String, _data := {}) -> void:
+	player.transition_timer.start()
 	player.should_jump = false
 	_item_mass = player._carried_item.mass
-	player.set_throw_arc_visible(true)
 	player.camera_controller.set_pivot(CameraController.CAMERA_PIVOT.OVER_SHOULDER)
 	player.update_interact_target(true)
 	player.update_drop_target(true)
@@ -49,5 +50,7 @@ func enter(_previous_state_path: String, _data := {}) -> void:
 
 
 func exit() -> void:
+	player.transition_timer.start()
+	player.hide_throw_arc()
 	player.should_jump = false
 	return

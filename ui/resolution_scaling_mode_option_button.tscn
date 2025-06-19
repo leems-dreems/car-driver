@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu2xk28hb7fkp"]
+
+[ext_resource type="PackedScene" uid="uid://b6xudp3iexis5" path="res://ui/setting_option_button.tscn" id="1_clw47"]
+[ext_resource type="Script" uid="uid://ds25agmccpouj" path="res://ui/resolution_scaling_mode_option_button.gd" id="2_t85in"]
+
+[node name="ResolutionScalingMode_OptionButton" instance=ExtResource("1_clw47")]
+selected = 0
+item_count = 3
+popup/item_0/text = "Bilinear"
+popup/item_0/id = 0
+popup/item_1/text = "FSR 1.0"
+popup/item_1/id = 1
+popup/item_2/text = "FSR 2.2"
+popup/item_2/id = 2
+script = ExtResource("2_t85in")

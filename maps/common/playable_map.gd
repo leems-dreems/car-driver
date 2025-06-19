@@ -3,7 +3,6 @@ extends Node3D
 @onready var road_manager: RoadManager = $RoadManager
 const road_physics_material := preload("res://assets/materials/road_physics_material.tres")
 const compact_car_scene := preload("res://cars/compact/compact.tscn")
-const scatter_tree_a_collider_scene := preload("res://maps/common/foliage/scatter_tree_A.tscn")
 
 
 func _ready() -> void:
@@ -12,13 +11,12 @@ func _ready() -> void:
 	PedestrianManager.pedestrian_container_node = $PedestrianContainer
 	PedestrianManager.add_spawn_points()
 	Game.physics_item_container = $PhysicsItemContainer
+	Game.current_environment = $WorldEnvironment
+	Game.current_sun = $DirectionalLight3D
 
 	for _child_terrain: Terrain3D in find_children("Terrain3D", "Terrain3D"):
 		Game.active_terrain = _child_terrain
 	await get_tree().create_timer(1.0).timeout
-	for _road_static_body: StaticBody3D in find_children("road_mesh_col", "StaticBody3D", true, false):
-		_road_static_body.add_to_group("Road")
-		_road_static_body.physics_material_override = road_physics_material
 	for _road_mesh: MeshInstance3D in find_children("road_mesh", "MeshInstance3D", true, false):
 		_road_mesh.set_layer_mask_value(11, true)
 		_road_mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON

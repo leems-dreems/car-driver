@@ -42,6 +42,8 @@ class_name Player extends RigidBody3D
 @onready var _animation_tree: AnimationTree = $square_guy/AnimationTree
 @onready var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
 
+@onready var _space_state := get_tree().get_root().get_world_3d().get_direct_space_state()
+
 @onready var pickup_marker: Sprite3D = $PickupMarker
 @onready var long_press_marker: Sprite3D = $ContainerMarker
 @onready var long_press_anim: AnimationPlayer = $ContainerMarker/AnimationPlayer
@@ -54,7 +56,8 @@ class_name Player extends RigidBody3D
 @onready var pickup_short_press_timer: Timer = $TimerNodes/PickupShortPressTimer
 @onready var pickup_target_timer: Timer = $TimerNodes/PickupTargetTimer
 @onready var drop_target_timer: Timer = $TimerNodes/DropTargetTimer
-@onready var push_vehicle_timer := $TimerNodes/PushVehicleTimer
+@onready var push_vehicle_timer: Timer = $TimerNodes/PushVehicleTimer
+@onready var transition_timer: Timer = $TimerNodes/TransitionTimer
 
 const _push_vehicle_button_delay := 1.0
 const _interact_button_short_press_delay := 0.2
@@ -63,6 +66,11 @@ const _interact_target_delay := 0.2 ## How long to wait after targeting an inter
 const _pickup_button_short_press_delay := 0.2
 const _pickup_target_delay := 0.2 ## How long to wait after targeting a pickup before looking for a new target
 const _drop_target_delay := 0.2 ## How long to wait after targeting a drop target before looking for a new target
+
+const _trajectory_sample_time := 1.4
+const _trajectory_sample_size: int = 12
+const _trajectory_dot_scene := preload("res://Player/trajectory_dot.tscn")
+const _trajectory_hit_material := preload("res://Player/trajectory_dot_hit_material.tres")
 
 var should_jump := false
 var _move_direction := Vector3.ZERO
@@ -516,16 +524,81 @@ func throw_item() -> void:
 	_carried_item.get_collider().disabled = false
 	_carried_item.freeze = false
 	_carried_item.visible = true
-	var _throw_vector: Vector3 = $CameraController/ThrowTarget.global_position - $CameraController/ThrowOrigin.global_position
-	_carried_item.apply_central_impulse(_throw_vector * 7 * _carried_item.mass)
+	var _throw_vector := get_throw_vector()
+	_carried_item.apply_central_impulse(_throw_vector * _carried_item.mass)
 	_carried_item.apply_torque_impulse(_throw_vector.rotated(Vector3.UP, -PI / 2) * _carried_item.mass)
+
+	# Briefly disable collision between player & thrown item while throwing
+	var _thrown_item := _carried_item
+	add_collision_exception_with(_thrown_item)
+	get_tree().create_timer(0.2).timeout.connect(func():
+		if is_instance_valid(_thrown_item):
+			remove_collision_exception_with(_thrown_item)
+	)
+
 	_carried_mesh = null
 	_carried_item = null
+
 	return
 
 
-func set_throw_arc_visible(_visible: bool) -> void:
-	$CameraController/ThrowArc.visible = _visible
+func get_throw_vector() -> Vector3:
+	if _carried_item == null:
+		return Vector3.ZERO
+	var _throw_vector: Vector3 = $CameraController/ThrowTarget.global_position - $CameraController/ThrowOrigin.global_position
+	_throw_vector *= 7
+	return _throw_vector
+
+## Draws the trajectory of the carried item if it was thrown
+func draw_throw_arc() -> void:
+	var _throw_vector := get_throw_vector()
+	if _throw_vector == Vector3.ZERO:
+		$CameraController/TrajectoryDots.visible = false
+		$CameraController/TrajectoryHitMarker.set_deferred("visible", false)
+		return
+	$CameraController/TrajectoryDots.visible = true
+	var _trajectory_samples := TrajectoryLib.samples($CameraController/ThrowOrigin.global_position, _throw_vector, get_gravity(), _trajectory_sample_time, _trajectory_sample_size)
+	var _dots := $CameraController/TrajectoryDots.get_children()
+	if len(_dots) != _trajectory_sample_size:
+		for _dot: Node in _dots:
+			_dot.queue_free()
+		for i in _trajectory_sample_size:
+			$CameraController/TrajectoryDots.add_child(_trajectory_dot_scene.instantiate())
+		_dots = $CameraController/TrajectoryDots.get_children()
+
+	var _has_hit := false
+	var _hit_sphere := SphereShape3D.new()
+	_hit_sphere.radius = 0.05
+
+	var _ray_collision_info := TrajectoryLib.ray_collision(_space_state, _trajectory_samples, 0.04, [get_rid()], _carried_item.collision_mask, true, false)
+	var _ray_hit_index: int = _ray_collision_info["sample_index"] if _ray_collision_info.has("sample_index") else -INF
+	if _ray_hit_index < 0:
+		$CameraController/TrajectoryHitMarker.set_deferred("visible", false)
+	else:
+		$CameraController/TrajectoryHitMarker.set_deferred("visible", true)
+
+	var j: int = 0
+	for _dot: MeshInstance3D in _dots:
+		_dot.global_position = _trajectory_samples[j].position
+		if _has_hit:
+			_dot.visible = false
+			j += 1
+			continue
+		_dot.visible = true
+		if j == _ray_hit_index + 1:
+			_has_hit = true
+			# Simulate the trajectory of our hit sphere, starting from 2 points back
+			var _collision_point = TrajectoryLib.shape_collision(_space_state, _hit_sphere, Transform3D(Basis.IDENTITY, _trajectory_samples[j - 2].position), _trajectory_samples[j - 2].velocity, get_gravity(), 0.05, get_physics_process_delta_time() * (_trajectory_sample_time * Engine.physics_ticks_per_second / _trajectory_sample_size) * 2, get_physics_process_delta_time(), [get_rid()], _carried_item.collision_mask, true, false)
+			_dot.visible = false
+			if _collision_point != null:
+				$CameraController/TrajectoryHitMarker.global_position = _collision_point
+		j += 1
+	return
+
+
+func hide_throw_arc() -> void:
+	$CameraController/TrajectoryDots.visible = false
+	$CameraController/TrajectoryHitMarker.set_deferred("visible", false)
 	return
 
 

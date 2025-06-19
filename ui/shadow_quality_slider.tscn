@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgqojdl366ijt"]
+
+[ext_resource type="PackedScene" uid="uid://dci5bs0ma6l73" path="res://ui/setting_slider.tscn" id="1_k06jg"]
+[ext_resource type="Script" uid="uid://b8byweblcolmc" path="res://ui/shadow_quality_slider.gd" id="2_l8etk"]
+
+[node name="ShadowQualitySetting_HSlider" instance=ExtResource("1_k06jg")]
+script = ExtResource("2_l8etk")
