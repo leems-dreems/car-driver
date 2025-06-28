@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dwml0mk8debv8"]
+
+[ext_resource type="Shader" path="res://addons/ShapesAndLines/Polyline3D.gdshader" id="1_4uee7"]
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_4uee7")
+shader_parameter/width = 10.0
+shader_parameter/debug = false

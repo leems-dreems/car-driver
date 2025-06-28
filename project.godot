@@ -88,6 +88,7 @@ Road="Vehicles will treat this surface as a road"
 Grass="Vehicles will treat this surface as grass"
 ExplosionCatcher="Used to fine-tune how explosions push larger objects"
 Building=""
+AStarPathDot="Dots used to draw AStar3D paths"
 
 [inkgd]
 
@@ -372,6 +373,16 @@ push_vehicle={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+set_pathfind_start={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+set_pathfind_end={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
 
 [layer_names]
 
@@ -390,6 +401,7 @@ push_vehicle={
 3d_physics/layer_12="TrafficSpawnPoint"
 3d_physics/layer_13="MovingScenery"
 3d_physics/layer_14="PhysicalTerrain"
+3d_physics/layer_15="Road"
 3d_physics/layer_16="ItemInsideVehicle"
 3d_physics/layer_17="CarryableItem"
 3d_physics/layer_18="CarBumper"
@@ -401,6 +413,11 @@ push_vehicle={
 3d_physics/layer_26="PedestrianSpawnPoint"
 3d_physics/layer_27="PedestrianAgent"
 3d_physics/layer_29="Bone"
+
+[navigation]
+
+3d/default_cell_size=1.0
+3d/default_cell_height=0.5
 
 [physics]
 

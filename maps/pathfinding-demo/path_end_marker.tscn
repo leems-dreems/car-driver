@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://6tcvkolf5tal"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kypv5"]
+shading_mode = 0
+albedo_color = Color(0.917647, 0.94902, 0.0196078, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ul041"]
+material = SubResource("StandardMaterial3D_kypv5")
+top_radius = 1.0
+bottom_radius = 0.0
+height = 4.0
+
+[node name="PathEndMarker" type="MeshInstance3D"]
+mesh = SubResource("CylinderMesh_ul041")
