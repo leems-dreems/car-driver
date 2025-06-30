@@ -5,9 +5,10 @@ extends Node3D
 @onready var path_end_marker := $PathEndMarker
 @onready var nav_agent := $NavigationRegion3D/NavParent/NavigationAgent3D
 @onready var astar := AStar3D.new()
-const _path_dot_scene := preload("pathfinding_dot.tscn")
-const _purple_material := preload("res://assets/materials/debug_materials/flat_yellow.tres")
+const path_dot_scene := preload("pathfinding_dot.tscn")
+const yellow_debug_material := preload("res://assets/materials/debug_materials/flat_yellow.tres")
 const search_radius_squared := 100 ## Pathfinding will find the nearest graph point, and then try out other points within this radius
+const astar_point_interval := 10.0
 var endpoints_dict: Dictionary[int, RoadLane] = {} ## Used to track the astar indices of the start & end points of each RoadLane
 
 
@@ -18,25 +19,15 @@ func _ready() -> void:
 	$RoadLanes_Label3D.text += str(len(_road_lanes))
 
 	for _road_lane: RoadLane in _road_lanes:
-		#var _lane_nav_link := NavigationLink3D.new()
-		#_lane_nav_link.bidirectional = false
-		#_lane_nav_link.travel_cost = 0.01
-		#_lane_nav_link.start_position = _road_lane.get_parent().position + _road_lane.curve.get_point_position(0).rotated(Vector3.UP, _road_lane.get_parent().rotation.y)
-		#_lane_nav_link.end_position = _road_lane.get_parent().position + _road_lane.curve.get_point_position(_road_lane.curve.point_count - 1).rotated(Vector3.UP, _road_lane.get_parent().rotation.y)
-		#var _distance := _lane_nav_link.start_position.distance_to(_lane_nav_link.end_position)
-		#var _curve_length := _road_lane.curve.get_baked_length()
-		#_lane_nav_link.travel_cost *= _curve_length / _distance
-		#nav_links.add_child(_lane_nav_link)
-
 		var _lane_points := _road_lane.curve.get_baked_points()
-		var _increment_amount := ceili(10 / _road_lane.curve.bake_interval)
+		var _increment_amount := ceili(astar_point_interval / _road_lane.curve.bake_interval)
 		var _index: int = 0
 		var _previous_point_id: int
 
 		while _index < len(_lane_points) - 1: # Add astar points at intervals along the lane's curve
 			var _new_id := astar.get_available_point_id()
 			astar.add_point(_new_id, _road_lane.to_global(_lane_points[_index]))
-			var _marker := _path_dot_scene.instantiate()
+			var _marker := path_dot_scene.instantiate()
 			_marker.add_to_group("AStarPathDot")
 			nav_links.add_child(_marker)
 			_marker.global_position = _road_lane.to_global(_lane_points[_index])
@@ -50,16 +41,16 @@ func _ready() -> void:
 			_index += _increment_amount
 
 		# Add astar point for end of lane's curve
-		var _new_id := astar.get_available_point_id()
-		astar.add_point(_new_id, _road_lane.to_global(_lane_points[len(_lane_points) - 1]))
-		astar.connect_points(_previous_point_id, _new_id, false)
-		draw_line(astar.get_point_position(_previous_point_id), astar.get_point_position(_new_id))
-		endpoints_dict[_new_id] = _road_lane
-		var _marker := _path_dot_scene.instantiate()
-		nav_links.add_child(_marker)
-		_marker.global_position = _road_lane.to_global(_lane_points[len(_lane_points) - 1])
-		_marker.add_to_group("AStarPathDot")
-		_marker.set_meta("point_id", _new_id)
+		var _endpoint_id := astar.get_available_point_id()
+		astar.add_point(_endpoint_id, _road_lane.to_global(_lane_points[len(_lane_points) - 1]))
+		astar.connect_points(_previous_point_id, _endpoint_id, false)
+		draw_line(astar.get_point_position(_previous_point_id), astar.get_point_position(_endpoint_id))
+		endpoints_dict[_endpoint_id] = _road_lane
+		var _end_marker := path_dot_scene.instantiate()
+		nav_links.add_child(_end_marker)
+		_end_marker.global_position = _road_lane.to_global(_lane_points[len(_lane_points) - 1])
+		_end_marker.add_to_group("AStarPathDot")
+		_end_marker.set_meta("point_id", _endpoint_id)
 
 	for _point_idx: int in endpoints_dict.keys():
 		var _point_position := astar.get_point_position(_point_idx)
@@ -135,7 +126,7 @@ func plot_route() -> void:
 	var _markers := get_tree().get_nodes_in_group("AStarPathDot")
 	for _marker: MeshInstance3D in _markers:
 		if _marker.get_meta("point_id") in _id_path:
-			_marker.set_surface_override_material(0, _purple_material)
+			_marker.set_surface_override_material(0, yellow_debug_material)
 			_marker.scale = Vector3(2, 2, 2)
 		else:
 			_marker.set_surface_override_material(0, null)

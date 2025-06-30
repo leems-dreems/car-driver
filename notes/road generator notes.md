@@ -1,17 +1,26 @@
-- Creating RoadLane nodes inside RoadParent nodes will automatically create the correct curve, but the RoadLane nodes seem to disappear after selecting "Refresh roads" from the dropdown
-- Automatically generated AI lanes work pretty well, but don't have an easy way to connect to lanes on intersections
-
 # AStar3D pathfinding (Godot 4.4, Road Gen 0.7.0)
 
 Notes on using AStar3D with Road Generator to plot a road route between two points, which may or may not be on-road. This route can be used for high-level navigation, and possibly for displaying on a map if then converted to 2D.
 
-- On RoadManager ready, create an instance of the AStar3D class. Also create a Dictionary[int, RoadLane] where the keys are indices of AStar3D points, and the values are references to the RoadLanes that those points belong to. Call this dictionary endpoints_dict
+- On RoadManager ready, create an instance of the AStar3D class. Also create a Dictionary[int, RoadLane] where the keys are indices of AStar3D points, and the values are references to the RoadLanes that those points belong to.
 - Loop over RoadLanes, and call AStar3D.add_point() at least 3 times for each lane - start position, end position and at least 1 point in-between
-	- When adding a start or end point of a lane, add the RoadLane to our endpoints_dict, keyed to the index of our newly added point
 	- For curved roads, add astar points along the RoadLane's curve, at intervals
 	- For straight roads, can probably get away with having just 1 midpoint and calling get_closest_position_in_segment() to get target destination
 	- The weight_scale of these midpoints can be adjusted to account for road type, speed limit etc
-- When all astar points have been added, loop over our endpoints_dict. For each point:
-	- Filter our endpoints_dict to only include other points within a small radius
-	- If this is the start point of this lane, filter the points to only include points whose positions match the end of their lane's curve, and make a one-way connection from those points to this one
-	- If this is the end point of this lane, filter the points to only include points whose positions match the start of their lane's curve, and make a one-way connection to those points from this one
+	- When adding the start or end point of a lane, add the RoadLane to our endpoints dictionary, keyed to the index of the newly added point
+- When all astar points have been added, loop over the endpoints dictionary to make connections. For each endpoint:
+	- Filter endpoints to only include other endpoints within a small radius
+	- If this is the start point of this lane, filter endpoints to only include points whose positions match the end of their lane's curve, and make a one-way connection from those points to this one
+
+When Road Generator supports RoadLanes with multiple entries/exits, the connection part of this will be a lot simpler.
+
+
+# Holistic Navigation Solution
+
+- Add an "off-road" NavigationRegion3D, with collision mask set to the terrain layer. Use Terrain3D's "paint navigable areas" feature to ensure that the navmesh doesn't overlap any roads. This layer is only used by vehicles that are currently off-road, or by on-road vehicles that are nearing their off-road destination
+- Add an "on-road" NavigationRegion3D on a second nav layer, with a navmesh that covers roads and nothing else.
+- Add a "waypoints" NavigationRegion3D on a third nav layer. The navmesh's collision mask should match a "road_waypoint" layer. Place small waypoint "islands" along each RoadLane, in a similar way to how astar points are placed. Set these islands to use the "road_waypoint" collision layer, and connect these islands using NavLinks that have a very low travel_cost.
+
+- The off-road nav layer is used when a vehicle is off-road or is navigating to an off-road position.
+- The on-road nav layer is used when a vehicle is on-road but isn't following traffic rules, e.g. a car in a race, a firetruck responding to a fire.
+- The waypoints nav layer is used when the vehicle has a set destination. When a vehicle hits a waypoint (i.e. its waypoint_reached signal goes off, and the waypoint's containing region/link is on the waypoints nav layer), it stops using all nav layers except the waypoints layer. When a waypoint-following vehicle gets close to its final position, it starts using the off-road nav layer again.
