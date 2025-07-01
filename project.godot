@@ -413,6 +413,7 @@ set_pathfind_end={
 3d_physics/layer_26="PedestrianSpawnPoint"
 3d_physics/layer_27="PedestrianAgent"
 3d_physics/layer_29="Bone"
+3d_physics/layer_30="RoadWaypoint"
 
 [navigation]
 
