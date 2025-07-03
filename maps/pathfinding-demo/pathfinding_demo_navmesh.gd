@@ -3,18 +3,31 @@ extends Node3D
 @onready var nav_links := $Waypoints_NavigationRegion3D/RoadLaneNavLinks
 @onready var path_start_marker := $PathStartMarker
 @onready var path_end_marker := $PathEndMarker
-@onready var nav_agent := $NavigationRegion3D/NavParent/NavigationAgent3D
+@onready var nav_parent := $NavParent
+@onready var nav_agent := $NavParent/NavigationAgent3D
 @onready var astar := AStar3D.new()
+
+@export var movement_speed := 50.0
+
 const road_waypoint_scene := preload("res://maps/pathfinding-demo/road_waypoint_mesh.tscn")
 const path_dot_scene := preload("pathfinding_dot.tscn")
 const yellow_debug_material := preload("res://assets/materials/debug_materials/flat_yellow.tres")
 const search_radius_squared := 100 ## Pathfinding will find the nearest graph point, and then try out other points within this radius
-const astar_point_interval := 10.0
+const astar_point_interval := 25.0
 var endpoints_dict: Dictionary[int, RoadLane] = {} ## Used to track the astar indices of the start & end points of each RoadLane
+var agent_is_navigating := false
 
 
 func _ready() -> void:
 	PauseAndHud.hide_hud()
+
+	nav_agent.velocity_computed.connect(func(safe_velocity: Vector3):
+		nav_parent.global_position += safe_velocity * movement_speed
+		nav_parent.transform.basis = nav_parent.transform.basis.looking_at(safe_velocity)
+	)
+	nav_agent.navigation_finished.connect(func():
+		stop_agent_navigating()
+	)
 
 	var waypoints_map_rid := NavigationServer3D.map_create()
 	NavigationServer3D.map_set_cell_size(waypoints_map_rid, 0.25)
@@ -31,68 +44,38 @@ func _ready() -> void:
 		var _previous_point_id: int
 
 		# Add navmesh island at intervals along the lane's curve, and connect them with navlinks
-		var _index: int = _increment_amount
-		while _index < len(_lane_points) - 1:
-			if len(_lane_points) - 1 - _index < _increment_amount / 2: # Jump to end if we're nearly there
-				_index = len(_lane_points) - 1
+		var _start_waypoint_mesh := road_waypoint_scene.instantiate()
+		nav_links.add_child(_start_waypoint_mesh)
+		_start_waypoint_mesh.global_position = _road_lane.to_global(_road_lane.curve.get_point_position(0))
 
+		var _idx: int = 0
+		var _previous_idx: int
+		while _idx < len(_lane_points) - 2:
 			var _waypoint_mesh := road_waypoint_scene.instantiate()
 			nav_links.add_child(_waypoint_mesh)
-			_waypoint_mesh.global_position = _road_lane.to_global(_road_lane.curve.get_baked_points()[_index])
+			_waypoint_mesh.global_position = _road_lane.to_global(_lane_points[_idx])
 
-			if _index >= _increment_amount:
-				var _lane_nav_link := NavigationLink3D.new()
-				_lane_nav_link.bidirectional = false
-				_lane_nav_link.travel_cost = 0.01
-				_lane_nav_link.start_position = _road_lane.to_global(_road_lane.curve.get_baked_points()[_index])
-				_lane_nav_link.end_position = _road_lane.to_global(_road_lane.curve.get_baked_points()[_index - _increment_amount])
-				nav_links.add_child(_lane_nav_link)
+			if _idx > 0:
+				var _start_position = _road_lane.to_global(_lane_points[_previous_idx])
+				var _end_position = _road_lane.to_global(_lane_points[_idx])
+				add_nav_link(_start_position, _end_position)
 
-			_index += _increment_amount
+			_previous_idx = _idx
+			_idx += _increment_amount
 
-	get_tree().create_timer(1.0).timeout.connect(func(): $Waypoints_NavigationRegion3D.bake_navigation_mesh())
-			#var _new_id := astar.get_available_point_id()
-			#astar.add_point(_new_id, _road_lane.to_global(_lane_points[_index]))
-			#var _marker := path_dot_scene.instantiate()
-			#_marker.add_to_group("AStarPathDot")
-			#nav_links.add_child(_marker)
-			#_marker.global_position = _road_lane.to_global(_lane_points[_index])
-			#_marker.set_meta("point_id", _new_id)
-			#if _index == 0: # If this is the first point on this lane, store its index
-				#endpoints_dict[_new_id] = _road_lane
-			#elif _index > 0: # Make a one-way connection from the previous point to this one
-				#astar.connect_points(_previous_point_id, _new_id, false)
-				#draw_line(astar.get_point_position(_previous_point_id), astar.get_point_position(_new_id))
-			#_previous_point_id = _new_id
-			#_index += _increment_amount
-		## Add astar point for end of lane's curve
-		#var _endpoint_id := astar.get_available_point_id()
-		#astar.add_point(_endpoint_id, _road_lane.to_global(_lane_points[len(_lane_points) - 1]))
-		#astar.connect_points(_previous_point_id, _endpoint_id, false)
-		#draw_line(astar.get_point_position(_previous_point_id), astar.get_point_position(_endpoint_id))
-		#endpoints_dict[_endpoint_id] = _road_lane
-		#var _end_marker := path_dot_scene.instantiate()
-		#nav_links.add_child(_end_marker)
-		#_end_marker.global_position = _road_lane.to_global(_lane_points[len(_lane_points) - 1])
-		#_end_marker.add_to_group("AStarPathDot")
-		#_end_marker.set_meta("point_id", _endpoint_id)
-#
-	#for _point_idx: int in endpoints_dict.keys():
-		#var _point_position := astar.get_point_position(_point_idx)
-		#var _lane := endpoints_dict[_point_idx]
-		#if _point_position == _lane.to_global(_lane.curve.get_point_position(0)):
-			#var _overlapping_indices := endpoints_dict.keys().filter(func(i):
-				#var _other_point_position := astar.get_point_position(i)
-				#var _other_lane := endpoints_dict[i]
-				#if _other_point_position != _other_lane.to_global(_other_lane.curve.get_point_position(_other_lane.curve.point_count - 1)):
-					#return false
-				#return _other_point_position.distance_squared_to(_point_position) < 1
-			#)
-			#for _overlapping_index in _overlapping_indices:
-				#astar.connect_points(_overlapping_index, _point_idx, false)
-				#draw_line(astar.get_point_position(_overlapping_index), astar.get_point_position(_point_idx))
+		var _start_position = _road_lane.to_global(_lane_points[_previous_idx])
+		var _end_position = _road_lane.to_global(_lane_points[len(_lane_points) - 1])
+		add_nav_link(_start_position, _end_position)
 
-	$NavLinks_Label3D.text += str(astar.get_point_count())
+	$Waypoints_NavigationRegion3D.bake_navigation_mesh()
+	$Road_NavigationRegion3D.bake_navigation_mesh()
+	return
+
+
+func _physics_process(delta: float) -> void:
+	if agent_is_navigating:
+		var new_velocity: Vector3 = nav_parent.global_position.direction_to(nav_agent.get_next_path_position()) * delta
+		nav_agent.set_velocity(new_velocity)
 	return
 
 
@@ -108,7 +91,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			path_start_marker.visible = true
 			path_start_marker.position = _result.position
 			path_start_marker.position.y += 2
-			plot_route()
+			nav_parent.global_position = path_start_marker.global_position
+			nav_agent.target_position = path_end_marker.global_position
+			start_agent_navigating()
 
 	if event.is_action_pressed("set_pathfind_end") and not event.is_echo():
 		var _space_state = get_world_3d().direct_space_state
@@ -121,53 +106,37 @@ func _unhandled_input(event: InputEvent) -> void:
 			path_end_marker.visible = true
 			path_end_marker.position = _result.position
 			path_end_marker.position.y += 2
-			plot_route()
+			path_start_marker.global_position = nav_parent.global_position
+			nav_agent.target_position = path_end_marker.global_position
+			start_agent_navigating()
+
+	if event.is_action_pressed("ui_accept") and not event.is_echo():
+		start_agent_navigating()
 	return
 
 
-func plot_route() -> void:
-	var _possible_starts: PackedInt64Array
-	var _possible_ends: PackedInt64Array
-	var _nearest_start := astar.get_point_position(astar.get_closest_point(path_start_marker.position))
-	var _nearest_end := astar.get_point_position(astar.get_closest_point(path_end_marker.position))
+func start_agent_navigating() -> void:
+	agent_is_navigating = true
+	print("start navigating")
+	return
 
-	for _id in astar.get_point_ids():
-		if astar.get_point_position(_id).distance_squared_to(_nearest_start) < search_radius_squared:
-			_possible_starts.push_back(_id)
-		if astar.get_point_position(_id).distance_squared_to(_nearest_end) < search_radius_squared:
-			_possible_ends.push_back(_id)
-	
-	var _lowest_cost := INF
-	var _id_path: PackedInt64Array
-	for _possible_start in _possible_starts:
-		for _possible_end in _possible_ends:
-			var _test_id_path := astar.get_id_path(_possible_start, _possible_end)
-			if len(_test_id_path) == 0: continue
-			var _cost := get_path_cost(_test_id_path)
-			if _cost < _lowest_cost:
-				_lowest_cost = _cost
-				_id_path = _test_id_path
 
-	var _markers := get_tree().get_nodes_in_group("AStarPathDot")
-	for _marker: MeshInstance3D in _markers:
-		if _marker.get_meta("point_id") in _id_path:
-			_marker.set_surface_override_material(0, yellow_debug_material)
-			_marker.scale = Vector3(2, 2, 2)
-		else:
-			_marker.set_surface_override_material(0, null)
-			_marker.scale = Vector3.ONE
+func stop_agent_navigating() -> void:
+	agent_is_navigating = false
+	print("stop navigating")
+	return
 
-	$Path_Start_Polyline3D.points.clear()
-	$Path_Start_Polyline3D.points.push_back(path_start_marker.position)
-	$Path_Start_Polyline3D.points.push_back(astar.get_point_position(_id_path[0]))
-	$Path_Start_Polyline3D.regenerateMesh()
-	$Path_End_Polyline3D.points.clear()
-	$Path_End_Polyline3D.points.push_back(astar.get_point_position(_id_path[len(_id_path) - 1]))
-	$Path_End_Polyline3D.points.push_back(path_end_marker.position)
-	$Path_End_Polyline3D.regenerateMesh()
 
-	$Path_Cost_Label3D.text = "Path cost: " + str(roundi(_lowest_cost))
-
+## Add a nav link to the scene. Start and end positions should be global
+func add_nav_link(_start_position: Vector3, _end_position: Vector3) -> void:
+	var _lane_nav_link := NavigationLink3D.new()
+	_lane_nav_link.bidirectional = false
+	_lane_nav_link.set_navigation_layer_value(1, false)
+	_lane_nav_link.set_navigation_layer_value(2, true)
+	_lane_nav_link.travel_cost = 0.01
+	_lane_nav_link.start_position = _start_position
+	_lane_nav_link.end_position = _end_position
+	nav_links.add_child(_lane_nav_link)
 	return
 
 

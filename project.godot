@@ -388,10 +388,13 @@ set_pathfind_end={
 
 3d_render/layer_11="ReceiveSkidmarks"
 3d_physics/layer_1="Terrain"
+3d_navigation/layer_1="Terrain"
 3d_physics/layer_2="Car"
+3d_navigation/layer_2="Road Waypoint"
 3d_physics/layer_3="Bounds"
 3d_physics/layer_4="Interactable"
 3d_physics/layer_5="Player"
+3d_navigation/layer_5="Road"
 3d_physics/layer_6="Latch"
 3d_physics/layer_7="PhysicsProp"
 3d_physics/layer_8="StaticScenery"
@@ -419,6 +422,8 @@ set_pathfind_end={
 
 3d/default_cell_size=1.0
 3d/default_cell_height=0.5
+3d/default_edge_connection_margin=5.0
+3d/default_link_connection_radius=2.0
 
 [physics]
 
