@@ -420,9 +420,8 @@ set_pathfind_end={
 
 [navigation]
 
-3d/default_cell_size=1.0
-3d/default_cell_height=0.5
-3d/default_edge_connection_margin=5.0
+3d/default_cell_height=0.1
+3d/default_edge_connection_margin=3.0
 3d/default_link_connection_radius=2.0
 
 [physics]

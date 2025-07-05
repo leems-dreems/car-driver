@@ -25,6 +25,7 @@ data = PackedVector3Array(-6.0012, 0, -12.0006, -4.0012, 0, -16.0012, -4.0012, 0
 
 [node name="4way_1x1" type="Node3D"]
 script = ExtResource("4")
+is_intersection = null
 create_geo = false
 material_resource = ExtResource("1")
 use_lowpoly_preview = true

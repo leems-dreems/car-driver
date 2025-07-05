@@ -21,6 +21,10 @@ When Road Generator supports RoadLanes with multiple entries/exits, the connecti
 - Add an "on-road" NavigationRegion3D on a second nav layer, with a navmesh that covers roads and nothing else.
 - Add a "waypoints" NavigationRegion3D on a third nav layer. The navmesh's collision mask should match a "road_waypoint" layer. Place small waypoint "islands" along each RoadLane, in a similar way to how astar points are placed. Set these islands to use the "road_waypoint" collision layer, and connect these islands using NavLinks that have a very low travel_cost.
 
-- The off-road nav layer is used when a vehicle is off-road or is navigating to an off-road position.
-- The on-road nav layer is used when a vehicle is on-road but isn't following traffic rules, e.g. a car in a race, a firetruck responding to a fire.
-- The waypoints nav layer is used when the vehicle has a set destination. When a vehicle hits a waypoint (i.e. its waypoint_reached signal goes off, and the waypoint's containing region/link is on the waypoints nav layer), it stops using all nav layers except the waypoints layer. When a waypoint-following vehicle gets close to its final position, it starts using the off-road nav layer again.
+
+todo next: remove the max edge length from roads, keep making tweaks to get paths to be more sensible. After that, add lane-following logic.
+
+
+# Ideas for the future
+
+Find a way to integrate an AStar3D instance into the Godot Navigation system. Look through astar-related PRs first
