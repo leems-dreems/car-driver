@@ -4,9 +4,9 @@ extends Node3D
 @onready var path_start_marker := $PathStartMarker
 @onready var path_end_marker := $PathEndMarker
 @onready var nav_parent := $NavParent
-@onready var nav_agent := $NavParent/NavigationAgent3D
+@onready var nav_agent: NavigationAgent3D = $NavParent/NavigationAgent3D
 
-@export var movement_speed := 50.0
+@export var movement_speed := 5.0
 
 const road_waypoint_scene := preload("res://maps/pathfinding-demo/road_waypoint_mesh.tscn")
 const search_radius_squared := 100 ## Pathfinding will find the nearest graph point, and then try out other points within this radius
@@ -25,17 +25,16 @@ func _ready() -> void:
 		nav_parent.transform.basis = nav_parent.transform.basis.looking_at(safe_velocity)
 	)
 	nav_agent.waypoint_reached.connect(func(details: Dictionary):
-		if details.owner is NavigationLink3D:
-			return
-		print("waypoint reached")
-		lane_to_follow = null
-		agent_is_following_link = false
+		match details.type:
+			0: # This segment of the path goes through a region
+				lane_to_follow = null
+				agent_is_following_link = false
 	)
 	nav_agent.link_reached.connect(func(details: Dictionary):
-		prints("link reached", details.owner)
 		lane_to_follow = details.owner.get_meta("RoadLane")
 		agent_is_following_link = true
 	)
+
 	nav_agent.navigation_finished.connect(func():
 		stop_agent_navigating()
 	)
@@ -84,9 +83,9 @@ func _ready() -> void:
 				_previous_idx = _idx
 				_idx += _increment_amount
 
-		var _start_position = road_lane.to_global(_lane_points[_previous_idx])
-		var _end_position = road_lane.to_global(_lane_points[len(_lane_points) - 1])
-		add_nav_link(_start_position, _end_position, road_lane, lane_parent)
+		var start_position = road_lane.to_global(_lane_points[_previous_idx])
+		var end_position = road_lane.to_global(_lane_points[len(_lane_points) - 1])
+		add_nav_link(start_position, end_position, road_lane, lane_parent)
 
 	$Waypoints_NavigationRegion3D.bake_navigation_mesh()
 	$Road_NavigationRegion3D.bake_navigation_mesh()
@@ -100,9 +99,8 @@ func _physics_process(delta: float) -> void:
 			agent_is_following_link = false
 		if agent_is_following_link:
 			var nearest_offset := lane_to_follow.curve.get_closest_offset(lane_to_follow.to_local(nav_parent.global_position))
-			var nearest_normal := lane_to_follow.curve.sample_baked_with_rotation(nearest_offset).basis.z
+			var nearest_normal := -(lane_to_follow.global_transform * lane_to_follow.curve.sample_baked_with_rotation(nearest_offset)).basis.z
 			var new_velocity: Vector3 = nearest_normal * delta
-			new_velocity = new_velocity.rotated(Vector3.UP, -lane_to_follow.global_rotation.y)
 			nav_agent.set_velocity(new_velocity)
 		else:
 			var new_velocity: Vector3 = nav_parent.global_position.direction_to(next_path_position) * delta
@@ -145,11 +143,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func start_agent_navigating() -> void:
 	agent_is_navigating = true
+	lane_to_follow = null
+	agent_is_following_link = false
 	return
 
 
 func stop_agent_navigating() -> void:
 	agent_is_navigating = false
+	lane_to_follow = null
 	agent_is_following_link = false
 	return
 

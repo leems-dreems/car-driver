@@ -8,7 +8,7 @@
 
 [sub_resource type="Curve3D" id="Curve3D_yq2lp"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -16, 0, 2, 3, 0, 3, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, -16),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -16, 0, 2, -3, 0, 3, 3, 0, -3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, -16),
 "tilts": PackedFloat32Array(0, 0, 0)
 }
 point_count = 3
@@ -25,7 +25,6 @@ data = PackedVector3Array(-6.0012, 0, -12.0006, -4.0012, 0, -16.0012, -4.0012, 0
 
 [node name="4way_1x1" type="Node3D"]
 script = ExtResource("4")
-is_intersection = null
 create_geo = false
 material_resource = ExtResource("1")
 use_lowpoly_preview = true
