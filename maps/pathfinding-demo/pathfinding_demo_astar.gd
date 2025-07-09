@@ -1,9 +1,9 @@
 extends Node3D
 
-@onready var nav_links := $NavigationRegion3D/RoadLaneNavLinks
+@onready var astar_markers := $AStarMarkers
 @onready var path_start_marker := $PathStartMarker
 @onready var path_end_marker := $PathEndMarker
-@onready var nav_agent := $NavigationRegion3D/NavParent/NavigationAgent3D
+@onready var nav_agent := $NavParent/NavigationAgent3D
 @onready var astar := AStar3D.new()
 const path_dot_scene := preload("pathfinding_dot.tscn")
 const yellow_debug_material := preload("res://assets/materials/debug_materials/flat_yellow.tres")
@@ -29,7 +29,7 @@ func _ready() -> void:
 			astar.add_point(_new_id, _road_lane.to_global(_lane_points[_index]))
 			var _marker := path_dot_scene.instantiate()
 			_marker.add_to_group("AStarPathDot")
-			nav_links.add_child(_marker)
+			astar_markers.add_child(_marker)
 			_marker.global_position = _road_lane.to_global(_lane_points[_index])
 			_marker.set_meta("point_id", _new_id)
 			if _index == 0: # If this is the first point on this lane, store its index
@@ -47,7 +47,7 @@ func _ready() -> void:
 		draw_line(astar.get_point_position(_previous_point_id), astar.get_point_position(_endpoint_id))
 		endpoints_dict[_endpoint_id] = _road_lane
 		var _end_marker := path_dot_scene.instantiate()
-		nav_links.add_child(_end_marker)
+		astar_markers.add_child(_end_marker)
 		_end_marker.global_position = _road_lane.to_global(_lane_points[len(_lane_points) - 1])
 		_end_marker.add_to_group("AStarPathDot")
 		_end_marker.set_meta("point_id", _endpoint_id)
@@ -148,7 +148,7 @@ func plot_route() -> void:
 
 func draw_line(_from: Vector3, _to: Vector3) -> void:
 	var _poly_line := Polyline3D.new()
-	nav_links.add_child(_poly_line)
+	astar_markers.add_child(_poly_line)
 	_poly_line.points.clear()
 	_poly_line.points.push_back(_from)
 	_poly_line.points.push_back(_to)
