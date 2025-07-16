@@ -18,6 +18,7 @@ var lane_to_follow: RoadLane = null
 var lanes_by_id: Dictionary[int, RoadLane]
 var endpoints_dict: Dictionary[int, RoadLane] = {} ## Used to track the astar indices of the start & end points of each RoadLane
 var id_path: PackedInt64Array ## AStar point IDs for the most recently plotted route
+var next_astar_id: int ## When following a lane, this is the ID of the next astar point on the path
 
 
 func _ready() -> void:
@@ -30,16 +31,12 @@ func _ready() -> void:
 		nav_parent.transform.basis = Basis.looking_at(safe_velocity)
 	)
 	nav_agent.navigation_finished.connect(func():
-		stop_agent_navigating()
 		if not id_path.is_empty():
 			if nav_parent.global_position.distance_to(astar.get_point_position(id_path[0])) < nav_agent.target_desired_distance * 2:
-				print("start of road route", str(lanes_by_id[id_path[0]]))
 				lane_to_follow = lanes_by_id[id_path[0]]
 				agent_is_following_lane = true
-			elif nav_parent.global_position.distance_to(astar.get_point_position(id_path[len(id_path) - 1])) < nav_agent.target_desired_distance * 2:
-				print("end of road route")
-				lane_to_follow = null
-				agent_is_following_lane = false
+		else:
+			stop_agent_navigating()
 	)
 
 	var _road_lanes: Array[Node] = find_children("*", "RoadLane", true, false)
@@ -105,12 +102,24 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if agent_is_following_lane:
+		if nav_parent.global_position.distance_to(astar.get_point_position(next_astar_id)) < nav_agent.path_desired_distance:
+			var _current_index := id_path.find(next_astar_id)
+			if _current_index < len(id_path) - 1:
+				next_astar_id = id_path[_current_index + 1]
+			else:
+				agent_leave_road()
+				clear_route()
+				nav_agent.target_position = path_end_marker.global_position
+				return
+
 		var nearest_offset := lane_to_follow.curve.get_closest_offset(lane_to_follow.to_local(nav_parent.global_position))
-		var nearest_normal := -(lane_to_follow.global_transform * lane_to_follow.curve.sample_baked_with_rotation(nearest_offset)).basis.z
-		var move_vector := nearest_normal * delta * movement_speed
+		var lane_follower_transform := lane_to_follow.global_transform * lane_to_follow.curve.sample_baked_with_rotation(nearest_offset)
+		var move_vector := -lane_follower_transform.basis.z * delta * movement_speed
+		nav_parent.global_transform = lane_follower_transform
 		nav_parent.global_position += move_vector
-		nav_parent.global_transform.basis = Basis.looking_at(move_vector.normalized())
-		# TODO: Switch to next lane at end
+		var remaining_length := lane_to_follow.curve.get_baked_length() - nearest_offset
+		if remaining_length < move_vector.length(): # We have reached the end of this lane
+			lane_to_follow = lanes_by_id[next_astar_id]
 	elif agent_is_navigating:
 		var next_path_position: Vector3 = nav_agent.get_next_path_position()
 		var new_velocity: Vector3 = nav_parent.global_position.direction_to(next_path_position) * delta
@@ -149,6 +158,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			path_start_marker.global_position = nav_parent.global_position
 			nav_agent.target_position = path_end_marker.global_position
 			id_path = plot_route()
+			nav_agent.target_position = astar.get_point_position(id_path[0])
 			start_agent_navigating()
 	return
 
@@ -185,14 +195,6 @@ func plot_route() -> PackedInt64Array:
 			_marker.set_surface_override_material(0, null)
 			_marker.scale = Vector3.ONE
 
-	#$Path_Start_Polyline3D.points.clear()
-	#$Path_Start_Polyline3D.points.push_back(path_start_marker.position)
-	#$Path_Start_Polyline3D.points.push_back(astar.get_point_position(_id_path[0]))
-	#$Path_Start_Polyline3D.regenerateMesh()
-	#$Path_End_Polyline3D.points.clear()
-	#$Path_End_Polyline3D.points.push_back(astar.get_point_position(_id_path[len(_id_path) - 1]))
-	#$Path_End_Polyline3D.points.push_back(path_end_marker.position)
-	#$Path_End_Polyline3D.regenerateMesh()
 	$Path_Cost_Label3D.text = "Path cost: " + str(roundi(_lowest_cost))
 
 	return _id_path
@@ -202,16 +204,27 @@ func clear_route() -> void:
 	id_path.clear()
 	return
 
-
+## Call this after setting id_path
 func start_agent_navigating() -> void:
+	print("Start navigating")
 	agent_is_navigating = true
 	lane_to_follow = null
 	agent_is_following_lane = false
+	next_astar_id = id_path[0]
 	return
 
 
 func stop_agent_navigating() -> void:
+	print("Stop navigating")
+	lane_to_follow = null
+	agent_is_following_lane = false
 	agent_is_navigating = false
+	return
+
+
+func agent_leave_road() -> void:
+	lane_to_follow = null
+	agent_is_following_lane = false
 	return
 
 
