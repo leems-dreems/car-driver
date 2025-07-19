@@ -1,3 +1,10 @@
+# Questions
+
+- How best to look for points on adjacent lanes, e.g. to link astar points and allow pathfinding to consider lane-switching?
+- How to consider all lanes on a road when choosing start & end points of astar path? Currently just searching for points in a 10m radius of closest point
+- How best to link next & prior lanes, including at intersections?
+
+
 # AStar3D pathfinding (Godot 4.4, Road Gen 0.7.0)
 
 Notes on using AStar3D with Road Generator to plot a road route between two points, which may or may not be on-road. This route can be used for high-level navigation, and possibly for displaying on a map if then converted to 2D.
@@ -21,8 +28,7 @@ When Road Generator supports RoadLanes with multiple entries/exits, the connecti
 - Add an "on-road" NavigationRegion3D on a second nav layer, with a navmesh that covers roads and nothing else.
 - Add a "waypoints" NavigationRegion3D on a third nav layer. The navmesh's collision mask should match a "road_waypoint" layer. Place small waypoint "islands" along each RoadLane, in a similar way to how astar points are placed. Set these islands to use the "road_waypoint" collision layer, and connect these islands using NavLinks that have a very low travel_cost.
 
-
-# Ideas for the future
+## Ideas for the future
 
 - Find a way to integrate an AStar3D instance into the Godot Navigation system. Look through astar-related PRs first
 - Work out how to align the edges of terrain & road navmeshes, to remove the need for edge connections
