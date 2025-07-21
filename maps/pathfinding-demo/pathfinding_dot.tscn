@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://easxevraxg8p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3um80"]
+shading_mode = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_hcugk"]
+material = SubResource("StandardMaterial3D_3um80")
+radius = 0.75
+height = 1.5
+
+[node name="PathfindingDot" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_hcugk")

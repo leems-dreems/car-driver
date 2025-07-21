@@ -88,6 +88,7 @@ Road="Vehicles will treat this surface as a road"
 Grass="Vehicles will treat this surface as grass"
 ExplosionCatcher="Used to fine-tune how explosions push larger objects"
 Building=""
+AStarPathDot="Dots used to draw AStar3D paths"
 
 [inkgd]
 
@@ -372,15 +373,28 @@ push_vehicle={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+set_pathfind_start={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+set_pathfind_end={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
 
 [layer_names]
 
 3d_render/layer_11="ReceiveSkidmarks"
 3d_physics/layer_1="Terrain"
+3d_navigation/layer_1="Terrain"
 3d_physics/layer_2="Car"
+3d_navigation/layer_2="Road Waypoint"
 3d_physics/layer_3="Bounds"
 3d_physics/layer_4="Interactable"
 3d_physics/layer_5="Player"
+3d_navigation/layer_5="Road"
 3d_physics/layer_6="Latch"
 3d_physics/layer_7="PhysicsProp"
 3d_physics/layer_8="StaticScenery"
@@ -390,6 +404,7 @@ push_vehicle={
 3d_physics/layer_12="TrafficSpawnPoint"
 3d_physics/layer_13="MovingScenery"
 3d_physics/layer_14="PhysicalTerrain"
+3d_physics/layer_15="Road"
 3d_physics/layer_16="ItemInsideVehicle"
 3d_physics/layer_17="CarryableItem"
 3d_physics/layer_18="CarBumper"
@@ -401,6 +416,13 @@ push_vehicle={
 3d_physics/layer_26="PedestrianSpawnPoint"
 3d_physics/layer_27="PedestrianAgent"
 3d_physics/layer_29="Bone"
+3d_physics/layer_30="RoadWaypoint"
+
+[navigation]
+
+3d/default_cell_height=0.1
+3d/default_edge_connection_margin=3.0
+3d/default_link_connection_radius=2.0
 
 [physics]
 

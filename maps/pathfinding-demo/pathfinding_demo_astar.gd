@@ -1,0 +1,258 @@
+extends Node3D
+
+@onready var astar_markers: Node3D = $AStarMarkers
+@onready var path_start_marker: MeshInstance3D = $PathStartMarker
+@onready var path_end_marker: MeshInstance3D = $PathEndMarker
+@onready var nav_parent: Node3D = $NavParent
+@onready var nav_agent: NavigationAgent3D = $NavParent/NavigationAgent3D
+@onready var astar := AStar3D.new()
+@onready var nav_map_rid: RID = $NavigationRegion3D.get_navigation_map()
+
+@export var movement_speed := 30
+
+const path_dot_scene := preload("pathfinding_dot.tscn")
+const yellow_debug_material := preload("res://assets/materials/debug_materials/flat_yellow.tres")
+const search_radius_squared := 100 ## Pathfinding will find the nearest graph point, and then try out other points within this radius
+const astar_point_interval := 10.0
+var agent_is_navigating := false
+var agent_is_following_lane := false
+var lane_to_follow: RoadLane = null
+var lanes_by_id: Dictionary[int, RoadLane]
+var endpoints_dict: Dictionary[int, RoadLane] = {} ## Used to track the astar indices of the start & end points of each RoadLane
+var id_path: PackedInt64Array ## AStar point IDs for the most recently plotted route
+var next_astar_id: int ## When following a lane, this is the ID of the next astar point on the path
+
+
+func _ready() -> void:
+	PauseAndHud.hide_hud()
+
+	nav_agent.velocity_computed.connect(func(safe_velocity: Vector3):
+		if safe_velocity == Vector3.ZERO:
+			return
+		nav_parent.global_position += safe_velocity * movement_speed
+		nav_parent.transform.basis = Basis.looking_at(safe_velocity)
+	)
+	nav_agent.navigation_finished.connect(func():
+		if not id_path.is_empty():
+			if nav_parent.global_position.distance_to(astar.get_point_position(id_path[0])) < nav_agent.target_desired_distance * 2:
+				lane_to_follow = lanes_by_id[id_path[0]]
+				agent_is_following_lane = true
+		else:
+			stop_agent_navigating()
+	)
+
+	var _road_lanes: Array[Node] = find_children("*", "RoadLane", true, false)
+	$RoadLanes_Label3D.text += str(len(_road_lanes))
+
+	for _road_lane: RoadLane in _road_lanes:
+		var _lane_points := _road_lane.curve.get_baked_points()
+		var _increment_amount := ceili(astar_point_interval / _road_lane.curve.bake_interval)
+		var _index: int = 0
+		var _previous_point_id: int
+
+		while _index < len(_lane_points) - 1: # Add astar points at intervals along the lane's curve
+			var _new_id := astar.get_available_point_id()
+			astar.add_point(_new_id, _road_lane.to_global(_lane_points[_index]))
+
+			var _marker := path_dot_scene.instantiate()
+			_marker.add_to_group("AStarPathDot")
+			astar_markers.add_child(_marker)
+			_marker.global_position = _road_lane.to_global(_lane_points[_index])
+			_marker.set_meta("point_id", _new_id)
+
+			lanes_by_id[_new_id] = _road_lane
+
+			if _index == 0: # If this is the first point on this lane, store its index
+				endpoints_dict[_new_id] = _road_lane
+			elif _index > 0: # Make a one-way connection from the previous point to this one
+				astar.connect_points(_previous_point_id, _new_id, false)
+			_previous_point_id = _new_id
+			_index += _increment_amount
+
+		# Add astar point for end of lane's curve
+		var _endpoint_id := astar.get_available_point_id()
+		astar.add_point(_endpoint_id, _road_lane.to_global(_lane_points[len(_lane_points) - 1]))
+		astar.connect_points(_previous_point_id, _endpoint_id, false)
+		endpoints_dict[_endpoint_id] = _road_lane
+		var _end_marker := path_dot_scene.instantiate()
+		astar_markers.add_child(_end_marker)
+		_end_marker.global_position = _road_lane.to_global(_lane_points[len(_lane_points) - 1])
+		_end_marker.add_to_group("AStarPathDot")
+		_end_marker.set_meta("point_id", _endpoint_id)
+		lanes_by_id[_endpoint_id] = _road_lane
+
+	for _point_idx: int in endpoints_dict.keys():
+		var _point_position := astar.get_point_position(_point_idx)
+		var _lane := endpoints_dict[_point_idx]
+		if _point_position == _lane.to_global(_lane.curve.get_point_position(0)):
+			var _overlapping_indices := endpoints_dict.keys().filter(func(i):
+				var _other_point_position := astar.get_point_position(i)
+				var _other_lane := endpoints_dict[i]
+				if _other_point_position != _other_lane.to_global(_other_lane.curve.get_point_position(_other_lane.curve.point_count - 1)):
+					return false
+				return _other_point_position.distance_squared_to(_point_position) < 1
+			)
+			for _overlapping_index in _overlapping_indices:
+				astar.connect_points(_overlapping_index, _point_idx, false)
+
+	$NavLinks_Label3D.text += str(astar.get_point_count())
+	return
+
+
+func _physics_process(delta: float) -> void:
+	if agent_is_following_lane:
+		if nav_parent.global_position.distance_to(astar.get_point_position(next_astar_id)) < nav_agent.path_desired_distance:
+			var _current_index := id_path.find(next_astar_id)
+			if _current_index < len(id_path) - 1:
+				next_astar_id = id_path[_current_index + 1]
+			else:
+				agent_leave_road()
+				clear_route()
+				nav_agent.target_position = path_end_marker.global_position
+				return
+
+		var nearest_offset := lane_to_follow.curve.get_closest_offset(lane_to_follow.to_local(nav_parent.global_position))
+		var lane_follower_transform := lane_to_follow.global_transform * lane_to_follow.curve.sample_baked_with_rotation(nearest_offset)
+		var move_vector := -lane_follower_transform.basis.z * delta * movement_speed
+		nav_parent.global_transform = lane_follower_transform
+		nav_parent.global_position += move_vector
+		var remaining_length := lane_to_follow.curve.get_baked_length() - nearest_offset
+		if remaining_length < move_vector.length(): # We have reached the end of this lane
+			lane_to_follow = lanes_by_id[next_astar_id]
+	elif agent_is_navigating:
+		var next_path_position: Vector3 = nav_agent.get_next_path_position()
+		var new_velocity: Vector3 = nav_parent.global_position.direction_to(next_path_position) * delta
+		nav_agent.set_velocity(new_velocity)
+	return
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("set_pathfind_start") and not event.is_echo():
+		var _space_state = get_world_3d().direct_space_state
+		var _ray_params := PhysicsRayQueryParameters3D.new()
+		_ray_params.from = $Camera3D.project_ray_origin(DisplayServer.mouse_get_position())
+		_ray_params.to = _ray_params.from + $Camera3D.project_ray_normal(get_viewport().get_mouse_position()) * $Camera3D.far
+
+		var _result = _space_state.intersect_ray(_ray_params)
+		if _result.size() > 0:
+			path_start_marker.visible = true
+			path_start_marker.position = _result.position
+			path_start_marker.position.y += 2
+			nav_parent.global_position = path_start_marker.global_position
+			id_path = plot_route()
+
+			if get_nav_path_cost(get_nav_path(path_start_marker.global_position, path_end_marker.global_position)) < get_nav_path_cost(get_nav_path(path_start_marker.global_position, astar.get_point_position(id_path[0]))):
+				nav_agent.target_position = path_end_marker.global_position
+			else:
+				nav_agent.target_position = astar.get_point_position(id_path[0])
+			start_agent_navigating()
+
+	if event.is_action_pressed("set_pathfind_end") and not event.is_echo():
+		var _space_state = get_world_3d().direct_space_state
+		var _ray_params := PhysicsRayQueryParameters3D.new()
+		_ray_params.from = $Camera3D.project_ray_origin(DisplayServer.mouse_get_position())
+		_ray_params.to = _ray_params.from + $Camera3D.project_ray_normal(get_viewport().get_mouse_position()) * $Camera3D.far
+
+		var _result = _space_state.intersect_ray(_ray_params)
+		if _result.size() > 0:
+			path_end_marker.visible = true
+			path_end_marker.position = _result.position
+			path_end_marker.position.y += 2
+			path_start_marker.global_position = nav_parent.global_position
+			nav_agent.target_position = path_end_marker.global_position
+			id_path = plot_route()
+			nav_agent.target_position = astar.get_point_position(id_path[0])
+			start_agent_navigating()
+	return
+
+
+func plot_route() -> PackedInt64Array:
+	var _possible_starts: PackedInt64Array
+	var _possible_ends: PackedInt64Array
+	var _nearest_start := astar.get_point_position(astar.get_closest_point(path_start_marker.position))
+	var _nearest_end := astar.get_point_position(astar.get_closest_point(path_end_marker.position))
+
+	for _id in astar.get_point_ids():
+		if astar.get_point_position(_id).distance_squared_to(_nearest_start) < search_radius_squared:
+			_possible_starts.push_back(_id)
+		if astar.get_point_position(_id).distance_squared_to(_nearest_end) < search_radius_squared:
+			_possible_ends.push_back(_id)
+
+	var _lowest_cost := INF
+	var _id_path: PackedInt64Array
+	for _possible_start in _possible_starts:
+		for _possible_end in _possible_ends:
+			var _test_id_path := astar.get_id_path(_possible_start, _possible_end)
+			if len(_test_id_path) == 0: continue
+			var _cost := get_astar_path_cost(_test_id_path)
+			if _cost < _lowest_cost:
+				_lowest_cost = _cost
+				_id_path = _test_id_path
+
+	var _markers := get_tree().get_nodes_in_group("AStarPathDot")
+	for _marker: MeshInstance3D in _markers:
+		if _marker.get_meta("point_id") in _id_path:
+			_marker.set_surface_override_material(0, yellow_debug_material)
+			_marker.scale = Vector3(2, 2, 2)
+		else:
+			_marker.set_surface_override_material(0, null)
+			_marker.scale = Vector3.ONE
+
+	$Path_Cost_Label3D.text = "Path cost: " + str(roundi(_lowest_cost))
+
+	return _id_path
+
+
+func clear_route() -> void:
+	id_path.clear()
+	return
+
+## Call this after setting id_path
+func start_agent_navigating() -> void:
+	agent_is_navigating = true
+	lane_to_follow = null
+	agent_is_following_lane = false
+	next_astar_id = id_path[0]
+	return
+
+
+func stop_agent_navigating() -> void:
+	lane_to_follow = null
+	agent_is_following_lane = false
+	agent_is_navigating = false
+	return
+
+
+func agent_leave_road() -> void:
+	lane_to_follow = null
+	agent_is_following_lane = false
+	return
+
+
+func get_astar_path_cost(id_path: PackedInt64Array) -> float:
+	var _path_cost := 0.0
+	var i: int = 0
+	while i < len(id_path) - 2:
+		_path_cost += astar.get_point_position(id_path[i]).distance_to(astar.get_point_position(id_path[i + 1])) * astar.get_point_weight_scale(id_path[i + 1])
+		i += 1
+	return _path_cost
+
+
+func get_nav_path(from: Vector3, to: Vector3) -> PackedVector3Array:
+	return NavigationServer3D.map_get_path(nav_map_rid, from, to, false)
+
+
+func get_nav_path_cost(nav_path: PackedVector3Array) -> float:
+	if len(nav_path) == 0 or len(nav_path) <= nav_agent.get_current_navigation_path_index():
+		return -1
+	var current_index := 0
+	var current_pos := nav_path[nav_agent.get_current_navigation_path_index()]
+	var result := nav_parent.global_position.distance_to(current_pos)
+
+	for i in nav_path:
+		if current_index <= nav_agent.get_current_navigation_path_index():
+			current_index += 1
+			continue
+		result += current_pos.distance_to(i)
+		current_pos = i
+	return result

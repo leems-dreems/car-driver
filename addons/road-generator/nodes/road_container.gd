@@ -28,6 +28,15 @@ const RoadSegment = preload("res://addons/road-generator/nodes/road_segment.gd")
 const RoadMaterial = preload("res://addons/road-generator/resources/road_texture.material")
 
 # ------------------------------------------------------------------------------
+# Stop-gap intersection solution
+@export_group("Intersection")
+# ------------------------------------------------------------------------------
+
+## Indicate that this RoadContainer is an intersection, for navigation purposes
+@export var is_intersection := false
+
+
+# ------------------------------------------------------------------------------
 # How road meshes are generated
 @export_group("Road Generation")
 # ------------------------------------------------------------------------------

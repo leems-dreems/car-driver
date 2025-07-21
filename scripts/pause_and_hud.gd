@@ -64,6 +64,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(_delta: float) -> void:
+	if player == null:
+		return
 	if input_switch_timer == null:
 		match last_input_method:
 			INPUT_METHODS.GAMEPAD:
@@ -429,6 +431,16 @@ func connect_to_player(_player: Player) -> void:
 		$PausedUI/PauseMenu/MarginContainer/VBoxContainer/PauseMenuButtons/ResetButton.disabled = false
 		set_handbrake_prompt_visible(false)
 	)
+	return
+
+
+func show_hud() -> void:
+	$HUD.visible = true
+	return
+
+
+func hide_hud() -> void:
+	$HUD.visible = false
 	return
 
 

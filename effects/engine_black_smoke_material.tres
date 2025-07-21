@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=13 format=3 uid="uid://bclipohnbqlxm"]
 
-[ext_resource type="Shader" uid="uid://cntuwy6tbecnw" path="res://effects/ExplosionShader.tres" id="1_x57bo"]
+[ext_resource type="Shader" uid="uid://ompvsx8x60m4" path="res://effects/ExplosionShader.tres" id="1_x57bo"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y7t3k"]
 load_path = "res://.godot/imported/normal+.png-cbb5d7f0255a83c76cbcd41cac168450.s3tc.ctex"

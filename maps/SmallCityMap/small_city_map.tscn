@@ -5,12 +5,12 @@
 [ext_resource type="PhysicsMaterial" uid="uid://xvg1njhe0wed" path="res://assets/materials/road_physics_material.tres" id="3_csym3"]
 [ext_resource type="PackedScene" uid="uid://bjybpumswq7gl" path="res://cars/compact/compact.tscn" id="8_dvnrp"]
 [ext_resource type="PackedScene" uid="uid://c1eqbtcdp18ii" path="res://Player/Player.tscn" id="10_b2bvt"]
-[ext_resource type="Script" uid="uid://dfnxcp3e87cs7" path="res://addons/road-generator/nodes/road_manager.gd" id="12_n3gia"]
-[ext_resource type="Script" uid="uid://dtkficyeok8ag" path="res://addons/road-generator/nodes/road_container.gd" id="13_fg0qv"]
+[ext_resource type="Script" uid="uid://cxd75wc2j30cy" path="res://addons/road-generator/nodes/road_manager.gd" id="12_n3gia"]
+[ext_resource type="Script" uid="uid://5kw6npr04uvt" path="res://addons/road-generator/nodes/road_container.gd" id="13_fg0qv"]
 [ext_resource type="PackedScene" uid="uid://dfcsj3jjvi65m" path="res://cars/Van/van.tscn" id="13_pjkok"]
 [ext_resource type="PackedScene" uid="uid://2g4icv655eh3" path="res://maps/common/4_way_junction.tscn" id="14_4imh1"]
-[ext_resource type="Material" uid="uid://c7ote2txeba1m" path="res://addons/road-generator/resources/road_texture.material" id="14_vie48"]
-[ext_resource type="Script" uid="uid://dik5hge5m61yr" path="res://addons/road-generator/nodes/road_point.gd" id="15_0gxjo"]
+[ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="14_vie48"]
+[ext_resource type="Script" uid="uid://balbhwnutp4a" path="res://addons/road-generator/nodes/road_point.gd" id="15_0gxjo"]
 [ext_resource type="PackedScene" uid="uid://4whew70l87gh" path="res://maps/common/t_junction.tscn" id="15_fat5n"]
 [ext_resource type="Script" uid="uid://bpqfdow2bhxh6" path="res://traffic/traffic_path.gd" id="16_k8s8v"]
 [ext_resource type="PhysicsMaterial" uid="uid://cc6punypby5f5" path="res://assets/materials/building_physics_material.tres" id="23_s8icf"]
@@ -332,6 +332,7 @@ directional_shadow_max_distance = 200.0
 
 [node name="RoadManager" type="Node3D" parent="."]
 script = ExtResource("12_n3gia")
+material_resource = ExtResource("14_vie48")
 
 [node name="Short_Road" type="Node3D" parent="RoadManager"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -96, 0.5, -66)
@@ -360,13 +361,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.907
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_E" type="Path3D" parent="RoadManager/Short_Road"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -407,13 +408,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.907
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_S" type="Path3D" parent="RoadManager/Short_Road2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -454,13 +455,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.907
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_S" type="Path3D" parent="RoadManager/Short_Road3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -501,13 +502,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.907
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_S" type="Path3D" parent="RoadManager/Short_Road4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -548,13 +549,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.907
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_S" type="Path3D" parent="RoadManager/Short_Road5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -595,13 +596,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.907
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_E" type="Path3D" parent="RoadManager/Short_Road6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -642,13 +643,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.907
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_S" type="Path3D" parent="RoadManager/Short_Road7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -689,13 +690,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.907
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_S" type="Path3D" parent="RoadManager/Short_Road8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -736,13 +737,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.907
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_E" type="Path3D" parent="RoadManager/Short_Road9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -783,13 +784,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.907
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_E" type="Path3D" parent="RoadManager/Short_Road10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -819,25 +820,25 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 0, 0, 0)
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+next_mag = 32.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 next_pt_init = NodePath("../RP_002")
-next_mag = 32.0
 
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Curved_Road"]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -52, 0, 52)
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 32.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 32.0
-next_mag = 8.0
 
 [node name="TP_NE" type="Path3D" parent="RoadManager/Short_Curved_Road"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -867,25 +868,25 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 0, 0, 0)
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+next_mag = 32.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 next_pt_init = NodePath("../RP_002")
-next_mag = 32.0
 
 [node name="RP_002" type="Node3D" parent="RoadManager/Short_Curved_Road2"]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -52, 0, 52)
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 32.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 32.0
-next_mag = 8.0
 
 [node name="TP_SE" type="Path3D" parent="RoadManager/Short_Curved_Road2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -926,13 +927,13 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 16.0
+next_mag = 16.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 16.0
-next_mag = 16.0
 
 [node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -973,13 +974,13 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 16.0
+next_mag = 16.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 16.0
-next_mag = 16.0
 
 [node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -1020,13 +1021,13 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 16.0
+next_mag = 16.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 16.0
-next_mag = 16.0
 
 [node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -1067,13 +1068,13 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -96, 0
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 16.0
+next_mag = 16.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 16.0
-next_mag = 16.0
 
 [node name="TP_East" type="Path3D" parent="RoadManager/Medium_Road4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -1114,13 +1115,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_S" type="Path3D" parent="RoadManager/Long_Road"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -1163,13 +1164,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 8.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
-prior_mag = 8.0
-next_mag = 8.0
 
 [node name="TP_S" type="Path3D" parent="RoadManager/Long_Road2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -1211,27 +1212,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 140)
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 32.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
 next_pt_init = NodePath("../RP_003")
-prior_mag = 8.0
-next_mag = 32.0
 
 [node name="RP_003" type="Node3D" parent="RoadManager/Long_Curved_Road"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 52, 0, 192)
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 32.0
+next_mag = 12.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_002")
-prior_mag = 32.0
-next_mag = 12.0
 
 [node name="TP_SE" type="Path3D" parent="RoadManager/Long_Curved_Road"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -1273,27 +1274,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 140)
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 8.0
+next_mag = 32.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_001")
 next_pt_init = NodePath("../RP_003")
-prior_mag = 8.0
-next_mag = 32.0
 
 [node name="RP_003" type="Node3D" parent="RoadManager/Long_Curved_Road2"]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -52, 0, 192)
 script = ExtResource("15_0gxjo")
 traffic_dir = Array[int]([2, 1])
 lanes = Array[int]([5, 5])
+prior_mag = 32.0
+next_mag = 12.0
 lane_width = 6.0
 shoulder_width_l = 4.0
 shoulder_width_r = 4.0
 gutter_profile = Vector2(5, -1)
 prior_pt_init = NodePath("../RP_002")
-prior_mag = 32.0
-next_mag = 12.0
 
 [node name="TP_SW" type="Path3D" parent="RoadManager/Long_Curved_Road2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
