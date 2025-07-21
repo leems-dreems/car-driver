@@ -1,6 +1,7 @@
 # Questions
 
 - How best to look for points on adjacent lanes, e.g. to link astar points and allow pathfinding to consider lane-switching?
+- Possibly merge lanes on multi-lane roads for astar purposes - e.g. an 8-lane highway would be treated as a 2-lane road for pathfinding
 - How to consider all lanes on a road when choosing start & end points of astar path? Currently just searching for points in a 10m radius of closest point
 - How best to link next & prior lanes, including at intersections?
 
