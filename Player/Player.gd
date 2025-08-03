@@ -140,10 +140,7 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera_controller.setup(self)
 	PropRespawnManager.camera = camera_controller.camera
-	TrafficManager.camera = camera_controller.camera
 	PedestrianManager.camera = camera_controller.camera
-	TrafficManager.spawn_include_area = $CameraController/PlayerCamera/TrafficSpawnIncludeArea
-	TrafficManager.spawn_exclude_area = $CameraController/PlayerCamera/TrafficSpawnExcludeArea
 	PedestrianManager.spawn_include_area = $CameraController/PlayerCamera/PedestrianSpawnIncludeArea
 	camera_controller.top_level = true
 	$CameraController/PlayerCamera.top_level = true
@@ -231,8 +228,6 @@ func _on_body_entered(_body: Node) -> void:
 			go_limp()
 			if _body is DriveableVehicle:
 				_body.request_stop()
-			elif _body.get_parent() is SpinningWhacker:
-				_body.get_parent().request_stop()
 	return
 
 

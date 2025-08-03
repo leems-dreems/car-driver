@@ -32,6 +32,7 @@ func _ready() -> void:
 	reload_graph()
 	return
 
+
 ## Reload our astar graph.
 func reload_graph() -> void:
 	if not is_instance_valid(road_manager):
@@ -93,6 +94,7 @@ func reload_graph() -> void:
 	prints(str(astar3d.get_point_count()), "points in AStar3D graph")
 	return
 
+
 ## Return an array of astar point ids, representing a path through our astar graph.
 func get_route(from: Vector3, to: Vector3) -> PackedInt64Array:
 	var possible_starts: PackedInt64Array
@@ -128,6 +130,7 @@ func get_route(from: Vector3, to: Vector3) -> PackedInt64Array:
 
 	prints("Path cost:", str(roundi(lowest_cost)))
 	return shortest_id_path
+
 
 ## Calculate the cost of a given astar path.
 func get_path_cost(_id_path: PackedInt64Array) -> float:

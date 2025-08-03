@@ -6,10 +6,7 @@ const compact_car_scene := preload("res://cars/compact/compact.tscn")
 
 
 func _ready() -> void:
-	TrafficManager.vehicle_container_node = $VehicleContainer
-	TrafficManager.add_spawn_points()
 	PedestrianManager.pedestrian_container_node = $PedestrianContainer
-	PedestrianManager.add_spawn_points()
 	Game.physics_item_container = $PhysicsItemContainer
 	Game.current_environment = $WorldEnvironment
 	Game.current_sun = $DirectionalLight3D
