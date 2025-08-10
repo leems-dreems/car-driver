@@ -5,6 +5,20 @@ enum SurfaceTypes { ROAD = 0, GRASS = 1, DIRT = 2, SAND = 3, ROCK = 4 }
 @export var lights_on := false
 @export var downforce_multiplier := 4.0
 @export var owned_by_player := false
+## Damage this vehicle can take before setting on fire and exploding
+@export var max_hit_points := 5.0
+@export var impact_force_threshold_1 := 0.3
+@export var impact_force_threshold_2 := 0.6
+@export var impact_force_threshold_3 := 1.5
+@export var astar_traffic_manager: AStarTrafficManager
+@export var astar_road_agent: AStarRoadAgent
+@export var contextual_steering_unit: ContextualSteeringUnit
+@export var daily_routine: DailyRoutine
+@export var brake_light_left_mesh: MeshInstance3D
+@export var brake_light_right_mesh: MeshInstance3D
+@export var reverse_light_left_mesh: MeshInstance3D
+@export var reverse_light_right_mesh: MeshInstance3D
+@export var explosion_position: Vector3
 var vehicle_name := "[Vehicle Name]"
 var vehicle_category := "[Vehicle Category]"
 var headlight_energy := 10.0
@@ -16,14 +30,6 @@ var is_ai_on := false
 var waiting_to_respawn := false
 ## Vehicle will calculate & play "scrape" effects if this is true
 var play_scrape_effects := false
-## Damage this vehicle can take before setting on fire and exploding
-@export var max_hit_points := 5.0
-@export var impact_force_threshold_1 := 0.3
-@export var impact_force_threshold_2 := 0.6
-@export var impact_force_threshold_3 := 1.5
-@export var astar_traffic_manager: AStarTrafficManager
-@export var astar_road_agent: AStarRoadAgent
-@export var contextual_steering_unit: ContextualSteeringUnit
 var current_hit_points: float
 var has_caught_fire := false
 ## Timer that runs after this vehicle is requested to stop by something else
@@ -63,10 +69,6 @@ var show_debug_label := false
 #@onready var brake_light_right: OmniLight3D = $BrakeLightRight
 #@onready var reverse_light_left: OmniLight3D = $ReverseLightLeft
 #@onready var reverse_light_right: OmniLight3D = $ReverseLightRight
-@export var brake_light_left_mesh: MeshInstance3D
-@export var brake_light_right_mesh: MeshInstance3D
-@export var reverse_light_left_mesh: MeshInstance3D
-@export var reverse_light_right_mesh: MeshInstance3D
 # Audio streams
 @onready var collision_audio_1: AudioStreamPlayer3D = $AudioStreams/CollisionAudio1
 # Particle emitters
@@ -78,22 +80,31 @@ var show_debug_label := false
 # Explosion
 var explosion: Explosion = null
 const explosion_scene := preload("res://effects/explosion.tscn")
-@export var explosion_position: Vector3
 
 
 func _ready () -> void:
 	super()
+
+	Game.minute_reached.connect(func(minute: int):
+		if daily_routine.appointments.has(minute):
+			start_navigating_to(get_node(daily_routine.appointments[minute]).global_position)
+	)
+
 	if show_debug_label:
 		debug_label.visible = true
+
 	if lights_on:
 		headlight_left.light_energy = headlight_energy
 		headlight_right.light_energy = headlight_energy
+
 	handbrake_input = 1.0
 	previous_handbrake_input = handbrake_input
 	current_hit_points = max_hit_points
+
 	await get_tree().create_timer(0.2).timeout
 	unfreeze_bodies()
 	linear_velocity = starting_velocity
+	
 	return
 
 
@@ -156,9 +167,6 @@ func _physics_process(delta: float) -> void:
 	previous_handbrake_input = handbrake_input
 
 	contextual_steering_unit.current_speed = speed
-
-	if astar_road_agent and len(astar_road_agent.id_path) > 0:
-		set_inputs()
 	return
 
 
@@ -415,6 +423,7 @@ func request_stop(duration: float = 5.0) -> void:
 		)
 	else:
 		request_stop_timer.time_left = duration
+	return
 
 
 ## Virtual method. Override to e.g. play FX, detach parts when colliding

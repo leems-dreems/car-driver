@@ -1,7 +1,8 @@
-[gd_scene load_steps=26 format=3 uid="uid://exf86gwk5hkg"]
+[gd_scene load_steps=37 format=3 uid="uid://exf86gwk5hkg"]
 
 [ext_resource type="Script" uid="uid://dd46yjx1b2sr7" path="res://maps/routines_demo/routines_demo.gd" id="1_8xtrp"]
 [ext_resource type="Terrain3DAssets" uid="uid://krekjaqgod8q" path="res://maps/BinRoninIsland/terrain_3d_assets.tres" id="2_k3r5v"]
+[ext_resource type="Script" uid="uid://bmgsab3ou86nj" path="res://maps/routines_demo/routine_resource.gd" id="2_nkcux"]
 [ext_resource type="Script" uid="uid://cxd75wc2j30cy" path="res://addons/road-generator/nodes/road_manager.gd" id="3_8xtrp"]
 [ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="4_pcm1u"]
 [ext_resource type="Script" uid="uid://5kw6npr04uvt" path="res://addons/road-generator/nodes/road_container.gd" id="5_nkcux"]
@@ -85,6 +86,113 @@ background_mode = 2
 sky = SubResource("Sky_en3uj")
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.005
+
+[sub_resource type="Resource" id="Resource_nkcux"]
+script = ExtResource("2_nkcux")
+appointments = Dictionary[int, NodePath]({
+700: NodePath("../../Landmarks/CafeLabel"),
+900: NodePath("../../Landmarks/EggShopLabel"),
+1300: NodePath("../../Landmarks/CafeLabel"),
+1400: NodePath("../../Landmarks/EggShopLabel"),
+1700: NodePath("../../Landmarks/HousesLabel")
+})
+metadata/_custom_type_script = "uid://bmgsab3ou86nj"
+
+[sub_resource type="Resource" id="Resource_yab0n"]
+script = ExtResource("2_nkcux")
+appointments = Dictionary[int, NodePath]({
+700: NodePath("../../Landmarks/CafeLabel"),
+900: NodePath("../../Landmarks/BeachLabel"),
+1300: NodePath("../../Landmarks/CafeLabel"),
+1400: NodePath("../../Landmarks/FerrisWheelLabel"),
+1700: NodePath("../../Landmarks/HousesLabel")
+})
+metadata/_custom_type_script = "uid://bmgsab3ou86nj"
+
+[sub_resource type="Resource" id="Resource_6d1y5"]
+script = ExtResource("2_nkcux")
+appointments = Dictionary[int, NodePath]({
+700: NodePath("../../Landmarks/CafeLabel"),
+900: NodePath("../../Landmarks/ParkLabel"),
+1300: NodePath("../../Landmarks/CafeLabel"),
+1400: NodePath("../../Landmarks/GoKartsLabel"),
+1700: NodePath("../../Landmarks/HousesLabel")
+})
+metadata/_custom_type_script = "uid://bmgsab3ou86nj"
+
+[sub_resource type="Resource" id="Resource_iouia"]
+script = ExtResource("2_nkcux")
+appointments = Dictionary[int, NodePath]({
+700: NodePath("../../Landmarks/CafeLabel"),
+900: NodePath("../../Landmarks/BeanShopLabel"),
+1300: NodePath("../../Landmarks/CafeLabel"),
+1400: NodePath("../../Landmarks/BeanShopLabel"),
+1700: NodePath("../../Landmarks/HousesLabel")
+})
+metadata/_custom_type_script = "uid://bmgsab3ou86nj"
+
+[sub_resource type="Resource" id="Resource_mcro2"]
+script = ExtResource("2_nkcux")
+appointments = Dictionary[int, NodePath]({
+700: NodePath("../../Landmarks/CafeLabel"),
+900: NodePath("../../Landmarks/LighthouseLabel"),
+1300: NodePath("../../Landmarks/CafeLabel"),
+1400: NodePath("../../Landmarks/LighthouseLabel"),
+1700: NodePath("../../Landmarks/HousesLabel")
+})
+metadata/_custom_type_script = "uid://bmgsab3ou86nj"
+
+[sub_resource type="Resource" id="Resource_rosoy"]
+script = ExtResource("2_nkcux")
+appointments = Dictionary[int, NodePath]({
+700: NodePath("../../Landmarks/CafeLabel"),
+900: NodePath("../../Landmarks/ChipShopLabel"),
+1300: NodePath("../../Landmarks/CafeLabel"),
+1400: NodePath("../../Landmarks/ChipShopLabel"),
+1700: NodePath("../../Landmarks/HousesLabel")
+})
+metadata/_custom_type_script = "uid://bmgsab3ou86nj"
+
+[sub_resource type="Resource" id="Resource_dmr2u"]
+script = ExtResource("2_nkcux")
+appointments = Dictionary[int, NodePath]({
+700: NodePath("../../Landmarks/CafeLabel"),
+900: NodePath("../../Landmarks/FishShopLabel"),
+1300: NodePath("../../Landmarks/CafeLabel"),
+1400: NodePath("../../Landmarks/FishShopLabel"),
+1700: NodePath("../../Landmarks/HousesLabel")
+})
+metadata/_custom_type_script = "uid://bmgsab3ou86nj"
+
+[sub_resource type="Resource" id="Resource_ikjy1"]
+script = ExtResource("2_nkcux")
+appointments = Dictionary[int, NodePath]({
+700: NodePath("../../Landmarks/CafeLabel"),
+900: NodePath("../../Landmarks/BeachLabel"),
+1300: NodePath("../../Landmarks/CafeLabel"),
+1400: NodePath("../../Landmarks/BeachLabel"),
+1700: NodePath("../../Landmarks/HousesLabel")
+})
+metadata/_custom_type_script = "uid://bmgsab3ou86nj"
+
+[sub_resource type="Resource" id="Resource_7qo8y"]
+script = ExtResource("2_nkcux")
+appointments = Dictionary[int, NodePath]({
+700: NodePath("../../Landmarks/CafeLabel"),
+900: NodePath("../../Landmarks/FerrisWheelLabel"),
+1300: NodePath("../../Landmarks/CafeLabel"),
+1400: NodePath("../../Landmarks/FerrisWheelLabel"),
+1700: NodePath("../../Landmarks/HousesLabel")
+})
+metadata/_custom_type_script = "uid://bmgsab3ou86nj"
+
+[sub_resource type="Resource" id="Resource_hvse0"]
+script = ExtResource("2_nkcux")
+appointments = Dictionary[int, NodePath]({
+700: NodePath("../../Landmarks/CafeLabel"),
+1700: NodePath("../../Landmarks/HousesLabel")
+})
+metadata/_custom_type_script = "uid://bmgsab3ou86nj"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nkcux"]
 size = Vector3(2, 2, 4)
@@ -1135,8 +1243,108 @@ transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, -35, 13,
 astar_traffic_manager = NodePath("../../AStarTrafficManager")
 astar_road_agent = NodePath("../AStarRoadAgent")
 contextual_steering_unit = NodePath("ContextualSteeringUnit")
+daily_routine = SubResource("Resource_nkcux")
 
 [node name="ContextualSteeringUnit" type="Node3D" parent="VehicleContainer/CompactCar"]
+script = ExtResource("12_nkcux")
+metadata/_custom_type_script = "uid://q1kt7prckrew"
+
+[node name="CompactCar2" parent="VehicleContainer" node_paths=PackedStringArray("astar_traffic_manager", "astar_road_agent", "contextual_steering_unit") instance=ExtResource("11_rosoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -178, 33, 60)
+astar_traffic_manager = NodePath("../../AStarTrafficManager")
+astar_road_agent = NodePath("../AStarRoadAgent2")
+contextual_steering_unit = NodePath("ContextualSteeringUnit")
+daily_routine = SubResource("Resource_yab0n")
+
+[node name="ContextualSteeringUnit" type="Node3D" parent="VehicleContainer/CompactCar2"]
+script = ExtResource("12_nkcux")
+metadata/_custom_type_script = "uid://q1kt7prckrew"
+
+[node name="CompactCar3" parent="VehicleContainer" node_paths=PackedStringArray("astar_traffic_manager", "astar_road_agent", "contextual_steering_unit") instance=ExtResource("11_rosoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 133, 18, 0)
+astar_traffic_manager = NodePath("../../AStarTrafficManager")
+astar_road_agent = NodePath("../AStarRoadAgent3")
+contextual_steering_unit = NodePath("ContextualSteeringUnit")
+daily_routine = SubResource("Resource_6d1y5")
+
+[node name="ContextualSteeringUnit" type="Node3D" parent="VehicleContainer/CompactCar3"]
+script = ExtResource("12_nkcux")
+metadata/_custom_type_script = "uid://q1kt7prckrew"
+
+[node name="CompactCar4" parent="VehicleContainer" node_paths=PackedStringArray("astar_traffic_manager", "astar_road_agent", "contextual_steering_unit") instance=ExtResource("11_rosoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 19, 269)
+astar_traffic_manager = NodePath("../../AStarTrafficManager")
+astar_road_agent = NodePath("../AStarRoadAgent4")
+contextual_steering_unit = NodePath("ContextualSteeringUnit")
+daily_routine = SubResource("Resource_iouia")
+
+[node name="ContextualSteeringUnit" type="Node3D" parent="VehicleContainer/CompactCar4"]
+script = ExtResource("12_nkcux")
+metadata/_custom_type_script = "uid://q1kt7prckrew"
+
+[node name="CompactCar5" parent="VehicleContainer" node_paths=PackedStringArray("astar_traffic_manager", "astar_road_agent", "contextual_steering_unit") instance=ExtResource("11_rosoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -333, 29, 50)
+astar_traffic_manager = NodePath("../../AStarTrafficManager")
+astar_road_agent = NodePath("../AStarRoadAgent5")
+contextual_steering_unit = NodePath("ContextualSteeringUnit")
+daily_routine = SubResource("Resource_mcro2")
+
+[node name="ContextualSteeringUnit" type="Node3D" parent="VehicleContainer/CompactCar5"]
+script = ExtResource("12_nkcux")
+metadata/_custom_type_script = "uid://q1kt7prckrew"
+
+[node name="CompactCar6" parent="VehicleContainer" node_paths=PackedStringArray("astar_traffic_manager", "astar_road_agent", "contextual_steering_unit") instance=ExtResource("11_rosoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -222, 127, -145)
+astar_traffic_manager = NodePath("../../AStarTrafficManager")
+astar_road_agent = NodePath("../AStarRoadAgent6")
+contextual_steering_unit = NodePath("ContextualSteeringUnit")
+daily_routine = SubResource("Resource_rosoy")
+
+[node name="ContextualSteeringUnit" type="Node3D" parent="VehicleContainer/CompactCar6"]
+script = ExtResource("12_nkcux")
+metadata/_custom_type_script = "uid://q1kt7prckrew"
+
+[node name="CompactCar7" parent="VehicleContainer" node_paths=PackedStringArray("astar_traffic_manager", "astar_road_agent", "contextual_steering_unit") instance=ExtResource("11_rosoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 193, 34, -137)
+astar_traffic_manager = NodePath("../../AStarTrafficManager")
+astar_road_agent = NodePath("../AStarRoadAgent7")
+contextual_steering_unit = NodePath("ContextualSteeringUnit")
+daily_routine = SubResource("Resource_dmr2u")
+
+[node name="ContextualSteeringUnit" type="Node3D" parent="VehicleContainer/CompactCar7"]
+script = ExtResource("12_nkcux")
+metadata/_custom_type_script = "uid://q1kt7prckrew"
+
+[node name="CompactCar8" parent="VehicleContainer" node_paths=PackedStringArray("astar_traffic_manager", "astar_road_agent", "contextual_steering_unit") instance=ExtResource("11_rosoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 251, 19, 233)
+astar_traffic_manager = NodePath("../../AStarTrafficManager")
+astar_road_agent = NodePath("../AStarRoadAgent8")
+contextual_steering_unit = NodePath("ContextualSteeringUnit")
+daily_routine = SubResource("Resource_ikjy1")
+
+[node name="ContextualSteeringUnit" type="Node3D" parent="VehicleContainer/CompactCar8"]
+script = ExtResource("12_nkcux")
+metadata/_custom_type_script = "uid://q1kt7prckrew"
+
+[node name="CompactCar9" parent="VehicleContainer" node_paths=PackedStringArray("astar_traffic_manager", "astar_road_agent", "contextual_steering_unit") instance=ExtResource("11_rosoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99, 26, -158)
+astar_traffic_manager = NodePath("../../AStarTrafficManager")
+astar_road_agent = NodePath("../AStarRoadAgent9")
+contextual_steering_unit = NodePath("ContextualSteeringUnit")
+daily_routine = SubResource("Resource_7qo8y")
+
+[node name="ContextualSteeringUnit" type="Node3D" parent="VehicleContainer/CompactCar9"]
+script = ExtResource("12_nkcux")
+metadata/_custom_type_script = "uid://q1kt7prckrew"
+
+[node name="CompactCar10" parent="VehicleContainer" node_paths=PackedStringArray("astar_traffic_manager", "astar_road_agent", "contextual_steering_unit") instance=ExtResource("11_rosoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92, 19, 204)
+astar_traffic_manager = NodePath("../../AStarTrafficManager")
+astar_road_agent = NodePath("../AStarRoadAgent10")
+contextual_steering_unit = NodePath("ContextualSteeringUnit")
+daily_routine = SubResource("Resource_hvse0")
+
+[node name="ContextualSteeringUnit" type="Node3D" parent="VehicleContainer/CompactCar10"]
 script = ExtResource("12_nkcux")
 metadata/_custom_type_script = "uid://q1kt7prckrew"
 
@@ -1155,6 +1363,159 @@ collision_mask = 268435474
 shape = SubResource("BoxShape3D_nkcux")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleContainer/AStarRoadAgent/Area3D"]
+mesh = SubResource("BoxMesh_nkcux")
+
+[node name="AStarRoadAgent2" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("traffic_manager", "collision_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31, 0)
+script = ExtResource("12_pcm1u")
+traffic_manager = NodePath("../../AStarTrafficManager")
+collision_area = NodePath("Area3D")
+metadata/_custom_type_script = "uid://b0cfyqehgjga"
+
+[node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent2"]
+collision_layer = 1024
+collision_mask = 268435474
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent2/Area3D"]
+shape = SubResource("BoxShape3D_nkcux")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleContainer/AStarRoadAgent2/Area3D"]
+mesh = SubResource("BoxMesh_nkcux")
+
+[node name="AStarRoadAgent3" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("traffic_manager", "collision_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31, 0)
+script = ExtResource("12_pcm1u")
+traffic_manager = NodePath("../../AStarTrafficManager")
+collision_area = NodePath("Area3D")
+metadata/_custom_type_script = "uid://b0cfyqehgjga"
+
+[node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent3"]
+collision_layer = 1024
+collision_mask = 268435474
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent3/Area3D"]
+shape = SubResource("BoxShape3D_nkcux")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleContainer/AStarRoadAgent3/Area3D"]
+mesh = SubResource("BoxMesh_nkcux")
+
+[node name="AStarRoadAgent4" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("traffic_manager", "collision_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31, 0)
+script = ExtResource("12_pcm1u")
+traffic_manager = NodePath("../../AStarTrafficManager")
+collision_area = NodePath("Area3D")
+metadata/_custom_type_script = "uid://b0cfyqehgjga"
+
+[node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent4"]
+collision_layer = 1024
+collision_mask = 268435474
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent4/Area3D"]
+shape = SubResource("BoxShape3D_nkcux")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleContainer/AStarRoadAgent4/Area3D"]
+mesh = SubResource("BoxMesh_nkcux")
+
+[node name="AStarRoadAgent5" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("traffic_manager", "collision_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31, 0)
+script = ExtResource("12_pcm1u")
+traffic_manager = NodePath("../../AStarTrafficManager")
+collision_area = NodePath("Area3D")
+metadata/_custom_type_script = "uid://b0cfyqehgjga"
+
+[node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent5"]
+collision_layer = 1024
+collision_mask = 268435474
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent5/Area3D"]
+shape = SubResource("BoxShape3D_nkcux")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleContainer/AStarRoadAgent5/Area3D"]
+mesh = SubResource("BoxMesh_nkcux")
+
+[node name="AStarRoadAgent6" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("traffic_manager", "collision_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31, 0)
+script = ExtResource("12_pcm1u")
+traffic_manager = NodePath("../../AStarTrafficManager")
+collision_area = NodePath("Area3D")
+metadata/_custom_type_script = "uid://b0cfyqehgjga"
+
+[node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent6"]
+collision_layer = 1024
+collision_mask = 268435474
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent6/Area3D"]
+shape = SubResource("BoxShape3D_nkcux")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleContainer/AStarRoadAgent6/Area3D"]
+mesh = SubResource("BoxMesh_nkcux")
+
+[node name="AStarRoadAgent7" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("traffic_manager", "collision_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31, 0)
+script = ExtResource("12_pcm1u")
+traffic_manager = NodePath("../../AStarTrafficManager")
+collision_area = NodePath("Area3D")
+metadata/_custom_type_script = "uid://b0cfyqehgjga"
+
+[node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent7"]
+collision_layer = 1024
+collision_mask = 268435474
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent7/Area3D"]
+shape = SubResource("BoxShape3D_nkcux")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleContainer/AStarRoadAgent7/Area3D"]
+mesh = SubResource("BoxMesh_nkcux")
+
+[node name="AStarRoadAgent8" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("traffic_manager", "collision_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31, 0)
+script = ExtResource("12_pcm1u")
+traffic_manager = NodePath("../../AStarTrafficManager")
+collision_area = NodePath("Area3D")
+metadata/_custom_type_script = "uid://b0cfyqehgjga"
+
+[node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent8"]
+collision_layer = 1024
+collision_mask = 268435474
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent8/Area3D"]
+shape = SubResource("BoxShape3D_nkcux")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleContainer/AStarRoadAgent8/Area3D"]
+mesh = SubResource("BoxMesh_nkcux")
+
+[node name="AStarRoadAgent9" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("traffic_manager", "collision_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31, 0)
+script = ExtResource("12_pcm1u")
+traffic_manager = NodePath("../../AStarTrafficManager")
+collision_area = NodePath("Area3D")
+metadata/_custom_type_script = "uid://b0cfyqehgjga"
+
+[node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent9"]
+collision_layer = 1024
+collision_mask = 268435474
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent9/Area3D"]
+shape = SubResource("BoxShape3D_nkcux")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleContainer/AStarRoadAgent9/Area3D"]
+mesh = SubResource("BoxMesh_nkcux")
+
+[node name="AStarRoadAgent10" type="Node3D" parent="VehicleContainer" node_paths=PackedStringArray("traffic_manager", "collision_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31, 0)
+script = ExtResource("12_pcm1u")
+traffic_manager = NodePath("../../AStarTrafficManager")
+collision_area = NodePath("Area3D")
+metadata/_custom_type_script = "uid://b0cfyqehgjga"
+
+[node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent10"]
+collision_layer = 1024
+collision_mask = 268435474
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent10/Area3D"]
+shape = SubResource("BoxShape3D_nkcux")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleContainer/AStarRoadAgent10/Area3D"]
 mesh = SubResource("BoxMesh_nkcux")
 
 [node name="Landmarks" type="Node3D" parent="."]
