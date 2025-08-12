@@ -88,6 +88,7 @@ Grass="Vehicles will treat this surface as grass"
 ExplosionCatcher="Used to fine-tune how explosions push larger objects"
 Building=""
 AStarPathDot="Dots used to draw AStar3D paths"
+AStarPointCollisionArea=""
 
 [inkgd]
 

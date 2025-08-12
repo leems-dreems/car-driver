@@ -27,6 +27,11 @@ var reverse_light_energy := 1.0
 var previous_handbrake_input := 0.0
 var is_being_driven := false
 var is_ai_on := false
+
+# TODO: move to character class
+## Global position of the current navigation target.
+var target_destination: Vector3
+
 var waiting_to_respawn := false
 ## Vehicle will calculate & play "scrape" effects if this is true
 var play_scrape_effects := false
@@ -264,6 +269,7 @@ func _on_body_entered(body: Node) -> void:
 func start_navigating_to(global_target_position: Vector3) -> void:
 	contextual_steering_unit.enable_raycasting()
 	var id_path := astar_traffic_manager.get_route(global_position, global_target_position)
+	target_destination = global_target_position
 	astar_road_agent.set_id_path(id_path)
 	return
 
@@ -276,28 +282,39 @@ func set_inputs() -> void:
 
 	if get_wheel_contact_count() >= 3:
 		var is_path_ahead_blocked := false
-		astar_road_agent.snap_to_nearest_offset(global_position)
-		var distance_to_path := global_position.distance_to(astar_road_agent.global_position)
-		if distance_to_path < path_distance_limit:
-			astar_road_agent.advance_lane_offset(speed / 2)
-
 		var target_speed := path_max_speed
+		var vehicle_in_front := false
+		var target_position: Vector3
 
-		var angle_to_lane := global_transform.basis.z.signed_angle_to(
-				global_transform.basis.z, Vector3.UP)
-		if distance_to_path < path_distance_limit and absf(angle_to_lane) < 0.1:
-			is_on_path = true
-		else:
+		if astar_road_agent.has_reached_end:
 			is_on_path = false
+			vehicle_in_front = false
+			target_position = target_destination
+		else:
+			astar_road_agent.snap_to_nearest_offset(global_position)
+			var distance_to_path := global_position.distance_to(astar_road_agent.global_position)
+			if distance_to_path < path_distance_limit:
+				astar_road_agent.advance_lane_offset(speed / 2)
+
+			target_position = astar_road_agent.global_position
+
+			var angle_to_lane := global_transform.basis.z.signed_angle_to(
+					global_transform.basis.z, Vector3.UP)
+			if distance_to_path < path_distance_limit and absf(angle_to_lane) < 0.1:
+				is_on_path = true
+			else:
+				is_on_path = false
 
 		# Set the vehicle's interest vectors and calculate the overall direction of interest
-		var interest_vector := contextual_steering_unit.get_interest_vector(astar_road_agent.global_position)
+		var interest_vector := contextual_steering_unit.get_interest_vector(target_position)
 		var turning_angle := Vector3.FORWARD.signed_angle_to(
 				interest_vector, Vector3.UP)
 
-		var vehicle_in_front := astar_road_agent.collision_area.get_overlapping_bodies().any(func(body: Node3D):
-			return (body is DriveableVehicle and body != self) or body is Player or body is PlayerPhysicalBone
-		)
+		is_path_ahead_blocked = (
+				not astar_road_agent.has_reached_end and
+				astar_road_agent.collision_area.get_overlapping_bodies().any(func(body: Node3D):
+					return (body is DriveableVehicle and body != self) or body is Player or body is PlayerPhysicalBone
+		))
 
 		# Adjust our target_speed based on direction of interest and turning angle
 		if is_path_ahead_blocked or vehicle_in_front or request_stop_timer != null:

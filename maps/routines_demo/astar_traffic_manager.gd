@@ -5,6 +5,8 @@ extends Node3D
 ## Builds an AStar3D graph based on the connected RoadManager.
 ## Used by AStarRoadAgent nodes, to get astar paths and their associated lanes.
 
+const ASTAR_COLLIDER_SCENE := preload("res://maps/routines_demo/astar_point_collision_area.tscn")
+
 ## RoadManager node used to identify RoadLanes and respond to updates.
 @export var road_manager: RoadManager
 ## Pathfinding will look for alternate start/endpoints within this radius.
@@ -22,6 +24,8 @@ var endpoints_dict: Dictionary[int, RoadLane] = {}
 var lanes_by_id: Dictionary[int, RoadLane]
 ## Lookup for finding the last astar point on a RoadLane.
 var endpoint_ids_by_lane: Dictionary[RoadLane, int]
+## Lookup for collision areas spawned on AStar3D points.
+var colliders_by_id: Dictionary[int, Area3D]
 
 @onready var path_search_radius_squared := pow(path_search_radius, 2)
 @onready var lane_connection_distance_squared := pow(lane_connection_distance, 2)
@@ -133,11 +137,30 @@ func get_route(from: Vector3, to: Vector3) -> PackedInt64Array:
 
 
 ## Calculate the cost of a given astar path.
-func get_path_cost(_id_path: PackedInt64Array) -> float:
+func get_path_cost(id_path: PackedInt64Array) -> float:
 	var path_cost := 0.0
 	var i: int = 0
-	while i < len(_id_path) - 2:
-		path_cost += astar3d.get_point_position(_id_path[i]).distance_to(
-				astar3d.get_point_position(_id_path[i + 1])) * astar3d.get_point_weight_scale(_id_path[i + 1])
+	while i < len(id_path) - 2:
+		path_cost += astar3d.get_point_position(id_path[i]).distance_to(
+				astar3d.get_point_position(id_path[i + 1])) * astar3d.get_point_weight_scale(id_path[i + 1])
 		i += 1
 	return path_cost
+
+
+func spawn_colliders_along(id_path: PackedInt64Array) -> void:
+	for point_id in id_path:
+		if not colliders_by_id.has(point_id):
+			var collider := ASTAR_COLLIDER_SCENE.instantiate()
+			collider.set_meta("point_id", point_id)
+			add_child(collider)
+			collider.global_position = astar3d.get_point_position(point_id)
+			colliders_by_id[point_id] = collider
+	return
+
+
+func despawn_colliders_along(id_path: PackedInt64Array) -> void:
+	for point_id in id_path:
+		if colliders_by_id.has(point_id):
+			colliders_by_id[point_id].queue_free()
+			colliders_by_id.erase(point_id)
+	return

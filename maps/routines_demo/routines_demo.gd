@@ -6,8 +6,8 @@ var cars: Array[DriveableVehicle] = []
 func _ready() -> void:
 	super()
 
-	Game.set_current_time(0650)
-	Game.time_speed = 1.0
+	Game.set_current_time(0675) # 06:45
+	Game.time_speed = 5.0
 
 	cars.push_back($VehicleContainer/CompactCar)
 	cars.push_back($VehicleContainer/CompactCar2)

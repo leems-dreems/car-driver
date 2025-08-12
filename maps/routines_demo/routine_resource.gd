@@ -8,7 +8,6 @@ extends Resource
 
 func get_next_appointment(from_time: int = Game.get_current_time()) -> NodePath:
 	assert(from_time >= 0 and from_time <= 2400)
-	var next_appointment: NodePath
 	for time: int in appointments.keys():
 		if from_time < time:
 			return appointments[time]

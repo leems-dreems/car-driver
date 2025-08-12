@@ -1357,7 +1357,7 @@ metadata/_custom_type_script = "uid://b0cfyqehgjga"
 
 [node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent"]
 collision_layer = 1024
-collision_mask = 268435474
+collision_mask = 805306386
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent/Area3D"]
 shape = SubResource("BoxShape3D_nkcux")
@@ -1374,7 +1374,7 @@ metadata/_custom_type_script = "uid://b0cfyqehgjga"
 
 [node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent2"]
 collision_layer = 1024
-collision_mask = 268435474
+collision_mask = 805306386
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent2/Area3D"]
 shape = SubResource("BoxShape3D_nkcux")
@@ -1391,7 +1391,7 @@ metadata/_custom_type_script = "uid://b0cfyqehgjga"
 
 [node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent3"]
 collision_layer = 1024
-collision_mask = 268435474
+collision_mask = 805306386
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent3/Area3D"]
 shape = SubResource("BoxShape3D_nkcux")
@@ -1408,7 +1408,7 @@ metadata/_custom_type_script = "uid://b0cfyqehgjga"
 
 [node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent4"]
 collision_layer = 1024
-collision_mask = 268435474
+collision_mask = 805306386
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent4/Area3D"]
 shape = SubResource("BoxShape3D_nkcux")
@@ -1425,7 +1425,7 @@ metadata/_custom_type_script = "uid://b0cfyqehgjga"
 
 [node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent5"]
 collision_layer = 1024
-collision_mask = 268435474
+collision_mask = 805306386
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent5/Area3D"]
 shape = SubResource("BoxShape3D_nkcux")
@@ -1442,7 +1442,7 @@ metadata/_custom_type_script = "uid://b0cfyqehgjga"
 
 [node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent6"]
 collision_layer = 1024
-collision_mask = 268435474
+collision_mask = 805306386
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent6/Area3D"]
 shape = SubResource("BoxShape3D_nkcux")
@@ -1459,7 +1459,7 @@ metadata/_custom_type_script = "uid://b0cfyqehgjga"
 
 [node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent7"]
 collision_layer = 1024
-collision_mask = 268435474
+collision_mask = 805306386
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent7/Area3D"]
 shape = SubResource("BoxShape3D_nkcux")
@@ -1476,7 +1476,7 @@ metadata/_custom_type_script = "uid://b0cfyqehgjga"
 
 [node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent8"]
 collision_layer = 1024
-collision_mask = 268435474
+collision_mask = 805306386
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent8/Area3D"]
 shape = SubResource("BoxShape3D_nkcux")
@@ -1493,7 +1493,7 @@ metadata/_custom_type_script = "uid://b0cfyqehgjga"
 
 [node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent9"]
 collision_layer = 1024
-collision_mask = 268435474
+collision_mask = 805306386
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent9/Area3D"]
 shape = SubResource("BoxShape3D_nkcux")
@@ -1510,7 +1510,7 @@ metadata/_custom_type_script = "uid://b0cfyqehgjga"
 
 [node name="Area3D" type="Area3D" parent="VehicleContainer/AStarRoadAgent10"]
 collision_layer = 1024
-collision_mask = 268435474
+collision_mask = 805306386
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleContainer/AStarRoadAgent10/Area3D"]
 shape = SubResource("BoxShape3D_nkcux")

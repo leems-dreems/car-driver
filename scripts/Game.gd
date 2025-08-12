@@ -37,12 +37,12 @@ func summon_car(_global_position: Vector3 = Vector3.INF) -> void:
 
 ## Returns the current time in 24-hour format (e.g. 1300 = 1PM)
 func get_current_time() -> int:
-	return current_time
+	return roundi(current_time)
 
 
 func set_current_time(_current_time: float) -> void:
 	current_time = _current_time
-	next_minute = floori(current_time) + 1
+	next_minute = ceili(current_time)
 	if next_minute >= max_time:
 		next_minute = 0
 	return
