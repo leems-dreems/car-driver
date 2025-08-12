@@ -1110,7 +1110,7 @@ points = PackedVector3Array(-3.99384, -3.12143, -1.76435, 3.99968, 3.995, -1.263
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_es0q2"]
 points = PackedVector3Array(0.618284, 0.841092, -0.248825, 0.486227, 1.3393, -0.248825, 0.585239, 0.343076, -0.248825, 0.618284, 0.841092, -1.52545, 0.486227, 1.31093, -1.1132, -0.486348, 1.3393, -0.248825, -0.58536, 0.343076, -0.248825, 0.585239, 0.343076, -1.38174, -0.618284, 0.841092, -1.52545, -0.486348, 1.31093, -1.1132, -0.618284, 0.841092, -0.248825, -0.58536, 0.343076, -1.38174)
 
-[node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("brake_light_left_mesh", "brake_light_right_mesh", "reverse_light_left_mesh", "reverse_light_right_mesh", "front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
+[node name="CompactCar" type="RigidBody3D" node_paths=PackedStringArray("nav_agent", "brake_light_left_mesh", "brake_light_right_mesh", "reverse_light_left_mesh", "reverse_light_right_mesh", "front_left_wheel", "front_right_wheel", "rear_left_wheel", "rear_right_wheel") groups=["CanCrash"]]
 collision_layer = 2
 collision_mask = 8403
 mass = 1500.0
@@ -1124,6 +1124,7 @@ contact_monitor = true
 max_contacts_reported = 24
 script = ExtResource("1_vk21t")
 max_hit_points = 50.0
+nav_agent = NodePath("NavigationAgent3D")
 brake_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightLeft/EmissiveMesh")
 brake_light_right_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/BrakeLightRight/EmissiveMesh")
 reverse_light_left_mesh = NodePath("ColliderBits/Boot/OpenBoot/Lights/ReverseLightLeft/EmissiveMesh")
@@ -1960,5 +1961,8 @@ pixel_size = 0.001
 billboard = 1
 text = "0"
 font_size = 128
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+target_desired_distance = 3.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -12,6 +12,7 @@ enum SurfaceTypes { ROAD = 0, GRASS = 1, DIRT = 2, SAND = 3, ROCK = 4 }
 @export var impact_force_threshold_3 := 1.5
 @export var astar_traffic_manager: AStarTrafficManager
 @export var astar_road_agent: AStarRoadAgent
+@export var nav_agent: NavigationAgent3D
 @export var contextual_steering_unit: ContextualSteeringUnit
 @export var daily_routine: DailyRoutine
 @export var brake_light_left_mesh: MeshInstance3D
@@ -26,6 +27,7 @@ var brake_light_energy := 5.0
 var reverse_light_energy := 1.0
 var previous_handbrake_input := 0.0
 var is_being_driven := false
+var is_navigating := false
 var is_ai_on := false
 
 # TODO: move to character class
@@ -271,6 +273,7 @@ func start_navigating_to(global_target_position: Vector3) -> void:
 	var id_path := astar_traffic_manager.get_route(global_position, global_target_position)
 	target_destination = global_target_position
 	astar_road_agent.set_id_path(id_path)
+	is_navigating = true
 	return
 
 
@@ -286,10 +289,20 @@ func set_inputs() -> void:
 		var vehicle_in_front := false
 		var target_position: Vector3
 
-		if astar_road_agent.has_reached_end:
+		if not is_navigating:
+			is_on_path = false
+			vehicle_in_front = false
+			target_position = global_position
+			target_speed = 0
+		elif astar_road_agent.has_reached_end:
 			is_on_path = false
 			vehicle_in_front = false
 			target_position = target_destination
+			target_speed = path_max_speed / 2
+			if target_destination.distance_to(
+					Vector3(global_position.x, target_destination.y, global_position.z)
+			) < nav_agent.target_desired_distance:
+				is_navigating = false
 		else:
 			astar_road_agent.snap_to_nearest_offset(global_position)
 			var distance_to_path := global_position.distance_to(astar_road_agent.global_position)
@@ -317,15 +330,16 @@ func set_inputs() -> void:
 		))
 
 		# Adjust our target_speed based on direction of interest and turning angle
-		if is_path_ahead_blocked or vehicle_in_front or request_stop_timer != null:
-			target_speed = 0.0
-		elif interest_vector.z > contextual_steering_unit.steering_ray_length * 0.75: # Interest vector is strongly to the rear
-			if not is_on_path and linear_velocity.z < min_speed and not vehicle_in_front:
-				target_speed = path_reversing_speed # If we are stopped and not on the road, start reversing
-			else:
-				target_speed = 0.0 # If we are on the road, slow to a stop
-		elif turning_angle < -PI / 16 or turning_angle > PI / 16:
-			target_speed *= 0.5 # Slow down for turn
+		if is_navigating:
+			if is_path_ahead_blocked or vehicle_in_front or request_stop_timer != null:
+				target_speed = 0.0
+			elif interest_vector.z > contextual_steering_unit.steering_ray_length * 0.75: # Interest vector is strongly to the rear
+				if not is_on_path and linear_velocity.z < min_speed and not vehicle_in_front:
+					target_speed = path_reversing_speed # If we are stopped and not on the road, start reversing
+				else:
+					target_speed = 0.0 # If we are on the road, slow to a stop
+			elif turning_angle < -PI / 16 or turning_angle > PI / 16:
+				target_speed *= 0.5 # Slow down for turn
 
 		# Use our adjusted target_speed to set throttle and brake inputs
 		if target_speed == path_reversing_speed: # We are trying to reverse

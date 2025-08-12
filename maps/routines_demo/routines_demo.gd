@@ -24,8 +24,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var vehicle := cars[current_car_index]
-	if vehicle.astar_road_agent and len(vehicle.astar_road_agent.id_path) > 0:
-		vehicle.set_inputs()
+	vehicle.set_inputs()
 	current_car_index += 1
 	if current_car_index > len(cars) - 1:
 		current_car_index = 0
