@@ -92,7 +92,7 @@ const explosion_scene := preload("res://effects/explosion.tscn")
 func _ready () -> void:
 	super()
 
-	Game.minute_reached.connect(func(minute: int):
+	Game.time_changed.connect(func(minute: int):
 		if daily_routine.appointments.has(minute):
 			start_navigating_to(get_node(daily_routine.appointments[minute]).global_position)
 	)

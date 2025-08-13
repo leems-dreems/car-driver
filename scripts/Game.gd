@@ -1,6 +1,6 @@
 extends Node
 
-signal minute_reached(minute: int)
+signal time_changed(minute: int)
 
 var active_terrain: Terrain3D = null
 var physics_item_container: Node3D = null
@@ -11,20 +11,6 @@ var max_time: float = 2400.0
 var time_speed: float = 0.0
 var next_minute: int
 @onready var minutes := range(0, roundi(max_time))
-
-
-func _physics_process(delta: float) -> void:
-	current_time += delta * time_speed
-
-	if current_time >= next_minute:
-		minute_reached.emit(next_minute)
-		next_minute += 1
-		if next_minute >= max_time:
-			next_minute = 0
-
-	if current_time > max_time:
-		current_time -= max_time
-	return
 
 
 func summon_car(_global_position: Vector3 = Vector3.INF) -> void:
@@ -42,9 +28,7 @@ func get_current_time() -> int:
 
 func set_current_time(_current_time: float) -> void:
 	current_time = _current_time
-	next_minute = ceili(current_time)
-	if next_minute >= max_time:
-		next_minute = 0
+	time_changed.emit(roundi(current_time))
 	return
 
 

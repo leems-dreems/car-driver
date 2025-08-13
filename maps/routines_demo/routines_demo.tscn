@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://exf86gwk5hkg"]
+[gd_scene load_steps=40 format=3 uid="uid://exf86gwk5hkg"]
 
 [ext_resource type="Script" uid="uid://dd46yjx1b2sr7" path="res://maps/routines_demo/routines_demo.gd" id="1_8xtrp"]
 [ext_resource type="Terrain3DAssets" uid="uid://krekjaqgod8q" path="res://maps/BinRoninIsland/terrain_3d_assets.tres" id="2_k3r5v"]
@@ -77,6 +77,12 @@ texture_filtering = 1
 auto_shader = true
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c488f"]
+sky_top_color = Color(0.317647, 0.596078, 0.988235, 1)
+sky_horizon_color = Color(0.317647, 0.596078, 0.988235, 1)
+ground_bottom_color = Color(0.317647, 0.596078, 0.988235, 1)
+ground_horizon_color = Color(0.317647, 0.596078, 0.988235, 1)
+sun_angle_max = 2.0
+sun_curve = 3.8988
 
 [sub_resource type="Sky" id="Sky_en3uj"]
 sky_material = SubResource("ProceduralSkyMaterial_c488f")
@@ -84,8 +90,144 @@ sky_material = SubResource("ProceduralSkyMaterial_c488f")
 [sub_resource type="Environment" id="Environment_t77od"]
 background_mode = 2
 sky = SubResource("Sky_en3uj")
+tonemap_mode = 2
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.005
+
+[sub_resource type="Animation" id="Animation_l6h74"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.309, -0.261799, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../WorldEnvironment:environment:sky:sky_material:sky_energy_multiplier")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../WorldEnvironment:environment:sky:sky_material:ground_energy_multiplier")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../WorldEnvironment:environment:volumetric_fog_density")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.005]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:light_energy")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_nkcux"]
+resource_name = "day_night_cycle"
+length = 240.0
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 60, 120, 180, 240),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1.5708, -0.261799, 0), Vector3(0, -0.261799, 0), Vector3(-1.5708, -0.261799, 0), Vector3(-3.14159, -0.261799, 0), Vector3(-4.71239, -0.261799, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../WorldEnvironment:environment:sky:sky_material:sky_energy_multiplier")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 120, 240),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.1, 1.0, 0.1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../WorldEnvironment:environment:sky:sky_material:ground_energy_multiplier")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 120, 240),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.1, 1.0, 0.1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../WorldEnvironment:environment:volumetric_fog_density")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 60, 120, 200, 240),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.01, 0.01, 0.001, 0.001, 0.01]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:light_energy")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 54, 64, 175, 185, 240),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.0, 1.0, 0.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yab0n"]
+_data = {
+&"RESET": SubResource("Animation_l6h74"),
+&"day_night_cycle": SubResource("Animation_nkcux")
+}
 
 [sub_resource type="Resource" id="Resource_nkcux"]
 script = ExtResource("2_nkcux")
@@ -1219,7 +1361,6 @@ next_pt_init = NodePath("../Node3D003")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 script = ExtResource("8_6d1y5")
 material = ExtResource("9_iouia")
-far_edge = 4000
 metadata/_custom_type_script = "uid://vajh8ihlmeer"
 
 [node name="Player" parent="." instance=ExtResource("10_mcro2")]
@@ -1229,12 +1370,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 29.6, 18)
 environment = SubResource("Environment_t77od")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.965926, 0.25, -0.0669873, 0, 0.258819, 0.965926, 0.258819, -0.933013, 0.25, 0, 13, 0)
+transform = Transform3D(0.965926, 0.25, -0.0669864, 0, 0.258816, 0.965927, 0.258819, -0.933014, 0.249997, 0, 13, 0)
 light_color = Color(1, 0.952941, 1, 1)
-light_energy = 2.0
 shadow_enabled = true
 directional_shadow_mode = 1
 directional_shadow_max_distance = 200.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DirectionalLight3D"]
+libraries = {
+&"": SubResource("AnimationLibrary_yab0n")
+}
 
 [node name="VehicleContainer" type="Node3D" parent="." groups=["AffectsNavMesh"]]
 

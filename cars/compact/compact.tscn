@@ -1963,6 +1963,6 @@ text = "0"
 font_size = 128
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
-target_desired_distance = 3.0
+target_desired_distance = 6.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
