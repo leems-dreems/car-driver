@@ -44,11 +44,18 @@ func set_lane(road_lane: RoadLane) -> void:
 
 
 func set_id_path(_id_path: PackedInt64Array) -> void:
+	if len(_id_path) == 1:
+		id_path = _id_path
+		remaining_path = id_path
+		reached_end.emit()
+		return
+
 	has_reached_end = false
 	collision_area.set_deferred("monitoring", true)
 	visible = true
 
 	id_path = _id_path
+	remaining_path = id_path
 	traffic_manager.spawn_colliders_along(id_path)
 	set_lane(traffic_manager.lanes_by_id[id_path[0]])
 	return
@@ -64,10 +71,6 @@ func advance_lane_offset(distance: float) -> void:
 			current_lane.curve.sample_baked_with_rotation(lane_offset)
 	)
 
-	# TODO: Need to register individual astar points, not just end-of-lane, to be
-	# able to detect when end of path has been reached. Add collision spheres to
-	# astar points? Could enable & disable colliders as paths are set & cleared.
-	# Same logic could be used for path debug visualisation.
 	if lane_offset > current_lane.curve.get_baked_length():
 		var endpoint_id := traffic_manager.endpoint_ids_by_lane[current_lane]
 		var endpoint_index := id_path.find(endpoint_id)

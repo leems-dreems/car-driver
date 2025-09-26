@@ -95,6 +95,7 @@ func _ready () -> void:
 	Game.time_changed.connect(func(minute: int):
 		if daily_routine.appointments.has(minute):
 			start_navigating_to(get_node(daily_routine.appointments[minute]).global_position)
+		lights_on = minute > 1800 or minute < 600
 	)
 
 	if show_debug_label:

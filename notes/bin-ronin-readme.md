@@ -1,4 +1,4 @@
-# Bin Day
+# Bin Day (Possible alt title: Beans-on-Fish)
 
 Some notes on a game similar in structure & scope to Mon Bazou, with handling and physics closer to a GTA.
 - Mostly third-person view

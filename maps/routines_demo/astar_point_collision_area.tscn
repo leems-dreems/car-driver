@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://b1k1h6878sq1g"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_yo0cr"]
-radius = 2.0
+radius = 1.0
 
 [node name="AStarPointCollisionArea" type="Area3D" groups=["AStarPointCollisionArea"]]
 collision_layer = 536870912
