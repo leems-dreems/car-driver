@@ -6,6 +6,7 @@ extends Node3D
 ## Used by AStarRoadAgent nodes, to get astar paths and their associated lanes.
 
 const ASTAR_COLLIDER_SCENE := preload("res://maps/routines_demo/astar_point_collision_area.tscn")
+const ASTAR_COLLIDER_META_NAME := "astar_road_agent"
 
 ## RoadManager node used to identify RoadLanes and respond to updates.
 @export var road_manager: RoadManager
@@ -155,6 +156,11 @@ func spawn_colliders_along(id_path: PackedInt64Array) -> void:
 			add_child(collider)
 			collider.global_position = astar3d.get_point_position(point_id)
 			colliders_by_id[point_id] = collider
+	return
+
+
+func register_collider_to_agent(collider: Area3D, astar_road_agent: AStarRoadAgent) -> void:
+	collider.set_meta(ASTAR_COLLIDER_META_NAME, astar_road_agent)
 	return
 
 

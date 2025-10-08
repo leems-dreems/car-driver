@@ -56,6 +56,7 @@ func set_id_path(_id_path: PackedInt64Array) -> void:
 
 	id_path = _id_path
 	remaining_path = id_path
+	# TODO: move this line into traffic manager. Look into only spawning colliders for the next X astar points on the path
 	traffic_manager.spawn_colliders_along(id_path)
 	set_lane(traffic_manager.lanes_by_id[id_path[0]])
 	return
