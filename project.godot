@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Bin Day"
 run/main_scene="res://maps/BinRoninIsland/bin_ronin_island.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 run/max_fps=60
 config/icon="res://icon.svg"
 
@@ -427,8 +427,8 @@ set_pathfind_end={
 [physics]
 
 3d/physics_engine="Jolt Physics (Extension)"
-jolt_physics_3d/simulation/areas_detect_static_bodies=true
 common/physics_interpolation=true
+jolt_physics_3d/simulation/areas_detect_static_bodies=true
 jolt_physics_extension_3d/collisions/areas_detect_static_bodies=true
 jolt_physics_extension_3d/continuous_cd/movement_threshold=100.0
 jolt_physics_extension_3d/queries/use_enhanced_internal_edge_removal=true

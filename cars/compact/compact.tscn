@@ -1163,7 +1163,7 @@ contact_monitor = true
 max_contacts_reported = 8
 script = ExtResource("3_4r4v3")
 
-[node name="Generic6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="ContactChecker"]
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="ContactChecker"]
 node_a = NodePath("../..")
 node_b = NodePath("..")
 
@@ -1282,14 +1282,10 @@ affect_navigation_mesh = true
 
 [node name="DoorLeft" type="Node3D" parent="ColliderBits"]
 
-[node name="HingeJointLeft" type="JoltHingeJoint3D" parent="ColliderBits/DoorLeft"]
-limit_enabled = true
-limit_lower = -1.0472
-motor_target_velocity = -2.0944
-motor_max_torque = 1000.0
+[node name="HingeJointLeft" type="HingeJoint3D" parent="ColliderBits/DoorLeft"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.76, 0.746, -0.743)
 node_a = NodePath("../../..")
 node_b = NodePath("../OpenDoorLeft")
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.76, 0.746, -0.743)
 
 [node name="LeftBodyHingeSeparationCollider" type="Area3D" parent="ColliderBits/DoorLeft/HingeJointLeft"]
 collision_layer = 32
@@ -1322,7 +1318,7 @@ car_door = NodePath("../OpenDoorLeft")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorLeft/InteractTarget"]
 shape = SubResource("BoxShape3D_hrlhf")
 
-[node name="OpenDoorLeft" type="RigidBody3D" parent="ColliderBits/DoorLeft" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "shut_door_colliders", "hinge_joint", "door_open_SFX", "door_shut_SFX", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
+[node name="OpenDoorLeft" type="RigidBody3D" parent="ColliderBits/DoorLeft" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "hinge_joint", "door_open_SFX", "door_shut_SFX", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 collision_layer = 262152
 collision_mask = 209
@@ -1332,7 +1328,6 @@ freeze = true
 script = ExtResource("9_653cp")
 parent_car = NodePath("../../..")
 shut_door_mesh = NodePath("../ShutDoorLeft")
-shut_door_colliders = [NodePath("../../../CollisionShape3DLeftDoor")]
 hinge_joint = NodePath("../HingeJointLeft")
 door_open_SFX = NodePath("DoorOpenSFX")
 door_shut_SFX = NodePath("DoorShutSFX")
@@ -1375,14 +1370,10 @@ shape = SubResource("SphereShape3D_jv0dm")
 
 [node name="DoorRight" type="Node3D" parent="ColliderBits"]
 
-[node name="HingeJointRight" type="JoltHingeJoint3D" parent="ColliderBits/DoorRight"]
-limit_enabled = true
-limit_upper = 1.0472
-motor_target_velocity = 2.0944
-motor_max_torque = 1000.0
+[node name="HingeJointRight" type="HingeJoint3D" parent="ColliderBits/DoorRight"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.760013, 0.745551, -0.742723)
 node_a = NodePath("../../..")
 node_b = NodePath("../OpenDoorRight")
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.760013, 0.745551, -0.742723)
 
 [node name="RightBodyHingeSeparationCollider" type="Area3D" parent="ColliderBits/DoorRight/HingeJointRight"]
 collision_layer = 32
@@ -1415,7 +1406,7 @@ car_door = NodePath("../OpenDoorRight")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderBits/DoorRight/InteractTarget"]
 shape = SubResource("BoxShape3D_hrlhf")
 
-[node name="OpenDoorRight" type="RigidBody3D" parent="ColliderBits/DoorRight" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "shut_door_colliders", "hinge_joint", "door_open_SFX", "door_shut_SFX", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
+[node name="OpenDoorRight" type="RigidBody3D" parent="ColliderBits/DoorRight" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "hinge_joint", "door_open_SFX", "door_shut_SFX", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 collision_layer = 262152
 collision_mask = 209
@@ -1425,7 +1416,6 @@ freeze = true
 script = ExtResource("9_653cp")
 parent_car = NodePath("../../..")
 shut_door_mesh = NodePath("../ShutDoorRight")
-shut_door_colliders = [NodePath("../../../CollisionShape3DRightDoor")]
 hinge_joint = NodePath("../HingeJointRight")
 door_open_SFX = NodePath("DoorOpenSFX")
 door_shut_SFX = NodePath("DoorShutSFX")
@@ -1468,14 +1458,10 @@ shape = SubResource("SphereShape3D_jv0dm")
 
 [node name="Boot" type="Node3D" parent="ColliderBits"]
 
-[node name="HingeJointBoot" type="JoltHingeJoint3D" parent="ColliderBits/Boot"]
-limit_enabled = true
-limit_upper = 1.5708
-motor_target_velocity = 2.0944
-motor_max_torque = 1000.0
+[node name="HingeJointBoot" type="HingeJoint3D" parent="ColliderBits/Boot"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.38098, 1.15747)
 node_a = NodePath("../../..")
 node_b = NodePath("../OpenBoot")
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.38098, 1.15747)
 
 [node name="BootBodyHingeSeparationCollider" type="Area3D" parent="ColliderBits/Boot/HingeJointBoot"]
 collision_layer = 32
@@ -1511,7 +1497,7 @@ car_door = NodePath("../OpenBoot")
 transform = Transform3D(1, 0, 0, 0, 0.999997, -1.49012e-08, 0, 1.49012e-08, 0.999997, 0, 0, 0)
 shape = SubResource("BoxShape3D_uwv30")
 
-[node name="OpenBoot" type="RigidBody3D" parent="ColliderBits/Boot" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "shut_door_colliders", "hinge_joint", "door_open_SFX", "door_shut_SFX", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
+[node name="OpenBoot" type="RigidBody3D" parent="ColliderBits/Boot" node_paths=PackedStringArray("parent_car", "shut_door_mesh", "hinge_joint", "door_open_SFX", "door_shut_SFX", "door_latch", "body_latch", "hinge_separation_collider_A", "hinge_separation_collider_B") groups=["vehicle_door"]]
 collision_layer = 262152
 collision_mask = 209
 mass = 30.0
@@ -1520,7 +1506,6 @@ freeze = true
 script = ExtResource("9_653cp")
 parent_car = NodePath("../../..")
 shut_door_mesh = NodePath("../ShutBoot")
-shut_door_colliders = [NodePath("../../../CollisionShape3DRearWindow"), NodePath("../../../CollisionShape3DBoot"), NodePath("../../../VehicleItemContainer/CollisionShape3DRear")]
 hinge_joint = NodePath("../HingeJointBoot")
 door_open_SFX = NodePath("DoorOpenSFX")
 door_shut_SFX = NodePath("DoorShutSFX")
@@ -1949,10 +1934,10 @@ transform = Transform3D(-1.2, 0, -1.81195e-07, 0, 1.2, 0, 1.81195e-07, 0, -1.2, 
 shape = SubResource("ConvexPolygonShape3D_es0q2")
 debug_color = Color(0.569633, 0.638287, 5.77569e-07, 0.42)
 
-[node name="Generic6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="VehicleItemContainer"]
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="VehicleItemContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0.5)
 node_a = NodePath("../..")
 node_b = NodePath("..")
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0.5)
 
 [node name="Label3D" type="Label3D" parent="VehicleItemContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
