@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Bin Day"
 run/main_scene="res://maps/BinRoninIsland/bin_ronin_island.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 run/max_fps=60
 config/icon="res://icon.svg"
 
@@ -20,7 +20,6 @@ config/icon="res://icon.svg"
 
 Game="*res://scripts/Game.gd"
 PropRespawnManager="*res://scripts/prop_respawn_manager.gd"
-TrafficManager="*res://traffic/traffic_manager.gd"
 PedestrianManager="*res://npcs/pedestrian_manager.gd"
 PauseAndHud="*res://menu/pause_and_hud.tscn"
 
@@ -68,9 +67,8 @@ text/autoadvance_fixed_delay=0.0
 
 [display]
 
-window/size/viewport_width=3840
-window/size/viewport_height=2160
-window/size/mode=2
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -89,6 +87,7 @@ Grass="Vehicles will treat this surface as grass"
 ExplosionCatcher="Used to fine-tune how explosions push larger objects"
 Building=""
 AStarPathDot="Dots used to draw AStar3D paths"
+AStarPointCollisionArea=""
 
 [inkgd]
 
@@ -420,15 +419,16 @@ set_pathfind_end={
 
 [navigation]
 
-3d/default_cell_height=0.1
+3d/default_cell_size=1.0
+3d/default_cell_height=1.0
 3d/default_edge_connection_margin=3.0
 3d/default_link_connection_radius=2.0
 
 [physics]
 
 3d/physics_engine="Jolt Physics (Extension)"
-jolt_physics_3d/simulation/areas_detect_static_bodies=true
 common/physics_interpolation=true
+jolt_physics_3d/simulation/areas_detect_static_bodies=true
 jolt_physics_extension_3d/collisions/areas_detect_static_bodies=true
 jolt_physics_extension_3d/continuous_cd/movement_threshold=100.0
 jolt_physics_extension_3d/queries/use_enhanced_internal_edge_removal=true

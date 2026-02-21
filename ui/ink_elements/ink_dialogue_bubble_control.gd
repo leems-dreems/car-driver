@@ -3,7 +3,7 @@ class_name DialogueBubbleControl extends CenterContainer
 @onready var choices_container := $PanelContainer/MarginContainer/VBoxContainer/VBoxContainer_Choices
 @onready var continue_button := $PanelContainer/MarginContainer/VBoxContainer/ContinueButton
 @onready var click_audio := $ClickAudio
-const choice_button_scene := preload("res://ui/ink_elements/dialogue_choice_button.tscn")
+const choice_button_scene := preload("res://ui/ink_elements/ink_dialogue_choice_button.tscn")
 signal choice_selected(InkChoice)
 signal continue_dialogue
 

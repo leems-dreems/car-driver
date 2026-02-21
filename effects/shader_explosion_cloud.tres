@@ -24,9 +24,9 @@ fractal_type = 2
 fractal_octaves = 2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yj0v3"]
-seamless = true
-color_ramp = SubResource("Gradient_ngy6n")
 noise = SubResource("FastNoiseLite_03ln8")
+color_ramp = SubResource("Gradient_ngy6n")
+seamless = true
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_wdsn0"]
 output_port_for_preview = 0
@@ -187,7 +187,7 @@ input_name = "time"
 
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_lambert, specular_schlick_ggx;
 
 
 // Varyings

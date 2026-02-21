@@ -75,10 +75,10 @@ func apply_burnt_material() -> void:
 ## Connect the vehicle's `body_entered` signal to this method
 func _on_body_entered(_body: Node) -> void:
 	if _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D or _body is Terrain3D:
-		var _velocity_change := _previous_velocity - linear_velocity
-		var _impact_force := _velocity_change.length() * 0.1
+		var velocity_change := previous_velocity - linear_velocity
+		var _impact_force := velocity_change.length() * 0.1
 		if _impact_force > impact_force_threshold_1:
-			#react_to_collision(_velocity_change)
+			#react_to_collision(velocity_change)
 			bump_audio.volume_db = linear_to_db(clampf(_impact_force, 0.0, 1.0))
 			bump_audio.play()
 			current_hit_points -= _impact_force

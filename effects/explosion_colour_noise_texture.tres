@@ -10,6 +10,6 @@ fractal_octaves = 1
 fractal_gain = 2.0
 
 [resource]
-seamless = true
-color_ramp = SubResource("Gradient_7tc6o")
 noise = SubResource("FastNoiseLite_mc27w")
+color_ramp = SubResource("Gradient_7tc6o")
+seamless = true

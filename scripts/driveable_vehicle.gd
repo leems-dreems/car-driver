@@ -5,58 +5,64 @@ enum SurfaceTypes { ROAD = 0, GRASS = 1, DIRT = 2, SAND = 3, ROCK = 4 }
 @export var lights_on := false
 @export var downforce_multiplier := 4.0
 @export var owned_by_player := false
-var vehicle_name := "[Vehicle Name]"
-var vehicle_category := "[Vehicle Category]"
-var headlight_energy := 10.0
-var brake_light_energy := 5.0
-var reverse_light_energy := 1.0
-var _previous_handbrake_input := 0.0
-var is_being_driven := false
-var is_ai_on := false
-var waiting_to_respawn := false
-## Vehicle will calculate & play "scrape" effects if this is true
-var play_scrape_effects := false
 ## Damage this vehicle can take before setting on fire and exploding
 @export var max_hit_points := 5.0
 @export var impact_force_threshold_1 := 0.3
 @export var impact_force_threshold_2 := 0.6
 @export var impact_force_threshold_3 := 1.5
+@export var astar_traffic_manager: AStarTrafficManager
+@export var astar_road_agent: AStarRoadAgent
+@export var nav_agent: NavigationAgent3D
+@export var contextual_steering_unit: ContextualSteeringUnit
+@export var daily_routine: DailyRoutine
+@export var brake_light_left_mesh: MeshInstance3D
+@export var brake_light_right_mesh: MeshInstance3D
+@export var reverse_light_left_mesh: MeshInstance3D
+@export var reverse_light_right_mesh: MeshInstance3D
+@export var explosion_position: Vector3
+var vehicle_name := "[Vehicle Name]"
+var vehicle_category := "[Vehicle Category]"
+var headlight_energy := 10.0
+var brake_light_energy := 5.0
+var reverse_light_energy := 1.0
+var previous_handbrake_input := 0.0
+var is_being_driven := false
+var is_navigating := false
+var is_ai_on := false
+
+# TODO: move to character class
+## Global position of the current navigation target.
+var target_destination: Vector3
+
+var waiting_to_respawn := false
+## Vehicle will calculate & play "scrape" effects if this is true
+var play_scrape_effects := false
 var current_hit_points: float
 var has_caught_fire := false
 ## Timer that runs after this vehicle is requested to stop by something else
 var request_stop_timer: SceneTreeTimer = null
 ## Velocity to apply to the car after spawning in
-var _starting_velocity: Vector3 = Vector3.ZERO
+var starting_velocity: Vector3 = Vector3.ZERO
 ## Velocity as of the last physics tick
-var _previous_velocity: Vector3 = Vector3.ZERO
-## The number of RayCast3Ds that this vehicle uses for close avoidance
-var steering_ray_count: int = 16
-## The index of the steering ray which points left. Set to 3/4 of `steering_ray_count`
-var steering_ray_index_left: int = 12
-## The index of the steering ray which points right. Set to 1/4 of `steering_ray_count`
-var steering_ray_index_right: int = 4
-## The index of the steering ray which points behind. Set to 1/2 of `steering_ray_count`
-var steering_ray_index_behind: int = 8
-## The radius for close avoidance steering raycasts
-var steering_ray_length := 8
-## The maximum length that the antenna raycasts will extend
-var max_antenna_length := 16
-## The minimum length of the antenna raycasts
-var min_antenna_length := 8
-var antenna_angle := PI / 32
-# Multiplier applied to the opposite vector when a steering raycast collides with something
-var avoidance_multiplier := 2
-# Multiplier applied to the side & behind vectors when an antenna raycast collides with something
-var antenna_multiplier := 32
-var antenna_raycasts: Array[RayCast3D] = []
-var steering_raycasts: Array[RayCast3D] = []
-var interest_vectors: Array[Vector3] = []
-## The localized vector of the overall direction of interest for this vehicle's AI
-var summed_interest_vector := Vector3.ZERO
-## The group that steering & avoidance raycasts belong to, used for cleanup when stopping AI
-var steering_ray_group := "SteeringRayCast"
-## The collision layers this vehicle's steering rays collide with
-var steering_ray_collision_masks: Array[int] = [2, 5, 7, 8, 11]
+var previous_velocity: Vector3 = Vector3.ZERO
+
+## The speed limit on this road
+var path_max_speed := 20.0
+## The speed limit when reversing on this road
+var path_reversing_speed := 5.0
+## Vehicle will try to stay within this distance from the path
+var path_distance_limit := 10.0
+## Vehicle is considered to be stopped when below this speed
+var min_speed := 0.1
+## How much braking should be applied
+var braking_multiplier := 0.5
+## Indicates that this vehicle is close to the path and facing the right direction
+var is_on_path := false
+## This vehicle will not calculate avoidance & inputs for the next X ticks
+var ticks_to_skip: int = 0
+## Increased by the TrafficManager when this prop fails a hearing & line-of-sight check
+var despawn_weight := 0.0
+
 ## Show the debug label for this vehicle
 var show_debug_label := false
 @onready var debug_label: Label3D = $DebugLabel3D
@@ -70,10 +76,6 @@ var show_debug_label := false
 #@onready var brake_light_right: OmniLight3D = $BrakeLightRight
 #@onready var reverse_light_left: OmniLight3D = $ReverseLightLeft
 #@onready var reverse_light_right: OmniLight3D = $ReverseLightRight
-@export var brake_light_left_mesh: MeshInstance3D
-@export var brake_light_right_mesh: MeshInstance3D
-@export var reverse_light_left_mesh: MeshInstance3D
-@export var reverse_light_right_mesh: MeshInstance3D
 # Audio streams
 @onready var collision_audio_1: AudioStreamPlayer3D = $AudioStreams/CollisionAudio1
 # Particle emitters
@@ -85,22 +87,32 @@ var show_debug_label := false
 # Explosion
 var explosion: Explosion = null
 const explosion_scene := preload("res://effects/explosion.tscn")
-@export var explosion_position: Vector3
 
 
 func _ready () -> void:
 	super()
+
+	Game.time_changed.connect(func(minute: int):
+		if daily_routine.appointments.has(minute):
+			start_navigating_to(get_node(daily_routine.appointments[minute]).global_position)
+		lights_on = minute > 1800 or minute < 600
+	)
+
 	if show_debug_label:
 		debug_label.visible = true
+
 	if lights_on:
 		headlight_left.light_energy = headlight_energy
 		headlight_right.light_energy = headlight_energy
+
 	handbrake_input = 1.0
-	_previous_handbrake_input = handbrake_input
+	previous_handbrake_input = handbrake_input
 	current_hit_points = max_hit_points
+
 	await get_tree().create_timer(0.2).timeout
 	unfreeze_bodies()
-	linear_velocity = _starting_velocity
+	linear_velocity = starting_velocity
+	
 	return
 
 
@@ -119,28 +131,24 @@ func _process(_delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	# Record current velocity, to refer to when processing collision signals
-	_previous_velocity = Vector3(linear_velocity)
-	# Apply downforce if 2 or more wheels are touching the ground
-	#if get_wheel_contact_count() > 1:
-		# Get Z rotation, then get the square-root of its square to ensure that it's positive
-		#var _angle_from_upright := (PI / 2) - sqrt(pow(rotation.z, 2))
-		#if _angle_from_upright > 0:
-			#apply_central_force(-basis.y * _angle_from_upright * downforce_multiplier * pow(speed, 2))
+	previous_velocity = Vector3(linear_velocity)
 	brake_light_left_mesh.transparency = 1.0 - brake_amount
 	brake_light_right_mesh.transparency = 1.0 - brake_amount
+
 	if current_gear == -1:
 		reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 0.0, delta * 10)
 		reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 0.0, delta * 10)
 	else:
 		reverse_light_left_mesh.transparency = lerpf(reverse_light_left_mesh.transparency, 1.0, delta * 10)
 		reverse_light_right_mesh.transparency = lerpf(reverse_light_right_mesh.transparency, 1.0, delta * 10)
-	var _target_headlight_energy := 0.0
+
+	var target_headlight_energy := 0.0
 	if lights_on:
-		_target_headlight_energy = headlight_energy
-	var _current_headlight_energy := lerpf(headlight_left.light_energy, _target_headlight_energy, delta * 10)
-	headlight_left.light_energy = _current_headlight_energy
-	headlight_right.light_energy = _current_headlight_energy
+		target_headlight_energy = headlight_energy
+	var current_headlight_energy := lerpf(headlight_left.light_energy, target_headlight_energy, delta * 10)
+	headlight_left.light_energy = current_headlight_energy
+	headlight_right.light_energy = current_headlight_energy
+
 	# Adjust engine smoke level to reflect damage
 	var damage_ratio := 1.0 - (current_hit_points / max_hit_points)
 	if damage_ratio > 0.1:
@@ -149,6 +157,7 @@ func _physics_process(delta: float) -> void:
 		engine_black_smoke_emitter.amount_ratio = damage_ratio
 	if damage_ratio > 0.75:
 		engine_white_smoke_emitter.amount_ratio = 0
+
 	# Turn engine off & catch fire if hit points are low
 	if current_hit_points <= 0:
 		ignition_on = false
@@ -159,24 +168,25 @@ func _physics_process(delta: float) -> void:
 			engine_fire_emitter.emitting = false
 			explode()
 	
-	if handbrake_input > _previous_handbrake_input:
+	if handbrake_input > previous_handbrake_input:
 		handbrake_up_audio.play()
-	elif handbrake_input < _previous_handbrake_input:
+	elif handbrake_input < previous_handbrake_input:
 		handbrake_down_audio.play()
-	_previous_handbrake_input = handbrake_input
+	previous_handbrake_input = handbrake_input
+
+	contextual_steering_unit.current_speed = speed
 	return
 
 
-func process_transmission(delta : float):
+func process_transmission(delta : float) -> void:
 	if is_shifting:
 		if delta_time > complete_shift_delta_time:
 			complete_shift()
 		return
-	
-	## For automatic transmissions to determine when to shift the current wheel speed and 
-	## what the wheel speed would be without slip are used. This allows vehicles to spin the
-	## tires without immidiately shifting to the next gear.
-	
+
+	# For automatic transmissions to determine when to shift the current wheel speed and 
+	# what the wheel speed would be without slip are used. This allows vehicles to spin the
+	# tires without immidiately shifting to the next gear.
 	if automatic_transmission:
 		var reversing := false
 		var ideal_wheel_spin := speed / average_drive_wheel_radius
@@ -184,10 +194,10 @@ func process_transmission(delta : float):
 		var real_wheel_spin := drivetrain_spin * get_gear_ratio(current_gear)
 		var current_ideal_gear_rpm := gear_ratios[current_gear - 1] * final_drive * ideal_wheel_spin * ANGULAR_VELOCITY_TO_RPM
 		var current_real_gear_rpm = real_wheel_spin * ANGULAR_VELOCITY_TO_RPM
-		
+
 		if current_gear == -1:
 			reversing = true
-		
+
 		if not reversing:
 			var next_gear_rpm := 0.0
 			if current_gear < gear_ratios.size():
@@ -195,8 +205,7 @@ func process_transmission(delta : float):
 			var previous_gear_rpm := 0.0
 			if current_gear - 1 > 0:
 				previous_gear_rpm = get_gear_ratio(current_gear - 1) * maxf(drivetrain_spin, ideal_wheel_spin) * ANGULAR_VELOCITY_TO_RPM
-			
-			
+
 			if current_gear < gear_ratios.size():
 				if current_gear > 0:
 					if current_ideal_gear_rpm > max_rpm:
@@ -224,9 +233,10 @@ func process_transmission(delta : float):
 				if current_gear == 0 or local_velocity.z < 0.0:
 					if delta_time - last_shift_delta_time > shift_time:
 						shift(1)
+	return
 
 
-func shift(count : int):
+func shift(count : int) -> void:
 	if is_shifting and current_gear + count >= 0:
 		return
 	
@@ -242,18 +252,150 @@ func shift(count : int):
 			is_shifting = true
 			if count > 0:
 				is_up_shifting = true
+	return
+
 
 ## Connect the vehicle's `body_entered` signal to this method
-func _on_body_entered(_body: Node) -> void:
-	if _body is StaticBody3D or _body is CSGShape3D or _body is RigidBody3D or _body is Terrain3D:
+func _on_body_entered(body: Node) -> void:
+	if body is StaticBody3D or body is CSGShape3D or body is RigidBody3D or body is Terrain3D:
 		if collision_audio_1.playing == false:
-			var _velocity_change := _previous_velocity - linear_velocity
-			var _impact_force := _velocity_change.length() * 0.1
-			if _impact_force > impact_force_threshold_1:
-				react_to_collision(_velocity_change)
-				collision_audio_1.volume_db = linear_to_db(clampf(_impact_force, 0.0, 1.0))
+			var velocity_change := previous_velocity - linear_velocity
+			var impact_force := velocity_change.length() * 0.1
+			if impact_force > impact_force_threshold_1:
+				react_to_collision(velocity_change)
+				collision_audio_1.volume_db = linear_to_db(clampf(impact_force, 0.0, 1.0))
 				collision_audio_1.play()
-				current_hit_points -= _impact_force
+				current_hit_points -= impact_force
+	return
+
+
+func start_navigating_to(global_target_position: Vector3) -> void:
+	contextual_steering_unit.enable_raycasting()
+	var id_path := astar_traffic_manager.get_route(global_position, global_target_position)
+	target_destination = global_target_position
+	astar_road_agent.set_id_path(id_path)
+	is_navigating = true
+	return
+
+
+## Update interest vectors & avoidance info for the vehicle, then adjust its inputs accordingly
+func set_inputs() -> void:
+	if ticks_to_skip > 0:
+		ticks_to_skip -= 1
+		return
+
+	if get_wheel_contact_count() >= 3:
+		var is_path_ahead_blocked := false
+		var target_speed := path_max_speed
+		var vehicle_in_front := false
+		var target_position: Vector3
+
+		if not is_navigating:
+			is_on_path = false
+			vehicle_in_front = false
+			target_position = global_position
+			target_speed = 0
+		elif astar_road_agent.has_reached_end:
+			is_on_path = false
+			vehicle_in_front = false
+			target_position = target_destination
+			target_speed = path_max_speed / 2
+			if target_destination.distance_to(
+					Vector3(global_position.x, target_destination.y, global_position.z)
+			) < nav_agent.target_desired_distance:
+				is_navigating = false
+		else:
+			astar_road_agent.snap_to_nearest_offset(global_position)
+			var distance_to_path := global_position.distance_to(astar_road_agent.global_position)
+			if distance_to_path < path_distance_limit:
+				astar_road_agent.advance_lane_offset(speed / 2)
+
+			target_position = astar_road_agent.global_position
+
+			var angle_to_lane := global_transform.basis.z.signed_angle_to(
+					global_transform.basis.z, Vector3.UP)
+			if distance_to_path < path_distance_limit and absf(angle_to_lane) < 0.1:
+				is_on_path = true
+			else:
+				is_on_path = false
+
+		# Set the vehicle's interest vectors and calculate the overall direction of interest
+		var interest_vector := contextual_steering_unit.get_interest_vector(target_position)
+		var turning_angle := Vector3.FORWARD.signed_angle_to(
+				interest_vector, Vector3.UP)
+
+		is_path_ahead_blocked = (
+				not astar_road_agent.has_reached_end and
+				astar_road_agent.collision_area.get_overlapping_bodies().any(func(body: Node3D):
+					return (body is DriveableVehicle and body != self) or body is Player or body is PlayerPhysicalBone
+		))
+
+		# Adjust our target_speed based on direction of interest and turning angle
+		if is_navigating:
+			if is_path_ahead_blocked or vehicle_in_front or request_stop_timer != null:
+				target_speed = 0.0
+			elif interest_vector.z > contextual_steering_unit.steering_ray_length * 0.75: # Interest vector is strongly to the rear
+				if not is_on_path and linear_velocity.z < min_speed and not vehicle_in_front:
+					target_speed = path_reversing_speed # If we are stopped and not on the road, start reversing
+				else:
+					target_speed = 0.0 # If we are on the road, slow to a stop
+			elif turning_angle < -PI / 16 or turning_angle > PI / 16:
+				target_speed *= 0.5 # Slow down for turn
+
+		# Use our adjusted target_speed to set throttle and brake inputs
+		if target_speed == path_reversing_speed: # We are trying to reverse
+			if speed < min_speed and not is_shifting and current_gear > -1:
+				shift(-1)
+			elif current_gear == -1:
+				throttle_input = 0.5
+				brake_input = 0.0
+				handbrake_input = 0.0
+		else: # We are either stopped or going forward
+			if current_gear < 1 and not is_shifting:
+				shift(1)
+			elif target_speed == 0.0: # We are trying to stop
+				throttle_input = 0.0
+				if speed < min_speed:
+					# Let off the brakes when we're stopped, because brake_input doubles as reversing input
+					brake_input = 0.0
+					ticks_to_skip = 10 # Skip the next 10 physics ticks
+				else:
+					brake_input = 1.0
+				handbrake_input = 1.0
+			elif speed < target_speed: # Our speed is lower than the target speed
+				if speed < target_speed / 2: # Our speed is less than half the target speed
+					throttle_input = 0.75
+					brake_input = 0.0
+					handbrake_input = 0.0
+				else:
+					throttle_input = 1.0 - clampf(speed / target_speed, 0.5, 1.0)
+					brake_input = 0.0
+					handbrake_input = 0.0
+			elif speed > target_speed * 1.2: # Our speed is higher than the target speed
+				throttle_input = 0.0
+				brake_input = braking_multiplier
+				handbrake_input = 0.0
+			else: # Set all inputs to 0 and coast
+				throttle_input = 0.0
+				brake_input = 0.0
+				handbrake_input = 0.0
+
+		if throttle_input > 0.0:
+			ignition_on = true
+
+		# Steer to match the rotation of the nearest path position
+		steering_input = clampf(turning_angle * 2, -1.0, 1.0)
+		if current_gear == -1: # Flip steering input if we're reversing
+			# TODO: subtract turning angle from either PI or -PI to allow reversing in a straight line
+			# The vehicle will currently always steer while reversing, which is fine for getting un-stuck from props
+			steering_input = -steering_input
+
+	else: # Take our hands off the steering wheel until 3 tires are touching the ground
+		steering_input = 0.0
+		throttle_input = 0.0
+
+	# Engage clutch if we're not throttling, to reduce oversteer
+	clutch_input = 1.0 - throttle_input
 	return
 
 
@@ -273,6 +415,7 @@ func explode() -> void:
 	despawn()
 	return
 
+
 ## Freeze the car, as well as the various bodies attached to it
 func freeze_bodies() -> void:
 	freeze = true
@@ -281,6 +424,7 @@ func freeze_bodies() -> void:
 	door_right.top_level = false
 	door_right.freeze = true
 	return
+
 
 ## Unfreeze the car. Attached bodies seem to behave more realistically when set to be `top_level`
 func unfreeze_bodies() -> void:
@@ -291,146 +435,27 @@ func unfreeze_bodies() -> void:
 	door_right.freeze = false
 	return
 
-## Enables AI for this vehicle
-func start_ai() -> void:
-	is_ai_on = true
-	# Check if first-time setup is required, and perform it if so
-	if len(steering_raycasts) != steering_ray_count:
-		# Delete existing AI raycasts
-		for _node: Node in get_children():
-			if _node is RayCast3D and _node.is_in_group(steering_ray_group):
-				_node.enabled = false
-				_node.queue_free()
-		steering_raycasts = []
-		antenna_raycasts = []
-		# Add steering raycasts for close avoidance
-		for i: int in steering_ray_count:
-			var _new_raycast := RayCast3D.new()
-			_new_raycast.add_to_group(steering_ray_group)
-			_new_raycast.position = Vector3(0, 0, 0)
-			_new_raycast.collision_mask = 0
-			for _mask_value in steering_ray_collision_masks: # 1235
-				_new_raycast.set_collision_mask_value(_mask_value, true)
-			var _angle := (i * (2 * PI)) / steering_ray_count
-			_new_raycast.target_position = Vector3.FORWARD.rotated(Vector3.UP, _angle) * steering_ray_length
-			add_child(_new_raycast)
-			steering_raycasts.push_back(_new_raycast)
-		# Add antenna raycasts for far avoidance
-		for i: int in [-1, 1]:
-			var _new_raycast := RayCast3D.new()
-			_new_raycast.add_to_group(steering_ray_group)
-			_new_raycast.position = Vector3.ZERO
-			_new_raycast.collision_mask = 0
-			for _mask_value in steering_ray_collision_masks:
-				_new_raycast.set_collision_mask_value(_mask_value, true)
-			var _angle := i * antenna_angle
-			_new_raycast.target_position = Vector3.FORWARD.rotated(Vector3.UP, _angle) * max_antenna_length
-			_new_raycast.debug_shape_custom_color = Color(0, 1, 0, 1)
-			add_child(_new_raycast)
-			antenna_raycasts.push_back(_new_raycast)
-
-	for _raycast in steering_raycasts:
-		_raycast.enabled = true
-	for _raycast in antenna_raycasts:
-		_raycast.enabled = true
-	return
-
-## Disables AI for this vehicle
-func stop_ai() -> void:
-	is_ai_on = false
-	for _node: Node in get_children():
-		if _node is RayCast3D and _node.is_in_group(steering_ray_group):
-			_node.enabled = false
-	return
-
 
 func despawn() -> void:
 	queue_free()
 	return
 
-## Calculate the amount of interest in each direction by comparing it to the target vector
-func set_interest_vectors(_target_global_position: Vector3) -> void:
-	var _target_position := to_local(_target_global_position)
-	_target_position.y = 0
-	_target_position = _target_position.normalized()
-	interest_vectors = []
-	# Loop through raycasts and compare their normalized vector to the normalized & localized target vector
-	for _raycast in steering_raycasts:
-		# The dot product of two aligned vectors is 1, and for two perpendicular vectors it’s 0
-		var _interest_amount := _raycast.target_position.normalized().dot(_target_position)
-		_interest_amount = maxf(0, _interest_amount)
-		interest_vectors.push_back(_raycast.target_position.normalized() * _interest_amount)
-	# Loop through raycasts again and check for danger to avoid
-	var i := 0
-	for _raycast in steering_raycasts:
-		_raycast.enabled = true
-		_raycast.force_raycast_update()
-		if _raycast.is_colliding():
-			# Use the distance to the collision point to reduce the aligned interest vector
-			var _danger_distance: float = _raycast.get_collision_point().distance_to(_raycast.global_position)
-			var _danger_amount = clampf(_danger_distance / steering_ray_length, 0.01, 1.0)
-			interest_vectors[i] *= _danger_amount
-			# Multiply the vector which points away from the danger
-			if i <= (steering_ray_index_behind) - 1:
-				interest_vectors[i + (steering_ray_index_behind)] /= _danger_amount * avoidance_multiplier
-			else:
-				interest_vectors[i - (steering_ray_index_behind)] /= _danger_amount * avoidance_multiplier
-		_raycast.enabled = false
-		i += 1
-	# Check "antenna" raycasts
-	var _danger_amount_left := 0.0
-	var _danger_amount_right := 0.0
-	var current_antenna_length := clampf(speed, min_antenna_length, max_antenna_length)
-	for _raycast in antenna_raycasts:
-		_raycast.enabled = true
-		_raycast.force_raycast_update()
-		if _raycast.target_position.x < 0:
-			var _antenna_position := Vector3.FORWARD.rotated(Vector3.UP, 1 * antenna_angle) * current_antenna_length
-			_raycast.target_position = _antenna_position
-		else:
-			var _antenna_position := Vector3.FORWARD.rotated(Vector3.UP, -1 * antenna_angle) * current_antenna_length
-			_raycast.target_position = _antenna_position
-		if _raycast.is_colliding():
-			var _danger_distance: float = _raycast.get_collision_point().distance_to(_raycast.global_position)
-			if _raycast.target_position.x < 0:
-				_danger_amount_left = 1 - clampf(_danger_distance / current_antenna_length, 0.0, 1.0)
-			else:
-				_danger_amount_right = 1 - clampf(_danger_distance / current_antenna_length, 0.0, 1.0)
-		_raycast.enabled = false
-	if _danger_amount_left > 0.0:
-		interest_vectors[steering_ray_index_right] *= _danger_amount_left * antenna_multiplier
-	if _danger_amount_right > 0.0:
-		interest_vectors[steering_ray_index_left] *= _danger_amount_right * antenna_multiplier
-	if _danger_amount_left > 0.0 or _danger_amount_right > 0.0:
-		interest_vectors[steering_ray_index_behind].z = maxf(1.0, interest_vectors[steering_ray_index_behind].z)
-		interest_vectors[steering_ray_index_behind] *= (_danger_amount_left + _danger_amount_right) * antenna_multiplier
-	return
-
-## Sum up our interest vectors to get the direction of travel
-func set_summed_interest_vector() -> void:
-	var _summed_interest_vector := Vector3.ZERO
-	for _interest_vector in interest_vectors:
-		_summed_interest_vector += _interest_vector
-	summed_interest_vector = _summed_interest_vector
-	return
-
-## Get the angle difference on the Y axis between the car's rotation and the interest vector
-func get_interest_angle() -> float:
-	return Vector3.FORWARD.signed_angle_to(summed_interest_vector, Vector3.UP)
 
 ## Override to apply a different material when the vehicle has exploded
 func apply_burnt_material() -> void:
 	pass
 
+
 ## Ask this vehicle to stop
-func request_stop(_duration: float = 5.0) -> void:
+func request_stop(duration: float = 5.0) -> void:
 	if request_stop_timer == null:
-		request_stop_timer = get_tree().create_timer(_duration)
+		request_stop_timer = get_tree().create_timer(duration)
 		request_stop_timer.timeout.connect(func():
 			request_stop_timer = null
 		)
 	else:
-		request_stop_timer.time_left = _duration
+		request_stop_timer.time_left = duration
+	return
 
 
 ## Virtual method. Override to e.g. play FX, detach parts when colliding

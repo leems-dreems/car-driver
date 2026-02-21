@@ -3,7 +3,7 @@ class_name CarDoor extends RigidBody3D
 @export var parent_car: DriveableVehicle
 @export var shut_door_mesh: MeshInstance3D
 @export var shut_door_colliders: Array[CollisionShape3D]
-@export var hinge_joint: JoltHingeJoint3D
+@export var hinge_joint: HingeJoint3D
 @export var door_open_SFX: AudioStreamPlayer3D
 @export var door_shut_SFX: AudioStreamPlayer3D
 ## If the "latch" areas overlap, the door will shut (if moving fast enough)
@@ -51,11 +51,11 @@ func _ready():
 	if not is_openable:
 		set_collision_layer_value(4, false)
 	shut_basis = Basis(transform.basis)
-	hinge_limit_upper = hinge_joint.limit_upper
-	hinge_limit_lower = hinge_joint.limit_lower
-	motor_target_velocity = hinge_joint.motor_target_velocity
-	hinge_joint.limit_upper = 0
-	hinge_joint.limit_lower = 0
+	hinge_limit_upper = hinge_joint.get_param(HingeJoint3D.PARAM_LIMIT_UPPER)
+	hinge_limit_lower = hinge_joint.get_param(HingeJoint3D.PARAM_LIMIT_LOWER)
+	motor_target_velocity = hinge_joint.get_param(HingeJoint3D.PARAM_MOTOR_TARGET_VELOCITY)
+	hinge_joint.set_param(HingeJoint3D.PARAM_LIMIT_UPPER, 0)
+	hinge_joint.set_param(HingeJoint3D.PARAM_LIMIT_LOWER, 0)
 	#mass = 0.1
 	is_shut = true
 	visible = !hide_rigidbody_when_shut

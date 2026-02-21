@@ -70,8 +70,6 @@ func _on_body_entered(_body: Node) -> void:
 			#go_limp()
 			if _body is DriveableVehicle:
 				_body.request_stop()
-			elif _body.get_parent() is SpinningWhacker:
-				_body.get_parent().request_stop()
 	return
 
 

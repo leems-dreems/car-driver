@@ -1,16 +1,21 @@
 # Questions
 
-- How best to look for points on adjacent lanes, e.g. to link astar points and allow pathfinding to consider lane-switching?
-- Possibly merge lanes on multi-lane roads for astar purposes - e.g. an 8-lane highway would be treated as a 2-lane road for pathfinding
-- How to consider all lanes on a road when choosing start & end points of astar path? Currently just searching for points in a 10m radius of closest point
-- How best to link next & prior lanes, including at intersections?
+- How best to look for points on adjacent lanes
+	- E.g. to link astar points and allow pathfinding to consider lane-switching
+- Possibly merge lanes on multi-lane roads for astar purposes
+	- E.g. an 8-lane highway would be treated as a 2-lane road for pathfinding
+- How to consider all lanes on a road when choosing start & end points of astar path
+	- Currently just searching for points in a 10m radius of closest point
+- How best to link next & prior lanes, including at intersections
 
 
 # AStar3D pathfinding (Godot 4.4, Road Gen 0.7.0)
 
-Notes on using AStar3D with Road Generator to plot a road route between two points, which may or may not be on-road. This route can be used for high-level navigation, and possibly for displaying on a map if then converted to 2D.
+Notes on using AStar3D with Road Generator to plot a road route between two points, which may or may not be on-road.
+This route can be used for high-level navigation, and possibly for displaying on a map if then converted to 2D.
 
-- On RoadManager ready, create an instance of the AStar3D class. Also create a Dictionary[int, RoadLane] where the keys are indices of AStar3D points, and the values are references to the RoadLanes that those points belong to.
+- On RoadManager ready, create an instance of the AStar3D class
+	- Also create a Dictionary[int, RoadLane] where the keys are indices of AStar3D points, and the values are references to the RoadLanes that those points belong to.
 - Loop over RoadLanes, and call AStar3D.add_point() at least 3 times for each lane - start position, end position and at least 1 point in-between
 	- For curved roads, add astar points along the RoadLane's curve, at intervals
 	- For straight roads, can probably get away with having just 1 midpoint and calling get_closest_position_in_segment() to get target destination
@@ -37,13 +42,20 @@ When Road Generator supports RoadLanes with multiple entries/exits, the connecti
 
 # AStar + NavMesh Solution
 
-Build an AStar3D graph from RoadLanes in the scene, as described above. Bake a navmesh over the terrain.
+Build an AStar3D graph from RoadLanes in the scene, as described above.
+Bake a navmesh over the terrain.
 
-When a vehicle's target position is set, get the nearest astar points to both the vehicle and the target position. Calculate a path between these points.
-Next, get all astar points within X metres of the start point. Calculate paths from each of these potential alternate start points to our initial end point. Keep the path with the lowest cost.
-Go through this process again to find alternate end points. It may even be worth taking another look for alternate start points after this.
+When a vehicle's target position is set, get the nearest astar points to both the vehicle and the target position.
+Calculate a path between these points.
 
-Using the vehicle's nav agent, get a navmesh path to our chosen astar start point. Start navigating towards it.
+Next, get all astar points within X metres of the start point.
+Calculate paths from each of these potential alternate start points to our initial end point.
+Keep the path with the lowest cost.
+Go through this process again to find alternate end points.
+It may even be worth taking another look for alternate start points after this.
+
+Using the vehicle's nav agent, get a navmesh path to our chosen astar start point.
+Start navigating towards it.
 Possible improvement: periodically sample other potential start points while navigating, and use some heuristic that looks at the combined on & off-road path costs to decide whether to use that start point instead.
 When the nav agent is within a certain range of its chosen astar start point, switch to lane-following behaviour.
 When the nav agent is nearing its chosen end point, start sampling points on the lane(s) ahead and calculate the path from each to the vehicle's target position.
