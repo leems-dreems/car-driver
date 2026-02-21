@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ddmen4ikpjrhv"]
 
-[ext_resource type="Script" uid="uid://dfijxmwdeqq61" path="res://ui/ink_elements/dialogue_choice_button.gd" id="1_vcwi3"]
+[ext_resource type="Script" uid="uid://dfijxmwdeqq61" path="res://ui/ink_elements/ink_dialogue_choice_button.gd" id="1_vcwi3"]
 
 [node name="Button" type="Button"]
 action_mode = 0
