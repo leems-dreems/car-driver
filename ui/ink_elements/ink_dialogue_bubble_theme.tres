@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://bkd3ixcbjp1l4"]
+[gd_resource type="Theme" format=3 uid="uid://bkd3ixcbjp1l4"]
 
 [ext_resource type="Texture2D" uid="uid://c4idsakupwi6w" path="res://ui/icons/black_dot.png" id="1_nm5ox"]
 [ext_resource type="FontFile" uid="uid://cfqyumdnfxl4s" path="res://ui/fonts/Smorgasbord.otf" id="1_oqmwo"]

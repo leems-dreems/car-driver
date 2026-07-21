@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=13 format=3 uid="uid://bclipohnbqlxm"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bclipohnbqlxm"]
 
 [ext_resource type="Shader" uid="uid://ompvsx8x60m4" path="res://effects/ExplosionShader.tres" id="1_x57bo"]
 

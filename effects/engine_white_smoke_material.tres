@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=13 format=3 uid="uid://8vfe26o7lqwj"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://8vfe26o7lqwj"]
 
 [ext_resource type="Shader" uid="uid://ompvsx8x60m4" path="res://effects/ExplosionShader.tres" id="1_fqfse"]
 [ext_resource type="Texture2D" uid="uid://dh0wvuemvp0cf" path="res://assets/textures/normal+.png" id="2_u2veq"]

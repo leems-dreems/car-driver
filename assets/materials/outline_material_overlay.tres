@@ -1,4 +1,4 @@
-[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cfc2aow8bbriw"]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cfc2aow8bbriw"]
 
 [ext_resource type="Shader" uid="uid://72o7ptgrsm63" path="res://assets/shaders/outline.gdshader" id="1_5feti"]
 

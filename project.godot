@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Bin Day"
 run/main_scene="res://maps/BinRoninIsland/bin_ronin_island.tscn"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 run/max_fps=60
 config/icon="res://icon.svg"
 
@@ -82,7 +82,7 @@ project/assembly_name="Fast Traffic"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/boujie_water_shader/plugin.cfg", "res://addons/inkgd/plugin.cfg", "res://addons/proton_scatter/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/boujie_water_shader/plugin.cfg", "res://addons/inkgd/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [global_group]
 
@@ -420,6 +420,11 @@ set_pathfind_end={
 3d_physics/layer_27="PedestrianAgent"
 3d_physics/layer_29="Bone"
 3d_physics/layer_30="RoadWaypoint"
+
+[limbo_ai]
+
+behavior_tree/behavior_tree_default_dir="res://data/limboai/trees"
+behavior_tree/user_task_dirs=PackedStringArray("res://data/limboai/tasks")
 
 [navigation]
 

@@ -1,0 +1,179 @@
+[gd_scene format=3 uid="uid://cuhkqkjv3rwqj"]
+
+[ext_resource type="Script" uid="uid://c72rsfa3chskw" path="res://maps/jobs-demo/jobs_demo.gd" id="1_ouvnr"]
+[ext_resource type="Terrain3DAssets" uid="uid://krekjaqgod8q" path="res://maps/BinRoninIsland/terrain_3d_assets.tres" id="2_b7j4i"]
+[ext_resource type="Script" uid="uid://bmk1ebw85d5n3" path="res://addons/road-generator/nodes/road_manager.gd" id="2_lk1d4"]
+[ext_resource type="Script" uid="uid://d0jpys7ij1lvw" path="res://addons/road-generator/nodes/road_container.gd" id="3_b7j4i"]
+[ext_resource type="Script" uid="uid://deov8hqq2brqr" path="res://addons/road-generator/nodes/road_point.gd" id="4_ehpts"]
+[ext_resource type="Script" uid="uid://cxw4g2sqkm56p" path="res://addons/road-generator/connectors/terrain3d_road_connector.gd" id="5_asy66"]
+[ext_resource type="PackedScene" uid="uid://d23s6bfnq6fex" path="res://addons/road-generator/custom_containers/4way_1x1.tscn" id="6_asy66"]
+[ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="7_w2glf"]
+[ext_resource type="PackedScene" uid="uid://c52clb7bsba3r" path="res://npcs/characters/tipman.tscn" id="9_w2glf"]
+[ext_resource type="Script" uid="uid://dk0nu63biymdl" path="res://maps/jobs-demo/npc_hsm.gd" id="10_cf37l"]
+[ext_resource type="Script" uid="uid://c0sg2o6dc0pc4" path="res://maps/jobs-demo/npc_idle_state.gd" id="11_roeaq"]
+[ext_resource type="PackedScene" uid="uid://c1eqbtcdp18ii" path="res://Player/Player.tscn" id="12_1sv0q"]
+
+[sub_resource type="Gradient" id="Gradient_w2glf"]
+offsets = PackedFloat32Array(0.2, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cf37l"]
+noise_type = 2
+frequency = 0.03
+cellular_jitter = 3.0
+cellular_return_type = 0
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 50.0
+domain_warp_fractal_type = 2
+domain_warp_fractal_lacunarity = 1.5
+domain_warp_fractal_gain = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_roeaq"]
+noise = SubResource("FastNoiseLite_cf37l")
+color_ramp = SubResource("Gradient_w2glf")
+seamless = true
+
+[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_1sv0q"]
+_shader_parameters = {
+&"auto_base_texture": 0,
+&"auto_height_reduction": 0.1,
+&"auto_overlay_texture": 1,
+&"auto_slope": 1.0,
+&"bias_distance": 512.0,
+&"blend_sharpness": 0.87,
+&"depth_blur": 0.0,
+&"enable_macro_variation": true,
+&"enable_projection": true,
+&"height_blending": true,
+&"macro_variation1": Color(1, 1, 1, 1),
+&"macro_variation2": Color(1, 1, 1, 1),
+&"macro_variation_slope": 0.333,
+&"mipmap_bias": 1.0,
+&"noise1_angle": 0.0,
+&"noise1_offset": Vector2(0.5, 0.5),
+&"noise1_scale": 0.04,
+&"noise2_scale": 0.076,
+&"noise3_scale": 0.225,
+&"noise_texture": SubResource("NoiseTexture2D_roeaq"),
+&"projection_angular_division": 2.0,
+&"projection_threshold": 0.8,
+&"world_space_normal_blend": true
+}
+texture_filtering = 1
+auto_shader = true
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_cf37l"]
+
+[sub_resource type="BBVariant" id="BBVariant_w2glf"]
+saved_value = null
+resource_name = "<null>"
+
+[sub_resource type="BTCheckAgentProperty" id="BTCheckAgentProperty_cf37l"]
+value = SubResource("BBVariant_w2glf")
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_roeaq"]
+blackboard_plan = SubResource("BlackboardPlan_cf37l")
+root_task = SubResource("BTCheckAgentProperty_cf37l")
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_w2glf"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w2glf"]
+sky_top_color = Color(0.317647, 0.596078, 0.988235, 1)
+sky_horizon_color = Color(0.317647, 0.596078, 0.988235, 1)
+ground_bottom_color = Color(0.317647, 0.596078, 0.988235, 1)
+ground_horizon_color = Color(0.317647, 0.596078, 0.988235, 1)
+sun_angle_max = 1.0
+sun_curve = 3.8988
+
+[sub_resource type="Sky" id="Sky_cf37l"]
+sky_material = SubResource("ProceduralSkyMaterial_w2glf")
+
+[sub_resource type="Environment" id="Environment_roeaq"]
+background_mode = 2
+sky = SubResource("Sky_cf37l")
+tonemap_mode = 2
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.005
+
+[node name="JobsDemo" type="Node3D" unique_id=1798618301]
+script = ExtResource("1_ouvnr")
+
+[node name="Terrain3D" type="Terrain3D" parent="." unique_id=581483958]
+data_directory = "res://maps/jobs-demo"
+material = SubResource("Terrain3DMaterial_1sv0q")
+assets = ExtResource("2_b7j4i")
+collision_mode = 3
+top_level = true
+metadata/_edit_lock_ = true
+
+[node name="RoadManager" type="Node3D" parent="." unique_id=660931340]
+script = ExtResource("2_lk1d4")
+
+[node name="RoadContainer_MainRoad" type="Node3D" parent="RoadManager" unique_id=1410294783]
+script = ExtResource("3_b7j4i")
+material_resource = ExtResource("7_w2glf")
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath("../4way_1x2"), NodePath("../4way_1x1")])
+edge_rp_targets = Array[NodePath]([NodePath("RP_002"), NodePath("RP_001")])
+edge_rp_target_dirs = Array[int]([0, 1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
+edge_rp_local_dirs = Array[int]([0, 1])
+
+[node name="RP_001" type="Node3D" parent="RoadManager/RoadContainer_MainRoad" unique_id=2045749250]
+transform = Transform3D(-1, 0, -0.00013748009, 0, 1, 0, 0.00013748009, 0, -1, 0, 0.25, 0)
+script = ExtResource("4_ehpts")
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
+next_mag = 77.59032
+prior_pt_init = NodePath("../RP_002")
+
+[node name="RP_002" type="Node3D" parent="RoadManager/RoadContainer_MainRoad" unique_id=69201518]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0.25, 156)
+script = ExtResource("4_ehpts")
+traffic_dir = Array[int]([2, 1])
+lanes = Array[int]([5, 5])
+prior_mag = 77.59032
+next_mag = 77.59032
+next_pt_init = NodePath("../RP_001")
+
+[node name="4way_1x1" parent="RoadManager" unique_id=216339183 instance=ExtResource("6_asy66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 172)
+edge_containers = Array[NodePath]([NodePath("../RoadContainer_MainRoad"), NodePath(""), NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath("RP_002"), NodePath(""), NodePath(""), NodePath("Node3D")])
+edge_rp_target_dirs = Array[int]([1, -1, -1, 1])
+
+[node name="4way_1x2" parent="RoadManager" unique_id=2128141747 instance=ExtResource("6_asy66")]
+transform = Transform3D(1, 0, 0.00013756752, 0, 1, 0, -0.00013756752, 0, 1, -0.0022010803, 0.25, -16)
+edge_containers = Array[NodePath]([NodePath(""), NodePath("../RoadContainer_MainRoad"), NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("RP_001"), NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, 0, -1, -1])
+
+[node name="RoadTerrain3DConnector" type="Node" parent="." unique_id=934220313 node_paths=PackedStringArray("terrain", "road_manager")]
+script = ExtResource("5_asy66")
+terrain = NodePath("../Terrain3D")
+road_manager = NodePath("../RoadManager")
+
+[node name="TipmanNPC" parent="." unique_id=2070148712 instance=ExtResource("9_w2glf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -33)
+
+[node name="BTPlayer" type="BTPlayer" parent="TipmanNPC" unique_id=1798070626]
+behavior_tree = SubResource("BehaviorTree_roeaq")
+blackboard_plan = SubResource("BlackboardPlan_w2glf")
+
+[node name="LimboHSM" type="LimboHSM" parent="TipmanNPC" unique_id=789012318 node_paths=PackedStringArray("npc")]
+script = ExtResource("10_cf37l")
+npc = NodePath("..")
+
+[node name="IdleState" type="LimboState" parent="TipmanNPC/LimboHSM" unique_id=74787470]
+script = ExtResource("11_roeaq")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=842562340]
+environment = SubResource("Environment_roeaq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1874321496]
+transform = Transform3D(0.8660254, -0.35355338, 0.35355338, 0, 0.7071068, 0.7071068, -0.50000006, -0.6123725, 0.6123725, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." unique_id=1242824497 instance=ExtResource("12_1sv0q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.817289, 0, -28.781845)

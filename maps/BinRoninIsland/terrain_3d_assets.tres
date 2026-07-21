@@ -1,4 +1,4 @@
-[gd_resource type="Terrain3DAssets" load_steps=30 format=3 uid="uid://krekjaqgod8q"]
+[gd_resource type="Terrain3DAssets" format=3 uid="uid://krekjaqgod8q"]
 
 [ext_resource type="Texture2D" uid="uid://cdscfiq1ytwb4" path="res://assets/textures/SBS - Tiny Texture Pack 2 - 256x256/Stone_01-256x256.png" id="1_1cixu"]
 [ext_resource type="Texture2D" uid="uid://0i1m8o5u36ab" path="res://assets/textures/grass_scatter.png" id="2_kynwr"]

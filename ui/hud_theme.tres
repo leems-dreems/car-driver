@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=25 format=3 uid="uid://djel5wi5nvl5d"]
+[gd_resource type="Theme" format=3 uid="uid://djel5wi5nvl5d"]
 
 [ext_resource type="FontFile" uid="uid://civ7qtq6hhi4x" path="res://assets/fonts/Kaph-Regular.otf" id="1_pwjpm"]
 [ext_resource type="Texture2D" uid="uid://cf4r0eprhxbav" path="res://assets/icons/Liam icons/unpressed_filled_checkbox.png" id="1_yl8sm"]

@@ -1,4 +1,4 @@
-[gd_resource type="RibbonTrailMesh" load_steps=2 format=3 uid="uid://cya57d6ip8mv7"]
+[gd_resource type="RibbonTrailMesh" format=3 uid="uid://cya57d6ip8mv7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8ttq"]
 emission_enabled = true
