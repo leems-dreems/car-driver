@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Bin Day"
-run/main_scene="res://maps/BinRoninIsland/bin_ronin_island.tscn"
+run/main_scene="uid://cuhkqkjv3rwqj"
 config/features=PackedStringArray("4.7", "Forward Plus")
 run/max_fps=60
 config/icon="res://icon.svg"
@@ -26,6 +26,7 @@ Game="*res://scripts/Game.gd"
 PropRespawnManager="*res://scripts/prop_respawn_manager.gd"
 PedestrianManager="*res://npcs/pedestrian_manager.gd"
 PauseAndHud="*res://menu/pause_and_hud.tscn"
+DialogueManager="*uid://c3rodes2l3gxb"
 
 [debug]
 
@@ -82,7 +83,7 @@ project/assembly_name="Fast Traffic"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/boujie_water_shader/plugin.cfg", "res://addons/inkgd/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/boujie_water_shader/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [global_group]
 
@@ -96,6 +97,7 @@ AStarPointCollisionArea=""
 [inkgd]
 
 register_templates=true
+use_mono_runtime=true
 
 [input]
 
@@ -386,6 +388,10 @@ set_pathfind_end={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
+
+[internationalization]
+
+locale/translations_pot_files=PackedStringArray("res://npcs/characters/npc.dialogue")
 
 [layer_names]
 

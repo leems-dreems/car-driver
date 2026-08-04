@@ -1,0 +1,16 @@
+[remap]
+
+importer="ink"
+type="Resource"
+uid="uid://bdcie5dcw3a5s"
+path="res://.godot/imported/npc_basic_example_dialog.ink-d4a5a2c9497a33f3c8efd4285bddf805.res"
+
+[deps]
+
+source_file="res://story/npc_basic_example_dialog.ink"
+dest_files=["res://.godot/imported/npc_basic_example_dialog.ink-d4a5a2c9497a33f3c8efd4285bddf805.res"]
+
+[params]
+
+is_main_file=true
+compress=false

@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://bd13gvrx2atuq"]
+
+[ext_resource type="PackedScene" uid="uid://ca3emwpdwnkxa" path="res://npcs/pedestrian.tscn" id="1_brmnm"]
+[ext_resource type="Script" uid="uid://dk86nxi4gwsgj" path="res://npcs/characters/npc.gd" id="2_we6y7"]
+[ext_resource type="Resource" uid="uid://byxrx51yx88k2" path="res://npcs/characters/npc.dialogue" id="3_aqtyr"]
+[ext_resource type="Script" uid="uid://cg0c87by1to57" path="res://npcs/npc_interactable_area.gd" id="5_aqtyr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_we6y7"]
+radius = 0.3
+
+[node name="NPC" unique_id=1814597791 instance=ExtResource("1_brmnm")]
+script = ExtResource("2_we6y7")
+npc_name = "NPC"
+
+[node name="NavigationAgent3D" parent="." index="0"]
+avoidance_enabled = false
+
+[node name="Skeleton3D" parent="square_guy/metarig" index="0"]
+bones/0/position = Vector3(1.9040317e-10, 0.7044448, -0.054497335)
+bones/0/rotation = Quaternion(0.06827497, 1.1893094e-07, 8.139016e-09, 0.99766654)
+bones/1/rotation = Quaternion(-0.027644297, 3.7920076e-14, -6.590909e-09, 0.9996178)
+bones/4/rotation = Quaternion(-0.0032685287, -1.19208956e-07, -3.8963985e-10, 0.99999464)
+bones/6/rotation = Quaternion(-0.254262, 0.776858, -0.43315697, 0.37976)
+bones/7/rotation = Quaternion(0.16795392, -0.12200895, -0.12457495, 0.97025067)
+bones/8/rotation = Quaternion(-0.05305711, 0.061912917, -0.067555025, 0.9943783)
+bones/10/rotation = Quaternion(-0.24613303, -0.7811973, 0.43063113, 0.37908605)
+bones/11/rotation = Quaternion(0.15346807, 0.21671708, 0.16182208, 0.95041835)
+bones/12/rotation = Quaternion(-0.005660479, -0.7603723, 0.08305675, 0.64413023)
+bones/15/rotation = Quaternion(0.146202, 0.7339829, 0.450436, -0.48682797)
+bones/17/rotation = Quaternion(0.9952789, -2.39528e-08, 2.39457e-07, 0.09705647)
+bones/18/rotation = Quaternion(0.06862835, -1.2051973e-07, -1.4958383e-08, 0.99764234)
+bones/19/rotation = Quaternion(-0.51919633, 7.0810355e-13, 5.210761e-13, 0.85465515)
+bones/20/rotation = Quaternion(2.08134e-08, 0.96124893, -0.27568197, -7.257229e-08)
+bones/22/rotation = Quaternion(0.9952789, -2.39528e-08, 2.39457e-07, 0.09705647)
+bones/23/rotation = Quaternion(0.06862835, -1.2051973e-07, -1.495848e-08, 0.99764234)
+bones/24/rotation = Quaternion(-0.51919633, 7.361251e-13, 5.433515e-13, 0.85465515)
+bones/25/rotation = Quaternion(2.0813298e-08, 0.96124893, -0.27568197, -7.257229e-08)
+
+[node name="NPCInteractArea" type="Area3D" parent="." index="7" unique_id=1189877222]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_aqtyr")
+dialogue_resource = ExtResource("3_aqtyr")
+metadata/_custom_type_script = "uid://cg0c87by1to57"
+
+[node name="CharacterCollisionShape" type="CollisionShape3D" parent="NPCInteractArea" index="0" unique_id=403413237]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_we6y7")

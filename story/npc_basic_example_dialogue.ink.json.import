@@ -1,0 +1,15 @@
+[remap]
+
+importer="inkgd.ink.json"
+type="Resource"
+uid="uid://lacn5jqjf57r"
+path="res://.godot/imported/npc_basic_example_dialogue.ink.json-bd16649d1ab4753b1676b92c43774f76.res"
+
+[deps]
+
+source_file="res://story/npc_basic_example_dialogue.ink.json"
+dest_files=["res://.godot/imported/npc_basic_example_dialogue.ink.json-bd16649d1ab4753b1676b92c43774f76.res"]
+
+[params]
+
+compress=true
