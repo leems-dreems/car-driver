@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://dp7fb2q2771a6"]
+
+[ext_resource type="Script" uid="uid://bmqhop6asqf2b" path="res://maps/common/interact_marker.gd" id="1_k1523"]
+[ext_resource type="Material" uid="uid://cqeyb6iu2bkc3" path="res://assets/materials/paint/blue.tres" id="1_sth4q"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s2q7c"]
+height = 1.25
+
+[sub_resource type="Curve" id="Curve_asbc5"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.50230414, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_ni8l8"]
+material = ExtResource("1_sth4q")
+radius = 0.25
+radial_steps = 4
+sections = 2
+section_length = 0.5
+section_rings = 1
+cap_top = false
+cap_bottom = false
+curve = SubResource("Curve_asbc5")
+
+[sub_resource type="Animation" id="Animation_k1523"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../MeshInstance3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../MeshInstance3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_to17k"]
+resource_name = "spin"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../MeshInstance3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3.0000002, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 1.5707964, 0), Vector3(0, 3.1415927, 0), Vector3(0, 4.712389, 0), Vector3(0, 6.2831855, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../MeshInstance3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3.0000002, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 1, 0), Vector3(0, 1.1, 0), Vector3(0, 1, 0), Vector3(0, 0.9, 0), Vector3(0, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kjere"]
+_data = {
+&"RESET": SubResource("Animation_k1523"),
+&"spin": SubResource("Animation_to17k")
+}
+
+[node name="StaticBody3D" type="StaticBody3D" unique_id=330314075]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_k1523")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1132409463]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_s2q7c")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2115533848]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("TubeTrailMesh_ni8l8")
+
+[node name="InteractMarker" type="Node3D" parent="." unique_id=1341981028]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="InteractMarker" unique_id=1639445232]
+libraries/ = SubResource("AnimationLibrary_kjere")
+autoplay = &"spin"

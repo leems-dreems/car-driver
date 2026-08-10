@@ -27,6 +27,9 @@ PropRespawnManager="*res://scripts/prop_respawn_manager.gd"
 PedestrianManager="*res://npcs/pedestrian_manager.gd"
 PauseAndHud="*res://menu/pause_and_hud.tscn"
 DialogueManager="*uid://c3rodes2l3gxb"
+DialogueInterface="*uid://dryamuus3sd8h"
+QuestManager="*uid://6corc8hvpaxj"
+Globals="*uid://djs5c73xlgij1"
 
 [debug]
 

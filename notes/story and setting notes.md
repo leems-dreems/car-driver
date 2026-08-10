@@ -1,0 +1,1 @@
+- Doctor character whose job it is to revive everyone who dies from being hit by cars. If you die during the night, you get revived after he arrives at work.

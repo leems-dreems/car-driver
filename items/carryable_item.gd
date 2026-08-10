@@ -2,6 +2,7 @@ class_name CarryableItem extends RigidBody3D
 
 enum ITEM_SIZE { SMALL, MEDIUM, LARGE }
 @export var item_name: String
+@export var item_type: Globals.Item_Types
 @export var item_size: ITEM_SIZE
 @onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer
 var is_highlighted := false

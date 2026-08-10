@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://0uwi576g6lao"]
+[gd_scene format=3 uid="uid://0uwi576g6lao"]
 
 [ext_resource type="Script" uid="uid://baadb6i3uijy7" path="res://items/carryable_item.gd" id="1_kmt6j"]
 [ext_resource type="Material" uid="uid://cqeyb6iu2bkc3" path="res://assets/materials/paint/blue.tres" id="2_am7p4"]
@@ -70,24 +70,22 @@ _data = {
 &"un_highlight": SubResource("Animation_v6b8s")
 }
 
-[node name="SmallCanItem" type="RigidBody3D"]
+[node name="SmallCanItem" type="RigidBody3D" unique_id=331507187]
 collision_layer = 65600
 collision_mask = 12499
 continuous_cd = true
 script = ExtResource("1_kmt6j")
 item_name = "empty box"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=431290813]
 mesh = SubResource("BoxMesh_umah5")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1368960970]
 shape = SubResource("ConvexPolygonShape3D_am7p4")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_73s5p")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1088135650]
+libraries/ = SubResource("AnimationLibrary_73s5p")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=55964164]
 stream = ExtResource("2_q6kb1")
