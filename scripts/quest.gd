@@ -1,46 +1,46 @@
 class_name Quest extends Node
 
-var quest_name: String:
+@export var quest_name: String:
 	set(value):
 		quest_name = value
 		if is_node_ready():
 			changed.emit()
-var quest_giver: NPC:
+@export var quest_giver: NPC:
 	set(value):
 		quest_giver = value
 		if is_node_ready():
 			changed.emit()
-var sub_quests: Array[Quest]:
+@export var sub_quests: Array[Quest]:
 	set(value):
 		sub_quests = value
 		if is_node_ready():
 			changed.emit()
-var item_types: Array[Globals.Item_Types]:
+@export var item_types: Array[Globals.Item_Types]:
 	set(value):
 		item_types = value
 		if is_node_ready():
 			changed.emit()
-var items: Array[CarryableItem]:
+@export var items: Array[CarryableItem]:
 	set(value):
 		items = value
 		if is_node_ready():
 			changed.emit()
-var actions: Array[Globals.Actions]:
+@export var actions: Array[Globals.Actions]:
 	set(value):
 		actions = value
 		if is_node_ready():
 			changed.emit()
-var target_markers: Array[InteractMarker]:
+@export var target_markers: Array[InteractableArea]:
 	set(value):
 		target_markers = value
 		if is_node_ready():
 			changed.emit()
-var target_npcs: Array[NPC]:
+@export var target_npcs: Array[NPC]:
 	set(value):
 		target_npcs = value
 		if is_node_ready():
 			changed.emit()
-var target_vehicles: Array[DriveableVehicle]:
+@export var target_vehicles: Array[DriveableVehicle]:
 	set(value):
 		target_vehicles = value
 		if is_node_ready():
@@ -57,7 +57,7 @@ func _init(
 		_item_types: Array[Globals.Item_Types] = [],
 		_items: Array[CarryableItem] = [],
 		_actions: Array[Globals.Actions] = [],
-		_target_markers: Array[InteractMarker] = [],
+		_target_markers: Array[InteractableArea] = [],
 		_target_npcs: Array[NPC] = [],
 		_target_vehicles: Array[DriveableVehicle] = []
 		) -> void:

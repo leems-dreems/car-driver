@@ -1,6 +1,7 @@
 extends Node
 
 signal time_changed(minute: int)
+signal player_speaking_to(npc: NPC)
 
 var active_terrain: Terrain3D = null
 var physics_item_container: Node3D = null
@@ -34,4 +35,9 @@ func set_current_time(_current_time: float) -> void:
 
 func set_time_speed(_time_speed: float) -> void:
 	time_speed = _time_speed
+	return
+
+
+func start_speaking_to(npc: NPC) -> void:
+	player_speaking_to.emit(npc)
 	return

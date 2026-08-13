@@ -102,6 +102,9 @@ var targeted_interactable: Node3D = null
 ## CarryableItem being targeted by a long-press action
 var targeted_pickup: CarryableItem = null
 
+## NPC the player is currently speaking to
+var speaking_to: NPC = null
+
 var _carried_item: CarryableItem = null
 var _carried_mesh: MeshInstance3D = null
 var _right_hand_bone_idx: int
@@ -208,6 +211,13 @@ func _ready() -> void:
 	_npc_awareness_area.body_exited.connect(func(_body: Node3D):
 		if _body is Pedestrian and _body.face_player:
 			_body.look_target = null
+	)
+
+	Game.player_speaking_to.connect(func(npc: NPC):
+		speaking_to = npc
+	)
+	DialogueManager.dialogue_ended.connect(func(_resource: DialogueResource):
+		speaking_to = null
 	)
 
 	interact_long_press_timer.timeout.connect(interact_long_press_timeout)

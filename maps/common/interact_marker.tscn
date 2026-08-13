@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dp7fb2q2771a6"]
 
-[ext_resource type="Script" uid="uid://bmqhop6asqf2b" path="res://maps/common/interact_marker.gd" id="1_k1523"]
+[ext_resource type="Script" uid="uid://huco14p7yl41" path="res://scripts/interactable_area.gd" id="1_k1523"]
 [ext_resource type="Material" uid="uid://cqeyb6iu2bkc3" path="res://assets/materials/paint/blue.tres" id="1_sth4q"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s2q7c"]
@@ -26,7 +26,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../MeshInstance3D:rotation")
+tracks/0/path = NodePath("MeshInstance3D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -38,7 +38,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../MeshInstance3D:position")
+tracks/1/path = NodePath("MeshInstance3D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -55,7 +55,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../MeshInstance3D:rotation")
+tracks/0/path = NodePath("MeshInstance3D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -67,7 +67,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../MeshInstance3D:position")
+tracks/1/path = NodePath("MeshInstance3D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -80,13 +80,15 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kjere"]
 _data = {
 &"RESET": SubResource("Animation_k1523"),
-&"spin": SubResource("Animation_to17k")
+&"bob_and_spin": SubResource("Animation_to17k")
 }
 
-[node name="StaticBody3D" type="StaticBody3D" unique_id=330314075]
+[node name="InteractMarker" type="Area3D" unique_id=1514792642]
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_k1523")
+interactable_noun = "Marker"
+metadata/_custom_type_script = "uid://huco14p7yl41"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1132409463]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -96,8 +98,6 @@ shape = SubResource("CapsuleShape3D_s2q7c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("TubeTrailMesh_ni8l8")
 
-[node name="InteractMarker" type="Node3D" parent="." unique_id=1341981028]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="InteractMarker" unique_id=1639445232]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1639445232]
 libraries/ = SubResource("AnimationLibrary_kjere")
-autoplay = &"spin"
+autoplay = &"bob_and_spin"

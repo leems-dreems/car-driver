@@ -3,6 +3,7 @@ Nathan: [[Hi|Hello|Howdy]], this is some dialogue.
 Nathan: Here are some choices.
 - First one
 	Nathan: You picked the first one.
+	$> QuestManager.accept_quest(player.speaking_to.offered_quest.get_instance_id())
 - Second one
 	Nathan: You picked the second one.
 - Start again => start

@@ -1,2 +1,0 @@
-class_name InteractMarker
-extends StaticBody3D

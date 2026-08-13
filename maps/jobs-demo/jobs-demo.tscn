@@ -12,6 +12,8 @@
 [ext_resource type="Script" uid="uid://dk0nu63biymdl" path="res://maps/jobs-demo/npc_hsm.gd" id="10_cf37l"]
 [ext_resource type="Script" uid="uid://c0sg2o6dc0pc4" path="res://maps/jobs-demo/npc_idle_state.gd" id="11_roeaq"]
 [ext_resource type="PackedScene" uid="uid://c1eqbtcdp18ii" path="res://Player/Player.tscn" id="12_1sv0q"]
+[ext_resource type="Script" uid="uid://dlcnyump055bb" path="res://scripts/quest.gd" id="12_4u0y5"]
+[ext_resource type="PackedScene" uid="uid://dp7fb2q2771a6" path="res://maps/common/interact_marker.tscn" id="14_0r7m3"]
 
 [sub_resource type="Gradient" id="Gradient_w2glf"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -146,8 +148,9 @@ script = ExtResource("5_asy66")
 terrain = NodePath("../Terrain3D")
 road_manager = NodePath("../RoadManager")
 
-[node name="NPC" parent="." unique_id=1814597791 instance=ExtResource("9_1sv0q")]
+[node name="NPC" parent="." unique_id=1814597791 node_paths=PackedStringArray("offered_quest") instance=ExtResource("9_1sv0q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.154704, 0, -34.65291)
+offered_quest = NodePath("Quest")
 
 [node name="BTPlayer" type="BTPlayer" parent="NPC" unique_id=1798070626]
 behavior_tree = SubResource("BehaviorTree_roeaq")
@@ -160,6 +163,14 @@ npc = NodePath("..")
 [node name="IdleState" type="LimboState" parent="NPC/LimboHSM" unique_id=74787470]
 script = ExtResource("11_roeaq")
 
+[node name="Quest" type="Node" parent="NPC" unique_id=1259588733 node_paths=PackedStringArray("quest_giver", "target_markers")]
+script = ExtResource("12_4u0y5")
+quest_name = "test quest 1"
+quest_giver = NodePath("..")
+actions = Array[int]([0])
+target_markers = [NodePath("../../InteractMarker")]
+metadata/_custom_type_script = "uid://dlcnyump055bb"
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=842562340]
 environment = SubResource("Environment_roeaq")
 
@@ -169,3 +180,6 @@ shadow_enabled = true
 
 [node name="Player" parent="." unique_id=1242824497 instance=ExtResource("12_1sv0q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.817289, 0, -28.781845)
+
+[node name="InteractMarker" parent="." unique_id=1514792642 instance=ExtResource("14_0r7m3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -30)

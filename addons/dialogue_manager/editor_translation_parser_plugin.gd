@@ -35,18 +35,31 @@ func _parse_file(path: String) -> Array[PackedStringArray]:
 
 		if not line.type in [DMConstants.TYPE_DIALOGUE, DMConstants.TYPE_RESPONSE]: continue
 
-		var translation_key: String = line.get(&"translation_key", line.text)
-		if translation_key.is_empty():
-			translation_key = line.text
+		var static_id: String = line.get(&"static_id", line.text)
+		if static_id.is_empty():
+			static_id = line.text
 
-		if translation_key in known_keys: continue
+		if static_id in known_keys: continue
 
-		known_keys.append(translation_key)
+		known_keys.append(static_id)
 		translated_lines.append(line)
-		if translation_key == line.text:
-			msgs.append(PackedStringArray([line.text.replace('"', '\"'), "", "", line.get("notes", "")]))
-		else:
-			msgs.append(PackedStringArray([line.text.replace('"', '\"'), line.translation_key.replace('"', '\"'), "", line.get("notes", "")]))
+
+		var message: String = line.text.replace('"', '\"')
+		var context: String = static_id.replace('"', '\"') if static_id != line.text else "dialogue"
+		var plural: String = ""
+		var extra_details: PackedStringArray = []
+		if line.has("character"):
+			extra_details.append("Character name: %s" % line.get("character", ""))
+		if line.has("notes"):
+			extra_details.append(line.get("notes", ""))
+		var notes: String = "\n".join(extra_details)
+		msgs.append(PackedStringArray([
+			message,
+			context,
+			plural,
+			notes,
+			key
+		]))
 
 	return msgs
 
