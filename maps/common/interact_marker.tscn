@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dp7fb2q2771a6"]
 
-[ext_resource type="Script" uid="uid://huco14p7yl41" path="res://scripts/interactable_area.gd" id="1_k1523"]
+[ext_resource type="Script" uid="uid://bfgyasfq3o5mv" path="res://maps/common/interact_marker.gd" id="1_k1523"]
 [ext_resource type="Material" uid="uid://cqeyb6iu2bkc3" path="res://assets/materials/paint/blue.tres" id="1_sth4q"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s2q7c"]
@@ -86,6 +86,7 @@ _data = {
 [node name="InteractMarker" type="Area3D" unique_id=1514792642]
 collision_layer = 8
 collision_mask = 0
+monitoring = false
 script = ExtResource("1_k1523")
 interactable_noun = "Marker"
 metadata/_custom_type_script = "uid://huco14p7yl41"

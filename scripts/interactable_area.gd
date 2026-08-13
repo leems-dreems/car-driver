@@ -1,6 +1,8 @@
 ## Base class for objects that can be interacted with.
 class_name InteractableArea extends Area3D
 
+signal was_interacted_with
+
 @export var interactable_noun := "InteractableArea"
 @export var short_press_text := "interact with"
 @export var long_press_text := "interact with"
@@ -22,6 +24,7 @@ func can_interact_short_press() -> bool:
 
 ## Handle a short-press of the interact button
 func interact_short_press() -> void:
+	was_interacted_with.emit()
 	return
 
 ## Return true if this object is a valid target for a long-press of the interact button
@@ -30,4 +33,5 @@ func can_interact_long_press(_carried_item: CarryableItem = null) -> bool:
 
 ## Handle a long-press of the interact button
 func interact_long_press() -> void:
+	was_interacted_with.emit()
 	return

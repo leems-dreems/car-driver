@@ -18,6 +18,7 @@ func _ready() -> void:
 
 
 func interact_short_press() -> void:
+	was_interacted_with.emit()
 	dialogue_bubble.visible = true
 	dialogue_bubble.control.visible = true
 	ink_player.choose_path("standard_dialogue")

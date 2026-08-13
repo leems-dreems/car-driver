@@ -16,6 +16,7 @@ func can_interact_short_press() -> bool:
 
 
 func interact_short_press() -> void:
+	super()
 	DialogueManager.show_dialogue_balloon(dialogue_resource)
 	Game.start_speaking_to(npc)
 	return
