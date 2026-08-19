@@ -1,12 +1,11 @@
 ~ start
-Nathan: [[Hi|Hello|Howdy]], this is some dialogue.
-Nathan: Here are some choices.
-- First one
-	Nathan: You picked the first one.
+Ned: Alright
+- Alright
+Ned: I need to interact with that floating marker over there, but I haven't the time
+Ned: Could you go over there and interact with it for me?
+- Sure
+	Ned: Cheers
 	$> QuestManager.accept_quest(player.speaking_to.offered_quest.get_instance_id())
-- Second one
-	Nathan: You picked the second one.
-- Start again => start
-- End the conversation => END
-Nathan: For more information see the online documentation.
+- No
+	Ned: I can't catch a break
 => END

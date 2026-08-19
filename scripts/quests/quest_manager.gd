@@ -1,5 +1,8 @@
 extends Node
 
+signal quest_accepted(quest: Quest)
+signal quest_completed(quest: Quest)
+
 var active_quests: Array[Quest]
 
 
@@ -16,6 +19,7 @@ func accept_quest(quest_id: int) -> void:
 		prints("Accepted quest", quest.quest_name)
 
 	active_quests.push_back(quest)
+	quest_accepted.emit(quest)
 	print(active_quests)
 
 	if quest is InteractQuest:
@@ -31,5 +35,6 @@ func complete_quest(quest_id: int) -> void:
 	var quest: Quest = instance_from_id(quest_id) as Quest
 	prints("Completed quest", quest_id)
 	active_quests.erase(quest)
+	quest_completed.emit(quest)
 	print(active_quests)
 	return

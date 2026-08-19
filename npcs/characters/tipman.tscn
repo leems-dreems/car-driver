@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c52clb7bsba3r"]
+[gd_scene format=3 uid="uid://c52clb7bsba3r"]
 
 [ext_resource type="PackedScene" uid="uid://ca3emwpdwnkxa" path="res://npcs/pedestrian.tscn" id="1_n7cvo"]
 [ext_resource type="Material" uid="uid://dfdnm2ans1prd" path="res://assets/materials/paint/green.tres" id="2_wcy18"]
@@ -13,10 +13,10 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ybvhr"]
 radius = 0.3
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_77juk"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_y00ak"]
 viewport_path = NodePath("SubViewport")
 
-[node name="TipmanNPC" instance=ExtResource("1_n7cvo")]
+[node name="TipmanNPC" unique_id=1819650029 instance=ExtResource("1_n7cvo")]
 script = ExtResource("2_y00ak")
 npc_name = "Tipman"
 material_0 = ExtResource("2_wcy18")
@@ -27,35 +27,47 @@ material_2 = ExtResource("4_ybvhr")
 avoidance_enabled = false
 
 [node name="Skeleton3D" parent="square_guy/metarig" index="0"]
-bones/0/position = Vector3(-1.66579e-09, 0.700434, -0.0507501)
-bones/17/rotation = Quaternion(0.993173, -1.5364e-08, 2.39011e-07, 0.116648)
-bones/18/rotation = Quaternion(0.116523, -1.211e-07, -9.14574e-09, 0.993188)
-bones/19/rotation = Quaternion(-0.543252, 6.79961e-13, 5.65735e-13, 0.83957)
-bones/22/rotation = Quaternion(0.993173, -1.5364e-08, 2.39011e-07, 0.116648)
-bones/23/rotation = Quaternion(0.116523, -1.211e-07, -9.14576e-09, 0.993188)
-bones/24/rotation = Quaternion(-0.543234, 7.08021e-13, 5.88591e-13, 0.839581)
+bones/0/position = Vector3(-5.6341204e-10, 0.69607985, -0.046681598)
+bones/0/rotation = Quaternion(0.06827497, 1.1893094e-07, 8.139016e-09, 0.99766654)
+bones/1/rotation = Quaternion(-0.027644297, 3.7920076e-14, -6.590909e-09, 0.9996178)
+bones/4/rotation = Quaternion(-0.0032685287, -1.19208956e-07, -3.8963985e-10, 0.99999464)
+bones/6/rotation = Quaternion(-0.254262, 0.776858, -0.43315697, 0.37976)
+bones/7/rotation = Quaternion(0.16795392, -0.12200895, -0.12457495, 0.97025067)
+bones/8/rotation = Quaternion(-0.05305711, 0.061912917, -0.067555025, 0.9943783)
+bones/10/rotation = Quaternion(-0.24613303, -0.7811973, 0.43063113, 0.37908605)
+bones/11/rotation = Quaternion(0.15346807, 0.21671708, 0.16182208, 0.95041835)
+bones/12/rotation = Quaternion(-0.005660479, -0.7603723, 0.08305675, 0.64413023)
+bones/15/rotation = Quaternion(0.146202, 0.7339829, 0.450436, -0.48682797)
+bones/17/rotation = Quaternion(0.9904482, -2.0475287e-08, 2.3834265e-07, 0.13788608)
+bones/18/rotation = Quaternion(0.16834362, -1.2141292e-07, -2.795267e-09, 0.9857285)
+bones/19/rotation = Quaternion(-0.5688839, 6.6299635e-13, 5.868251e-13, 0.8224178)
+bones/20/rotation = Quaternion(2.08134e-08, 0.96124893, -0.27568197, -7.257229e-08)
+bones/22/rotation = Quaternion(0.9904482, -2.0475335e-08, 2.3834248e-07, 0.13788597)
+bones/23/rotation = Quaternion(0.16834362, -1.2141292e-07, -2.7952953e-09, 0.9857285)
+bones/24/rotation = Quaternion(-0.5688839, 6.8961406e-13, 6.1069395e-13, 0.8224178)
+bones/25/rotation = Quaternion(2.0813298e-08, 0.96124893, -0.27568197, -7.257229e-08)
 
-[node name="InteractableArea" type="Area3D" parent="." index="7" node_paths=PackedStringArray("ink_player", "dialogue_bubble")]
+[node name="InteractableArea" type="Area3D" parent="." index="7" unique_id=1935564580 node_paths=PackedStringArray("ink_player", "dialogue_bubble")]
 collision_layer = 8
 collision_mask = 0
 monitoring = false
 script = ExtResource("5_yiaex")
-ink_player = NodePath("../InkPlayer")
-dialogue_bubble = NodePath("../InkDialogueBubble")
 interactable_noun = "NPC"
 short_press_text = "talk to"
+ink_player = NodePath("../InkPlayer")
+dialogue_bubble = NodePath("../InkDialogueBubble")
 metadata/_custom_type_script = "uid://huco14p7yl41"
 
-[node name="CharacterCollisionShape" type="CollisionShape3D" parent="InteractableArea" index="0"]
+[node name="CharacterCollisionShape" type="CollisionShape3D" parent="InteractableArea" index="0" unique_id=4215931]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_ybvhr")
 
-[node name="InkPlayer" type="Node" parent="." index="8"]
+[node name="InkPlayer" type="Node" parent="." index="8" unique_id=697961268]
 script = ExtResource("6_kiq65")
 ink_file = ExtResource("7_yiaex")
 metadata/_custom_type_script = "uid://dhevaeuigpl8p"
 
-[node name="InkDialogueBubble" parent="." index="9" instance=ExtResource("8_3q5jn")]
+[node name="InkDialogueBubble" parent="." index="9" unique_id=73127527 instance=ExtResource("8_3q5jn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
 visible = false
-texture = SubResource("ViewportTexture_77juk")
+texture = SubResource("ViewportTexture_y00ak")

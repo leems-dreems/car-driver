@@ -16,7 +16,7 @@ npc_name = "NPC"
 avoidance_enabled = false
 
 [node name="Skeleton3D" parent="square_guy/metarig" index="0"]
-bones/0/position = Vector3(-1.8170113e-09, 0.7010312, -0.05130814)
+bones/0/position = Vector3(-2.7200724e-09, 0.7045986, -0.05464102)
 bones/0/rotation = Quaternion(0.06827497, 1.1893094e-07, 8.139016e-09, 0.99766654)
 bones/1/rotation = Quaternion(-0.027644297, 3.7920076e-14, -6.590909e-09, 0.9996178)
 bones/4/rotation = Quaternion(-0.0032685287, -1.19208956e-07, -3.8963985e-10, 0.99999464)
@@ -27,13 +27,13 @@ bones/10/rotation = Quaternion(-0.24613303, -0.7811973, 0.43063113, 0.37908605)
 bones/11/rotation = Quaternion(0.15346807, 0.21671708, 0.16182208, 0.95041835)
 bones/12/rotation = Quaternion(-0.005660479, -0.7603723, 0.08305675, 0.64413023)
 bones/15/rotation = Quaternion(0.146202, 0.7339829, 0.450436, -0.48682797)
-bones/17/rotation = Quaternion(0.99350953, -1.4666855e-08, 2.3909385e-07, 0.113748945)
-bones/18/rotation = Quaternion(0.10945369, -1.210317e-07, -1.0007163e-08, 0.9939919)
-bones/19/rotation = Quaternion(-0.5397086, 6.8231195e-13, 5.6341775e-13, 0.84185195)
+bones/17/rotation = Quaternion(0.99535465, -1.04670015e-08, 2.3954794e-07, 0.09627644)
+bones/18/rotation = Quaternion(0.06658394, -1.2048896e-07, -1.5205515e-08, 0.9977808)
+bones/19/rotation = Quaternion(-0.5181612, 6.9591143e-13, 5.4509115e-13, 0.85528296)
 bones/20/rotation = Quaternion(2.08134e-08, 0.96124893, -0.27568197, -7.257229e-08)
-bones/22/rotation = Quaternion(0.99350953, -1.4666902e-08, 2.3909385e-07, 0.113748945)
-bones/23/rotation = Quaternion(0.10945369, -1.210317e-07, -1.0007177e-08, 0.9939919)
-bones/24/rotation = Quaternion(-0.53971595, 7.097087e-13, 5.861455e-13, 0.8418472)
+bones/22/rotation = Quaternion(0.99535465, -1.0467053e-08, 2.3954794e-07, 0.09627644)
+bones/23/rotation = Quaternion(0.06658394, -1.2048896e-07, -1.5205515e-08, 0.9977808)
+bones/24/rotation = Quaternion(-0.5181612, 7.2406924e-13, 5.679644e-13, 0.85528296)
 bones/25/rotation = Quaternion(2.0813298e-08, 0.96124893, -0.27568197, -7.257229e-08)
 
 [node name="NPCInteractArea" type="Area3D" parent="." index="7" unique_id=1189877222]

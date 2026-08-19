@@ -394,7 +394,7 @@ set_pathfind_end={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://npcs/characters/npc.dialogue")
+locale/translations_pot_files=PackedStringArray("res://npcs/characters/npc.dialogue", "res://maps/jobs-demo/map_intro.dialogue", "res://maps/jobs-demo/map_outro.dialogue")
 
 [layer_names]
 

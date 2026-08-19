@@ -1,0 +1,5 @@
+~ start
+The Developer: Thanks for completing the jobs demo. It's been a pleasure to have you.
+- End demo
+	$> get_tree().quit()
+=> END

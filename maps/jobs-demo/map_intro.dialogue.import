@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://dvucnhjnwmlel"
+path="res://.godot/imported/map_intro.dialogue-5d3d3db62582cd9e99b9ef853774e731.tres"
+
+[deps]
+
+source_file="res://maps/jobs-demo/map_intro.dialogue"
+dest_files=["res://.godot/imported/map_intro.dialogue-5d3d3db62582cd9e99b9ef853774e731.tres"]
+
+[params]
+
+defaults=true

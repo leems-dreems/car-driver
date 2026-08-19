@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://cuhkqkjv3rwqj"]
 
 [ext_resource type="Script" uid="uid://c72rsfa3chskw" path="res://maps/jobs-demo/jobs_demo.gd" id="1_ouvnr"]
+[ext_resource type="Resource" uid="uid://dvucnhjnwmlel" path="res://maps/jobs-demo/map_intro.dialogue" id="2_0r7m3"]
 [ext_resource type="Terrain3DAssets" uid="uid://krekjaqgod8q" path="res://maps/BinRoninIsland/terrain_3d_assets.tres" id="2_b7j4i"]
 [ext_resource type="Script" uid="uid://bmk1ebw85d5n3" path="res://addons/road-generator/nodes/road_manager.gd" id="2_lk1d4"]
 [ext_resource type="Script" uid="uid://d0jpys7ij1lvw" path="res://addons/road-generator/nodes/road_container.gd" id="3_b7j4i"]
+[ext_resource type="Resource" uid="uid://b6asbv74vdg8v" path="res://maps/jobs-demo/map_outro.dialogue" id="3_np7jn"]
 [ext_resource type="Script" uid="uid://deov8hqq2brqr" path="res://addons/road-generator/nodes/road_point.gd" id="4_ehpts"]
 [ext_resource type="Script" uid="uid://cxw4g2sqkm56p" path="res://addons/road-generator/connectors/terrain3d_road_connector.gd" id="5_asy66"]
 [ext_resource type="PackedScene" uid="uid://d23s6bfnq6fex" path="res://addons/road-generator/custom_containers/4way_1x1.tscn" id="6_asy66"]
@@ -92,6 +94,8 @@ volumetric_fog_density = 0.005
 
 [node name="JobsDemo" type="Node3D" unique_id=1798618301]
 script = ExtResource("1_ouvnr")
+intro_dialogue = ExtResource("2_0r7m3")
+outro_dialogue = ExtResource("3_np7jn")
 
 [node name="Terrain3D" type="Terrain3D" parent="." unique_id=581483958]
 data_directory = "res://maps/jobs-demo"
