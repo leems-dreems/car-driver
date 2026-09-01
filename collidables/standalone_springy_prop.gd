@@ -67,3 +67,7 @@ func play_effect() -> void:
 
 func stop_effect() -> void:
 	pass
+
+## Used when drag & dropping this node as a quest target, to get direct reference to interact area
+func get_interact_target() -> InteractableArea:
+	return null

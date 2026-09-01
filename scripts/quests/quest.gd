@@ -1,48 +1,53 @@
 class_name Quest extends Node
 
-@export var quest_name: String:
-	set(value):
-		quest_name = value
-		if is_node_ready():
-			changed.emit()
-@export var quest_giver: NPC:
-	set(value):
-		quest_giver = value
-		if is_node_ready():
-			changed.emit()
-@export var sub_quests: Array[Quest]:
-	set(value):
-		sub_quests = value
-		if is_node_ready():
-			changed.emit()
-@export var target_markers: Array[InteractableArea]:
-	set(value):
-		target_markers = value
-		if is_node_ready():
-			changed.emit()
-@export var target_vehicles: Array[DriveableVehicle]:
-	set(value):
-		target_vehicles = value
-		if is_node_ready():
-			changed.emit()
+@export var quest_name: String
+@export var quest_giver: NPC
+@export var item_types: Array[Globals.Item_Types]
+@export var items: Array[CarryableItem]
+@export var target_npcs: Array[NPC]
+@export var drop_target_nodes: Array[Node]:
+	set(_nodes):
+		drop_target_nodes = _nodes
+		drop_target_areas = []
+		for _node in _nodes:
+			if _node is StandaloneSpringyProp:
+				drop_target_areas.push_back(_node.get_interact_target())
+@export var target_markers: Array[InteractableArea]
+@export var target_vehicles: Array[DriveableVehicle]
+
+var is_sub_quest := false
+var is_complete := false
+var completed_by: Node = null
+var drop_target_areas: Array[InteractableArea] = []
 
 signal completed
-signal changed
 
 
 func _init(
 		_quest_name: String = "Unnamed Quest",
 		_quest_giver: NPC = null,
-		_sub_quests: Array[Quest] = [],
-		_target_markers: Array[InteractableArea] = [],
-		_target_vehicles: Array[DriveableVehicle] = []
 		) -> void:
 	quest_name = _quest_name
 	quest_giver = _quest_giver
-	sub_quests = _sub_quests
-	target_markers = _target_markers
-	target_vehicles = _target_vehicles
 	return
+
+
+func _ready() -> void:
+	if get_parent() is Quest:
+		is_sub_quest = true
+	return
+
+## Returns the first subquest which hasn't been completed, or self if all are complete
+func get_active_quest() -> Quest:
+	if is_complete:
+		return null
+
+	var sub_quests := find_children("*")
+	var quest_index := sub_quests.find_custom(func(_quest: Quest): return !_quest.is_complete)
+	if quest_index != -1:
+		return sub_quests[quest_index]
+
+	return self
 
 
 func mark_completed() -> void:

@@ -14,3 +14,7 @@ func play_effect() -> void:
 func stop_effect() -> void:
 	$AudioStreamPlayer3D.stop()
 	$AudioStreamPlayer3D.seek(0)
+
+
+func get_interact_target() -> InteractableArea:
+	return $StandalonePropBodies/RigidBody3D/InteractableArea

@@ -4,6 +4,7 @@ signal quest_accepted(quest: Quest)
 signal quest_completed(quest: Quest)
 
 var active_quests: Array[Quest]
+var player: Player
 
 
 func accept_quest(quest_id: int) -> void:
@@ -27,7 +28,12 @@ func accept_quest(quest_id: int) -> void:
 			target_marker.was_interacted_with.connect(func():
 				prints("target marker", target_marker, "was interacted with")
 				complete_quest(quest_id)
-			)
+			, 4)
+	elif quest is DeliverQuest:
+		player.item_delivered.connect(func(item: CarryableItem, delivery_target: Node):
+			prints("delivered", item.name, "to", delivery_target.name)
+			complete_quest(quest_id)
+		, 4)
 	return
 
 
@@ -37,4 +43,19 @@ func complete_quest(quest_id: int) -> void:
 	active_quests.erase(quest)
 	quest_completed.emit(quest)
 	print(active_quests)
+	return
+
+
+func item_picked_up(item: CarryableItem, picked_up_by: Node) -> void:
+	# get current subquest of each top level quest
+	var filtered_quests: Array[Quest] = active_quests.filter(func(quest: Quest):
+		return quest.items.has(item)
+	)
+	#for quest in filtered_quests:
+		#quest.completed
+	return
+
+
+func item_delivered(delivered_by: Node, item: CarryableItem, delivered_to: Node) -> void:
+	prints(delivered_by, 'delivered', item, 'to', delivered_to)
 	return

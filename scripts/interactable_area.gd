@@ -2,6 +2,8 @@
 class_name InteractableArea extends Area3D
 
 signal was_interacted_with
+signal received_player_delivery(item: CarryableItem)
+signal received_npc_delivery(item: CarryableItem, npc: NPC)
 
 @export var interactable_noun := "InteractableArea"
 @export var short_press_text := "interact with"

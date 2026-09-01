@@ -136,6 +136,7 @@ signal push_vehicle_start
 signal vehicle_entered(_vehicle: DriveableVehicle)
 signal vehicle_exited
 signal state_changed(_state: String)
+signal item_delivered(item: CarryableItem, delivery_target: Node)
 
 
 func _ready() -> void:
@@ -145,6 +146,7 @@ func _ready() -> void:
 	PropRespawnManager.camera = camera_controller.camera
 	PedestrianManager.camera = camera_controller.camera
 	PedestrianManager.spawn_include_area = $CameraController/PlayerCamera/PedestrianSpawnIncludeArea
+	QuestManager.player = self
 	camera_controller.top_level = true
 	$CameraController/PlayerCamera.top_level = true
 	PauseAndHud.player = self
@@ -848,6 +850,8 @@ func handle_drop_button_pressed() -> void:
 	drop_item()
 	if len(drop_targets) > 0 and drop_targets[0].has_method("deposit_item"):
 		drop_targets[0].deposit_item(_item)
+		# item_delivered.emit(_item, drop_targets[0])
+		QuestManager.item_delivered(self, item, drop_targets[0])
 		_item.queue_free()
 		drop_targets[0].unhighlight()
 	short_press_drop_finish.emit()

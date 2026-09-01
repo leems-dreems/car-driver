@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://df8mbdhlomb01"]
+[gd_scene format=3 uid="uid://df8mbdhlomb01"]
 
 [ext_resource type="Script" uid="uid://cd4f22m3wdn16" path="res://collidables/standalone_bin_prop.gd" id="1_l6t2o"]
 [ext_resource type="PackedScene" uid="uid://dc8sax4rbvaj4" path="res://collidables/standalone_bin_bodies.tscn" id="2_5f4lt"]
@@ -15,30 +15,30 @@
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7nua6"]
 streams_count = 9
 stream_0/stream = ExtResource("3_8pcki")
-stream_0/weight = 3.40936e+14
+stream_0/weight = 340936000000000.0
 stream_1/stream = ExtResource("4_r73pa")
-stream_1/weight = 3.40902e+14
+stream_1/weight = 340902000000000.0
 stream_2/stream = ExtResource("5_omde4")
-stream_2/weight = 3.40885e+14
+stream_2/weight = 340885000000000.0
 stream_3/stream = ExtResource("6_brtfq")
-stream_3/weight = 3.40919e+14
+stream_3/weight = 340919000000000.0
 stream_4/stream = ExtResource("7_kvh12")
-stream_4/weight = 3.4097e+14
+stream_4/weight = 340970000000000.0
 stream_5/stream = ExtResource("8_qsi72")
-stream_5/weight = 3.40876e+14
+stream_5/weight = 340876000000000.0
 stream_6/stream = ExtResource("9_tss21")
-stream_6/weight = 3.40915e+14
+stream_6/weight = 340915000000000.0
 stream_7/stream = ExtResource("10_nsfjt")
-stream_7/weight = 3.4085e+14
+stream_7/weight = 340850000000000.0
 stream_8/stream = ExtResource("11_bckdp")
-stream_8/weight = 3.40889e+14
+stream_8/weight = 340889000000000.0
 
-[node name="StandaloneBinProp" type="Node3D"]
+[node name="StandaloneBinProp" type="Node3D" unique_id=1462779492]
 script = ExtResource("1_l6t2o")
 
-[node name="StandalonePropBodies" parent="." instance=ExtResource("2_5f4lt")]
+[node name="StandalonePropBodies" parent="." unique_id=1109272419 instance=ExtResource("2_5f4lt")]
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=141992148]
 stream = SubResource("AudioStreamRandomizer_7nua6")
 bus = &"SFX"
 doppler_tracking = 2

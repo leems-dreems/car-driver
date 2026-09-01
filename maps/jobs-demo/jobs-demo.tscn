@@ -16,6 +16,14 @@
 [ext_resource type="PackedScene" uid="uid://c1eqbtcdp18ii" path="res://Player/Player.tscn" id="12_1sv0q"]
 [ext_resource type="Script" uid="uid://clv8xlxhbl1nk" path="res://scripts/quests/interact_quest.gd" id="12_4u0y5"]
 [ext_resource type="PackedScene" uid="uid://dp7fb2q2771a6" path="res://maps/common/interact_marker.tscn" id="14_0r7m3"]
+[ext_resource type="Material" uid="uid://cd8qqwdrqubw4" path="res://assets/materials/paint/brown.tres" id="15_tgkmd"]
+[ext_resource type="Material" uid="uid://ky6syqq4i4ae" path="res://assets/materials/road.tres" id="17_vwlo2"]
+[ext_resource type="Material" uid="uid://vgwqikmc8vwq" path="res://assets/materials/concrete.tres" id="18_tgkmd"]
+[ext_resource type="Material" uid="uid://dfdnm2ans1prd" path="res://assets/materials/paint/green.tres" id="19_vpswm"]
+[ext_resource type="Material" uid="uid://chtp2lqgot4wh" path="res://assets/materials/raycast_debug_red.tres" id="20_4f7e4"]
+[ext_resource type="Script" uid="uid://qb88672q58m6" path="res://scripts/quests/deliver_quest.gd" id="22_4f7e4"]
+[ext_resource type="PackedScene" uid="uid://df8mbdhlomb01" path="res://collidables/standalone_bin_prop.tscn" id="24_tbjgd"]
+[ext_resource type="PackedScene" uid="uid://0uwi576g6lao" path="res://items/small/small_can_item.tscn" id="24_tk0s7"]
 
 [sub_resource type="Gradient" id="Gradient_w2glf"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -67,13 +75,6 @@ _shader_parameters = {
 texture_filtering = 1
 auto_shader = true
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_cf37l"]
-
-[sub_resource type="BehaviorTree" id="BehaviorTree_roeaq"]
-blackboard_plan = SubResource("BlackboardPlan_cf37l")
-
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_w2glf"]
-
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w2glf"]
 sky_top_color = Color(0.317647, 0.596078, 0.988235, 1)
 sky_horizon_color = Color(0.317647, 0.596078, 0.988235, 1)
@@ -91,6 +92,15 @@ sky = SubResource("Sky_cf37l")
 tonemap_mode = 2
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.005
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_cf37l"]
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_roeaq"]
+blackboard_plan = SubResource("BlackboardPlan_cf37l")
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_w2glf"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_tgkmd"]
 
 [node name="JobsDemo" type="Node3D" unique_id=1798618301]
 script = ExtResource("1_ouvnr")
@@ -152,28 +162,6 @@ script = ExtResource("5_asy66")
 terrain = NodePath("../Terrain3D")
 road_manager = NodePath("../RoadManager")
 
-[node name="NPC" parent="." unique_id=1814597791 node_paths=PackedStringArray("offered_quest") instance=ExtResource("9_1sv0q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.154704, 0, -34.65291)
-offered_quest = NodePath("InteractQuest")
-
-[node name="BTPlayer" type="BTPlayer" parent="NPC" unique_id=1798070626]
-behavior_tree = SubResource("BehaviorTree_roeaq")
-blackboard_plan = SubResource("BlackboardPlan_w2glf")
-
-[node name="LimboHSM" type="LimboHSM" parent="NPC" unique_id=789012318 node_paths=PackedStringArray("npc")]
-script = ExtResource("10_cf37l")
-npc = NodePath("..")
-
-[node name="IdleState" type="LimboState" parent="NPC/LimboHSM" unique_id=74787470]
-script = ExtResource("11_roeaq")
-
-[node name="InteractQuest" type="Node" parent="NPC" unique_id=2097034614 node_paths=PackedStringArray("quest_giver", "target_markers")]
-script = ExtResource("12_4u0y5")
-quest_name = "test quest 1"
-quest_giver = NodePath("..")
-target_markers = [NodePath("../../InteractMarker")]
-metadata/_custom_type_script = "uid://clv8xlxhbl1nk"
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=842562340]
 environment = SubResource("Environment_roeaq")
 
@@ -183,6 +171,81 @@ shadow_enabled = true
 
 [node name="Player" parent="." unique_id=1242824497 instance=ExtResource("12_1sv0q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.817289, 0, -28.781845)
+move_speed = null
+acceleration = null
+jump_initial_impulse = null
+jump_additional_force = null
+rotation_speed = null
+stopping_speed = null
+running_speed = null
+impact_resistance = null
+min_ragdoll_time = null
 
 [node name="InteractMarker" parent="." unique_id=1514792642 instance=ExtResource("14_0r7m3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -30)
+
+[node name="NPC_Ned" parent="." unique_id=1814597791 node_paths=PackedStringArray("offered_quest") instance=ExtResource("9_1sv0q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.154704, 0, -34.65291)
+offered_quest = NodePath("InteractQuest")
+npc_name = "Ned"
+material_0 = ExtResource("19_vpswm")
+material_1 = ExtResource("15_tgkmd")
+
+[node name="BTPlayer" type="BTPlayer" parent="NPC_Ned" unique_id=1798070626]
+behavior_tree = SubResource("BehaviorTree_roeaq")
+blackboard_plan = SubResource("BlackboardPlan_w2glf")
+
+[node name="LimboHSM" type="LimboHSM" parent="NPC_Ned" unique_id=789012318 node_paths=PackedStringArray("npc")]
+script = ExtResource("10_cf37l")
+npc = NodePath("..")
+
+[node name="IdleState" type="LimboState" parent="NPC_Ned/LimboHSM" unique_id=74787470]
+script = ExtResource("11_roeaq")
+
+[node name="InteractQuest" type="Node" parent="NPC_Ned" unique_id=2097034614 node_paths=PackedStringArray("quest_giver", "target_markers")]
+script = ExtResource("12_4u0y5")
+quest_name = "interact quest"
+quest_giver = NodePath("..")
+target_markers = [NodePath("../../InteractMarker")]
+metadata/_custom_type_script = "uid://clv8xlxhbl1nk"
+
+[node name="NPC_Glenda" parent="." unique_id=270308374 instance=ExtResource("9_1sv0q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -35)
+npc_name = "Glenda"
+material_0 = ExtResource("17_vwlo2")
+material_1 = ExtResource("18_tgkmd")
+material_2 = ExtResource("19_vpswm")
+material_3 = ExtResource("20_4f7e4")
+
+[node name="BTPlayer" type="BTPlayer" parent="NPC_Glenda" unique_id=2003444792]
+blackboard_plan = SubResource("BlackboardPlan_tgkmd")
+
+[node name="LimboHSM" type="LimboHSM" parent="NPC_Glenda" unique_id=1510845416]
+
+[node name="LimboState" type="LimboState" parent="NPC_Glenda/LimboHSM" unique_id=256422611]
+script = ExtResource("11_roeaq")
+
+[node name="DeliverQuest" type="Node" parent="NPC_Glenda" unique_id=244117335 node_paths=PackedStringArray("quest_giver", "items", "drop_target_nodes")]
+script = ExtResource("22_4f7e4")
+quest_name = "deliver quest"
+quest_giver = NodePath("..")
+items = [NodePath("../../PhysicsItemContainer/SmallCanItem")]
+drop_target_nodes = [NodePath("../../PropContainer/StandaloneBinProp")]
+metadata/_custom_type_script = "uid://qb88672q58m6"
+
+[node name="InteractQuest" type="Node" parent="NPC_Glenda/DeliverQuest" unique_id=983249652 node_paths=PackedStringArray("quest_giver", "target_markers")]
+script = ExtResource("12_4u0y5")
+quest_name = "interact subquest"
+quest_giver = NodePath("../..")
+target_markers = [NodePath("../../../InteractMarker")]
+metadata/_custom_type_script = "uid://clv8xlxhbl1nk"
+
+[node name="PhysicsItemContainer" type="Node3D" parent="." unique_id=1590639308]
+
+[node name="SmallCanItem" parent="PhysicsItemContainer" unique_id=331507187 instance=ExtResource("24_tk0s7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 1, -6)
+
+[node name="PropContainer" type="Node3D" parent="." unique_id=1402845929]
+
+[node name="StandaloneBinProp" parent="PropContainer" unique_id=690190142 instance=ExtResource("24_tbjgd")]
+transform = Transform3D(-0.7071068, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071068, 11, 0, -7)
